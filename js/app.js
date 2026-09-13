@@ -1,4 +1,17 @@
-/* ===== CodingPlan Radar app ===== */
+/* ============================================================
+ * CodingPlan Radar — 前端应用逻辑
+ * ------------------------------------------------------------
+ * 模块划分（自上而下）：
+ *   1. 常量与状态        —— models.dev 接入、供应商白名单、筛选/排序状态
+ *   2. 订阅计划对比表     —— renderPlans()（搜索/筛选/排序，倍率列）
+ *   3. 平台详情卡片      —— renderCards()（档位/三周期倍率/速度/坑点）
+ *   4. IDE 榜 / 变更记录  —— renderIde() / renderChangelog()
+ *   5. Token 实时价格榜  —— loadModels() 三级数据保障：
+ *        本地缓存(24h) → models.dev 在线拉取 → 内置快照降级
+ *   6. 成本计算器        —— renderCalc()（API 价 × 用量 vs 订阅额度）
+ *   7. 每日巡检状态      —— loadAutoMeta() / loadPageAlerts()（Actions 产物）
+ * 数据均来自 js/data.js 与 js/snapshot.js；页面结构见 index.html。
+ * ============================================================ */
 const MODELS_DEV_API = "https://models.dev/api.json";
 const CACHE_KEY = "cp_modelsdev_cache_v1";
 const CACHE_TTL = 24 * 3600 * 1000; // 24h

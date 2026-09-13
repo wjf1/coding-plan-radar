@@ -2,6 +2,16 @@
 // 价格来源：官方定价页直采（2026-09-13）或聚合参考（逐条标注）
 // ratio = 月额度倍率（额度折算价值 ÷ 月价），方法论与数值参考 GitHub: mahonzhan/awesome-coding-plan（2026-09-13 检索）
 // periods = 三周期（5h/周/月）额度倍率，同上来源；坑点 = 社区反馈汇总，仅供参考
+// PLAN_DATA 条目字段说明：
+//   name/vendor/region     平台名、厂商、intl=国际 | cn=国内（用于筛选）
+//   status                 ok=正常 | promo=促销中 | bad=已停售（bad 不渲染详情卡片）
+//   start/startVal         起步价展示文本 / 折合人民币数值（仅用于排序，$ 按 RATE 换算）
+//   tiers                  全档位 [名称, 价格, 备注]
+//   ratio/ratioTier        月额度倍率与档位说明（awesome-coding-plan 口径，null=无折算数据）
+//   periods                三周期额度 {h5, wk, mo}（可缺省）
+//   speed                  实测生成速度 TPS（awesome-coding-plan 实测，null=无数据）
+//   pitfalls               坑点与社区反馈（429/限额/稳定性等，逐条带来源提示）
+//   srcType/srcUrl/srcNote srcType: official=官方直采 | agg=聚合参考；来源链接与采集日期
 const RATE = 7.2; // $1 ≈ ¥7.2，仅用于排序统一量纲
 
 const PLAN_DATA = [
