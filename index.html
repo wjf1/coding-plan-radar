@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodingPlan Radar — AI 编程订阅计划对比（官方数据 + GitHub 实时源）</title>
+<meta name="description" content="AI Coding Plan 对比：ChatGPT / Claude / Copilot / Cursor / GLM / Kimi / MiniMax 等 11 个平台的价格、额度倍率横评；模型 Token API 价格实时榜接入 GitHub 开源数据库 models.dev。">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">CodingPlan <span>Radar</span></div>
+    <nav>
+      <a href="#compare">对比表</a>
+      <a href="#tokens">Token 实时价格</a>
+      <a href="#calc">成本计算器</a>
+      <a href="#detail">平台详情</a>
+      <a href="#ide">IDE 订阅榜</a>
+      <a href="#dynamics">市场动态</a>
+      <a href="#repos">同类项目</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="updated-pill">数据更新：2026-09-13</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>AI Coding Plan <em>横评对比</em><br>看得见来源的订阅指南</h1>
+    <p>11 个主流平台、30+ 付费档位：价格、额度口径与<b>额度倍率</b>（参考 GitHub 开源项目方法论）；另接入 models.dev 实时数据源，呈现 60+ 款编码模型的 Token API 价格性价比。</p>
+    <div class="stats">
+      <div class="stat"><b id="st-plat">11</b><small>对比平台</small></div>
+      <div class="stat"><b id="st-tier">33</b><small>付费档位</small></div>
+      <div class="stat"><b id="st-models">60+</b><small>实时模型价格</small></div>
+      <div class="stat"><b>每周</b><small>例行核对频率</small></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="alerts">
+    <div class="alert warn"><span class="ico">🔥</span><div>
+      <b>OpenCode Go：V4.1 Flash 四倍额度活动延期至 9 月 20 日</b>
+      <small>来源：<a href="https://www.bilibili.com/video/BV1xtYR6EE72/" target="_blank">B站《9月12日 codingplan 订阅套餐推荐》</a>（2026-09-12）</small>
+    </div></div>
+    <div class="alert bad"><span class="ico">⛔</span><div>
+      <b>R4Coder 因算力不足已关闭订阅渠道，暂不推荐新购</b>
+      <small>已订阅用户若觉得速度慢可申请退款 · 来源：同上视频（2026-09-12）</small>
+    </div></div>
+  </div>
+</div>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>⚡ 快速对比表 <i>—</i> 价格 · 额度倍率 · 来源</h2>
+      <p>点击表头排序 · 起步价为最低付费档 · 倍率 = 额度折算价值 ÷ 月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 口径，社区估算仅供参考）</p>
+    </div>
+    <div class="toolbar">
+      <button class="chip on" data-filter="all">全部</button>
+      <button class="chip" data-filter="intl">国际平台</button>
+      <button class="chip" data-filter="cn">国内平台</button>
+      <div class="grow"></div>
+      <input id="search" class="s" type="text" placeholder="搜索平台 / 模型 / 价格…">
+      <select id="sort">
+        <option value="ratio">按额度倍率降序（性价比）</option>
+        <option value="price">按起步价升序</option>
+        <option value="price-desc">按起步价降序</option>
+        <option value="name">按名称 A–Z</option>
+      </select>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr>
+          <th data-k="name">平台</th>
+          <th data-k="price">起步价（付费档）</th>
+          <th data-k="ratio">额度倍率 ↑ 性价比</th>
+          <th>核心模型</th>
+          <th>额度口径</th>
+          <th>状态</th>
+          <th>数据来源</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--dim);margin-top:8px">* 倍率仅覆盖已有社区折算数据的档位（如 MiniMax Plus 88.65×、Claude Pro 63.6×、ChatGPT Plus 21.82×、Kimi Allegretto 9.89×、GLM Pro 8.35×），无数据的标「—」；各家计费口径不同，倍率高低≠实际体验好坏，需结合自己的使用节奏（5h / 周 / 月）判断。</p>
+  </div>
+</section>
+
+<section id="tokens" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>💰 Token 实时价格榜 <i>—</i> API 按量计费参照系</h2>
+      <p>判断订阅值不值：先看这里模型按量多少钱。数据源为 GitHub 开源数据库 <a href="https://github.com/sst/models.dev" target="_blank">models.dev</a>，浏览器直连实时拉取</p>
+    </div>
+    <div class="statusbar" id="token-status"><span class="dot" id="token-dot"></span><span id="token-msg">正在连接 models.dev …</span></div>
+    <div class="toolbar">
+      <button class="chip on" data-tfilter="all">全部供应商</button>
+      <button class="chip" data-tfilter="cn">国产模型</button>
+      <button class="chip" data-tfilter="intl">国际模型</button>
+      <button class="chip on" data-ttool="1">仅工具调用（适合 Coding）</button>
+      <div class="grow"></div>
+      <input id="tsearch" class="s" type="text" placeholder="搜索模型名…">
+      <select id="tsort">
+        <option value="out">按输出价升序（便宜优先）</option>
+        <option value="out-desc">按输出价降序</option>
+        <option value="in">按输入价升序</option>
+      </select>
+    </div>
+    <div class="table-scroll">
+      <table style="min-width:820px">
+        <thead><tr>
+          <th>模型</th><th>供应商</th>
+          <th data-tk="in">输入 $/M ↑</th>
+          <th data-tk="out">输出 $/M ↑</th>
+          <th>上下文</th><th>能力</th>
+        </tr></thead>
+        <tbody id="ttbody"><tr><td colspan="6" style="color:var(--dim)">加载中…</td></tr></tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--dim);margin-top:8px">* 价格为各官方 API 刊例（$/百万 Token）；输出 10× 输入属正常比例。<b>参考用法</b>：若你每月用量折算 API 价低于订阅月费，按量计费（如 DeepSeek V4 Flash 输出 $0.6/M）可能比订阅更划算；重度 Agent 用户则订阅几乎总赢。</p>
+  </div>
+</section>
+
+<section id="picks">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>🏆 编辑推荐 <i>—</i> 三类典型需求</h2>
+      <p>综合价格、额度倍率与生态给出的参考结论，非广告，本站不含任何推广链接</p>
+    </div>
+    <div class="picks">
+      <div class="pick star">
+        <span class="tag">性价比之选</span>
+        <h3>OpenCode Go</h3>
+        <div class="pr">$10 <small>/ 月</small></div>
+        <p>24 款模型通吃（Grok 4.6、GLM-5.3、Kimi K3、DeepSeek V4 等），5h $12 / 周 $30 / 月 $60 三重额度。</p>
+        <div class="why"><b>适合：</b>预算有限、想多模型轮换的个人开发者。当前叠加 V4.1 Flash 4× 额度（至 9/20）。</div>
+      </div>
+      <div class="pick">
+        <span class="tag">国际全能</span>
+        <h3>Claude Pro</h3>
+        <div class="pr">$20 <small>/ 月（年付 $17）</small></div>
+        <p>Claude Code 与聊天共享用量池，额度倍率 63.6×，社区口碑与生态（Cowork / MCP）最完整。</p>
+        <div class="why"><b>适合：</b>主力用 Claude Code 工作流的用户；重度再升 Max 5×（$100 起）。</div>
+      </div>
+      <div class="pick">
+        <span class="tag">国内之选</span>
+        <h3>MiniMax Coding Plus</h3>
+        <div class="pr">¥49 <small>/ 月</small></div>
+        <p>月额度倍率 88.65×，为全表最高（awesome-coding-plan 口径）；6 亿 Token/月，按月计量最直观。</p>
+        <div class="why"><b>适合：</b>国内用量大、节奏平稳的开发者；5 小时爆发型用户可再看 GLM / Kimi。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>🧮 订阅 vs API 成本计算器 <i>—</i> 你该订阅还是按量付费？</h2>
+      <p>输入每月用量，用上方实时 API 价格估算按量成本，并匹配额度够用的最便宜订阅（社区折算口径，仅供决策参考）</p>
+    </div>
+    <div class="calc">
+      <div class="calc-in">
+        <div class="cfield">
+          <label>① 每月 Agent 输出量（百万 tokens）</label>
+          <div class="presets">
+            <button class="chip" data-tok="30">轻度 30M</button>
+            <button class="chip" data-tok="150">中度 150M</button>
+            <button class="chip on" data-tok="500">重度 500M</button>
+            <button class="chip" data-tok="1500">超重 1500M</button>
+          </div>
+          <input id="tok" class="s" type="number" min="1" value="500" style="margin-top:8px;max-width:220px">
+          <small class="hint">编码场景输入约为输出 3×（按 1 输出 : 3 输入估算总消耗）</small>
+        </div>
+        <div class="cfield">
+          <label>② 按 API 价计费的模型档位</label>
+          <select id="calcmodel">
+            <option value="0">DeepSeek V4 Flash（经济档）</option>
+            <option value="1" selected>GLM-5.3（中档）</option>
+            <option value="2">Claude Sonnet 5（高档）</option>
+          </select>
+          <small class="hint" id="calcprice"></small>
+        </div>
+      </div>
+      <div class="calc-out" id="calc-out"></div>
+    </div>
+    <p style="font-size:12px;color:var(--dim);margin-top:8px">* 估算不含缓存折扣、批量优惠与税费；订阅「额度够用」按社区折算的月度 token 总量判断，实际以各平台 5h/周窗口体验为准。参考业界同类工具（如 sessionwatcher plan-calculator）的交互思路。</p>
+  </div>
+</section>
+
+<section id="detail" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>📋 平台详情 <i>—</i> 全档位价格与额度</h2>
+      <p>「官方直采」= 采集当日从官方定价页抓取；「聚合参考」= 转引自第三方对比站；「实时」= GitHub 开源数据源拉取</p>
+    </div>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<section id="ide">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>🖥️ IDE / 编辑器订阅扩展榜 <i>—</i> $10–20 档横评</h2>
+      <p>来源：awesome-coding-plan IDE Plan 表（2026-09-13 检索）；倍率为社区折算口径</p>
+    </div>
+    <div class="table-scroll">
+      <table style="min-width:760px">
+        <thead><tr><th>工具</th><th>价格</th><th>额度倍率</th><th>要点</th></tr></thead>
+        <tbody id="idetbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="dynamics">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>📡 市场动态 <i>—</i> 促销与停售追踪</h2>
+      <p>参考社区每日播报（如 B站 UP主「暗杰巫」的套餐推荐系列）与官方公告交叉核实</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="date">2026-09-12</div>
+        <h4>OpenCode：V4.1 Flash 四倍额度活动延期一周</h4>
+        <p>活动延长至 2026-09-20，期间订阅可享四倍额度，性价比较高。</p>
+        <div class="from">来源：<a href="https://www.bilibili.com/video/BV1xtYR6EE72/" target="_blank">B站《[9月12日]codingplan订阅套餐推荐》</a></div>
+      </div>
+      <div class="tl-item">
+        <div class="date">2026-09-12</div>
+        <h4>R4Coder：因算力不足关闭订阅渠道</h4>
+        <p>已停止新订阅；官方提示已订阅用户若觉得模型速度慢可申请退款。本站对比表中已标注「停售」。</p>
+        <div class="from">来源：同上视频</div>
+      </div>
+      <div class="tl-item">
+        <div class="date">2026-08-15 截止</div>
+        <h4>智谱 GLM Coding Plan：新版积分制上线，包年 7 折 / 包季 8 折</h4>
+        <p>新套餐改为按 Token 消耗的积分制（非高峰时段积分 5 折），老用户 Max 可保留原权益。</p>
+        <div class="from">来源：<a href="https://docs.bigmodel.cn/cn/coding-plan/overview" target="_blank">bigmodel.cn 官方文档</a> / IT之家报道</div>
+      </div>
+      <div class="tl-item">
+        <div class="date">2026-11-08 截止</div>
+        <h4>火山引擎方舟：Pro 档首两月 ¥49.9（刊例 ¥200）</h4>
+        <p>Lite 首购 ¥9.9（刊例 ¥40），适合低成本尝鲜豆包系编码模型。</p>
+        <div class="from">来源：codingplan.org 聚合（2026-08-31），建议下单前以官网确认</div>
+      </div>
+    </div>
+    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">📝 本站变更记录</h2></div>
+    <div id="changelog"></div>
+  </div>
+</section>
+
+<section id="repos" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>🔗 同类 GitHub 项目 <i>—</i> 方法论与数据源</h2>
+      <p>本站的倍率口径与实时数据均来自以下开源项目，欢迎对照阅读</p>
+    </div>
+    <div class="repos" id="repos-grid"></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head"><h2>❓ FAQ 常见问题</h2></div>
+    <details open><summary>「额度口径」「额度倍率」分别是什么？</summary>
+      <div class="ans">额度口径 = 平台怎么计费：Claude 按「5 小时滚动会话 + 每周上限」、Cursor 按模型用量金额、Copilot 按 Premium Requests / AI Credits、国内多为积分 / Token 配额。额度倍率 = 把额度折算成钱再除以月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 的方法论），倍率越高名义性价比越高；但 MiniMax 月倍率 88.65× 最高、其 5h 周期倍率却一般——请按自己的使用节奏对号入座。</div>
+    </details>
+    <details><summary>Token 实时价格榜的数据从哪来？会不会是假的？</summary>
+      <div class="ans">浏览器直接从 <a href="https://models.dev/api.json" target="_blank">models.dev/api.json</a> 拉取（GitHub 开源项目 sst/models.dev，社区持续提交、CDN 分发，返回体带 CORS 全开放头）。拉取成功时页面显示绿色圆点和拉取时间；网络失败时自动降级到内置快照（黄色圆点，快照日期 2026-09-13），绝不伪造"实时"假象。</div>
+    </details>
+    <details><summary>价格会变吗？以哪个页面为准？</summary>
+      <div class="ans">会。AI 订阅价格与额度调整非常频繁（如 GLM 2026 年内就经历了次数制 → 积分制整体改版）。本站价格仅供决策参考，<b>付款前请务必以平台官网为准</b>；每个卡片底部附有来源链接与采集日期。</div>
+    </details>
+    <details><summary>数据多久更新一次？怎么保证真实性？</summary>
+      <div class="ans">① <b>每周一</b>例行核对官方定价页，更新页面顶部日期；② <b>48 小时内</b>插播促销、涨价、停售等重大变动（线索来自社区每日播报视频、官方公告）；③ <b>模型 API 价格</b>每次打开页面实时拉取 models.dev（缓存 24 小时）；④ 来源分级：官方直采（绿标）&gt; 聚合参考（蓝标）&gt; 社区情报（仅进动态区）。</div>
+    </details>
+    <details><summary>按量计费和订阅到底怎么选？</summary>
+      <div class="ans">用上面的 Token 实时价格榜估算：轻度用户（每月折算 API 费 &lt; $10）选按量计费更便宜，如 DeepSeek V4 Flash（输出 $0.6/M）；中重度用户（每天数小时 Agent）订阅几乎必赢——Claude Pro 倍率 63.6× 意味着同等 API 用量要花 $1,272。处于中间地带就选 $10–20 档订阅 + 超出按量的混合模式（Cursor / Copilot 均支持）。</div>
+    </details>
+    <details><summary>本站有推广链接吗？</summary>
+      <div class="ans">没有。站内所有外链均为官方页面或开源项目（GitHub / B站 / 新闻），不含任何 referral / 返佣参数，推荐结论不受商业利益影响。</div>
+    </details>
+  </div>
+</section>
+
+<section id="policy" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head"><h2>🛡️ 数据说明与更新机制</h2></div>
+    <div class="policy">
+      <div class="pol"><div class="ico">🔎</div><h4>来源分级</h4>
+        <ul>
+          <li><b style="color:var(--ok)">官方直采</b>：claude.com、openai.com、github.com、cursor.com、bigmodel.cn 定价页当日抓取</li>
+          <li><b style="color:var(--accent2)">实时数据源</b>：models.dev API（GitHub: sst/models.dev）+ litellm 价格表备查</li>
+          <li><b style="color:#9db9ff">聚合参考</b>：codingplan.org（2026-08-31 快照）等，逐条标注</li>
+          <li><b style="color:var(--warn)">社区情报</b>：B站每日播报视频，仅用于「市场动态」，不直接进入价格表</li>
+        </ul>
+      </div>
+      <div class="pol"><div class="ico">🗓️</div><h4>更新频率</h4>
+        <ul>
+          <li><b>每周一</b>：例行核对全部官方定价页，刷新「数据更新」日期</li>
+          <li><b>每次打开</b>：Token 价格榜实时拉取 models.dev（本地缓存 24h）</li>
+          <li><b>48 小时内</b>：促销开始/结束、涨价、停售等重大变动</li>
+          <li><b>随时</b>：来源冲突先标「待核实」，不直接改数</li>
+        </ul>
+      </div>
+      <div class="pol"><div class="ico">⚖️</div><h4>免责声明</h4>
+        <ul>
+          <li>价格与额度可能随时变化，付款前以官网为准</li>
+          <li>「额度倍率」为社区估算口径，不代表官方承诺价值</li>
+          <li>「编辑推荐」为基于公开数据的主观参考，非广告</li>
+          <li>聚合来源数据如与官方冲突，以官方为准并欢迎指正</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>CodingPlan Radar · AI 编程订阅计划对比 · 数据更新 2026-09-13</div>
+    <div>官方来源：claude.com · openai.com · github.com · cursor.com · bigmodel.cn　实时源：models.dev（GitHub）　方法论：awesome-coding-plan（GitHub）</div>
+  </div>
+  <div class="wrap disclaimer">本站为静态信息聚合页面，与所列平台无商业关系；所有商标归各自所有者。</div>
+</footer>
+
+<script src="js/snapshot.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
