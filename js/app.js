@@ -273,7 +273,27 @@ function bind(){
   bindCalc();
 }
 
+/* ================= 每日自动巡检状态 ================= */
+function renderAutoMeta(){
+  const el=document.getElementById("auto-pill");
+  if(el && window.SITE_META?.autoCheck) el.textContent="自动巡检："+SITE_META.autoCheck;
+}
+async function loadPageAlerts(){
+  try{
+    const list=await (await fetch("data/alerts.json",{cache:"no-cache"})).json();
+    const open=list.filter(a=>!a.resolved);
+    const box=document.getElementById("page-alerts");
+    if(!open.length || !box) return;
+    box.innerHTML=open.map(a=>`
+      <div class="alert warn"><span class="ico">🔎</span><div>
+        <b>${a.label} 内容有变动，价格待人工核实</b>
+        <small>自动巡检发现于 ${a.detected} · 原始页面：<a href="${a.url}" target="_blank">${a.url}</a></small>
+      </div></div>`).join("");
+  }catch(e){/* alerts 数据不存在时静默 */}
+}
+
 /* ================= init ================= */
 document.getElementById("st-plat").textContent=PLAN_DATA.filter(d=>d.status!=="bad").length;
 document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
-bind(); renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); loadModels();
+renderAutoMeta();
+bind(); renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); loadModels(); loadPageAlerts();

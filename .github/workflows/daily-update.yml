@@ -1,0 +1,75 @@
+name: daily-data-update
+
+on:
+  schedule:
+    - cron: "0 1 * * *"   # UTC 01:00 = 北京时间每天 09:00
+  workflow_dispatch: {}    # 支持手动触发
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: daily-data-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 重新生成 models.dev 兜底快照
+        run: node scripts/update-snapshot.mjs
+
+      - name: 官方定价页变动检测
+        run: node scripts/check-pages.mjs
+
+      - name: 写入巡检日期
+        run: |
+          echo "// 由 GitHub Actions 每日自动更新" > js/meta.js
+          echo "const SITE_META={autoCheck:\"$(date -u +%Y-%m-%d)\"};" >> js/meta.js
+
+      - name: 提交并推送（触发 Pages 重新发布）
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "无数据变化，跳过提交"
+          else
+            git commit -m "chore(daily): 自动数据巡检 $(date -u +%Y-%m-%d)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 官方页变动时开 issue 提醒人工核价
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -f data/alerts.json ]; then
+            CHANGED=$(node -e '
+              const a=require("./data/alerts.json");
+              const t=new Date().toISOString().slice(0,10);
+              const c=a.filter(x=>!x.resolved&&x.detected===t);
+              console.log(c.map(x=>`- [${x.label}](${x.url}) 检测到内容变动（${x.detected}），数据待人工核价`).join("\n"));
+            ')
+            if [ -n "$CHANGED" ]; then
+              gh issue create \
+                --repo "$GITHUB_REPOSITORY" \
+                --title "官方定价页变动提醒 $(date -u +%Y-%m-%d)" \
+                --body "$CHANGED
+
+          > 处理方式：核对对应平台价格 → 更新 js/data.js（含采集日期）→ 将 data/alerts.json 中该条目的 resolved 改为 true。" \
+                --label "" 2>/dev/null || gh issue create \
+                --repo "$GITHUB_REPOSITORY" \
+                --title "官方定价页变动提醒 $(date -u +%Y-%m-%d)" \
+                --body "$CHANGED"
+          fi

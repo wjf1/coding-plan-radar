@@ -22,7 +22,7 @@
       <a href="#repos">同类项目</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <div class="updated-pill">数据更新：2026-09-13</div>
+    <div class="updated-pill">数据更新：2026-09-13 · <span id="auto-pill">自动巡检：…</span></div>
   </div>
 </header>
 
@@ -50,6 +50,7 @@
       <small>已订阅用户若觉得速度慢可申请退款 · 来源：同上视频（2026-09-12）</small>
     </div></div>
   </div>
+  <div class="alerts" id="page-alerts" style="margin-top:-14px"></div>
 </div>
 
 <section id="compare">
@@ -301,10 +302,10 @@
       </div>
       <div class="pol"><div class="ico">🗓️</div><h4>更新频率</h4>
         <ul>
-          <li><b>每周一</b>：例行核对全部官方定价页，刷新「数据更新」日期</li>
+          <li><b>每天 09:00</b>：GitHub Actions 自动巡检——重新抓取 models.dev 生成兜底快照，并对 5 个官方定价页做哈希变动检测</li>
+          <li><b>官方页有变动</b>：自动标注「待核实」横幅并开 issue，48 小时内人工核价</li>
           <li><b>每次打开</b>：Token 价格榜实时拉取 models.dev（本地缓存 24h）</li>
-          <li><b>48 小时内</b>：促销开始/结束、涨价、停售等重大变动</li>
-          <li><b>随时</b>：来源冲突先标「待核实」，不直接改数</li>
+          <li><b>随时</b>：促销、涨价、停售等重大变动（社区播报线索）人工插播</li>
         </ul>
       </div>
       <div class="pol"><div class="ico">⚖️</div><h4>免责声明</h4>
@@ -328,6 +329,7 @@
 </footer>
 
 <script src="js/snapshot.js"></script>
+<script src="js/meta.js"></script>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 </body>
