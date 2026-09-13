@@ -1,1 +1,16 @@
-[]
+[
+ {
+  "id": "openai",
+  "label": "ChatGPT 官方定价页",
+  "url": "https://openai.com/chatgpt/pricing/",
+  "detected": "2026-09-13",
+  "resolved": false
+ },
+ {
+  "id": "cursor",
+  "label": "Cursor 官方定价页",
+  "url": "https://cursor.com/pricing",
+  "detected": "2026-09-13",
+  "resolved": false
+ }
+]
