@@ -54,22 +54,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -f data/alerts.json ]; then
-            CHANGED=$(node -e '
-              const a=require("./data/alerts.json");
-              const t=new Date().toISOString().slice(0,10);
-              const c=a.filter(x=>!x.resolved&&x.detected===t);
-              console.log(c.map(x=>`- [${x.label}](${x.url}) 检测到内容变动（${x.detected}），数据待人工核价`).join("\n"));
-            ')
-            if [ -n "$CHANGED" ]; then
-              gh issue create \
-                --repo "$GITHUB_REPOSITORY" \
-                --title "官方定价页变动提醒 $(date -u +%Y-%m-%d)" \
-                --body "$CHANGED
-
-          > 处理方式：核对对应平台价格 → 更新 js/data.js（含采集日期）→ 将 data/alerts.json 中该条目的 resolved 改为 true。" \
-                --label "" 2>/dev/null || gh issue create \
-                --repo "$GITHUB_REPOSITORY" \
-                --title "官方定价页变动提醒 $(date -u +%Y-%m-%d)" \
-                --body "$CHANGED"
+          CHANGED=$(node -e 'const a=require("./data/alerts.json");const t=new Date().toISOString().slice(0,10);console.log(a.filter(x=>!x.resolved&&x.detected===t).map(x=>"- ["+x.label+"]("+x.url+") 检测到内容变动（"+x.detected+"），数据待人工核价").join("\n"))')
+          if [ -n "$CHANGED" ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "官方定价页变动提醒 $(date -u +%F)" --body "$CHANGED"
           fi
