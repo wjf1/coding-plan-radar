@@ -31,8 +31,7 @@ jobs:
 
       - name: 写入巡检日期
         run: |
-          echo "// 由 GitHub Actions 每日自动更新" > js/meta.js
-          echo "const SITE_META={autoCheck:\"$(date -u +%Y-%m-%d)\"};" >> js/meta.js
+          echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
 
       - name: 提交并推送（触发 Pages 重新发布）
         id: commit

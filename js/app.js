@@ -274,9 +274,13 @@ function bind(){
 }
 
 /* ================= 每日自动巡检状态 ================= */
-function renderAutoMeta(){
+async function loadAutoMeta(){
   const el=document.getElementById("auto-pill");
-  if(el && window.SITE_META?.autoCheck) el.textContent="自动巡检："+SITE_META.autoCheck;
+  if(!el) return;
+  try{
+    const m=await (await fetch("data/meta.json",{cache:"no-cache"})).json();
+    if(m.autoCheck) el.textContent="自动巡检："+m.autoCheck;
+  }catch(e){ el.textContent="自动巡检：待首次运行"; }
 }
 async function loadPageAlerts(){
   try{
@@ -295,5 +299,5 @@ async function loadPageAlerts(){
 /* ================= init ================= */
 document.getElementById("st-plat").textContent=PLAN_DATA.filter(d=>d.status!=="bad").length;
 document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
-renderAutoMeta();
+loadAutoMeta();
 bind(); renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); loadModels(); loadPageAlerts();
