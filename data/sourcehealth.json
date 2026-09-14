@@ -224,7 +224,7 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "500 chars",
+   "detail": "1866 chars",
    "lastFailDate": null
   },
   "litellm": {

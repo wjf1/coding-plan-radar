@@ -82,11 +82,13 @@ jobs:
             }
 
             // 机器线索中的官方来源信号 → 待确认后录入 promos.json
+            // 只报「促销 / 价格 / 停售」类：状态页故障事件（kind=availability）不算需要人工处理的线索，
+            // 否则 Claude/GitHub 状态页一忙就会天天开 issue。它们仍会显示在站点「线索队列」里。
             const sig = read("data/signals.json", { items: [] }).items
-              .filter(s => s.tier !== "community" && s.firstSeen === today);
+              .filter(s => s.tier !== "community" && s.kind !== "availability" && s.firstSeen === today);
             if (sig.length) {
               out.push("### 自动发现的新线索（官方源，需人工确认后才进价格表）\n" +
-                sig.slice(0, 25).map(s => `- [${s.title}](${s.url})　— ${s.sourceLabel}`).join("\n"));
+                sig.slice(0, 20).map(s => `- [${s.title}](${s.url})　— ${s.sourceLabel}`).join("\n"));
             }
 
             // 连续失败的源 → 需要修监控
