@@ -191,8 +191,9 @@
       "url": "https://education.github.com/pack",
       "tier": "official",
       "type": "page",
-      "enabled": true,
-      "note": "学生包权益变动缓慢，哈希变化多数为营销位轮换，人工复核即可"
+      "enabled": false,
+      "reason": "2026-09-14 实测不适合做哈希监控：连续抓取 4 次有 3 次直接失败（连接被重置），CI 侧两次巡检也拿到不同的内容哈希——属营销页轮播 + 抓取不稳定，会持续产生假变动。学生包权益变更是季度级的，改为人工核对（条目仍保留在 data/freebies.json，标注证据强度）。",
+      "note": "学生包条目仍在「白嫖 / 免费额度」板块人工维护"
     },
     {
       "id": "aliyun-university",
@@ -274,6 +275,13 @@
       "url": "https://www.v2ex.com/feed/tab/hot.xml",
       "tier": "community",
       "reason": "2026-09-14 双环境实测：中国大陆线路超时；GitHub Actions 返回 HTTP 200 但响应体为空（按 IP 限流并拦截数据中心 IP）。自建 VPS 无法解决，只能人工巡览。"
+    },
+    {
+      "id": "gh-education",
+      "label": "GitHub 学生开发包（页面监控）",
+      "url": "https://education.github.com/pack",
+      "tier": "official",
+      "reason": "2026-09-14 双环境实测：本机连续抓取 4 次 3 次失败（连接被重置）；CI 侧两次巡检拿到不同哈希。营销页轮播 + 抓取不稳，做哈希监控只会刷假变动。改为人工按季度核对，权益条目保留在 data/freebies.json。"
     },
     {
       "id": "openai-pricing",

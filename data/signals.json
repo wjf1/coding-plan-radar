@@ -247,7 +247,7 @@
    "tier": "official",
    "kind": "availability",
    "title": "Elevated errors across ChatGPT and Codex",
-   "excerpt": "Status: Resolved The issue causing elevated errors across ChatGPT and Codex has been resolved. Some Codex remote control users may need to pair their mobile device again following this incident. Affected components Login (Operational) Image Generation (Operational) GPTs (Operational) Agent (Operatio…",
+   "excerpt": "Status: Resolved The issue causing elevated errors across ChatGPT and Codex has been resolved. Some Codex remote control users may need to pair their mobile device again following this incident. Affected components Sites (Operational) Voice mode (Operational) Codex API (Operational) ChatGPT Work (Op…",
    "url": "https://status.openai.com//incidents/01M1KWEDH417T2CF44YYHZDFCR",
    "date": "Thu, 03 Sep 2026 16:55:49 GMT",
    "firstSeen": "2026-09-14",

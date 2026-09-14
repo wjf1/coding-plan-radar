@@ -1,34 +1,14 @@
 [
  {
-  "id": "cursor",
-  "label": "Cursor 官方定价页",
-  "url": "https://cursor.com/pricing",
-  "tier": "official",
-  "kind": "page-change",
-  "detected": "2026-09-14",
-  "resolved": true,
-  "resolvedBy": "auto-revert",
-  "resolvedAt": "2026-09-14"
- },
- {
-  "id": "openai-pricing",
-  "label": "ChatGPT 官方定价页（已停用监控）",
-  "url": "https://openai.com/chatgpt/pricing/",
-  "tier": "official",
-  "kind": "page-change",
-  "detected": "2026-09-13",
-  "resolved": true,
-  "resolvedBy": "source-disabled",
-  "resolvedAt": "2026-09-14",
-  "note": "2026-09-14 查明：该页对非浏览器请求返回 403 Cloudflare 验证页，此前一直是静默失效而非价格变动。已停用该监控点（见 data/sources.json 的 disabled），ChatGPT 计划变动改由 OpenAI News RSS 捕捉 + 人工核价。"
- },
- {
   "id": "gh-education",
   "label": "GitHub 学生开发包",
   "url": "https://education.github.com/pack",
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-14",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "source-disabled",
+  "resolvedAt": "2026-09-14",
+  "note": "2026-09-14 查明为误报：该页连续抓取 4 次有 3 次失败，CI 侧两次巡检也拿到不同哈希（营销页轮播 + 抓取不稳）。已停用该页的哈希监控，学生包权益改为人工季度核对（条目保留在 data/freebies.json）。"
  }
 ]

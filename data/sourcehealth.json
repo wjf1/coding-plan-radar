@@ -122,22 +122,6 @@
    "detail": "10 条 / 命中 4",
    "lastFailDate": null
   },
-  "gh-education": {
-   "consecutiveFailures": 0,
-   "id": "gh-education",
-   "label": "GitHub 学生开发包",
-   "url": "https://education.github.com/pack",
-   "tier": "official",
-   "type": "page",
-   "lastChecked": "2026-09-14",
-   "blockedFrom": "2026-09-14",
-   "lastFailDate": null,
-   "ok": true,
-   "httpStatus": 200,
-   "error": null,
-   "lastOk": "2026-09-14",
-   "detail": "32358 chars"
-  },
   "github-status": {
    "consecutiveFailures": 0,
    "id": "github-status",
@@ -240,7 +224,7 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "500 chars",
+   "detail": "1866 chars",
    "lastFailDate": null
   },
   "litellm": {
