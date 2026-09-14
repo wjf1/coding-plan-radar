@@ -1,0 +1,210 @@
+{
+  "_note": "白嫖 / 免费额度条目：只收录有公开可核验出处的正规免费额度、学生优惠与试用，不收录逆向接口、共享账号、中转站等违规来源。evidence 标注该条额的证据强度：官方页面=本次实测可访问且页面直载；官方文档=官方帮助文档；社区转述=权威度较低。requires 标注门槛。额度与规则随时可能调整，领取前请以官方页面为准。",
+  "checked": "2026-09-14",
+  "evidenceTiers": {
+    "官方页面": "官方页面直采，本次实测可访问且正文含相关信息",
+    "官方文档": "官方帮助/文档页，实测可访问",
+    "官方活动": "官方活动页，规则随官网通知变更",
+    "社区转述": "第三方或社区转述，权威度较低，需自行复核"
+  },
+  "items": [
+    {
+      "id": "copilot-free",
+      "name": "GitHub Copilot Free",
+      "vendor": "GitHub",
+      "region": "intl",
+      "offer": "每月 2000 次代码补全 + 50 次聊天请求；可用部分模型但为自动选择",
+      "limit": "2000 补全 / 50 聊天 每月",
+      "requires": "GitHub 账号（无需信用卡）",
+      "evidence": "官方页面",
+      "source": "https://docs.github.com/en/copilot/get-started/plans",
+      "tier": "official",
+      "note": "本站对比表已收录该档位。付费档位变动由每日哈希巡检跟踪。"
+    },
+    {
+      "id": "copilot-student",
+      "name": "GitHub Copilot Pro 免费（学生 / 教师 / 热门 OSS 维护者）",
+      "vendor": "GitHub",
+      "region": "intl",
+      "offer": "通过 GitHub 学生开发包或教育身份认证，免费获得 Copilot Pro 权益",
+      "limit": "等同 Pro 档",
+      "requires": "学籍认证 / 教师身份 / 热门开源项目维护者",
+      "evidence": "官方页面",
+      "source": "https://education.github.com/pack",
+      "tier": "official",
+      "note": "权益变动缓慢，按周巡检即可；认证流程需人工完成。"
+    },
+    {
+      "id": "aliyun-bailian-free-quota",
+      "name": "阿里云百炼（Model Studio）新用户免费额度",
+      "vendor": "阿里云",
+      "region": "cn",
+      "offer": "开通后各模型通常赠送 100 万 Token 额度，有效期 90 天；OAuth 方式另有独立日额度",
+      "limit": "约 100 万 Token/模型（90 天）",
+      "requires": "阿里云账号；开通百炼服务",
+      "evidence": "官方文档",
+      "source": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+      "tier": "official",
+      "note": "额度规则随新模型发布调整，已纳入每日哈希巡检，变动会自动挂「待核实」。"
+    },
+    {
+      "id": "aliyun-university",
+      "name": "阿里云云工开物（学生权益）",
+      "vendor": "阿里云",
+      "region": "cn",
+      "offer": "学生认证后可领云券与 AI 工具试用，含 Qoder 学生专享 Pro 免费额度",
+      "limit": "云券额度按活动规则，每日限量",
+      "requires": "学籍认证 + 实名",
+      "evidence": "官方活动",
+      "source": "https://university.aliyun.com/",
+      "tier": "official",
+      "note": "规则与名额随官网通知变更，已纳入巡检；领取需人工完成。"
+    },
+    {
+      "id": "openrouter-free-models",
+      "name": "OpenRouter :free 模型",
+      "vendor": "OpenRouter",
+      "region": "intl",
+      "offer": "一批以 :free 结尾的零成本模型，含代码类模型，无需绑定付费",
+      "limit": "按模型限速，额度以页面为准",
+      "requires": "OpenRouter 账号（无需信用卡）",
+      "evidence": "官方页面",
+      "source": "https://openrouter.ai/models?max_price=0",
+      "tier": "realtime",
+      "note": "免费模型清单由 scripts/diff-prices.mjs 每日对比，新增/下架会自动产生信号。"
+    },
+    {
+      "id": "cloudflare-workers-ai",
+      "name": "Cloudflare Workers AI 免费额度",
+      "vendor": "Cloudflare",
+      "region": "intl",
+      "offer": "每天 10,000 Neurons 免费推理额度，UTC 零点重置，部分前沿模型仅付费",
+      "limit": "10,000 Neurons / 天",
+      "requires": "Cloudflare 账号（无需信用卡）",
+      "evidence": "官方文档",
+      "source": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "tier": "official",
+      "note": "适合零成本做脚本类小任务。"
+    },
+    {
+      "id": "trae-free",
+      "name": "Trae 免费版 + Pro 试用",
+      "vendor": "字节跳动",
+      "region": "intl",
+      "offer": "免费版含每月 5000 次补全与基础额度；Pro 提供 7 天试用",
+      "limit": "5000 补全/月；试用 7 天",
+      "requires": "账号注册",
+      "evidence": "官方页面",
+      "source": "https://www.trae.ai/pricing",
+      "tier": "official",
+      "note": "已纳入每日哈希巡检。"
+    },
+    {
+      "id": "qoder-trial",
+      "name": "Qoder 新用户 Pro 试用",
+      "vendor": "阿里云",
+      "region": "intl",
+      "offer": "新用户 2 周 Pro 试用，试用结束自动降级到 Free",
+      "limit": "14 天",
+      "requires": "账号注册；一人一号（多开会封号）",
+      "evidence": "社区转述",
+      "source": "https://qoder.com/",
+      "tier": "official",
+      "note": "Qoder 定价页为 JS 渲染，无法自动核验，需人工确认。"
+    },
+    {
+      "id": "cursor-hobby",
+      "name": "Cursor Hobby 免费版",
+      "vendor": "Anysphere",
+      "region": "intl",
+      "offer": "免费档位，含有限 Agent 请求与 Composer 使用权",
+      "limit": "有限 Agent 请求",
+      "requires": "账号注册（无需信用卡）",
+      "evidence": "官方页面",
+      "source": "https://cursor.com/pricing",
+      "tier": "official",
+      "note": "无免费试用、无学生折扣；具体限额官方仅给「有限」定性描述。"
+    },
+    {
+      "id": "glm-offpeak",
+      "name": "GLM Coding Plan 非高峰优惠",
+      "vendor": "智谱 BigModel",
+      "region": "cn",
+      "offer": "非高峰时段积分 5 折消耗；夜间时段部分模型额度宽松",
+      "limit": "按档位积分池，非高峰 5 折",
+      "requires": "已订阅任一付费档",
+      "evidence": "官方文档",
+      "source": "https://docs.bigmodel.cn/cn/coding-plan/overview",
+      "tier": "official",
+      "note": "严格说是「半价」而非免费，但属最高性价比用法；已纳入巡检。"
+    },
+    {
+      "id": "siliconflow-free",
+      "name": "硅基流动免费模型额度",
+      "vendor": "SiliconFlow",
+      "region": "cn",
+      "offer": "部分模型免费调用，按固定限速计费 0 元",
+      "limit": "固定限速，不随付费等级提升",
+      "requires": "实名认证",
+      "evidence": "官方文档",
+      "source": "https://docs.siliconflow.cn/",
+      "tier": "official",
+      "note": "需实名才可调用免费模型。"
+    },
+    {
+      "id": "codebuddy-bonus",
+      "name": "腾讯 CodeBuddy 个人专业版限时加赠",
+      "vendor": "腾讯",
+      "region": "cn",
+      "offer": "个人专业版每月 2000 Credits，限时活动加赠 2000",
+      "limit": "2000 + 2000 Credits/月",
+      "requires": "账号注册",
+      "evidence": "社区转述",
+      "source": "https://www.codebuddy.cn/",
+      "tier": "agg",
+      "note": "定价页实测为 JS 渲染空壳，无法自动核验，需人工确认。"
+    },
+    {
+      "id": "kiro-first-month",
+      "name": "Kiro 首月免费",
+      "vendor": "AWS",
+      "region": "intl",
+      "offer": "首月免费使用资格",
+      "limit": "首月",
+      "requires": "账号注册",
+      "evidence": "社区转述",
+      "source": "https://kiro.dev/pricing",
+      "tier": "agg",
+      "note": "社区反馈：首月免费资格一旦退出付款页即失效，需一次走完流程。"
+    },
+    {
+      "id": "ide-trials",
+      "name": "IDE 工具试用集合",
+      "vendor": "多家",
+      "region": "intl",
+      "offer": "Windsurf 提供 2 周试用；Trae Pro 提供 7 天试用；多家 $20 档工具提供新用户试用",
+      "limit": "7–14 天不等",
+      "requires": "账号注册",
+      "evidence": "社区转述",
+      "source": "https://github.com/mahonzhan/awesome-coding-plan",
+      "tier": "agg",
+      "note": "试用条款各平台差异大，以官网为准；来源为 awesome-coding-plan 的 IDE Plan 表。"
+    }
+  ],
+  "retired": [
+    {
+      "id": "github-models",
+      "name": "GitHub Models 免费额度",
+      "reason": "该服务已于 2026-07-30 全面下线（playground / 模型目录 / 推理 API 均不可用）。任何仍然推荐它的教程均已过期，本站不收录。",
+      "source": "https://docs.github.com/en/github-models"
+    }
+  ],
+  "excluded": {
+    "_note": "以下类型明确不收录，原因见 data/sources.json 的 disabled 段。",
+    "items": [
+      "逆向 / 公益 / 中转站（free-one-api、chatanywhere 等）：违反上游 ToS，存在密钥泄露与封号风险，且项目随时消失",
+      "共享账号 / 合租：涉及账号安全与平台条款风险",
+      "需要提供他人 API Key 的「免费额度」：典型钓鱼模式"
+    ]
+  }
+}

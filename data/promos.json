@@ -1,0 +1,61 @@
+{
+  "_note": "人工确认后的促销 / 停售 / 价格变动记录，驱动站点「市场动态」时间线。字段 verified=false 表示来源已失效或未能从官方渠道复核，页面会显示「待重新核实」——不假装已核实。机器发现的新线索先落在 data/signals.json，人工确认后才应写入本文件。",
+  "_sourcePolicy": {
+    "bilibili-removed": "2026-09-14：原「B站每日播报」来源已从本站移除。相关条目的原始出处仅剩视频，无法结构化核验，故标为待重新核实，改由官方 changelog / 状态页 / 官方文档的自动管道持续找官方确认。"
+  },
+  "statusMap": {
+    "promo": { "label": "促销中", "cls": "promo" },
+    "delist": { "label": "已停售", "cls": "delist" },
+    "price": { "label": "价格调整", "cls": "price" }
+  },
+  "items": [
+    {
+      "id": "opencode-go-4x",
+      "date": "2026-09-12",
+      "expires": "2026-09-20",
+      "kind": "promo",
+      "vendor": "OpenCode",
+      "title": "OpenCode Go：V4.1 Flash 四倍额度活动延期至 9 月 20 日",
+      "body": "活动期内订阅可享四倍额度，性价比明显高于常规档位。",
+      "verified": false,
+      "source": { "label": "codingplan.org 聚合（原始来源 B站播报已移除）", "url": "https://codingplan.org/", "tier": "agg" },
+      "note": "原始出处为社区视频、无法结构化核验，改由官方渠道重新确认中。"
+    },
+    {
+      "id": "r4coder-delist",
+      "date": "2026-09-12",
+      "expires": null,
+      "kind": "delist",
+      "vendor": "R4Coder",
+      "title": "R4Coder：因算力不足关闭订阅渠道",
+      "body": "已停止新订阅；官方提示已订阅用户若觉得模型速度慢可申请退款。对比表中已标注「已停售」。",
+      "verified": false,
+      "source": { "label": "原始来源（社区视频）已从本站移除，待官方页面复核", "url": "", "tier": "community" },
+      "note": "该平台官方站点未找到可核验的停售公告，本站暂以「已停售」标注并持续留意。"
+    },
+    {
+      "id": "glm-credit-system",
+      "date": "2026-08-15",
+      "expires": "2026-08-15",
+      "kind": "price",
+      "vendor": "智谱 BigModel",
+      "title": "GLM Coding Plan：新版积分制上线，包年 7 折 / 包季 8 折",
+      "body": "新套餐改为按 Token 消耗的积分制（非高峰时段积分 5 折），老用户 Max 可保留原权益。",
+      "verified": true,
+      "source": { "label": "bigmodel.cn 官方文档", "url": "https://docs.bigmodel.cn/cn/coding-plan/overview", "tier": "official" },
+      "note": "官方文档直采，已纳入每日哈希巡检。"
+    },
+    {
+      "id": "volcengine-ark-intro",
+      "date": "2026-08-31",
+      "expires": "2026-11-08",
+      "kind": "promo",
+      "vendor": "火山引擎",
+      "title": "火山引擎方舟：Pro 档首两月 ¥49.9（刊例 ¥200）",
+      "body": "Lite 首购 ¥9.9（刊例 ¥40），适合低成本尝鲜豆包系编码模型；续费恢复刊例价。",
+      "verified": false,
+      "source": { "label": "codingplan.org 聚合，官网计费页为 JS 渲染无法自动核验", "url": "https://codingplan.org/", "tier": "agg" },
+      "note": "官网计费文档实测为 JS 渲染空壳，无法纳入哈希巡检，需人工核对。"
+    }
+  ]
+}

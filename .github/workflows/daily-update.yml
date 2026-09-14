@@ -2,7 +2,7 @@ name: daily-data-update
 
 on:
   schedule:
-    - cron: "0 1 * * *"   # UTC 01:00 = 北京时间每天 09:00
+    - cron: "0 1 * * *"   # UTC 01:00 = 北京时间每天 09:00（注意：cron 固定 UTC，无本地时区）
   workflow_dispatch: {}    # 支持手动触发
 
 permissions:
@@ -23,11 +23,26 @@ jobs:
         with:
           node-version: 20
 
-      - name: 重新生成 models.dev 兜底快照
+      # 每个抓取任务互相独立：任一源失败不影响其余任务，也不中断整个巡检。
+      # 源的成功/失败会写入 data/sourcehealth.json，在站点「信息源健康」里公开可见。
+
+      - name: ① 重新生成 models.dev 兜底快照
+        continue-on-error: true
         run: node scripts/update-snapshot.mjs
 
-      - name: 官方定价页变动检测
+      - name: ② 官方页面变动检测（哈希）
+        continue-on-error: true
         run: node scripts/check-pages.mjs
+
+      - name: ③ 抓取 changelog / 状态页 / 社区订阅源
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}   # GitHub API 未认证仅 60 次/小时
+        run: node scripts/fetch-feeds.mjs
+
+      - name: ④ 价格库与免费模型差异检测
+        continue-on-error: true
+        run: node scripts/diff-prices.mjs
 
       - name: 写入巡检日期
         run: |
@@ -48,12 +63,46 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: 官方页变动时开 issue 提醒人工核价
+      - name: 有变动 / 有源失效时开 issue 提醒人工处理
         if: steps.commit.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          CHANGED=$(node -e 'const a=require("./data/alerts.json");const t=new Date().toISOString().slice(0,10);console.log(a.filter(x=>!x.resolved&&x.detected===t).map(x=>"- ["+x.label+"]("+x.url+") 检测到内容变动（"+x.detected+"），数据待人工核价").join("\n"))')
-          if [ -n "$CHANGED" ]; then
-            gh issue create --repo "$GITHUB_REPOSITORY" --title "官方定价页变动提醒 $(date -u +%F)" --body "$CHANGED"
+          node -e '
+            const fs = require("fs");
+            const read = (p, d) => { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch (e) { return d; } };
+            const today = new Date().toISOString().slice(0, 10);
+            const out = [];
+
+            // 官方页变动 → 待人工核价
+            const alerts = read("data/alerts.json", []).filter(a => !a.resolved && a.detected === today);
+            if (alerts.length) {
+              out.push("### 官方页内容变动，价格待人工核实\n" +
+                alerts.map(a => `- [${a.label}](${a.url}) 检测于 ${a.detected}`).join("\n"));
+            }
+
+            // 机器线索中的官方来源信号 → 待确认后录入 promos.json
+            const sig = read("data/signals.json", { items: [] }).items
+              .filter(s => s.tier !== "community" && s.firstSeen === today);
+            if (sig.length) {
+              out.push("### 自动发现的新线索（官方源，需人工确认后才进价格表）\n" +
+                sig.slice(0, 25).map(s => `- [${s.title}](${s.url})　— ${s.sourceLabel}`).join("\n"));
+            }
+
+            // 连续失败的源 → 需要修监控
+            const hs = read("data/sourcehealth.json", { sources: {} }).sources || {};
+            const dead = Object.values(hs).filter(s => s.ok === false && (s.consecutiveFailures || 0) >= 3);
+            if (dead.length) {
+              out.push("### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/sources.json 中修复或停用\n" +
+                dead.map(s => `- ${s.label}（${s.url}）— 最后错误：${s.error || "未知"}`).join("\n"));
+            }
+            if (out.length) fs.writeFileSync("issue-body.md", out.join("\n\n"), "utf8");
+            else fs.writeFileSync("issue-body.md", "", "utf8");
+          '
+          if [ -s issue-body.md ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "每日巡检待处理 $(date -u +%F)" \
+              --body-file issue-body.md
+          else
+            echo "无待人工处理事项（仅有常规数据提交）"
           fi

@@ -1,0 +1,333 @@
+{
+  "_note": "信息源声明清单（唯一事实来源）。scripts/*.mjs 一律读本文件，不再硬编码 URL。type: feed=RSS/Atom 订阅源 | page=页面内容哈希监控 | api=JSON 接口差异检测。tier: official=官方直采 | realtime=实时数据源 | agg=聚合参考 | community=社区情报（仅进动态区）。enabled=false 表示暂不抓取，reason 说明原因——被禁用的源仍会显示在站点「数据说明」里，不做静默隐藏。",
+  "_keywordNote": "keywords 为整词匹配（英文短词加词边界 + 允许复数），因此请写完整单词如 pricing/deprecation，不要写 pric/deprecat 这类前缀，否则不会命中；中文按包含匹配。留空数组表示不过滤。",
+  "tiers": {
+    "official": { "label": "官方直采", "color": "var(--ok)" },
+    "realtime": { "label": "实时数据源", "color": "var(--accent2)" },
+    "agg": { "label": "聚合参考", "color": "#9db9ff" },
+    "community": { "label": "社区情报", "color": "var(--warn)" }
+  },
+
+  "feeds": [
+    {
+      "id": "gh-changelog",
+      "label": "GitHub Changelog",
+      "url": "https://github.blog/changelog/feed/",
+      "tier": "official",
+      "type": "feed",
+      "keywords": ["copilot", "plan", "pricing", "price", "billing", "credit", "quota", "premium request", "deprecation", "deprecated", "usage"],
+      "maxAgeDays": 30,
+      "enabled": true
+    },
+    {
+      "id": "cursor-changelog",
+      "label": "Cursor Changelog",
+      "url": "https://cursor.com/changelog/rss.xml",
+      "tier": "official",
+      "type": "feed",
+      "keywords": ["pricing", "price", "plan", "billing", "usage", "limit", "quota", "credit"],
+      "maxAgeDays": 45,
+      "enabled": true
+    },
+    {
+      "id": "openai-news",
+      "label": "OpenAI News",
+      "url": "https://openai.com/news/rss.xml",
+      "tier": "official",
+      "type": "feed",
+      "keywords": ["pricing", "subscription", "plan", "credit", "usage limit", "rate limit", "deprecation", "deprecated"],
+      "maxAgeDays": 14,
+      "enabled": true
+    },
+    {
+      "id": "claude-status",
+      "label": "Claude Status",
+      "url": "https://status.claude.com/history.rss",
+      "tier": "official",
+      "type": "feed",
+      "keywords": ["incident", "outage", "degraded", "degradation", "limit", "usage"],
+      "kind": "availability",
+      "maxAgeDays": 14,
+      "enabled": true,
+      "note": "仅服务可用性，用于证伪/证实「降级、停售」类传言，不直接作为促销来源；在站点里单独归类为「可用性事件」，不与促销线索混排"
+    },
+    {
+      "id": "openai-status",
+      "label": "OpenAI Status",
+      "url": "https://status.openai.com/history.rss",
+      "tier": "official",
+      "type": "feed",
+      "keywords": ["incident", "outage", "degraded", "degradation"],
+      "kind": "availability",
+      "maxAgeDays": 14,
+      "enabled": true
+    },
+    {
+      "id": "github-status",
+      "label": "GitHub Status",
+      "url": "https://www.githubstatus.com/history.rss",
+      "tier": "official",
+      "type": "feed",
+      "keywords": ["incident", "outage", "degraded", "degradation", "copilot"],
+      "kind": "availability",
+      "maxAgeDays": 14,
+      "enabled": true
+    },
+    {
+      "id": "linuxdo-feed",
+      "label": "LINUX DO 最新帖",
+      "url": "https://linux.do/latest.rss",
+      "tier": "community",
+      "type": "feed",
+      "keywords": ["claude", "cursor", "copilot", "codex", "glm", "kimi", "优惠", "免费", "额度", "订阅", "涨价", "停售", "封号"],
+      "maxAgeDays": 3,
+      "enabled": true,
+      "note": "国内一手爆料最强来源。本机（中国大陆线路）不可达，仅 GitHub Actions 海外出口可抓；实际抓取成功率由 data/sourcehealth.json 如实暴露"
+    },
+    {
+      "id": "v2ex-feed",
+      "label": "V2EX 最新主题",
+      "url": "https://www.v2ex.com/feed/tab/hot.xml",
+      "tier": "community",
+      "type": "feed",
+      "keywords": ["claude", "cursor", "copilot", "codex", "glm", "kimi", "优惠", "免费", "额度", "订阅", "涨价", "合租"],
+      "maxAgeDays": 3,
+      "enabled": true,
+      "note": "V2EX 按 IP 限流约 120 次/小时；本机不可达，Actions 海外出口实测为准"
+    },
+    {
+      "id": "sspai",
+      "label": "少数派",
+      "url": "https://sspai.com/feed",
+      "tier": "community",
+      "type": "feed",
+      "keywords": ["claude", "cursor", "copilot", "chatgpt", "订阅", "优惠", "免费额度", "涨价"],
+      "maxAgeDays": 7,
+      "enabled": true
+    },
+    {
+      "id": "ithome",
+      "label": "IT之家",
+      "url": "https://www.ithome.com/rss/",
+      "tier": "community",
+      "type": "feed",
+      "keywords": ["订阅", "涨价", "降价", "免费额度", "优惠", "套餐", "价格调整"],
+      "maxAgeDays": 3,
+      "enabled": true
+    }
+  ],
+
+  "pages": [
+    {
+      "id": "claude",
+      "label": "Claude 官方定价页",
+      "url": "https://claude.com/pricing",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    },
+    {
+      "id": "copilot",
+      "label": "GitHub Copilot 计划文档",
+      "url": "https://docs.github.com/en/copilot/get-started/plans",
+      "tier": "official",
+      "type": "page",
+      "enabled": true,
+      "note": "原监控页 github.com/features/copilot/plans 在 Actions/本机均连接失败，2026-09-14 换用服务端渲染的官方文档页（实测 200 且含价格文本）"
+    },
+    {
+      "id": "cursor",
+      "label": "Cursor 官方定价页",
+      "url": "https://cursor.com/pricing",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    },
+    {
+      "id": "glm",
+      "label": "GLM Coding Plan 官方文档",
+      "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    },
+    {
+      "id": "kimi",
+      "label": "Kimi 开放平台定价文档",
+      "url": "https://platform.kimi.com/docs/pricing",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    },
+    {
+      "id": "trae",
+      "label": "Trae 定价页",
+      "url": "https://www.trae.ai/pricing",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    },
+    {
+      "id": "minimax",
+      "label": "MiniMax 平台定价文档",
+      "url": "https://platform.minimaxi.com/document/price",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    },
+    {
+      "id": "aliyun-free-quota",
+      "label": "阿里云百炼免费额度说明",
+      "url": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    },
+    {
+      "id": "gh-education",
+      "label": "GitHub 学生开发包",
+      "url": "https://education.github.com/pack",
+      "tier": "official",
+      "type": "page",
+      "enabled": true,
+      "note": "学生包权益变动缓慢，哈希变化多数为营销位轮换，人工复核即可"
+    },
+    {
+      "id": "aliyun-university",
+      "label": "阿里云云工开物（学生权益）",
+      "url": "https://university.aliyun.com/",
+      "tier": "official",
+      "type": "page",
+      "enabled": true
+    }
+  ],
+
+  "apis": [
+    {
+      "id": "modelsdev",
+      "label": "models.dev 模型价格库",
+      "url": "https://models.dev/api.json",
+      "tier": "realtime",
+      "type": "api",
+      "pipeline": "diff",
+      "enabled": true,
+      "note": "价格差异检测 + 兜底快照生成（scripts/update-snapshot.mjs 同源）"
+    },
+    {
+      "id": "openrouter",
+      "label": "OpenRouter 模型表（含 :free 免费模型）",
+      "url": "https://openrouter.ai/api/v1/models",
+      "tier": "realtime",
+      "type": "api",
+      "pipeline": "diff",
+      "enabled": true,
+      "note": "零鉴权，可枚举 :free 后缀免费模型 → 白嫖板块的自动数据源"
+    },
+    {
+      "id": "litellm",
+      "label": "LiteLLM 价格表（交叉校验）",
+      "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+      "tier": "realtime",
+      "type": "api",
+      "pipeline": "diff",
+      "enabled": true,
+      "note": "2.3 MB 量级，仅提取关注模型的价格做交叉校验，不整份落盘"
+    },
+    {
+      "id": "hn-algolia",
+      "label": "Hacker News（Algolia 搜索）",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?query=%22coding%20plan%22&tags=story&hitsPerPage=30",
+      "tier": "community",
+      "type": "api",
+      "pipeline": "signals",
+      "parser": "hn-algolia",
+      "keywords": ["claude", "cursor", "copilot", "codex", "coding plan", "subscription", "pricing", "rate limit", "usage limit"],
+      "enabled": true,
+      "note": "低产出的补充源：Algolia 的 query 不支持 OR 语法（实测返回 0 条），故用精确短语 \"coding plan\"。宁缺毋滥——没有相关讨论时它就应当没有输出。"
+    },
+    {
+      "id": "freebie-repos",
+      "label": "免费 API 汇总仓库（README 变更流）",
+      "url": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+      "tier": "community",
+      "type": "api",
+      "pipeline": "signals",
+      "parser": "gh-commits",
+      "enabled": true,
+      "note": "用 commit 变更当「免费额度变动」事件流；CC0/MIT 许可仓库可安全引用。未认证 60 次/小时，Actions 内用 GITHUB_TOKEN 提升额度"
+    }
+  ],
+
+  "disabled": [
+    {
+      "id": "openai-pricing",
+      "label": "OpenAI ChatGPT 定价页",
+      "url": "https://openai.com/chatgpt/pricing/",
+      "reason": "2026-09-14 实测：对非浏览器请求返回 403 Cloudflare 验证页（此前 301 空响应即由此而来），无法自动抓取。原监控点已失效，改用 OpenAI News RSS 捕捉公告；价格数字改为人工核对。",
+      "tier": "official"
+    },
+    {
+      "id": "qoder-pricing",
+      "label": "Qoder 定价页",
+      "url": "https://qoder.com/pricing",
+      "reason": "实测仅 8.5 KB JS 渲染空壳，正文不含价格文本，哈希对比恒为「无变化」= 假巡检",
+      "tier": "official"
+    },
+    {
+      "id": "codebuddy-pricing",
+      "label": "腾讯 CodeBuddy 定价页",
+      "url": "https://www.codebuddy.cn/pricing",
+      "reason": "实测 6.9 KB 空壳（copilot.tencent.com/pricing 302 至此），无价格文本，不可哈希监控",
+      "tier": "official"
+    },
+    {
+      "id": "volcengine-ark",
+      "label": "火山引擎方舟计费文档",
+      "url": "https://www.volcengine.com/docs/82379",
+      "reason": "实测 11 KB JS 渲染空壳，无价格文本，不可哈希监控",
+      "tier": "official"
+    },
+    {
+      "id": "devin-windsurf",
+      "label": "Devin / Windsurf 定价页",
+      "url": "https://devin.ai/pricing",
+      "reason": "实测对无浏览器特征的请求稳定返回 429 机器人防护（带浏览器 UA 亦然），且 Windsurf 定价已并入 Devin。仅人工核对",
+      "tier": "official"
+    },
+    {
+      "id": "xiaohongshu",
+      "label": "小红书",
+      "type": "feed",
+      "reason": "抓取必须携带登录 cookie、强反爬、路由高频失效，合规与稳定性均不可接受",
+      "tier": "community"
+    },
+    {
+      "id": "wechat-mp",
+      "label": "微信公众号",
+      "type": "feed",
+      "reason": "无官方 RSS，现有方案均为第三方中转（易断、灰色），不作主源",
+      "tier": "community"
+    },
+    {
+      "id": "x-twitter",
+      "label": "X / Twitter",
+      "type": "feed",
+      "reason": "RSSHub 路由需三组鉴权 token，官方实例已关闭该路由，Nitter 已大面积失效",
+      "tier": "community"
+    },
+    {
+      "id": "reverse-proxy-apis",
+      "label": "逆向 / 公益 / 中转站（free-one-api、chatanywhere 等）",
+      "type": "api",
+      "reason": "违反上游 ToS、存在密钥与封号风险，且存活期不可预期（popjane/free_chatgpt_api、kimi-free-api 均已 404 消失）。本站不收录、不接入。",
+      "tier": "community"
+    },
+    {
+      "id": "cn-deal-aggregators",
+      "label": "中文羊毛聚合站（福利吧 / hostloc / 什么值得买首页）",
+      "type": "feed",
+      "reason": "实测主动断连 / 需邀请码 / 首页无 AI 订阅相关内容，噪声比极差，仅适合人工巡览",
+      "tier": "community"
+    }
+  ]
+}

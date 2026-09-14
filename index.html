@@ -2,11 +2,14 @@
 <html lang="zh-CN">
 <!--
   CodingPlan Radar — AI 编程订阅计划对比（纯静态，零依赖）
-  页面区块自上而下：header 导航 → hero 统计 → 市场动态横幅(#page-alerts 为自动巡检产物)
+  页面区块自上而下：header 导航 → hero 统计 → 市场动态横幅(#hero-promos / #page-alerts 为数据产物)
   → #compare 对比表 → #tokens Token 实时价格榜 → #calc 成本计算器 → #picks 编辑推荐
-  → #detail 平台详情卡片 → #ide IDE 订阅榜 → #dynamics 市场动态+变更记录
-  → #repos 同类 GitHub 项目 → #faq → #policy 数据说明 → footer
+  → #detail 平台详情卡片 → #ide IDE 订阅榜 → #freebies 白嫖/免费额度
+  → #dynamics 市场动态+线索队列+源健康+变更记录 → #repos 同类 GitHub 项目 → #faq → #policy → footer
   数据文件：js/data.js（人工维护）+ js/snapshot.js（Actions 每日生成）
+  运行时数据：data/promos.json（人工确认的促销停售）、data/freebies.json（白嫖/免费额度）、
+             data/signals.json（机器发现的线索）、data/sourcehealth.json（每源抓取成败）、
+             data/alerts.json（官方页变动待核实）、data/meta.json（巡检日期）
 -->
 <head>
 <meta charset="UTF-8">
@@ -26,6 +29,7 @@
       <a href="#calc">成本计算器</a>
       <a href="#detail">平台详情</a>
       <a href="#ide">IDE 订阅榜</a>
+      <a href="#freebies">白嫖额度</a>
       <a href="#dynamics">市场动态</a>
       <a href="#repos">同类项目</a>
       <a href="#faq">FAQ</a>
@@ -42,22 +46,14 @@
       <div class="stat"><b id="st-plat">11</b><small>对比平台</small></div>
       <div class="stat"><b id="st-tier">33</b><small>付费档位</small></div>
       <div class="stat"><b id="st-models">60+</b><small>实时模型价格</small></div>
-      <div class="stat"><b>每周</b><small>例行核对频率</small></div>
+      <div class="stat"><b id="st-free">15</b><small>免费/白嫖额度</small></div>
+      <div class="stat"><b>每天 09:00</b><small>自动巡检</small></div>
     </div>
   </div>
 </div>
 
 <div class="wrap">
-  <div class="alerts">
-    <div class="alert warn"><span class="ico">🔥</span><div>
-      <b>OpenCode Go：V4.1 Flash 四倍额度活动延期至 9 月 20 日</b>
-      <small>来源：<a href="https://www.bilibili.com/video/BV1xtYR6EE72/" target="_blank">B站《9月12日 codingplan 订阅套餐推荐》</a>（2026-09-12）</small>
-    </div></div>
-    <div class="alert bad"><span class="ico">⛔</span><div>
-      <b>R4Coder 因算力不足已关闭订阅渠道，暂不推荐新购</b>
-      <small>已订阅用户若觉得速度慢可申请退款 · 来源：同上视频（2026-09-12）</small>
-    </div></div>
-  </div>
+  <div class="alerts" id="hero-promos"></div>
   <div class="alerts" id="page-alerts" style="margin-top:-14px"></div>
 </div>
 
@@ -225,38 +221,32 @@
   </div>
 </section>
 
+<section id="freebies" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>🎁 白嫖 / 免费额度 <i>—</i> 有公开出处的正规免费额度</h2>
+      <p>只收录官方免费档、学生包、免费 API 额度与限时试用；<b>不收录逆向接口、共享账号、API 中转站</b>（原因见页面底部「数据说明」）。额度与规则随时可能调整，领取前请以官方页面为准</p>
+    </div>
+    <div id="freebies-retired"></div>
+    <div class="free-grid" id="freebies-grid"><p style="color:var(--dim)">加载中…</p></div>
+    <p style="font-size:12px;color:var(--dim);margin-top:12px">* 「证据」栏标注该条目的核实强度：<b>官方页面 / 官方文档</b> ＝ 本次实测可访问且正文直载；<b>社区转述</b> ＝ 权威度较低，需自行复核。免费模型清单（OpenRouter :free）与模型刊例价由每日自动管道追踪变动。</p>
+  </div>
+</section>
+
 <section id="dynamics">
   <div class="wrap">
     <div class="sec-head">
       <h2>📡 市场动态 <i>—</i> 促销与停售追踪</h2>
-      <p>参考社区每日播报（如 B站 UP主「暗杰巫」的套餐推荐系列）与官方公告交叉核实</p>
+      <p>下方条目均为<b>人工确认</b>后录入；机器发现的线索单独列在「自动发现的线索」区，未经确认不会写进价格表。来源分级：官方直采（绿）＞ 实时数据源（青）＞ 聚合参考（蓝）＞ 社区情报（黄）</p>
     </div>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="date">2026-09-12</div>
-        <h4>OpenCode：V4.1 Flash 四倍额度活动延期一周</h4>
-        <p>活动延长至 2026-09-20，期间订阅可享四倍额度，性价比较高。</p>
-        <div class="from">来源：<a href="https://www.bilibili.com/video/BV1xtYR6EE72/" target="_blank">B站《[9月12日]codingplan订阅套餐推荐》</a></div>
-      </div>
-      <div class="tl-item">
-        <div class="date">2026-09-12</div>
-        <h4>R4Coder：因算力不足关闭订阅渠道</h4>
-        <p>已停止新订阅；官方提示已订阅用户若觉得模型速度慢可申请退款。本站对比表中已标注「停售」。</p>
-        <div class="from">来源：同上视频</div>
-      </div>
-      <div class="tl-item">
-        <div class="date">2026-08-15 截止</div>
-        <h4>智谱 GLM Coding Plan：新版积分制上线，包年 7 折 / 包季 8 折</h4>
-        <p>新套餐改为按 Token 消耗的积分制（非高峰时段积分 5 折），老用户 Max 可保留原权益。</p>
-        <div class="from">来源：<a href="https://docs.bigmodel.cn/cn/coding-plan/overview" target="_blank">bigmodel.cn 官方文档</a> / IT之家报道</div>
-      </div>
-      <div class="tl-item">
-        <div class="date">2026-11-08 截止</div>
-        <h4>火山引擎方舟：Pro 档首两月 ¥49.9（刊例 ¥200）</h4>
-        <p>Lite 首购 ¥9.9（刊例 ¥40），适合低成本尝鲜豆包系编码模型。</p>
-        <div class="from">来源：codingplan.org 聚合（2026-08-31），建议下单前以官网确认</div>
-      </div>
-    </div>
+    <div class="timeline" id="promo-timeline"><p style="color:var(--dim)">加载中…</p></div>
+
+    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">🔎 自动发现的线索（机器产出，未经人工确认）</h2></div>
+    <div class="policy" id="signal-queue"></div>
+
+    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">🩺 信息源健康</h2></div>
+    <div id="source-health"></div>
+
     <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">📝 本站变更记录</h2></div>
     <div id="changelog"></div>
   </div>
@@ -285,13 +275,13 @@
       <div class="ans">会。AI 订阅价格与额度调整非常频繁（如 GLM 2026 年内就经历了次数制 → 积分制整体改版）。本站价格仅供决策参考，<b>付款前请务必以平台官网为准</b>；每个卡片底部附有来源链接与采集日期。</div>
     </details>
     <details><summary>数据多久更新一次？怎么保证真实性？</summary>
-      <div class="ans">① <b>每周一</b>例行核对官方定价页，更新页面顶部日期；② <b>48 小时内</b>插播促销、涨价、停售等重大变动（线索来自社区每日播报视频、官方公告）；③ <b>模型 API 价格</b>每次打开页面实时拉取 models.dev（缓存 24 小时）；④ 来源分级：官方直采（绿标）&gt; 聚合参考（蓝标）&gt; 社区情报（仅进动态区）。</div>
+      <div class="ans">① <b>每天 09:00</b>（北京时间）GitHub Actions 自动巡检：重生成 models.dev 兜底快照、对官方定价页做内容哈希变动检测、抓取官方 changelog / 状态页与公开社区订阅源、对比价格库与 OpenRouter 免费模型清单；② 官方页或价格库有变动，<b>自动挂「待核实」并开 issue</b>，人工核价后才改表；③ <b>模型 API 价格</b>每次打开页面实时拉取 models.dev（缓存 24 小时）；④ 来源分级：官方直采（绿标）&gt; 实时数据源（青标）&gt; 聚合参考（蓝标）&gt; 社区情报（黄标，仅作线索）。<b>每个源的抓取成败都公开在「市场动态 → 信息源健康」</b>，连续失败会标注为已失效——不做假巡检。</div>
     </details>
     <details><summary>按量计费和订阅到底怎么选？</summary>
       <div class="ans">用上面的 Token 实时价格榜估算：轻度用户（每月折算 API 费 &lt; $10）选按量计费更便宜，如 DeepSeek V4 Flash（输出 $0.6/M）；中重度用户（每天数小时 Agent）订阅几乎必赢——Claude Pro 倍率 63.6× 意味着同等 API 用量要花 $1,272。处于中间地带就选 $10–20 档订阅 + 超出按量的混合模式（Cursor / Copilot 均支持）。</div>
     </details>
     <details><summary>本站有推广链接吗？</summary>
-      <div class="ans">没有。站内所有外链均为官方页面或开源项目（GitHub / B站 / 新闻），不含任何 referral / 返佣参数，推荐结论不受商业利益影响。</div>
+      <div class="ans">没有。站内所有外链均为官方页面、官方文档或开源项目（GitHub 等），不含任何 referral / 返佣参数，推荐结论不受商业利益影响。</div>
     </details>
   </div>
 </section>
@@ -302,18 +292,36 @@
     <div class="policy">
       <div class="pol"><div class="ico">🔎</div><h4>来源分级</h4>
         <ul>
-          <li><b style="color:var(--ok)">官方直采</b>：claude.com、openai.com、github.com、cursor.com、bigmodel.cn 定价页当日抓取</li>
-          <li><b style="color:var(--accent2)">实时数据源</b>：models.dev API（GitHub: sst/models.dev）+ litellm 价格表备查</li>
-          <li><b style="color:#9db9ff">聚合参考</b>：codingplan.org（2026-08-31 快照）等，逐条标注</li>
-          <li><b style="color:var(--warn)">社区情报</b>：B站每日播报视频，仅用于「市场动态」，不直接进入价格表</li>
+          <li><b style="color:var(--ok)">官方直采</b>：claude.com、docs.github.com、cursor.com、bigmodel.cn、platform.kimi.com 等官方定价页/文档（每日哈希巡检）</li>
+          <li><b style="color:var(--accent2)">实时数据源</b>：models.dev API（GitHub: sst/models.dev）、OpenRouter 模型表、litellm 价格表（交叉校验）</li>
+          <li><b style="color:#9db9ff">聚合参考</b>：codingplan.org 等第三方对比站，逐条标注</li>
+          <li><b style="color:var(--warn)">社区情报</b>：LINUX DO / V2EX / Hacker News 等公开信息源，<b>仅作线索</b>，固定黄色标注，不进入价格表</li>
         </ul>
       </div>
       <div class="pol"><div class="ico">🗓️</div><h4>更新频率</h4>
         <ul>
-          <li><b>每天 09:00</b>：GitHub Actions 自动巡检——重新抓取 models.dev 生成兜底快照，并对 5 个官方定价页做哈希变动检测</li>
-          <li><b>官方页有变动</b>：自动标注「待核实」横幅并开 issue，48 小时内人工核价</li>
+          <li><b>每天 09:00</b>：GitHub Actions 自动巡检——重生成 models.dev 兜底快照、对官方定价页做哈希变动检测、抓取官方 changelog / 状态页 / 社区订阅源、对比价格库与免费模型清单</li>
+          <li><b>官方页有变动</b>：自动挂「待核实」横幅并开 issue，人工核价后才改表</li>
           <li><b>每次打开</b>：Token 价格榜实时拉取 models.dev（本地缓存 24h）</li>
-          <li><b>随时</b>：促销、涨价、停售等重大变动（社区播报线索）人工插播</li>
+          <li><b>随时</b>：促销、涨价、停售等重大变动，人工确认后录入「市场动态」</li>
+        </ul>
+      </div>
+      <div class="pol"><div class="ico">🚫</div><h4>不收录的信息源</h4>
+        <ul>
+          <li><b>逆向 / 公益 / API 中转站</b>（free-one-api、chatanywhere 等）：违反上游 ToS，存在密钥泄露与封号风险，且项目随时消失</li>
+          <li><b>共享账号 / 合租</b>：涉及账号安全与平台条款风险</li>
+          <li><b>需登录 cookie 抓取的渠道</b>（小红书、即刻、公众号中转）：合规与稳定性均不可接受</li>
+          <li><b>对机器人返回验证页的页面</b>：如 OpenAI 定价页实测 403，不假装在监控</li>
+        </ul>
+      </div>
+      <div class="pol"><div class="ico">🩺</div><h4>巡检诚实性</h4>
+        <ul>
+          <li>每个信息源的抓取成败都记录在 <b>「市场动态 → 信息源健康」</b>，连续 3 天失败会标注为<b>已失效</b></li>
+          <li>失败不做静默跳过：早期版本曾因页面改版导致 2 个监控点长期失效而无人知晓，现已修复</li>
+          <li>社区源（LINUX DO / V2EX）在中国大陆线路不可达，仅 Actions 海外出口可抓，成败同样如实呈现</li>
+          <li>JS 渲染的空壳页面（Qoder / CodeBuddy / 火山方舟计费页）明确标注为不可自动监控，不做假巡检</li>
+          <li><b>变动需二次确认</b>：页面内容变了不算数，要下一次巡检仍是同一个新值才告警（代价是真实变动晚一天），避免动态渲染页面天天误报</li>
+          <li><b>不稳定页面自动停用预警</b>：如 cursor.com/pricing 实测两次抓取正文长度都不同（渲染变体跳变），会被标记为「需人工核对」并停止自动告警</li>
         </ul>
       </div>
       <div class="pol"><div class="ico">⚖️</div><h4>免责声明</h4>
@@ -322,6 +330,7 @@
           <li>「额度倍率」为社区估算口径，不代表官方承诺价值</li>
           <li>「编辑推荐」为基于公开数据的主观参考，非广告</li>
           <li>聚合来源数据如与官方冲突，以官方为准并欢迎指正</li>
+          <li>免费额度条目仅供参考，领取条件与规则以官方为准</li>
         </ul>
       </div>
     </div>
@@ -331,7 +340,7 @@
 <footer>
   <div class="wrap">
     <div>CodingPlan Radar · AI 编程订阅计划对比 · 数据更新 2026-09-13</div>
-    <div>官方来源：claude.com · openai.com · github.com · cursor.com · bigmodel.cn　实时源：models.dev（GitHub）　方法论：awesome-coding-plan（GitHub）</div>
+    <div>官方来源：claude.com · docs.github.com · cursor.com · docs.bigmodel.cn · platform.kimi.com　实时源：models.dev / OpenRouter　方法论：awesome-coding-plan（GitHub）</div>
   </div>
   <div class="wrap disclaimer">本站为静态信息聚合页面，与所列平台无商业关系；所有商标归各自所有者。</div>
 </footer>

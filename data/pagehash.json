@@ -1,7 +1,75 @@
 {
- "claude": "a5038e7fb141637f",
- "openai": "96d5d0fda9643c6c",
- "cursor": "c0d3ac6d79815b8b",
- "glm": "bab3a2f22fd532c4",
- "copilot": "856dc515d0aaf4ef"
+ "claude": {
+  "hash": "1a0e38e65194",
+  "seen": [
+   "1a0e38e65194"
+  ],
+  "flaps": 0
+ },
+ "copilot": {
+  "hash": "a9a0523c57c3",
+  "seen": [
+   "a9a0523c57c3"
+  ],
+  "flaps": 0
+ },
+ "cursor": {
+  "unstable": true,
+  "revertCount": 2,
+  "note": "2026-09-14 实测：cursor.com/pricing 连续两次抓取的正文长度不同（7506 / 8114 字符），内容在多个渲染变体间跳变，哈希对比会产生假变动。已判定为不可稳定监控，只记录不预警，价格需人工核对。",
+  "seen": [
+   "91adaabc1fb2",
+   "f0accd8e1d52"
+  ],
+  "pending": "f0accd8e1d52",
+  "pendingSince": "2026-09-14"
+ },
+ "glm": {
+  "hash": "035b26d4b76",
+  "seen": [
+   "035b26d4b76"
+  ],
+  "flaps": 0
+ },
+ "kimi": {
+  "hash": "d596a35940f",
+  "seen": [
+   "d596a35940f"
+  ],
+  "flaps": 0
+ },
+ "trae": {
+  "hash": "878faef474a",
+  "seen": [
+   "878faef474a"
+  ],
+  "flaps": 0
+ },
+ "minimax": {
+  "hash": "99a05bfa5df",
+  "seen": [
+   "99a05bfa5df"
+  ],
+  "flaps": 0
+ },
+ "aliyun-free-quota": {
+  "hash": "d08c06691ad5",
+  "seen": [
+   "d08c06691ad5"
+  ],
+  "flaps": 0
+ },
+ "gh-education": {
+  "hash": "6b1ecc5c7e66",
+  "seen": [
+   "6b1ecc5c7e66"
+  ]
+ },
+ "aliyun-university": {
+  "hash": "f9f610c22572",
+  "seen": [
+   "f9f610c22572"
+  ],
+  "flaps": 0
+ }
 }

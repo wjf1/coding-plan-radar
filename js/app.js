@@ -10,6 +10,9 @@
  *        本地缓存(24h) → models.dev 在线拉取 → 内置快照降级
  *   6. 成本计算器        —— renderCalc()（API 价 × 用量 vs 订阅额度）
  *   7. 每日巡检状态      —— loadAutoMeta() / loadPageAlerts()（Actions 产物）
+ *   8. 信息源与白嫖板块  —— renderPromos() / renderFreebies() / renderSignals() / renderSourceHealth()
+ *        数据分别来自 data/promos.json（人工确认的促销停售）、data/freebies.json（白嫖/免费额度）、
+ *        data/signals.json（机器发现的线索）、data/sourcehealth.json（每源抓取成败，失效会如实标注）
  * 数据均来自 js/data.js 与 js/snapshot.js；页面结构见 index.html。
  * ============================================================ */
 const MODELS_DEV_API = "https://models.dev/api.json";
@@ -286,27 +289,171 @@ function bind(){
   bindCalc();
 }
 
-/* ================= 每日自动巡检状态 ================= */
+/* ================= 每日自动巡检状态 · 信息源健康 ================= */
+// 来源分级标签：官方直采 > 实时数据源 > 聚合参考 > 社区情报（仅作线索）
+const TIER_MAP = {
+  official: ["src-official", "官方直采"],
+  realtime: ["src-realtime", "实时数据源"],
+  agg: ["src-agg", "聚合参考"],
+  community: ["src-community", "社区情报"],
+};
+function tierBadge(tier){
+  const [cls,label]=TIER_MAP[tier]||TIER_MAP.agg;
+  return `<span class="srcbadge ${cls}">${label}</span>`;
+}
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fetchJSON = async p => (await fetch(p,{cache:"no-cache"})).json();
+
 async function loadAutoMeta(){
   const el=document.getElementById("auto-pill");
   if(!el) return;
   try{
-    const m=await (await fetch("data/meta.json",{cache:"no-cache"})).json();
+    const m=await fetchJSON("data/meta.json");
     if(m.autoCheck) el.textContent="自动巡检："+m.autoCheck;
   }catch(e){ el.textContent="自动巡检：待首次运行"; }
 }
+
+// 页面变动提醒（alerts.json）：官方页有变动 → 人工核价
 async function loadPageAlerts(){
   try{
-    const list=await (await fetch("data/alerts.json",{cache:"no-cache"})).json();
+    const list=await fetchJSON("data/alerts.json");
     const open=list.filter(a=>!a.resolved);
     const box=document.getElementById("page-alerts");
     if(!open.length || !box) return;
     box.innerHTML=open.map(a=>`
       <div class="alert warn"><span class="ico">🔎</span><div>
-        <b>${a.label} 内容有变动，价格待人工核实</b>
-        <small>自动巡检发现于 ${a.detected} · 原始页面：<a href="${a.url}" target="_blank">${a.url}</a></small>
+        <b>${esc(a.label)} 内容有变动，价格待人工核实</b>
+        <small>${tierBadge(a.tier||"official")} 自动巡检发现于 ${esc(a.detected)} · 原始页面：<a href="${esc(a.url)}" target="_blank">${esc(a.url)}</a></small>
       </div></div>`).join("");
   }catch(e){/* alerts 数据不存在时静默 */}
+}
+
+/* ================= 促销 / 停售（data/promos.json，人工确认） ================= */
+async function renderPromos(){
+  const box=document.getElementById("promo-timeline");
+  const hero=document.getElementById("hero-promos");
+  let j;
+  try{ j=await fetchJSON("data/promos.json"); }
+  catch(e){
+    if(box) box.innerHTML='<p style="color:var(--dim)">动态数据加载失败（data/promos.json）</p>';
+    return;
+  }
+  const items=(j.items||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const stOf=k=>(j.statusMap||{})[k]||{label:k,cls:""};
+
+  if(hero){
+    const top=items.filter(p=>p.kind==="promo"||p.kind==="delist").slice(0,2);
+    hero.innerHTML=top.map(p=>`
+      <div class="alert ${p.kind==="delist"?"bad":"warn"}"><span class="ico">${p.kind==="delist"?"⛔":"🔥"}</span><div>
+        <b>${esc(p.title)}</b>
+        <small>${p.expires?`${p.kind==="promo"?"活动截止":"生效"} ${esc(p.expires)} · `:""}来源：${p.source&&p.source.url?`<a href="${esc(p.source.url)}" target="_blank">${esc(p.source.label)}</a>`:esc(p.source&&p.source.label||"待补")} · ${esc(p.date)}${p.verified?"":' · <span class="vflag">⚠ 待重新核实</span>'}</small>
+      </div></div>`).join("");
+  }
+
+  if(!box) return;
+  if(!items.length){ box.innerHTML='<p style="color:var(--dim)">暂无记录</p>'; return; }
+  box.innerHTML=items.map(p=>{
+    const st=stOf(p.kind);
+    const src=p.source&&p.source.url
+      ? `<a href="${esc(p.source.url)}" target="_blank">${esc(p.source.label)}</a>`
+      : esc(p.source&&p.source.label||"来源待补");
+    return `<div class="tl-item">
+      <div class="date">${esc(p.date)}${p.expires?` · ${p.kind==="promo"?"截止":"生效"} ${esc(p.expires)}`:""}</div>
+      <h4>${esc(p.title)}</h4>
+      <p>${esc(p.body)}</p>
+      <div class="src-line">${tierBadge(p.source&&p.source.tier)}<span class="badge b-chip">${esc(st.label)}</span>${p.verified?"":'<span class="vflag">⚠ 待重新核实</span>'}<span>来源：${src}</span></div>
+      ${p.note?`<div class="src-line">${esc(p.note)}</div>`:""}
+    </div>`;
+  }).join("");
+}
+
+/* ================= 白嫖 / 免费额度（data/freebies.json，人工确认） ================= */
+async function renderFreebies(){
+  const box=document.getElementById("freebies-grid");
+  if(!box) return;
+  try{
+    const j=await fetchJSON("data/freebies.json");
+    const items=j.items||[];
+    const cnt=document.getElementById("st-free");
+    if(cnt) cnt.textContent=items.length;
+    box.innerHTML=items.map(f=>`
+      <div class="free">
+        <div class="fh"><h3>${esc(f.name)}</h3><span class="badge b-chip">${esc(f.vendor)}</span>${tierBadge(f.tier)}</div>
+        <div class="offer">${esc(f.offer)}</div>
+        <div class="kv"><b>额度：</b>${esc(f.limit||"—")}</div>
+        <div class="kv"><b>门槛：</b>${esc(f.requires||"—")}</div>
+        ${f.note?`<div class="kv">${esc(f.note)}</div>`:""}
+        <div class="foot"><span>证据：${esc(f.evidence||"—")} · 核对 ${esc(j.checked||"—")}</span><a href="${esc(f.source)}" target="_blank">查看来源 ↗</a></div>
+      </div>`).join("");
+    const retBox=document.getElementById("freebies-retired");
+    const ret=j.retired||[];
+    if(retBox) retBox.innerHTML=ret.map(r=>`
+      <div class="alert bad"><span class="ico">⛔</span><div>
+        <b>${esc(r.name)} 已失效，不要再照着旧教程折腾</b>
+        <small>${esc(r.reason)}${r.source?` · <a href="${esc(r.source)}" target="_blank">官方说明 ↗</a>`:""}</small>
+      </div></div>`).join("");
+  }catch(e){
+    box.innerHTML='<p style="color:var(--dim)">白嫖数据加载失败（data/freebies.json）</p>';
+  }
+}
+
+/* ================= 自动发现的线索队列（data/signals.json，机器产出） ================= */
+function sigRow(s){
+  return `<div class="sig">
+    <div class="sh">${tierBadge(s.tier)}<a href="${esc(s.url)}" target="_blank">${esc(s.title)}</a></div>
+    <div class="sd">${esc(s.sourceLabel)} · 本站发现于 ${esc(s.firstSeen)}${s.date?` · 原文时间 ${esc(String(s.date).slice(0,16))}`:""}</div>
+    ${s.excerpt?`<div class="sd">${esc(s.excerpt)}</div>`:""}
+  </div>`;
+}
+async function renderSignals(){
+  const box=document.getElementById("signal-queue");
+  if(!box) return;
+  let j;
+  try{ j=await fetchJSON("data/signals.json"); }
+  catch(e){ box.innerHTML='<div class="pol"><p style="color:var(--dim)">线索数据尚未生成（data/signals.json），首次自动巡检后出现。</p></div>'; return; }
+  const items=j.items||[];
+  const promo=items.filter(i=>i.tier!=="community" && i.kind!=="availability").slice(0,12);
+  const avail=items.filter(i=>i.kind==="availability").slice(0,8);
+  const comm=items.filter(i=>i.tier==="community").slice(0,8);
+  box.innerHTML=`
+    <div class="pol" style="grid-column:1/-1">
+      <div class="ico">🔎</div><h4>促销 / 价格 / 停售相关线索（${promo.length}）</h4>
+      <p style="margin-bottom:6px">来自官方 changelog、价格库与免费模型清单的机器线索。<b>机器只负责发现，未经人工确认不会写进价格表。</b></p>
+      ${promo.length?promo.map(sigRow).join(""):'<p style="color:var(--dim);font-size:13px">暂无线索</p>'}
+    </div>
+    <div class="pol" style="grid-column:1/-1">
+      <div class="ico">🩺</div><h4>官方状态页事件（${avail.length}）</h4>
+      <p style="margin-bottom:6px">仅服务可用性事件，用来<b>证伪或证实「降级 / 停售」类传言</b>；与促销无关，故单独列出不混排。</p>
+      ${avail.length?avail.map(sigRow).join(""):'<p style="color:var(--dim);font-size:13px">暂无事件</p>'}
+    </div>
+    <div class="pol" style="grid-column:1/-1">
+      <div class="ico">💬</div><h4>社区情报线索（${comm.length}）</h4>
+      <p style="margin-bottom:6px">黄色标注，<b>仅作线索提示，不作为数据结论</b>。若长期为空，请查看下方「信息源健康」，那里会如实显示哪个源没抓到东西。</p>
+      ${comm.length?comm.map(sigRow).join(""):'<p style="color:var(--dim);font-size:13px">暂无线索</p>'}
+    </div>`;
+}
+
+/* ================= 信息源健康（data/sourcehealth.json，机器产出） ================= */
+async function renderSourceHealth(){
+  const box=document.getElementById("source-health");
+  if(!box) return;
+  try{
+    const j=await fetchJSON("data/sourcehealth.json");
+    const list=Object.values(j.sources||{});
+    if(!list.length){ box.innerHTML=""; return; }
+    const chips=list.map(s=>{
+      const dead=s.ok===false&&(s.consecutiveFailures||0)>=3;
+      const cls=dead?"bad":(s.unstable||s.ok===false)?"warn":"";
+      const extra=dead?"（已失效）":s.unstable?"（需人工核对）":"";
+      const tip=dead?`连续 ${s.consecutiveFailures} 天抓取失败${s.error?`（${s.error}）`:""}`
+        :s.unstable?"页面内容在多个渲染变体间跳变，哈希对比不可靠，已暂停自动预警，价格需人工核对"
+        :s.ok===false?`上次抓取失败${s.error?`（${s.error}）`:""}`
+        :`最后成功 ${s.lastOk||"—"}${s.detail?` · ${s.detail}`:""}`;
+      return `<span class="h-item ${dead?"dead":""}" title="${esc(tip)}"><span class="h-dot ${cls}"></span>${esc(s.label)}${extra}</span>`;
+    }).join("");
+    box.innerHTML=`<div class="health">${chips}</div>
+      <p style="font-size:12px;color:var(--dim);margin-top:8px">绿点＝最近一次抓取成功；黄点＝失败未达阈值，或该页内容不稳定（已暂停自动预警、需人工核对）；红点＝连续 3 天失败，判定为<b>已失效</b>——站点会如实标注，不再假装该源在正常工作。巡检时间：${esc(j.updatedAt||"—")}。部分社区源（LINUX DO / V2EX）在中国大陆线路不可达，仅 GitHub Actions 海外出口可抓，其成败同样在此如实呈现。</p>`;
+  }catch(e){ box.innerHTML=""; }
 }
 
 /* ================= init ================= */
@@ -314,3 +461,4 @@ document.getElementById("st-plat").textContent=PLAN_DATA.filter(d=>d.status!=="b
 document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
 loadAutoMeta();
 bind(); renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); loadModels(); loadPageAlerts();
+renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();

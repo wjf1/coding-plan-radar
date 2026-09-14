@@ -16,42 +16,72 @@
 | 💰 Token 实时价格榜 | 浏览器直连 [models.dev](https://github.com/sst/models.dev) 拉取 200+ 款第一方模型 API 价（$/百万 Token），输出价升序 + ⚡性价比标记 |
 | 🧮 订阅 vs API 计算器 | 输入月输出量与模型档位，实时估算按量成本，对比候选订阅给出「订阅还是按量」结论 |
 | 🖥️ IDE 订阅榜 | 12 个 $10–20 档 IDE/编辑器订阅横评（Trae / Copilot / Zed / Kiro / Windsurf…） |
-| 📡 市场动态 | 促销与停售追踪（B站每日播报 + 官方公告交叉核实）+ 本站变更记录 |
-| 🛡️ 来源分级 | 官方直采（绿）＞ 实时数据源（青）＞ 聚合参考（蓝）＞ 社区情报（黄，仅进动态区） |
+| 🎁 白嫖 / 免费额度 | 官方免费档、学生包、免费 API 额度、限时试用；标注额度 / 门槛 / 证据强度，并列出已失效的坑（如 GitHub Models 已下线） |
+| 📡 市场动态 | 促销与停售追踪（人工确认）+ 自动发现的线索队列 + 信息源健康看板 + 本站变更记录 |
+| 🛡️ 来源分级 | 官方直采（绿）＞ 实时数据源（青）＞ 聚合参考（蓝）＞ 社区情报（黄，仅作线索，不进价格表） |
 
 ## 🔄 每日自动更新（GitHub Actions）
 
-仓库每天 **北京时间 09:00**（cron `0 1 * * *` UTC）自动运行 [daily-update.yml](.github/workflows/daily-update.yml)：
+仓库每天 **北京时间 09:00**（cron `0 1 * * *` UTC）自动运行 [daily-update.yml](.github/workflows/daily-update.yml)，
+四个任务互相独立、任一失败不影响其余（`continue-on-error`）：
 
-1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `js/snapshot.js` 兜底快照（116 款编码模型）
-2. **`scripts/check-pages.mjs`** —— 对 5 个官方定价页（Claude / ChatGPT / Copilot / Cursor / GLM）做内容哈希变动检测
-   - 有变动 → 写入 `data/alerts.json`，站点顶部自动挂「待核实」横幅，并自动开 issue 提醒人工核价
-3. **提交推送** —— 有数据变化才 commit，push 自动触发 GitHub Pages 重新发布
-4. **巡检日期** —— 写入 `data/meta.json`，显示在站点顶部导航
+1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `js/snapshot.js` 兜底快照
+2. **`scripts/check-pages.mjs`** —— 按 `data/sources.json` 对官方定价页/文档做内容哈希变动检测
+   - 有变动 → 写入 `data/alerts.json`，站点顶部自动挂「待核实」横幅并开 issue
+   - 页面回到基线哈希时**自动 resolved**；抓取失败不再静默跳过，而是计入源健康
+3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/signals.json` 线索
+4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
 
-**诚实原则**：脚本只自动更新机器可验证的数据（模型 API 价快照、页面变动信号），订阅价格一律人工核实后才改 —— 顶部导航的「数据更新」（人工核价日期）与「自动巡检」（机器检查日期）分开标注。
+**诚实原则**：
+
+- 机器只负责**发现**，所有价格与促销数字一律人工确认后才进对比表；机器线索单独陈列
+- 每个信息源的抓取成败写入 `data/sourcehealth.json`，在站点「市场动态 → 信息源健康」公开可见，
+  **连续 3 天失败即标注「已失效」**，不再假装巡检成功
+- JS 渲染的空壳页面（Qoder / CodeBuddy / 火山方舟计费页）与对机器人返回验证页的站点（OpenAI 定价页实测 403）
+  明确标注为不可自动监控，不做假巡检
+- **变动需二次确认**：页面内容变化要「下一次巡检仍是同一个新值」才告警（真实变动因此晚一天），
+  避免动态渲染页面天天误报
+- **不稳定页面自动停用预警**：cursor.com/pricing 实测两次抓取正文长度即不同（渲染变体跳变），
+  连续确认后回滚达阈值即标记为「需人工核对」并停止自动告警——宁可承认监控不了，也不刷假警报
 
 ### 处理「官方页变动」issue 的流程
 
 1. 打开 issue 中列出的官方页面，核对新价格 / 新额度
 2. 更新本地 `js/data.js` 对应平台条目（含新的采集日期）
-3. 将 `data/alerts.json` 中该条目的 `"resolved": false` 改为 `true`
+3. 将 `data/alerts.json` 中该条目的 `"resolved": false` 改为 `true`（或等着它自动回滚解决）
 4. 提交推送，横幅自动消失
+
+### 处理「自动发现的线索」的流程
+
+1. 看站点「市场动态 → 自动发现的线索」，或 issue 里的线索列表
+2. 人工核实后，促销/停售写进 `data/promos.json`，白嫖/免费额度写进 `data/freebies.json`
+3. 社区情报（黄标）默认**不录入**，除非能追到官方出处
 
 ## 📁 目录结构
 
 ```
-├── index.html              # 页面骨架（对比表 / Token 榜 / 计算器 / IDE 榜 / 动态 / FAQ）
+├── index.html              # 页面骨架（对比表 / Token 榜 / 计算器 / IDE 榜 / 白嫖 / 动态 / FAQ）
 ├── css/styles.css          # 全部样式（深色主题，无框架）
 ├── js/
 │   ├── data.js             # ⭐ 订阅计划数据 + IDE 表 + 变更记录（日常改这里）
-│   ├── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/巡检状态）
+│   ├── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/巡检/白嫖/源健康）
 │   └── snapshot.js         # models.dev 兜底快照（每日自动重新生成，勿手改）
 ├── data/
+│   ├── sources.json        # ⭐ 信息源声明清单（唯一事实来源：URL / 分级 / 关键词 / 启用状态与原因）
+│   ├── promos.json         # 人工确认的促销 / 停售记录（驱动「市场动态」时间线）
+│   ├── freebies.json       # 人工维护的白嫖 / 免费额度条目
+│   ├── alerts.json         # 「待核实」预警状态（人工 resolved，或自动回滚解决）
+│   ├── signals.json        # 机器发现的线索（90 天滚动窗口，自动维护）
+│   ├── sourcehealth.json   # 每源抓取成败（自动维护，站点据此显示「已失效」）
 │   ├── pagehash.json       # 官方页内容哈希基线（自动维护）
-│   ├── alerts.json         # 「待核实」预警状态（人工 resolved）
+│   ├── pricebase.json      # 价格 / 免费模型基线（自动维护，用于差异检测）
 │   └── meta.json           # 最近巡检日期（自动维护）
-├── scripts/                # 每日巡检脚本（node ≥18，可手动运行）
+├── scripts/
+│   ├── lib.mjs             # 公用：带 UA/超时抓取、JSON 读写、源健康、极简 RSS 解析、关键词匹配
+│   ├── update-snapshot.mjs # 兜底快照
+│   ├── check-pages.mjs     # 官方页哈希巡检 + 源健康
+│   ├── fetch-feeds.mjs     # RSS / JSON 源 → 线索
+│   └── diff-prices.mjs     # 价格库与免费模型差异检测
 └── .github/workflows/
     └── daily-update.yml    # 定时任务（cron 09:00 北京时间，可手动触发）
 ```
@@ -66,24 +96,43 @@ npx serve .
 # 数据/内容更新后发布
 git add . && git commit -m "update: ..." && git push   # Pages 自动重新发布
 
-# 手动跑一次巡检
-node scripts/update-snapshot.mjs && node scripts/check-pages.mjs
+# 手动跑一次完整巡检
+node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
+  && node scripts/fetch-feeds.mjs && node scripts/diff-prices.mjs
 ```
 
-无构建步骤、零 npm 依赖、纯静态 —— fork 后开启 Pages 即可获得自己的实例。
+无构建步骤、零 npm 依赖（含 RSS 解析，未引入 YAML / XML 库）、纯静态 —— fork 后开启 Pages 即可获得自己的实例。
+
+> 注：`data/sources.json` 里的社区源（LINUX DO / V2EX 等）在中国大陆线路不可达，只在 GitHub Actions
+> 的海外出口能抓到；本地跑时它们会正常报失败并记录到 `sourcehealth.json`，这属预期行为。
 
 ## 📚 数据来源
 
 | 层级 | 来源 | 用途 |
 |---|---|---|
-| 官方直采 | [claude.com/pricing](https://claude.com/pricing) · [openai.com](https://openai.com/chatgpt/pricing/) · [github.com](https://github.com/features/copilot/plans) · [cursor.com](https://cursor.com/pricing) · [bigmodel.cn](https://bigmodel.cn/glm-coding) | 订阅价格（人工核价） |
-| 实时数据源 | [models.dev](https://github.com/sst/models.dev)（API 直连，CORS 全开放） | Token 价格榜 + 兜底快照 |
+| 官方直采 | [claude.com/pricing](https://claude.com/pricing) · [docs.github.com Copilot 计划](https://docs.github.com/en/copilot/get-started/plans) · [cursor.com/pricing](https://cursor.com/pricing) · [docs.bigmodel.cn](https://docs.bigmodel.cn/cn/coding-plan/overview) · [platform.kimi.com](https://platform.kimi.com/docs/pricing) · [trae.ai](https://www.trae.ai/pricing) · [MiniMax](https://platform.minimaxi.com/document/price) · [阿里云百炼免费额度](https://help.aliyun.com/zh/model-studio/new-free-quota) 等 | 订阅价格（人工核价）+ 每日哈希巡检 |
+| 官方订阅源 | [GitHub Changelog](https://github.blog/changelog/feed/) · [Cursor Changelog](https://cursor.com/changelog/rss.xml) · [OpenAI News](https://openai.com/news/rss.xml) · [Claude](https://status.claude.com/history.rss) / [OpenAI](https://status.openai.com/history.rss) / [GitHub](https://www.githubstatus.com/history.rss) Status | 促销与可用性事件线索（RSS/Atom） |
+| 实时数据源 | [models.dev](https://github.com/sst/models.dev)（API 直连，CORS 全开放）· [OpenRouter 模型表](https://openrouter.ai/api/v1/models) · [LiteLLM 价格表](https://github.com/BerriAI/litellm) | Token 价格榜 + 兜底快照 + 免费模型 / 价格差异检测 |
 | 方法论 | [mahonzhan/awesome-coding-plan](https://github.com/mahonzhan/awesome-coding-plan)（2857★） | 额度倍率 / TPS / 三周期额度 / 坑点 |
 | 聚合参考 | [codingplan.org](https://codingplan.org/) | 部分国内平台价格（逐条标注） |
-| 社区情报 | [B站每日播报](https://www.bilibili.com/video/BV1xtYR6EE72/) | 市场动态（不直接进价格表） |
+| 社区情报 | [LINUX DO](https://linux.do/) · [V2EX](https://www.v2ex.com/) · [Hacker News](https://hn.algolia.com/) · [少数派](https://sspai.com/) · [IT之家](https://www.ithome.com/) · [awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis) 提交流 | 线索提示（黄色标注，**不直接进价格表**） |
+
+### 🚫 明确不收录的信息源
+
+| 类型 | 原因 |
+|---|---|
+| 逆向 / 公益 / API 中转站（free-one-api、chatanywhere 等） | 违反上游 ToS，存在密钥泄露与封号风险；且项目寿命不可预期（已有多个知名仓库 404 消失） |
+| 共享账号 / 合租 | 账号安全与平台条款风险 |
+| 需登录 cookie 抓取（小红书 / 即刻 / 公众号中转） | 合规与稳定性均不可接受 |
+| X / Twitter、36氪 / 机器之心原生 RSS | 前者路由需多组鉴权 token 且官方实例已关闭，后者实测返回反爬页或非 feed |
+| 中文羊毛聚合站（福利吧 / hostloc / 什么值得买首页） | 实测主动断连 / 需邀请码 / 与 AI 订阅无关内容为主，噪声比极差 |
+
+> 2026-09-14：原「B站每日播报」来源已移除。相关条目的原始出处仅剩视频、无法结构化核验，
+> 故改由上述官方 / 结构化源持续找官方确认；未能复核的条目在站点上明确标注「⚠ 待重新核实」。
 
 ## ⚖️ 免责声明
 
 - 价格与额度可能随时变化，**付款前务必以平台官网为准**
 - 「额度倍率」「编辑推荐」为基于公开数据的社区口径估算与主观参考，非官方承诺，非广告
+- 免费额度条目的领取条件与规则以官方为准，本站仅做汇总与出处标注
 - 本站不含任何推广链接，与所列平台无商业关系；所有商标归各自所有者

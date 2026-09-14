@@ -85,8 +85,8 @@ const PLAN_DATA = [
     pitfalls:"额度按 API 价值折算而非不限量，重度使用可能不够；当前 4× 活动显著放大额度（至 9/20）。",
     tiers:[["Go","$10 / 月","全模型通吃"],["活动","4× 额度","V4.1 Flash 活动延至 2026-09-20"]],
     tags:["性价比之王","多模型轮换","限时 4× 额度"],
-    srcType:"agg", srcLabel:"聚合参考 + 社区动态",
-    srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31）+ B站播报（2026-09-12）",
+    srcType:"agg", srcLabel:"聚合参考",
+    srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31）；4× 活动原始出处为社区视频、已从本站移除，正由官方渠道重新确认",
     note:"当前促销期内性价比突出；活动 9/20 结束"
   },
   {
@@ -189,8 +189,8 @@ const PLAN_DATA = [
     pitfalls:"算力不足关闭订阅渠道——「额度再差也比天天 429 强」的反面教材。",
     tiers:[["订阅渠道","已关闭","因算力不足停止新订阅"]],
     tags:["停售","不推荐新购","老用户可退款"],
-    srcType:"agg", srcLabel:"社区情报",
-    srcUrl:"https://www.bilibili.com/video/BV1xtYR6EE72/", srcNote:"B站播报（2026-09-12）",
+    srcType:"agg", srcLabel:"社区情报（待重新核实）",
+    srcUrl:"https://codingplan.org/", srcNote:"停售信息原始出处为社区视频、已从本站移除；未找到可核验的官方公告，标注待重新核实",
     note:"已订阅用户若觉得模型速度慢可申请退款"
   }
 ];
@@ -231,7 +231,8 @@ const IDE_PLANS = [
 
 // ===== 本站变更记录 =====
 const CHANGELOG = [
-  {date:"2026-09-13", v:"v4", text:"上线每日自动巡检：GitHub Actions 每天 09:00（北京时间）重新生成 models.dev 兜底快照 + 5 个官方定价页哈希变动检测，变动自动挂「待核实」横幅并开 issue 提醒人工核价。"},
+  {date:"2026-09-14", v:"v5", text:"信息源机制重构：① 移除 B站播报来源，改由官方 changelog / 状态页 RSS + 公开社区订阅源（LINUX DO / V2EX / HN）+ 官方文档页哈希巡检组成的多源管道；② 新增「白嫖 / 免费额度」板块（含官方免费档、学生包、免费 API 额度、限时试用）；③ 修复 2 个静默失效的监控点——OpenAI 定价页实测对机器人返回 403 Cloudflare、原 Copilot 监控页连接失败，前者改为只抓 news RSS 并人工核价，后者换用 docs.github.com 官方文档页；④ 新增「信息源健康」看板，每源抓取成败公开可见，连续 3 天失败标注为已失效；⑤ 新增「自动发现的线索」队列，机器发现与人工确认严格分离，社区情报固定黄色标注、不进价格表。"},
+  {date:"2026-09-13", v:"v4", text:"上线每日自动巡检：GitHub Actions 每天 09:00（北京时间）重新生成 models.dev 兜底快照 + 官方定价页哈希变动检测，变动自动挂「待核实」横幅并开 issue 提醒人工核价。"},
   {date:"2026-09-13", v:"v3", text:"新增：订阅 vs API 成本计算器、IDE 订阅扩展榜、三周期（5h/周/月）额度倍率、TPS 速度参考、各平台坑点提示（社区反馈）。数据方法与坑点来源：awesome-coding-plan（2857★，2026-09-01 更新）+ Reddit 限额讨论汇总。"},
   {date:"2026-09-13", v:"v2", text:"新增：Token 实时价格榜（models.dev 直连 + 兜底快照）、额度倍率列、同类 GitHub 项目板块；重构为多文件结构。"},
   {date:"2026-09-13", v:"v1", text:"初版上线：11 平台 33 档对比、市场动态（B站播报 9/12）、FAQ 与数据来源分级。"}
@@ -242,5 +243,7 @@ const GH_REPOS = [
   {name:"mahonzhan/awesome-coding-plan", desc:"各厂家 Coding Plan 实际价值对比：额度价值 / 三周期额度倍率 / TPS 实测 / IDE Plan 表 / 能力测试。本站倍率、速度与坑点数据的方法论来源（2857★，2026-09-01 更新）", stars:"活跃维护 · 2857★", url:"https://github.com/mahonzhan/awesome-coding-plan", tag:"方法论 + 数据"},
   {name:"sst/models.dev", desc:"开源模型数据库，含 800+ 供应商、每百万 Token 的 API 价格、上下文窗口；本站「Token 实时价格榜」的数据源", stars:"实时更新", url:"https://github.com/sst/models.dev", tag:"实时数据源"},
   {name:"wmpeng/codingplan", desc:"国内主流 AI 平台 Coding Plan 对比（智谱 / Kimi / MiniMax 等），覆盖 Agent 高强度编码场景", stars:"社区维护", url:"https://github.com/wmpeng/codingplan", tag:"参考"},
-  {name:"berriai/litellm", desc:"LLM 网关，其 model_prices_and_context_window.json 是业界常用的模型价格实时数据源（3900+ 模型），可作 models.dev 的交叉校验源", stars:"42k+ stars 生态", url:"https://raw.githubusercontent.com/berriai/litellm/main/model_prices_and_context_window.json", tag:"备用数据源"}
+  {name:"berriai/litellm", desc:"LLM 网关，其 model_prices_and_context_window.json 是业界常用的模型价格实时数据源（3900+ 模型），可作 models.dev 的交叉校验源", stars:"42k+ stars 生态", url:"https://raw.githubusercontent.com/berriai/litellm/main/model_prices_and_context_window.json", tag:"备用数据源"},
+  {name:"mnfst/awesome-free-llm-apis", desc:"「永久免费」LLM API 清单，本站「白嫖 / 免费额度」板块的参考来源之一；仓库 README 的提交变更被用作免费额度变动的事件流", stars:"7601★ · CC0", url:"https://github.com/mnfst/awesome-free-llm-apis", tag:"白嫖参考"},
+  {name:"open-free-llm-api/awesome-freellm-apis", desc:"134+ 免费 API 汇总，含 Claude Code / Cursor / Codex 的一键配置思路，更新频繁（MIT 许可，可安全引用）", stars:"2985★ · 活跃更新", url:"https://github.com/open-free-llm-api/awesome-freellm-apis", tag:"白嫖参考"}
 ];
