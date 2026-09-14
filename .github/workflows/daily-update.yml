@@ -48,25 +48,10 @@ jobs:
         run: |
           echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
 
-      - name: 提交并推送（触发 Pages 重新发布）
-        id: commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "无数据变化，跳过提交"
-          else
-            git commit -m "chore(daily): 自动数据巡检 $(date -u +%Y-%m-%d)"
-            git push
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: 有变动 / 有源失效时开 issue 提醒人工处理
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # 先生成待处理清单（会写入 data/reported.json 记录"已上报"的线索），
+      # 再提交，最后才开 issue —— 顺序不能颠倒，否则 reported.json 不会被持久化，
+      # 同一条线索就会天天重复开 issue。
+      - name: 生成待人工处理清单
         run: |
           node -e '
             const fs = require("fs");
@@ -82,13 +67,21 @@ jobs:
             }
 
             // 机器线索中的官方来源信号 → 待确认后录入 promos.json
-            // 只报「促销 / 价格 / 停售」类：状态页故障事件（kind=availability）不算需要人工处理的线索，
-            // 否则 Claude/GitHub 状态页一忙就会天天开 issue。它们仍会显示在站点「线索队列」里。
-            const sig = read("data/signals.json", { items: [] }).items
-              .filter(s => s.tier !== "community" && s.kind !== "availability" && s.firstSeen === today);
+            // 规则：① 排除状态页故障事件（kind=availability），那类不是促销线索，且状态页一忙就天天开单；
+            //       ② 排除社区情报（tier=community），它固定只作线索展示，不进入人工处理队列；
+            //       ③ 每条线索只上报一次（记录在 data/reported.json），避免同一条线索天天开 issue。
+            const reportedPath = "data/reported.json";
+            const reported = read(reportedPath, { ids: [] });
+            const reportedSet = new Set(reported.ids || []);
+            const sig = read("data/signals.json", { items: [] }).items.filter(
+              s => s.tier !== "community" && s.kind !== "availability" && !reportedSet.has(s.id)
+            );
             if (sig.length) {
               out.push("### 自动发现的新线索（官方源，需人工确认后才进价格表）\n" +
                 sig.slice(0, 20).map(s => `- [${s.title}](${s.url})　— ${s.sourceLabel}`).join("\n"));
+              reported.ids = [...reportedSet, ...sig.map(s => s.id)];
+              reported.updatedAt = today;
+              fs.writeFileSync(reportedPath, JSON.stringify(reported, null, 1) + "\n", "utf8");
             }
 
             // 连续失败的源 → 需要修监控
@@ -98,9 +91,29 @@ jobs:
               out.push("### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/sources.json 中修复或停用\n" +
                 dead.map(s => `- ${s.label}（${s.url}）— 最后错误：${s.error || "未知"}`).join("\n"));
             }
-            if (out.length) fs.writeFileSync("issue-body.md", out.join("\n\n"), "utf8");
-            else fs.writeFileSync("issue-body.md", "", "utf8");
+            fs.writeFileSync("issue-body.md", out.length ? out.join("\n\n") : "", "utf8");
           '
+
+      - name: 提交并推送（触发 Pages 重新发布）
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "无数据变化，跳过提交"
+          else
+            git commit -m "chore(daily): 自动数据巡检 $(date -u +%Y-%m-%d)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 有待处理事项时开 issue
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           if [ -s issue-body.md ]; then
             gh issue create --repo "$GITHUB_REPOSITORY" \
               --title "每日巡检待处理 $(date -u +%F)" \
