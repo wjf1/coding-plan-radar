@@ -129,7 +129,7 @@ for (const it of byId.values()) {
 keep.sort((a, b) => String(b.firstSeen).localeCompare(String(a.firstSeen)) || String(a.source).localeCompare(String(b.source)));
 
 writeJSON("data/signals.json", { generatedAt: d, items: keep.slice(0, MAX_ITEMS) });
-saveHealth(health);
+saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);
 if (dead.length) console.log(`\n⚠ 已失效源（连续失败 ≥${FAIL_THRESHOLD} 天）：${dead.map((x) => x.label).join("、")}`);

@@ -295,7 +295,7 @@
           <li><b style="color:var(--ok)">官方直采</b>：claude.com、docs.github.com、cursor.com、bigmodel.cn、platform.kimi.com 等官方定价页/文档（每日哈希巡检）</li>
           <li><b style="color:var(--accent2)">实时数据源</b>：models.dev API（GitHub: sst/models.dev）、OpenRouter 模型表、litellm 价格表（交叉校验）</li>
           <li><b style="color:#9db9ff">聚合参考</b>：codingplan.org 等第三方对比站，逐条标注</li>
-          <li><b style="color:var(--warn)">社区情报</b>：LINUX DO / V2EX / Hacker News 等公开信息源，<b>仅作线索</b>，固定黄色标注，不进入价格表</li>
+          <li><b style="color:var(--warn)">社区情报</b>：Hacker News / 少数派 / IT之家 / 免费 API 汇总仓库提交流等公开信息源，<b>仅作线索</b>，固定黄色标注，不进入价格表</li>
         </ul>
       </div>
       <div class="pol"><div class="ico">🗓️</div><h4>更新频率</h4>
@@ -318,7 +318,7 @@
         <ul>
           <li>每个信息源的抓取成败都记录在 <b>「市场动态 → 信息源健康」</b>，连续 3 天失败会标注为<b>已失效</b></li>
           <li>失败不做静默跳过：早期版本曾因页面改版导致 2 个监控点长期失效而无人知晓，现已修复</li>
-          <li>社区源（LINUX DO / V2EX）在中国大陆线路不可达，仅 Actions 海外出口可抓，成败同样如实呈现</li>
+          <li><b>抓不到的源就承认抓不到</b>：LINUX DO 与 V2EX 经双环境实测（大陆线路 + GitHub Actions 海外出口）均无法获取——前者 403 Cloudflare、后者空响应，属数据中心 IP 被拦截，自建服务器同样无效，已停用并改为人工巡览</li>
           <li>JS 渲染的空壳页面（Qoder / CodeBuddy / 火山方舟计费页）明确标注为不可自动监控，不做假巡检</li>
           <li><b>变动需二次确认</b>：页面内容变了不算数，要下一次巡检仍是同一个新值才告警（代价是真实变动晚一天），避免动态渲染页面天天误报</li>
           <li><b>不稳定页面自动停用预警</b>：如 cursor.com/pricing 实测两次抓取正文长度都不同（渲染变体跳变），会被标记为「需人工核对」并停止自动告警</li>

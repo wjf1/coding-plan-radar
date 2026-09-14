@@ -21,5 +21,14 @@
   "resolvedBy": "source-disabled",
   "resolvedAt": "2026-09-14",
   "note": "2026-09-14 查明：该页对非浏览器请求返回 403 Cloudflare 验证页，此前一直是静默失效而非价格变动。已停用该监控点（见 data/sources.json 的 disabled），ChatGPT 计划变动改由 OpenAI News RSS 捕捉 + 人工核价。"
+ },
+ {
+  "id": "gh-education",
+  "label": "GitHub 学生开发包",
+  "url": "https://education.github.com/pack",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-14",
+  "resolved": false
  }
 ]

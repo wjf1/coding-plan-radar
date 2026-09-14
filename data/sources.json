@@ -81,8 +81,9 @@
       "type": "feed",
       "keywords": ["claude", "cursor", "copilot", "codex", "glm", "kimi", "优惠", "免费", "额度", "订阅", "涨价", "停售", "封号"],
       "maxAgeDays": 3,
-      "enabled": true,
-      "note": "国内一手爆料最强来源。本机（中国大陆线路）不可达，仅 GitHub Actions 海外出口可抓；实际抓取成功率由 data/sourcehealth.json 如实暴露"
+      "enabled": false,
+      "reason": "2026-09-14 双环境实测均失败：本机（中国大陆线路）超时；GitHub Actions 海外出口返回 HTTP 403（Cloudflare 拦截数据中心 IP）。因此这不是翻墙问题，自建 VPS 也解决不了——属 IP 信誉层面的拦截，需住宅代理或人工访问。已停用，避免站点长期挂一个「已失效」的源。",
+      "note": "国内一手爆料最强来源，但目前无法自动获取；保留此条以便将来有代理方案时一键启用"
     },
     {
       "id": "v2ex-feed",
@@ -92,8 +93,9 @@
       "type": "feed",
       "keywords": ["claude", "cursor", "copilot", "codex", "glm", "kimi", "优惠", "免费", "额度", "订阅", "涨价", "合租"],
       "maxAgeDays": 3,
-      "enabled": true,
-      "note": "V2EX 按 IP 限流约 120 次/小时；本机不可达，Actions 海外出口实测为准"
+      "enabled": false,
+      "reason": "2026-09-14 双环境实测均失败：本机超时；GitHub Actions 海外出口返回 HTTP 200 但响应体为空（接口按 IP 限流/拦截数据中心 IP）。同 LINUX DO，自建 VPS 无法解决。已停用，建议人工定期巡览。",
+      "note": "V2EX 按 IP 限流约 120 次/小时，且对数据中心 IP 不友好"
     },
     {
       "id": "sspai",
@@ -225,13 +227,13 @@
     },
     {
       "id": "litellm",
-      "label": "LiteLLM 价格表（交叉校验）",
+      "label": "LiteLLM 价格表（参考基线）",
       "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
       "tier": "realtime",
       "type": "api",
       "pipeline": "diff",
       "enabled": true,
-      "note": "2.3 MB 量级，仅提取关注模型的价格做交叉校验，不整份落盘"
+      "note": "2.3 MB 量级，仅提取关注模型的价格做参考基线，不整份落盘。已停用「价格分歧告警」：实测按模型名匹配会把 litellm 的 azure/gpt-5.6（转售 $30）与第一方 openai/gpt-5.6（$20）误配，首个真实 CI 运行即产生 146 条假信号"
     },
     {
       "id": "hn-algolia",
@@ -259,6 +261,20 @@
   ],
 
   "disabled": [
+    {
+      "id": "linuxdo-feed",
+      "label": "LINUX DO 最新帖",
+      "url": "https://linux.do/latest.rss",
+      "tier": "community",
+      "reason": "2026-09-14 双环境实测：中国大陆线路超时；GitHub Actions（海外 Azure）返回 403 Cloudflare。属数据中心 IP 被拦截，与网络封锁无关，自建 VPS 同样无效。当前无自动获取方案，只能人工巡览；若将来接入住宅代理可一键启用。"
+    },
+    {
+      "id": "v2ex-feed",
+      "label": "V2EX 最新主题",
+      "url": "https://www.v2ex.com/feed/tab/hot.xml",
+      "tier": "community",
+      "reason": "2026-09-14 双环境实测：中国大陆线路超时；GitHub Actions 返回 HTTP 200 但响应体为空（按 IP 限流并拦截数据中心 IP）。自建 VPS 无法解决，只能人工巡览。"
+    },
     {
       "id": "openai-pricing",
       "label": "OpenAI ChatGPT 定价页",

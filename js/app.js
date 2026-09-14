@@ -452,7 +452,7 @@ async function renderSourceHealth(){
       return `<span class="h-item ${dead?"dead":""}" title="${esc(tip)}"><span class="h-dot ${cls}"></span>${esc(s.label)}${extra}</span>`;
     }).join("");
     box.innerHTML=`<div class="health">${chips}</div>
-      <p style="font-size:12px;color:var(--dim);margin-top:8px">绿点＝最近一次抓取成功；黄点＝失败未达阈值，或该页内容不稳定（已暂停自动预警、需人工核对）；红点＝连续 3 天失败，判定为<b>已失效</b>——站点会如实标注，不再假装该源在正常工作。巡检时间：${esc(j.updatedAt||"—")}。部分社区源（LINUX DO / V2EX）在中国大陆线路不可达，仅 GitHub Actions 海外出口可抓，其成败同样在此如实呈现。</p>`;
+      <p style="font-size:12px;color:var(--dim);margin-top:8px">绿点＝最近一次抓取成功；黄点＝失败未达阈值，或该页内容不稳定（已暂停自动预警、需人工核对）；红点＝连续 3 天失败，判定为<b>已失效</b>——站点会如实标注，不再假装该源在正常工作。巡检时间：${esc(j.updatedAt||"—")}。抓不到的源不会硬撑：LINUX DO 与 V2EX 经双环境实测均无法获取（403 / 空响应，数据中心 IP 被拦截），已从清单停用并改为人工巡览，详见页面末尾「数据说明」。</p>`;
   }catch(e){ box.innerHTML=""; }
 }
 

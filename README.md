@@ -115,7 +115,12 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 | 实时数据源 | [models.dev](https://github.com/sst/models.dev)（API 直连，CORS 全开放）· [OpenRouter 模型表](https://openrouter.ai/api/v1/models) · [LiteLLM 价格表](https://github.com/BerriAI/litellm) | Token 价格榜 + 兜底快照 + 免费模型 / 价格差异检测 |
 | 方法论 | [mahonzhan/awesome-coding-plan](https://github.com/mahonzhan/awesome-coding-plan)（2857★） | 额度倍率 / TPS / 三周期额度 / 坑点 |
 | 聚合参考 | [codingplan.org](https://codingplan.org/) | 部分国内平台价格（逐条标注） |
-| 社区情报 | [LINUX DO](https://linux.do/) · [V2EX](https://www.v2ex.com/) · [Hacker News](https://hn.algolia.com/) · [少数派](https://sspai.com/) · [IT之家](https://www.ithome.com/) · [awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis) 提交流 | 线索提示（黄色标注，**不直接进价格表**） |
+| 社区情报 | [Hacker News](https://hn.algolia.com/) · [少数派](https://sspai.com/) · [IT之家](https://www.ithome.com/) · [awesome-free-llm-apis 提交流](https://github.com/mnfst/awesome-free-llm-apis) | 线索提示（黄色标注，**不直接进价格表**） |
+
+> **关于 LINUX DO / V2EX（2026-09-14 结论）**：这两个一手性最强的中文社区源，经**双环境实测**均无法自动获取 ——
+> 大陆线路超时，GitHub Actions 海外出口分别返回 `403 Cloudflare` 与 `HTTP 200 空响应体`。
+> 这说明拦截发生在**数据中心 IP 信誉层**而非网络封锁层，**自建 VPS / RSSHub 同样解决不了**（能解决的是住宅代理）。
+> 因此本站停用这两个源并改为人工巡览，不做"看起来在监控"的假象。
 
 ### 🚫 明确不收录的信息源
 
@@ -126,6 +131,11 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 | 需登录 cookie 抓取（小红书 / 即刻 / 公众号中转） | 合规与稳定性均不可接受 |
 | X / Twitter、36氪 / 机器之心原生 RSS | 前者路由需多组鉴权 token 且官方实例已关闭，后者实测返回反爬页或非 feed |
 | 中文羊毛聚合站（福利吧 / hostloc / 什么值得买首页） | 实测主动断连 / 需邀请码 / 与 AI 订阅无关内容为主，噪声比极差 |
+| LINUX DO / V2EX（暂缓） | 双环境实测均不可自动获取（403 Cloudflare / 空响应体），属数据中心 IP 信誉拦截，自建 VPS 无效；保留配置但 `enabled: false`，有住宅代理时可一键启用 |
+
+> **LiteLLM 只做参考基线，不告警**：按模型名匹配会把不同 SKU 配到一起（如 litellm 的 `azure/gpt-5.6`
+> 转售价 $30 vs 第一方 `openai/gpt-5.6` $20），首个真实 CI 运行即产生 146 条假"价格分歧"信号。
+> 因此它只抓取、只记录基线供人工比对，不再自动报警。
 
 > 2026-09-14：原「B站每日播报」来源已移除。相关条目的原始出处仅剩视频、无法结构化核验，
 > 故改由上述官方 / 结构化源持续找官方确认；未能复核的条目在站点上明确标注「⚠ 待重新核实」。

@@ -1,11 +1,10 @@
 // 每日任务④：结构性数据差异检测（价格 / 免费模型）
 //   1. models.dev  —— 第一方 API 刊例价变动（与 js/snapshot.js 同源）
 //   2. OpenRouter  —— :free 免费模型的新增与消失（白嫖板块的自动数据来源）
-//   3. LiteLLM     —— 与 models.dev 交叉校验，价格分歧 >25% 时提示人工确认
+//   3. LiteLLM     —— 只做健康检查与参考基线，不产生告警（理由见文件内注释）
 // 首次运行只落基线、不发信号，避免一天内灌入上百条噪声。
 import { readJSON, writeJSON, fetchText, hash16, today, loadHealth, recordHealth, saveHealth, isDead, FAIL_THRESHOLD } from "./lib.mjs";
 
-const DIVERGENCE = 0.25; // LiteLLM 与 models.dev 输出价分歧阈值
 const WATCH_MARKERS = ["claude-sonnet", "claude-opus", "gpt-5", "glm-5", "deepseek-v4", "kimi-k", "qwen3"];
 
 // 第一方 API 价供应商（与 js/app.js 的 OFFICIAL_PROVIDERS 保持一致）
@@ -136,17 +135,19 @@ const num = (v) => (Number.isFinite(+v) ? +v : null);
   }
 }
 
-/* ---------- 3) LiteLLM 交叉校验 ---------- */
+/* ---------- 3) LiteLLM：仅作健康检查与参考基线，不产生告警 ---------- */
+// 为什么不做"价格分歧告警"（2026-09-14 实测）：按模型名后缀匹配会把不同 SKU 配到一起，
+// 例如 litellm 的 azure/gpt-5.6（Azure 转售价 $30）会撞上 models.dev 的第一方 openai/gpt-5.6（$20），
+// 首个真实 CI 运行一次就产生了 146 条"分歧"假信号，把真正的线索全部淹没。
+// 因此这里只抓取、只记录基线（供人工比对参考），不再自动报警。
 {
   const src = byIdSrc.litellm;
-  const before = added;
   if (src) {
     let status = null;
     try {
       const r = await fetchText(src.url, { timeout: 40000 });
       status = r.status;
       const j = JSON.parse(r.text);
-      // 只提取关注模型（键名含marker），不整份落盘
       for (const [key, v] of Object.entries(j)) {
         if (key === "sample_spec" || !v || typeof v !== "object") continue;
         const lower = key.toLowerCase();
@@ -155,22 +156,12 @@ const num = (v) => (Number.isFinite(+v) ? +v : null);
         if (out === null || out <= 0) continue;
         next.litellm[key] = +(out * 1e6).toFixed(4);
       }
-      recordHealth(health, src, { ok: true, status, detail: `${Object.keys(next.litellm).length} 款关注模型` });
-
-      if (!firstRun) {
-        for (const [key, outPrice] of Object.entries(next.litellm)) {
-          const mdKey = Object.keys(next.modelsdev).find((k) => k.split("|")[1] && key.toLowerCase().endsWith(k.split("|")[1].toLowerCase()));
-          if (!mdKey) continue;
-          const mdPrice = next.modelsdev[mdKey];
-          const diff = Math.abs(outPrice - mdPrice) / Math.max(mdPrice, 1e-9);
-          if (diff > DIVERGENCE)
-            addSignal(src, "price-divergence", `价格源分歧：${key} LiteLLM $${outPrice} vs models.dev $${mdPrice}`, {
-              url: "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
-              excerpt: `两个价格源相差 ${Math.round(diff * 100)}%，超过 ${DIVERGENCE * 100}% 阈值，建议人工确认哪个为准。`,
-            });
-        }
-      }
-      console.log(`· LiteLLM: ${Object.keys(next.litellm).length} 款关注模型，新增分歧信号 ${added - before}`);
+      recordHealth(health, src, {
+        ok: true,
+        status,
+        detail: `${Object.keys(next.litellm).length} 款关注模型（仅作参考基线，不告警）`,
+      });
+      console.log(`· LiteLLM: ${Object.keys(next.litellm).length} 款关注模型记入参考基线（按设计不产生告警）`);
     } catch (e) {
       failed.push({ id: src.id, error: e.message });
       recordHealth(health, src, { ok: false, status, error: e.message });
@@ -201,7 +192,7 @@ for (const it of byId.values()) {
 }
 keep.sort((a, b) => String(b.firstSeen).localeCompare(String(a.firstSeen)) || String(a.source).localeCompare(String(b.source)));
 writeJSON("data/signals.json", { generatedAt: d, items: keep.slice(0, 600) });
-saveHealth(health);
+saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);
 if (dead.length) console.log(`\n⚠ 已失效源（连续失败 ≥${FAIL_THRESHOLD} 天）：${dead.map((x) => x.label).join("、")}`);

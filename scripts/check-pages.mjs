@@ -131,7 +131,7 @@ for (const p of disabled) {
 
 writeJSON("data/pagehash.json", hashes);
 writeJSON("data/alerts.json", alerts);
-saveHealth(health);
+saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);
 if (dead.length) console.log(`\n⚠ 已失效源（连续失败 ≥${FAIL_THRESHOLD} 天）：${dead.map((x) => x.label).join("、")}`);

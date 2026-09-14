@@ -48,7 +48,7 @@ export function loadHealth() {
   return readJSON(HEALTH_PATH, { updatedAt: null, sources: {} });
 }
 
-/** 记录一次抓取结果：ok=true 清零失败计数；ok=false 累加（跨天累加，靠 date 去重） */
+/** 记录一次抓取结果：ok=true 清零失败计数；ok=false 按天累加（同一天多次失败只算一天） */
 export function recordHealth(health, src, { ok, status = null, error = null, detail = null }) {
   const prev = health.sources[src.id] || { consecutiveFailures: 0 };
   const d = today();
@@ -60,25 +60,35 @@ export function recordHealth(health, src, { ok, status = null, error = null, det
     type: src.type,
     lastChecked: d,
     ...(ok
-      ? { lastOk: d, consecutiveFailures: 0, ok: true, httpStatus: status, error: null }
+      ? {
+          lastOk: d,
+          consecutiveFailures: 0,
+          ok: true,
+          httpStatus: status,
+          error: null,
+          // 必须清掉，否则"失败→恢复→再失败"时同一天的重复失败会被误判为同一天而不再累加
+          lastFailDate: null,
+        }
       : {
-          blockedFrom: prev.blockedFrom || (prev.ok === false ? null : d),
-          consecutiveFailures: (prev.lastFailDate === d ? prev.consecutiveFailures : (prev.consecutiveFailures || 0) + 1),
           lastFailDate: d,
+          consecutiveFailures:
+            prev.lastFailDate === d ? prev.consecutiveFailures || 0 : (prev.consecutiveFailures || 0) + 1,
           ok: false,
           httpStatus: status,
           error: error ? String(error).slice(0, 200) : null,
+          blockedFrom: prev.blockedFrom || (prev.ok === false ? null : d),
         }),
     ...(detail ? { detail } : {}),
   };
-  if (ok) delete entry.blockedFrom;
-  else delete entry.lastOk0;
   health.sources[src.id] = { ...prev, ...entry };
   return entry;
 }
 
-export function saveHealth(health) {
+export function saveHealth(health, sources = null) {
   health.updatedAt = today();
+  // 停用的源应从健康表中移除：否则站点会给一个"已主动停用"的源永久挂红点，
+  // 看起来像故障，实际上是我们自己关掉的。
+  if (sources) pruneHealth(health, sources);
   // 按 tier 排序，便于页面阅读
   const order = { official: 0, realtime: 1, agg: 2, community: 3 };
   health.sources = Object.fromEntries(
@@ -87,6 +97,18 @@ export function saveHealth(health) {
     )
   );
   writeJSON(HEALTH_PATH, health);
+}
+
+/** 删除健康表中已不在启用清单里的源 */
+export function pruneHealth(health, sources) {
+  const active = new Set(
+    ["feeds", "pages", "apis"].flatMap((k) =>
+      (sources[k] || []).filter((s) => s.enabled !== false).map((s) => s.id)
+    )
+  );
+  const removed = Object.keys(health.sources).filter((id) => !active.has(id));
+  for (const id of removed) delete health.sources[id];
+  return removed;
 }
 
 /** 连续失败达到阈值 → 视为该源已失效（页面据此显示，不再假装巡检成功） */

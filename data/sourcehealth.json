@@ -13,7 +13,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "6869 chars"
+   "detail": "6869 chars",
+   "lastFailDate": null
   },
   "aliyun-university": {
    "consecutiveFailures": 0,
@@ -27,7 +28,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "9586 chars"
+   "detail": "9586 chars",
+   "lastFailDate": null
   },
   "claude": {
    "consecutiveFailures": 0,
@@ -41,7 +43,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "20884 chars"
+   "detail": "20884 chars",
+   "lastFailDate": null
   },
   "claude-status": {
    "consecutiveFailures": 0,
@@ -55,7 +58,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "25 条 / 命中 6"
+   "detail": "25 条 / 命中 6",
+   "lastFailDate": null
   },
   "copilot": {
    "consecutiveFailures": 0,
@@ -69,7 +73,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "22467 chars"
+   "detail": "22467 chars",
+   "lastFailDate": null
   },
   "cursor": {
    "consecutiveFailures": 0,
@@ -84,7 +89,8 @@
    "httpStatus": 200,
    "error": null,
    "detail": "7506 chars · 内容在多个渲染变体间跳变，已暂停自动预警（需人工核对）",
-   "unstable": true
+   "unstable": true,
+   "lastFailDate": null
   },
   "cursor-changelog": {
    "consecutiveFailures": 0,
@@ -98,7 +104,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "50 条 / 命中 0"
+   "detail": "50 条 / 命中 0",
+   "lastFailDate": null
   },
   "gh-changelog": {
    "consecutiveFailures": 0,
@@ -112,7 +119,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "10 条 / 命中 4"
+   "detail": "10 条 / 命中 4",
+   "lastFailDate": null
   },
   "gh-education": {
    "consecutiveFailures": 0,
@@ -123,7 +131,7 @@
    "type": "page",
    "lastChecked": "2026-09-14",
    "blockedFrom": "2026-09-14",
-   "lastFailDate": "2026-09-14",
+   "lastFailDate": null,
    "ok": true,
    "httpStatus": 200,
    "error": null,
@@ -142,7 +150,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "25 条 / 命中 4"
+   "detail": "25 条 / 命中 4",
+   "lastFailDate": null
   },
   "glm": {
    "consecutiveFailures": 0,
@@ -156,7 +165,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "2934 chars"
+   "detail": "2934 chars",
+   "lastFailDate": null
   },
   "kimi": {
    "consecutiveFailures": 0,
@@ -170,7 +180,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "1039 chars"
+   "detail": "1039 chars",
+   "lastFailDate": null
   },
   "minimax": {
    "consecutiveFailures": 0,
@@ -184,7 +195,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "1503 chars"
+   "detail": "1503 chars",
+   "lastFailDate": null
   },
   "openai-news": {
    "consecutiveFailures": 0,
@@ -198,7 +210,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "1193 条 / 命中 0"
+   "detail": "1193 条 / 命中 0",
+   "lastFailDate": null
   },
   "openai-status": {
    "consecutiveFailures": 0,
@@ -212,7 +225,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "87 条 / 命中 1"
+   "detail": "87 条 / 命中 1",
+   "lastFailDate": null
   },
   "trae": {
    "consecutiveFailures": 0,
@@ -226,12 +240,13 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "500 chars"
+   "detail": "1866 chars",
+   "lastFailDate": null
   },
   "litellm": {
    "consecutiveFailures": 0,
    "id": "litellm",
-   "label": "LiteLLM 价格表（交叉校验）",
+   "label": "LiteLLM 价格表（参考基线）",
    "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
    "tier": "realtime",
    "type": "api",
@@ -240,7 +255,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "873 款关注模型"
+   "detail": "873 款关注模型（仅作参考基线，不告警）",
+   "lastFailDate": null
   },
   "modelsdev": {
    "consecutiveFailures": 0,
@@ -254,7 +270,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "210 款模型纳入基线"
+   "detail": "210 款模型纳入基线",
+   "lastFailDate": null
   },
   "openrouter": {
    "consecutiveFailures": 0,
@@ -268,7 +285,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "19 个免费模型"
+   "detail": "19 个免费模型",
+   "lastFailDate": null
   },
   "freebie-repos": {
    "consecutiveFailures": 0,
@@ -282,7 +300,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "3 条 / 命中 3"
+   "detail": "3 条 / 命中 3",
+   "lastFailDate": null
   },
   "hn-algolia": {
    "consecutiveFailures": 0,
@@ -296,7 +315,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "13 条 / 命中 0"
+   "detail": "13 条 / 命中 0",
+   "lastFailDate": null
   },
   "ithome": {
    "consecutiveFailures": 0,
@@ -310,21 +330,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "60 条 / 命中 0"
-  },
-  "linuxdo-feed": {
-   "consecutiveFailures": 1,
-   "id": "linuxdo-feed",
-   "label": "LINUX DO 最新帖",
-   "url": "https://linux.do/latest.rss",
-   "tier": "community",
-   "type": "feed",
-   "lastChecked": "2026-09-14",
-   "blockedFrom": "2026-09-14",
-   "lastFailDate": "2026-09-14",
-   "ok": false,
-   "httpStatus": null,
-   "error": "HTTP 403"
+   "detail": "60 条 / 命中 0",
+   "lastFailDate": null
   },
   "sspai": {
    "consecutiveFailures": 0,
@@ -338,21 +345,8 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "10 条 / 命中 1"
-  },
-  "v2ex-feed": {
-   "consecutiveFailures": 1,
-   "id": "v2ex-feed",
-   "label": "V2EX 最新主题",
-   "url": "https://www.v2ex.com/feed/tab/hot.xml",
-   "tier": "community",
-   "type": "feed",
-   "lastChecked": "2026-09-14",
-   "blockedFrom": "2026-09-14",
-   "lastFailDate": "2026-09-14",
-   "ok": false,
-   "httpStatus": null,
-   "error": "HTTP 200 但响应体为空"
+   "detail": "10 条 / 命中 1",
+   "lastFailDate": null
   }
  }
 }
