@@ -41,9 +41,12 @@
  "trae": {
   "hash": "878faef474a",
   "seen": [
-   "878faef474a"
+   "878faef474a",
+   "98bcbe1f1f4"
   ],
-  "flaps": 0
+  "flaps": 0,
+  "pending": "98bcbe1f1f4",
+  "pendingSince": "2026-09-14"
  },
  "minimax": {
   "hash": "99a05bfa5df",
@@ -62,8 +65,12 @@
  "gh-education": {
   "hash": "6b1ecc5c7e66",
   "seen": [
-   "6b1ecc5c7e66"
-  ]
+   "6b1ecc5c7e66",
+   "2b48c9a07e66"
+  ],
+  "flaps": 0,
+  "pending": "2b48c9a07e66",
+  "pendingSince": "2026-09-14"
  },
  "aliyun-university": {
   "hash": "f9f610c22572",

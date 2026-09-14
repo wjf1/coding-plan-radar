@@ -226,7 +226,7 @@
    "ok": true,
    "httpStatus": 200,
    "error": null,
-   "detail": "1866 chars"
+   "detail": "500 chars"
   },
   "litellm": {
    "consecutiveFailures": 0,
@@ -324,7 +324,7 @@
    "lastFailDate": "2026-09-14",
    "ok": false,
    "httpStatus": null,
-   "error": "fetch failed"
+   "error": "HTTP 403"
   },
   "sspai": {
    "consecutiveFailures": 0,
@@ -352,7 +352,7 @@
    "lastFailDate": "2026-09-14",
    "ok": false,
    "httpStatus": null,
-   "error": "fetch failed"
+   "error": "HTTP 200 但响应体为空"
   }
  }
 }
