@@ -81,7 +81,8 @@
 │   ├── update-snapshot.mjs # 兜底快照
 │   ├── check-pages.mjs     # 官方页哈希巡检 + 源健康
 │   ├── fetch-feeds.mjs     # RSS / JSON 源 → 线索
-│   └── diff-prices.mjs     # 价格库与免费模型差异检测
+│   ├── diff-prices.mjs     # 价格库与免费模型差异检测
+│   └── publish-via-api.mjs # 走 GitHub API 发布（github.com 被阻断时替代 git push）
 └── .github/workflows/
     └── daily-update.yml    # 定时任务（cron 09:00 北京时间，可手动触发）
 ```
@@ -95,6 +96,9 @@ npx serve .
 
 # 数据/内容更新后发布
 git add . && git commit -m "update: ..." && git push   # Pages 自动重新发布
+
+# 若所在网络阻断了 github.com 的 HTTPS（git push 报 connection reset），改用 API 发布：
+node scripts/publish-via-api.mjs "update: ..."         # 需要 GITHUB_TOKEN 或已登录的 gh CLI
 
 # 手动跑一次完整巡检
 node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \

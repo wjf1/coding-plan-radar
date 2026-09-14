@@ -39,13 +39,12 @@
   "flaps": 0
  },
  "trae": {
-  "hash": "98bcbe1f1f4",
+  "hash": "878faef474a",
   "seen": [
    "878faef474a",
    "98bcbe1f1f4"
   ],
-  "flaps": 0,
-  "changedAt": "2026-09-14"
+  "flaps": 0
  },
  "minimax": {
   "hash": "99a05bfa5df",
