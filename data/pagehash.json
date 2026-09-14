@@ -44,7 +44,9 @@
    "878faef474a",
    "98bcbe1f1f4"
   ],
-  "flaps": 0
+  "flaps": 0,
+  "pending": "98bcbe1f1f4",
+  "pendingSince": "2026-09-14"
  },
  "minimax": {
   "hash": "99a05bfa5df",
@@ -64,10 +66,13 @@
   "hash": "2b48c9a07e66",
   "seen": [
    "6b1ecc5c7e66",
-   "2b48c9a07e66"
+   "2b48c9a07e66",
+   "91f484da7e66"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-14"
+  "changedAt": "2026-09-14",
+  "pending": "91f484da7e66",
+  "pendingSince": "2026-09-14"
  },
  "aliyun-university": {
   "hash": "f9f610c22572",
