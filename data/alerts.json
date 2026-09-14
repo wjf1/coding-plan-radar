@@ -10,5 +10,14 @@
   "resolvedBy": "source-disabled",
   "resolvedAt": "2026-09-14",
   "note": "2026-09-14 查明为误报：该页连续抓取 4 次有 3 次失败，CI 侧两次巡检也拿到不同哈希（营销页轮播 + 抓取不稳）。已停用该页的哈希监控，学生包权益改为人工季度核对（条目保留在 data/freebies.json）。"
+ },
+ {
+  "id": "trae",
+  "label": "Trae 定价页",
+  "url": "https://www.trae.ai/pricing",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-14",
+  "resolved": false
  }
 ]
