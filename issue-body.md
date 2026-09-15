@@ -1,2 +1,2 @@
-### 官方页内容变动，价格待人工核实
-- [Trae 定价页](https://www.trae.ai/pricing) 检测于 2026-09-14
+### 自动发现的新线索（官方源，需人工确认后才进价格表）
+- [Configure cost and quality in Copilot auto model selection](https://github.blog/changelog/2026-09-14-configure-cost-and-quality-in-copilot-auto-model-selection)　— GitHub Changelog

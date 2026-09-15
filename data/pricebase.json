@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-09-14",
+ "updatedAt": "2026-09-15",
  "modelsdev": {
   "anthropic|claude-sonnet-4-6": 15,
   "anthropic|claude-opus-5": 25,
@@ -535,7 +535,7 @@
   "eu.anthropic.claude-sonnet-4-20250514-v1:0": 15,
   "eu.anthropic.claude-sonnet-4-5-20250929-v1:0": 16.5,
   "fireworks_ai/accounts/fireworks/models/deepseek-v4-flash": 0.28,
-  "fireworks_ai/accounts/fireworks/models/deepseek-v4-pro": 3.48,
+  "fireworks_ai/accounts/fireworks/models/deepseek-v4-pro": 1.2,
   "fireworks_ai/accounts/fireworks/models/deepseek-v4-pro-0813": 3.96,
   "fireworks_ai/accounts/fireworks/models/glm-5p1": 4.4,
   "fireworks_ai/accounts/fireworks/models/glm-5p2": 4.4,
@@ -546,7 +546,7 @@
   "fireworks_ai/accounts/fireworks/models/kimi-k2p6": 4,
   "fireworks_ai/accounts/fireworks/models/kimi-k2p7-code": 4,
   "fireworks_ai/deepseek-v4-flash": 0.28,
-  "fireworks_ai/deepseek-v4-pro": 3.48,
+  "fireworks_ai/deepseek-v4-pro": 1.2,
   "fireworks_ai/glm-5p1": 4.4,
   "fireworks_ai/glm-5p1-fast": 8.8,
   "fireworks_ai/glm-5p2": 4.4,
@@ -1106,6 +1106,9 @@
   "openrouter/qwen/qwen3-8b": 0.455,
   "openrouter/qwen/qwen3-14b": 0.91,
   "openrouter/qwen/qwen3-32b": 0.28,
-  "openrouter/qwen/qwen3-235b-a22b": 1.82
+  "openrouter/qwen/qwen3-235b-a22b": 1.82,
+  "fireworks_ai/accounts/fireworks/routers/glm-5p3-fast": 6.6,
+  "together_ai/deepseek-ai/DeepSeek-V4.1-Flash": 1.2,
+  "gpt-5.5-cyber": 75
  }
 }
