@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-09-15",
+ "updatedAt": "2026-09-16",
  "modelsdev": {
   "anthropic|claude-sonnet-4-6": 15,
   "anthropic|claude-opus-5": 25,
@@ -231,7 +231,8 @@
   "poolside/laguna-s-2.1:free",
   "poolside/laguna-xs-2.1:free",
   "thinkingmachines/inkling-small:free",
-  "thinkingmachines/inkling:free"
+  "thinkingmachines/inkling:free",
+  "z-ai/glm-5.2:free"
  ],
  "litellm": {
   "anthropic.claude-opus-4-1-20250805-v1:0": 75,
@@ -1109,6 +1110,41 @@
   "openrouter/qwen/qwen3-235b-a22b": 1.82,
   "fireworks_ai/accounts/fireworks/routers/glm-5p3-fast": 6.6,
   "together_ai/deepseek-ai/DeepSeek-V4.1-Flash": 1.2,
-  "gpt-5.5-cyber": 75
+  "gpt-5.5-cyber": 75,
+  "aihubmix/cc-glm-5.1": 0.22,
+  "aihubmix/claude-opus-4-8-think": 25,
+  "aihubmix/claude-opus-5": 25,
+  "aihubmix/claude-sonnet-5": 10,
+  "aihubmix/coding-glm-5.3": 0.22,
+  "aihubmix/coding-kimi-k3": 1.6133,
+  "aihubmix/deepseek-v4-flash": 0.284,
+  "aihubmix/deepseek-v4-pro": 3.38,
+  "aihubmix/glm-5.2-fast-preview": 7.889,
+  "aihubmix/glm-5.3": 3.9438,
+  "aihubmix/glm-5.3-flash": 0.3944,
+  "aihubmix/glm-5v-turbo": 3.0985,
+  "aihubmix/gpt-5.3-codex": 14,
+  "aihubmix/gpt-5.4-high": 15,
+  "aihubmix/gpt-5.4-low": 15,
+  "aihubmix/gpt-5.4-mini": 4.5,
+  "aihubmix/gpt-5.4-nano": 1.25,
+  "aihubmix/gpt-5.5": 30,
+  "aihubmix/gpt-5.5-pro": 180,
+  "aihubmix/gpt-5.6-luna": 1.2,
+  "aihubmix/gpt-5.6-sol-disc": 20,
+  "aihubmix/gpt-5.6-terra": 12,
+  "aihubmix/kimi-k2.6": 3.9995,
+  "aihubmix/kimi-k2.7-code-highspeed": 7.999,
+  "aihubmix/kimi-k3": 15,
+  "aihubmix/qwen3-coder-next": 0.548,
+  "aihubmix/qwen3.5-122b-a10b": 0.9008,
+  "aihubmix/qwen3.5-397b-a17b": 0.9864,
+  "aihubmix/qwen3.6-27b": 2.532,
+  "aihubmix/qwen3.6-35b-a3b": 1.524,
+  "aihubmix/qwen3.6-max-preview": 7.608,
+  "aihubmix/qwen3.7-plus": 1.128,
+  "aihubmix/qwen3.8-2.4t-a95b": 6,
+  "aihubmix/qwen3.8-flash": 0.38,
+  "aihubmix/qwen3.8-max": 5.07
  }
 }

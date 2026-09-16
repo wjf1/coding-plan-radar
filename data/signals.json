@@ -1,6 +1,62 @@
 {
- "generatedAt": "2026-09-15",
+ "generatedAt": "2026-09-16",
  "items": [
+  {
+   "id": "gh-changelog:dda84cb85e",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot suggests custom properties definitions",
+   "excerpt": "GitHub Copilot can now suggest allowed values when you create a custom property for repositories in your organization. This feature is in public preview for GitHub Copilot Business and Copilot&#8230; The post GitHub Copilot suggests custom properties definitions appeared first on The GitHub Blog .",
+   "url": "https://github.blog/changelog/2026-09-15-github-copilot-suggests-custom-properties-definitions",
+   "date": "Tue, 15 Sep 2026 19:07:47 +0000",
+   "firstSeen": "2026-09-16",
+   "lastSeen": "2026-09-16"
+  },
+  {
+   "id": "github-status:0d1a04be33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with some GitHub services",
+   "excerpt": "<p> <small>Sep <var data-var=&apos;date&apos;>15</var>, <var data-var=&apos;time&apos;>20:00</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as s…",
+   "url": "https://www.githubstatus.com/incidents/bk7zgdcq7s9t",
+   "date": "Tue, 15 Sep 2026 20:00:50 +0000",
+   "firstSeen": "2026-09-16",
+   "lastSeen": "2026-09-16"
+  },
+  {
+   "id": "github-status:081248a433",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with some GitHub services",
+   "excerpt": "<p> <small>Sep <var data-var=&apos;date&apos;>15</var>, <var data-var=&apos;time&apos;>11:17</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as s…",
+   "url": "https://www.githubstatus.com/incidents/qwdwmtqghpk5",
+   "date": "Tue, 15 Sep 2026 11:17:22 +0000",
+   "firstSeen": "2026-09-16",
+   "lastSeen": "2026-09-16"
+  },
+  {
+   "id": "openrouter:1efb2fd531",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-new",
+   "title": "OpenRouter 新增免费模型：z-ai/glm-5.2:free",
+   "excerpt": "可作为白嫖/零成本验证模型的候选，额度与限速以 OpenRouter 页面为准。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-09-16",
+   "firstSeen": "2026-09-16",
+   "lastSeen": "2026-09-16"
+  },
   {
    "id": "gh-changelog:f6e4cb2263",
    "source": "gh-changelog",
@@ -13,7 +69,7 @@
    "url": "https://github.blog/changelog/2026-09-14-configure-cost-and-quality-in-copilot-auto-model-selection",
    "date": "Mon, 14 Sep 2026 16:05:27 +0000",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "github-status:6698d00333",
@@ -27,7 +83,7 @@
    "url": "https://www.githubstatus.com/incidents/kzh5j0mt7qwc",
    "date": "Mon, 14 Sep 2026 19:35:48 +0000",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "openai-status:72cd51403f",
@@ -41,7 +97,7 @@
    "url": "https://status.openai.com//incidents/01M2H3J1D6Y7RHAP49GRWGJAY0",
    "date": "Mon, 14 Sep 2026 23:39:21 GMT",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "claude-status:0b3c97b530",
@@ -55,7 +111,7 @@
    "url": "https://status.claude.com/incidents/r1pqn1kb4hvk",
    "date": "Fri, 11 Sep 2026 14:19:51 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "claude-status:da2cac7b30",
@@ -69,7 +125,7 @@
    "url": "https://status.claude.com/incidents/288w7p4hk1l1",
    "date": "Thu, 03 Sep 2026 12:56:26 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "claude-status:abec02c830",
@@ -139,7 +195,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/5d71a98734dc6805eb8be6ddaf4247e9048e3831",
    "date": "2026-08-21T05:30:01Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "freebie-repos:172e99bc5e",
@@ -153,7 +209,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/853888f6ac9ba77eb87ef3be2b40c35e553b0401",
    "date": "2026-08-21T05:17:31Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "freebie-repos:5c55fcb85e",
@@ -167,7 +223,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/b0c71b4cdea097c077af917152f36f76bae43d58",
    "date": "2026-08-21T05:15:54Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "gh-changelog:b10f778c54",
@@ -181,7 +237,7 @@
    "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
    "date": "Fri, 11 Sep 2026 21:30:30 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "gh-changelog:dde15ea564",
@@ -195,7 +251,7 @@
    "url": "https://github.blog/changelog/2026-09-11-auto-resolution-and-analysis-updates-in-copilot-code-review",
    "date": "Fri, 11 Sep 2026 20:00:07 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "gh-changelog:0a1b0fdd53",
@@ -209,7 +265,7 @@
    "url": "https://github.blog/changelog/2026-09-10-github-copilot-weekly-releases-september-7",
    "date": "Thu, 10 Sep 2026 22:55:07 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "gh-changelog:a12ad34e44",
@@ -237,7 +293,7 @@
    "url": "https://www.githubstatus.com/incidents/0rn90wk115q9",
    "date": "Sun, 13 Sep 2026 10:44:55 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "github-status:2117f8cc33",
@@ -251,7 +307,7 @@
    "url": "https://www.githubstatus.com/incidents/zw1hbx2yyhvr",
    "date": "Fri, 04 Sep 2026 22:26:46 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "github-status:f766f58f33",
@@ -265,7 +321,7 @@
    "url": "https://www.githubstatus.com/incidents/r05vk75c594j",
    "date": "Fri, 04 Sep 2026 22:23:34 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "github-status:e71015f933",
@@ -279,7 +335,7 @@
    "url": "https://www.githubstatus.com/incidents/ktdr5t0xwnhp",
    "date": "Thu, 03 Sep 2026 17:11:47 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "openai-status:a028208b3f",
@@ -293,7 +349,7 @@
    "url": "https://status.openai.com//incidents/01M1KWEDH417T2CF44YYHZDFCR",
    "date": "Thu, 03 Sep 2026 16:55:49 GMT",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   },
   {
    "id": "sspai:145b89c341",
@@ -307,7 +363,7 @@
    "url": "https://sspai.com/prime/story/ai-assisted-spreadsheeting-a-survey",
    "date": "Mon, 14 Sep 2026 16:35:27 +0800",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-15"
+   "lastSeen": "2026-09-16"
   }
  ]
 }
