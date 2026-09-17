@@ -3,22 +3,22 @@
   "hash": "1a0e38e65194",
   "seen": [
    "1a0e38e65194",
-   "0dea2636519a"
+   "0dea2636519a",
+   "67c307f05119"
   ],
-  "flaps": 0,
-  "pending": "0dea2636519a",
+  "flaps": 1,
+  "pending": "67c307f05119",
   "pendingSince": "2026-09-16"
  },
  "copilot": {
-  "hash": "a9a0523c57c3",
+  "hash": "631a31e1578b",
   "seen": [
    "a9a0523c57c3",
    "f354549357e4",
    "631a31e1578b"
   ],
-  "flaps": 1,
-  "pending": "631a31e1578b",
-  "pendingSince": "2026-09-15"
+  "flaps": 0,
+  "changedAt": "2026-09-17"
  },
  "cursor": {
   "unstable": true,
@@ -29,7 +29,7 @@
    "f0accd8e1d52",
    "3a67767c1dcc"
   ],
-  "pending": "3a67767c1dcc",
+  "pending": "f0accd8e1d52",
   "pendingSince": "2026-09-14"
  },
  "glm": {
@@ -40,23 +40,25 @@
   "flaps": 0
  },
  "kimi": {
-  "hash": "d596a35940f",
+  "hash": "c3990aea451",
   "seen": [
    "d596a35940f",
    "c3990aea451"
   ],
   "flaps": 0,
-  "pending": "c3990aea451",
-  "pendingSince": "2026-09-16"
+  "changedAt": "2026-09-17"
  },
  "trae": {
   "hash": "98bcbe1f1f4",
   "seen": [
    "878faef474a",
-   "98bcbe1f1f4"
+   "98bcbe1f1f4",
+   "61b47adb196"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-16"
+  "changedAt": "2026-09-16",
+  "pending": "61b47adb196",
+  "pendingSince": "2026-09-17"
  },
  "minimax": {
   "hash": "99a05bfa5df",
@@ -73,13 +75,12 @@
   "flaps": 0
  },
  "aliyun-university": {
-  "hash": "f9f610c22572",
+  "hash": "922fc4e42588",
   "seen": [
    "f9f610c22572",
    "922fc4e42588"
   ],
   "flaps": 0,
-  "pending": "922fc4e42588",
-  "pendingSince": "2026-09-16"
+  "changedAt": "2026-09-17"
  }
 }

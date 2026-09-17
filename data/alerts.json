@@ -19,5 +19,32 @@
   "kind": "page-change",
   "detected": "2026-09-16",
   "resolved": false
+ },
+ {
+  "id": "copilot",
+  "label": "GitHub Copilot 计划文档",
+  "url": "https://docs.github.com/en/copilot/get-started/plans",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-17",
+  "resolved": false
+ },
+ {
+  "id": "kimi",
+  "label": "Kimi 开放平台定价文档",
+  "url": "https://platform.kimi.com/docs/pricing",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-17",
+  "resolved": false
+ },
+ {
+  "id": "aliyun-university",
+  "label": "阿里云云工开物（学生权益）",
+  "url": "https://university.aliyun.com/",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-17",
+  "resolved": false
  }
 ]
