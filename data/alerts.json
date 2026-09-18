@@ -17,7 +17,7 @@
   "url": "https://www.trae.ai/pricing",
   "tier": "official",
   "kind": "page-change",
-  "detected": "2026-09-16",
+  "detected": "2026-09-18",
   "resolved": false
  },
  {
@@ -36,7 +36,9 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-17",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-18"
  },
  {
   "id": "aliyun-university",
@@ -45,6 +47,8 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-17",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-18"
  }
 ]

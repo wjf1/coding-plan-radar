@@ -1,6 +1,90 @@
 {
- "generatedAt": "2026-09-17",
+ "generatedAt": "2026-09-18",
  "items": [
+  {
+   "id": "gh-changelog:de69698e5e",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Copilot impact dashboard now shows feature engagement",
+   "excerpt": "The Copilot impact dashboard now shows how many active users regularly use key Copilot features. Enterprise administrators can quickly see which experiences are widely adopted and which may need more&#8230; The post Copilot impact dashboard now shows feature engagement appeared first on The GitHub B…",
+   "url": "https://github.blog/changelog/2026-09-17-copilot-impact-dashboard-now-shows-feature-engagement",
+   "date": "Thu, 17 Sep 2026 21:47:27 +0000",
+   "firstSeen": "2026-09-18",
+   "lastSeen": "2026-09-18"
+  },
+  {
+   "id": "gh-changelog:89cde4de60",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Agentic CLI customizations now in the usage metrics API",
+   "excerpt": "GitHub Copilot expands existing CLI report coverage with agentic activity metrics for skills, custom agents, Model Context Protocol (MCP) servers, slash commands, and plugins. What&#8217;s new The fields appear in&#8230; The post Agentic CLI customizations now in the usage metrics API appeared first…",
+   "url": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api",
+   "date": "Thu, 17 Sep 2026 21:08:50 +0000",
+   "firstSeen": "2026-09-18",
+   "lastSeen": "2026-09-18"
+  },
+  {
+   "id": "github-status:adc90ae833",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated rate of errors for OpenAI models provided by Copilot",
+   "excerpt": "<p> <small>Sep <var data-var=&apos;date&apos;>17</var>, <var data-var=&apos;time&apos;>21:49</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as s…",
+   "url": "https://www.githubstatus.com/incidents/nvy2q96mcmyg",
+   "date": "Thu, 17 Sep 2026 21:49:01 +0000",
+   "firstSeen": "2026-09-18",
+   "lastSeen": "2026-09-18"
+  },
+  {
+   "id": "ithome:3655260924",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "12306 客服回应国庆高铁票涨价：日常票价有折扣，节假日有浮动是正常的",
+   "excerpt": "<p data-vmark=\"1a7c\">IT之家 9 月 18 日消息，有网友 9 月 16 日发文称，准备抢国庆期间的车票，但发现车票居然涨价了，“中秋没涨，但是国庆涨了。”</p><p data-vmark=\"8cca\">根据该网友发布的图片，<strong>9 月 25 日，从重庆北到南京南的 D988 次列车票价是 446 元起，9 月 30 日同车次的票价则涨到了 520 元起</strong>。</p><p data-vmark=\"e3ed\">此外，有不少车次在临近十一调整了价格，比如北京到上海的 G547 次高铁，9 月 18 日价格为 553 元起，9 月 30 日票价调整到…",
+   "url": "https://www.ithome.com/1/004/057.htm",
+   "date": "Fri, 18 Sep 2026 04:23:06 GMT",
+   "firstSeen": "2026-09-18",
+   "lastSeen": "2026-09-18"
+  },
+  {
+   "id": "openrouter:a73a559444",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-new",
+   "title": "OpenRouter 新增免费模型：deepseek/deepseek-v4-flash-0731:free",
+   "excerpt": "可作为白嫖/零成本验证模型的候选，额度与限速以 OpenRouter 页面为准。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-09-18",
+   "firstSeen": "2026-09-18",
+   "lastSeen": "2026-09-18"
+  },
+  {
+   "id": "openrouter:ef516a2135",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-new",
+   "title": "OpenRouter 新增免费模型：qwen/qwen3.8-27b:free",
+   "excerpt": "可作为白嫖/零成本验证模型的候选，额度与限速以 OpenRouter 页面为准。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-09-18",
+   "firstSeen": "2026-09-18",
+   "lastSeen": "2026-09-18"
+  },
   {
    "id": "gh-changelog:0a94029f61",
    "source": "gh-changelog",
@@ -13,7 +97,7 @@
    "url": "https://github.blog/changelog/2026-09-16-copilot-budget-increase-requests-are-generally-available",
    "date": "Wed, 16 Sep 2026 20:17:18 +0000",
    "firstSeen": "2026-09-17",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "github-status:54866fbc33",
@@ -27,7 +111,7 @@
    "url": "https://www.githubstatus.com/incidents/nlxnbqnkdzdl",
    "date": "Wed, 16 Sep 2026 17:48:49 +0000",
    "firstSeen": "2026-09-17",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "ithome:6b69935324",
@@ -55,7 +139,7 @@
    "url": "https://github.blog/changelog/2026-09-15-github-copilot-suggests-custom-properties-definitions",
    "date": "Tue, 15 Sep 2026 19:07:47 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "github-status:0d1a04be33",
@@ -69,7 +153,7 @@
    "url": "https://www.githubstatus.com/incidents/bk7zgdcq7s9t",
    "date": "Tue, 15 Sep 2026 20:00:50 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "github-status:081248a433",
@@ -83,7 +167,7 @@
    "url": "https://www.githubstatus.com/incidents/qwdwmtqghpk5",
    "date": "Tue, 15 Sep 2026 11:17:22 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "openrouter:1efb2fd531",
@@ -125,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/kzh5j0mt7qwc",
    "date": "Mon, 14 Sep 2026 19:35:48 +0000",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "openai-status:72cd51403f",
@@ -139,7 +223,7 @@
    "url": "https://status.openai.com//incidents/01M2H3J1D6Y7RHAP49GRWGJAY0",
    "date": "Mon, 14 Sep 2026 23:39:21 GMT",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "claude-status:0b3c97b530",
@@ -153,7 +237,7 @@
    "url": "https://status.claude.com/incidents/r1pqn1kb4hvk",
    "date": "Fri, 11 Sep 2026 14:19:51 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "claude-status:da2cac7b30",
@@ -237,7 +321,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/5d71a98734dc6805eb8be6ddaf4247e9048e3831",
    "date": "2026-08-21T05:30:01Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "freebie-repos:172e99bc5e",
@@ -251,7 +335,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/853888f6ac9ba77eb87ef3be2b40c35e553b0401",
    "date": "2026-08-21T05:17:31Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "freebie-repos:5c55fcb85e",
@@ -265,7 +349,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/b0c71b4cdea097c077af917152f36f76bae43d58",
    "date": "2026-08-21T05:15:54Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "gh-changelog:b10f778c54",
@@ -335,7 +419,7 @@
    "url": "https://www.githubstatus.com/incidents/0rn90wk115q9",
    "date": "Sun, 13 Sep 2026 10:44:55 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "github-status:2117f8cc33",
@@ -349,7 +433,7 @@
    "url": "https://www.githubstatus.com/incidents/zw1hbx2yyhvr",
    "date": "Fri, 04 Sep 2026 22:26:46 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "github-status:f766f58f33",
@@ -363,7 +447,7 @@
    "url": "https://www.githubstatus.com/incidents/r05vk75c594j",
    "date": "Fri, 04 Sep 2026 22:23:34 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-17"
+   "lastSeen": "2026-09-18"
   },
   {
    "id": "github-status:e71015f933",

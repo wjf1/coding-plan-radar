@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-09-17",
+ "updatedAt": "2026-09-18",
  "modelsdev": {
   "anthropic|claude-sonnet-4-6": 15,
   "anthropic|claude-opus-5": 25,
@@ -216,6 +216,7 @@
  },
  "openrouterFree": [
   "cohere/north-mini-code:free",
+  "deepseek/deepseek-v4-flash-0731:free",
   "dots-studio/dots-3-note-preview:free",
   "google/gemma-4-26b-a4b-it:free",
   "google/gemma-4-31b-it:free",
@@ -232,6 +233,7 @@
   "nvidia/nemotron-3.5-lightning:free",
   "poolside/laguna-s-2.1:free",
   "poolside/laguna-xs-2.1:free",
+  "qwen/qwen3.8-27b:free",
   "thinkingmachines/inkling-small:free",
   "thinkingmachines/inkling:free",
   "z-ai/glm-5.2:free"
@@ -391,7 +393,7 @@
   "azure_ai/FW-Kimi-K2.5": 3.3,
   "azure_ai/FW-Kimi-K2.6": 4.4,
   "azure_ai/FW-Kimi-K2.7-Code": 4.4,
-  "azure_ai/FW-Kimi-K3": 16.5,
+  "azure_ai/FW-Kimi-K3": 15,
   "azure_ai/deepseek-v4-pro": 3.48,
   "azure_ai/deepseek-v4-flash": 0.51,
   "azure_ai/DeepSeek-V4-Flash-0731": 1.32,
@@ -1189,6 +1191,7 @@
   "aihubmix/qwen3.7-plus": 1.128,
   "aihubmix/qwen3.8-2.4t-a95b": 6,
   "aihubmix/qwen3.8-flash": 0.38,
-  "aihubmix/qwen3.8-max": 5.07
+  "aihubmix/qwen3.8-max": 5.07,
+  "wandb/zai-org/GLM-5.3-Flash": 0.5
  }
 }

@@ -4,21 +4,26 @@
   "seen": [
    "1a0e38e65194",
    "0dea2636519a",
-   "67c307f05119"
+   "67c307f05119",
+   "f92d29a45139"
   ],
-  "flaps": 1,
-  "pending": "67c307f05119",
-  "pendingSince": "2026-09-16"
+  "flaps": 2,
+  "pending": "f92d29a45139",
+  "pendingSince": "2026-09-16",
+  "unstable": true
  },
  "copilot": {
   "hash": "631a31e1578b",
   "seen": [
    "a9a0523c57c3",
    "f354549357e4",
-   "631a31e1578b"
+   "631a31e1578b",
+   "c3057b5c57a4"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-17"
+  "changedAt": "2026-09-17",
+  "pending": "c3057b5c57a4",
+  "pendingSince": "2026-09-18"
  },
  "cursor": {
   "unstable": true,
@@ -46,19 +51,18 @@
    "c3990aea451"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-17"
+  "changedAt": "2026-09-17",
+  "revertCount": 1
  },
  "trae": {
-  "hash": "98bcbe1f1f4",
+  "hash": "61b47adb196",
   "seen": [
    "878faef474a",
    "98bcbe1f1f4",
    "61b47adb196"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-16",
-  "pending": "61b47adb196",
-  "pendingSince": "2026-09-17"
+  "changedAt": "2026-09-18"
  },
  "minimax": {
   "hash": "99a05bfa5df",
@@ -81,6 +85,7 @@
    "922fc4e42588"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-17"
+  "changedAt": "2026-09-17",
+  "revertCount": 1
  }
 }
