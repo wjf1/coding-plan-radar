@@ -1,6 +1,118 @@
 {
- "generatedAt": "2026-09-18",
+ "generatedAt": "2026-09-19",
  "items": [
+  {
+   "id": "gh-changelog:5d5c9bb85a",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Copilot code review: An improved review experience",
+   "excerpt": "Copilot code review now gives you a clearer view of how a review changes over time, more intelligently auto-resolves its own suggestions, and generates useful commit messages when you accept&#8230; The post Copilot code review: An improved review experience appeared first on The GitHub Blog .",
+   "url": "https://github.blog/changelog/2026-09-18-copilot-code-review-an-improved-review-experience",
+   "date": "Fri, 18 Sep 2026 20:17:22 +0000",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
+  {
+   "id": "gh-changelog:0493720554",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot weekly releases — September 14",
+   "excerpt": "This week, GitHub Copilot adds new model selection options, code review updates, and Sentry integration in the Copilot app. There are also updates for admins, plus new agent features in&#8230; The post GitHub Copilot weekly releases — September 14 appeared first on The GitHub Blog .",
+   "url": "https://github.blog/changelog/2026-09-18-github-copilot-weekly-releases-september-14",
+   "date": "Fri, 18 Sep 2026 19:21:22 +0000",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
+  {
+   "id": "gh-changelog:d9baa2af6e",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Upcoming deprecation of selected GitHub Copilot models in mid-October",
+   "excerpt": "We will deprecate the following models across all GitHub Copilot experiences (including Copilot Chat, inline edits, ask and agent modes, and code completions) on October 19th, 2026: Model Deprecation date&#8230; The post Upcoming deprecation of selected GitHub Copilot models in mid-October appeared …",
+   "url": "https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october",
+   "date": "Fri, 18 Sep 2026 19:00:00 +0000",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
+  {
+   "id": "ithome:3d03604a24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "四家 AI 巨头因呼吁放缓研发遭反垄断诉讼：Anthropic、OpenAI、SpaceXAI、谷歌面临集体诉讼",
+   "excerpt": "<p data-vmark=\"a8f5\">IT之家 9 月 19 日消息，美国加利福尼亚州北区联邦法院当地时间 9 月 18 日受理了一宗诉讼案，原告指控 Anthropic、OpenAI、SpaceXAI 和谷歌四大 AI 巨头共同非法协调以限制 AI 发展速度。</p><p data-vmark=\"9457\">起诉书显示，案件名称为 Buist v. Anthropic PBC，编号为 3:26-cv-10693。原告为订阅上述公司 AI 服务的消费者，包括 Cheyenne Hunt、佛罗里达州律师 Charles Buist、Nick Spetsas 以及加利福尼亚州居民 Christ…",
+   "url": "https://www.ithome.com/1/004/423.htm",
+   "date": "Sat, 19 Sep 2026 04:10:28 GMT",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
+  {
+   "id": "ithome:c35d8d4124",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "武汉通互联互通卡 9 月 22 日发行，全国 300 余城一卡通行",
+   "excerpt": "<p data-vmark=\"b631\">IT之家 9 月 19 日消息，武汉城市一卡通支付有限公司将于 9 月 22 日起正式发行带有“交通联合”标识的武汉通全国交通一卡通互联互通卡。</p><p data-vmark=\"4947\">该卡支持在全国 300 余个城市刷卡乘车，线下线上均可充值。在武汉市内使用，该卡可享受公交 8 折、地铁 9 折等优惠，具体以最新政策为准。</p><p data-vmark=\"afc7\" style=\"text-align: center;\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/9/a34…",
+   "url": "https://www.ithome.com/1/004/390.htm",
+   "date": "Sat, 19 Sep 2026 02:00:40 GMT",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
+  {
+   "id": "ithome:79527fef24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "IT早报 0919：12306 客服回应国庆高铁票涨价；水滴筹服务费上涨至 8% 引争议；智谱就 Zcode 偷传代码事件致歉；华为 Peerium 突破冯诺依曼单机架构...",
+   "excerpt": "<p data-vmark=\"2cd9\">“IT早报”时间，大家好，现在是 2026 年 9 月 19 日星期六，今天的重要科技资讯有：</p><h2 data-vmark=\"8018\">1. 12306 客服回应国庆高铁票涨价：日常票价有折扣，节假日有浮动是正常的</h2><p data-vmark=\"0e6a\">9 月 25 日，从重庆北到南京南的 D988 次列车票价是 446 元起，9 月 30 日同车次的票价则涨到了 520 元起。>> <a href=\"https://www.ithome.com/1/004/057.htm\" target=\"_blank\">查看详情</a></p…",
+   "url": "https://www.ithome.com/1/004/363.htm",
+   "date": "Fri, 18 Sep 2026 23:47:38 GMT",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
+  {
+   "id": "modelsdev:f5e0f60235",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "glm-5.3-flash 输出价 0.25 → 0.5 $/M（zhipuai）",
+   "excerpt": "models.dev 刊例输出价由 $0.25 变为 $0.5 每百万 token。请人工确认后决定是否更新站内数据。",
+   "url": "https://models.dev/zhipuai/glm-5.3-flash",
+   "date": "2026-09-19",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
+  {
+   "id": "modelsdev:744d4bb631",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "glm-5.3-flash 输出价 0.25 → 0.5 $/M（zai）",
+   "excerpt": "models.dev 刊例输出价由 $0.25 变为 $0.5 每百万 token。请人工确认后决定是否更新站内数据。",
+   "url": "https://models.dev/zai/glm-5.3-flash",
+   "date": "2026-09-19",
+   "firstSeen": "2026-09-19",
+   "lastSeen": "2026-09-19"
+  },
   {
    "id": "gh-changelog:de69698e5e",
    "source": "gh-changelog",
@@ -13,7 +125,7 @@
    "url": "https://github.blog/changelog/2026-09-17-copilot-impact-dashboard-now-shows-feature-engagement",
    "date": "Thu, 17 Sep 2026 21:47:27 +0000",
    "firstSeen": "2026-09-18",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "gh-changelog:89cde4de60",
@@ -27,7 +139,7 @@
    "url": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api",
    "date": "Thu, 17 Sep 2026 21:08:50 +0000",
    "firstSeen": "2026-09-18",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "github-status:adc90ae833",
@@ -41,7 +153,7 @@
    "url": "https://www.githubstatus.com/incidents/nvy2q96mcmyg",
    "date": "Thu, 17 Sep 2026 21:49:01 +0000",
    "firstSeen": "2026-09-18",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "ithome:3655260924",
@@ -111,7 +223,7 @@
    "url": "https://www.githubstatus.com/incidents/nlxnbqnkdzdl",
    "date": "Wed, 16 Sep 2026 17:48:49 +0000",
    "firstSeen": "2026-09-17",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "ithome:6b69935324",
@@ -153,7 +265,7 @@
    "url": "https://www.githubstatus.com/incidents/bk7zgdcq7s9t",
    "date": "Tue, 15 Sep 2026 20:00:50 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "github-status:081248a433",
@@ -167,7 +279,7 @@
    "url": "https://www.githubstatus.com/incidents/qwdwmtqghpk5",
    "date": "Tue, 15 Sep 2026 11:17:22 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "openrouter:1efb2fd531",
@@ -223,7 +335,7 @@
    "url": "https://status.openai.com//incidents/01M2H3J1D6Y7RHAP49GRWGJAY0",
    "date": "Mon, 14 Sep 2026 23:39:21 GMT",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "claude-status:0b3c97b530",
@@ -237,7 +349,7 @@
    "url": "https://status.claude.com/incidents/r1pqn1kb4hvk",
    "date": "Fri, 11 Sep 2026 14:19:51 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "claude-status:da2cac7b30",
@@ -321,7 +433,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/5d71a98734dc6805eb8be6ddaf4247e9048e3831",
    "date": "2026-08-21T05:30:01Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "freebie-repos:172e99bc5e",
@@ -335,7 +447,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/853888f6ac9ba77eb87ef3be2b40c35e553b0401",
    "date": "2026-08-21T05:17:31Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "freebie-repos:5c55fcb85e",
@@ -349,7 +461,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/b0c71b4cdea097c077af917152f36f76bae43d58",
    "date": "2026-08-21T05:15:54Z",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "gh-changelog:b10f778c54",
@@ -419,7 +531,7 @@
    "url": "https://www.githubstatus.com/incidents/0rn90wk115q9",
    "date": "Sun, 13 Sep 2026 10:44:55 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-18"
+   "lastSeen": "2026-09-19"
   },
   {
    "id": "github-status:2117f8cc33",

@@ -18,7 +18,9 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-18",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-19"
  },
  {
   "id": "copilot",
@@ -26,7 +28,7 @@
   "url": "https://docs.github.com/en/copilot/get-started/plans",
   "tier": "official",
   "kind": "page-change",
-  "detected": "2026-09-17",
+  "detected": "2026-09-19",
   "resolved": false
  },
  {
