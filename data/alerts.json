@@ -29,7 +29,9 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-19",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-20"
  },
  {
   "id": "kimi",
@@ -52,5 +54,14 @@
   "resolved": true,
   "resolvedBy": "auto-revert",
   "resolvedAt": "2026-09-18"
+ },
+ {
+  "id": "aliyun-free-quota",
+  "label": "阿里云百炼免费额度说明",
+  "url": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-20",
+  "resolved": false
  }
 ]
