@@ -151,7 +151,9 @@
       "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
       "tier": "official",
       "type": "page",
-      "enabled": true
+      "enabled": true,
+      "hashMonitors": "layout-only",
+      "layoutOnlyReason": "2026-09-20 实测：775 KB 的 HTML 里价格字段命中 0，套餐价为客户端再取。同上，哈希只覆盖版式，不能当作价格在被盯着。"
     },
     {
       "id": "kimi",
@@ -159,7 +161,9 @@
       "url": "https://platform.kimi.com/docs/pricing",
       "tier": "official",
       "type": "page",
-      "enabled": true
+      "enabled": true,
+      "hashMonitors": "layout-only",
+      "layoutOnlyReason": "2026-09-20 实测：253 KB 的 HTML 里没有任何可识别的价格文本（去标签后仅 1370 字符），套餐价由客户端再取。哈希对比只能发现版式/文案改动，价格改了它不会响。"
     },
     {
       "id": "trae",
@@ -175,7 +179,9 @@
       "url": "https://platform.minimaxi.com/document/price",
       "tier": "official",
       "type": "page",
-      "enabled": true
+      "enabled": true,
+      "hashMonitors": "layout-only",
+      "layoutOnlyReason": "2026-09-20 实测：正文含价但是语音套餐（¥630 / ¥5,950 / ¥56,000），与 Coding Plan 档位无关——按价格文本去抽会抽到错的数字，故哈希仅作版式监控。"
     },
     {
       "id": "aliyun-free-quota",

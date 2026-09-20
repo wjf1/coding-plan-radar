@@ -22,8 +22,13 @@
 
 ## 🔄 每日自动更新（GitHub Actions）
 
-仓库每天 **北京时间 09:00**（cron `0 1 * * *` UTC）自动运行 [daily-update.yml](.github/workflows/daily-update.yml)，
-四个任务互相独立、任一失败不影响其余（`continue-on-error`）：
+仓库每天自动运行 [daily-update.yml](.github/workflows/daily-update.yml) 巡检一次。cron 设为 `0 1 * * *`
+（= 北京时间 09:00），但 **GitHub 的定时调度不保证启动时点**——2026-09-15→09-20 六次定时运行实测均在
+05:2x–05:3x UTC（约北京 13:30）才起跑，因此本站只承诺"每天一次"，不承诺"09:00 完成"。
+四个抓取任务互相独立、任一失败不影响其余（`continue-on-error`），跑之前还有一道硬闸：
+
+0. **`node scripts/validate-data.mjs && node --test`** —— 数据契约（每平台必须有合法 `pricedAt`/`pricedBy`）
+   与纯函数层单测；不通过就中止，绝不带着脏数据往下巡检
 
 1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `js/snapshot.js` 兜底快照
 2. **`scripts/check-pages.mjs`** —— 按 `data/sources.json` 对官方定价页/文档做内容哈希变动检测
@@ -43,6 +48,15 @@
   避免动态渲染页面天天误报
 - **不稳定页面自动停用预警**：cursor.com/pricing 实测两次抓取正文长度即不同（渲染变体跳变），
   连续确认后回滚达阈值即标记为「需人工核对」并停止自动告警——宁可承认监控不了，也不刷假警报
+- **区分"源抓不到"与"脚本崩了"**：前者是数据问题，写入 `data/sourcehealth.json` 并在连续 3 天失败时标失效，
+  巡检照常；后者是代码 bug，`scripts/mark-pipeline.mjs` 会把 `data/meta.json` 标为 `pipelineDegraded` 且
+  **不推进"最近巡检"日期**，并让 Actions 运行变红（此前四个步骤全 `continue-on-error` 后无条件写日期，
+  于是"全崩"与"跑成"在页面上长得一样）
+- **哈希监控分两类**：Kimi / GLM 的套餐价不在 HTML 里（客户端再取）、MiniMax 页面含价但属语音套餐，
+  这三页的哈希对比只能发现版式改动、发现不了价格改动，故在 `data/sources.json` 标
+  `"hashMonitors": "layout-only"`，站点显示为「仅版式监控」（虚线灰底），不计入"价格正在被自动盯着"
+- **待办不再隔天消失**：未核实的告警按「当前未决全集」输出到一条常驻 issue（label `daily-triage`），
+  并标注已挂起天数；队列清空时自动关闭
 
 ### 处理「官方页变动」issue 的流程
 
@@ -63,9 +77,12 @@
 ├── index.html              # 页面骨架（对比表 / Token 榜 / 计算器 / IDE 榜 / 白嫖 / 动态 / FAQ）
 ├── css/styles.css          # 全部样式（深色主题，无框架）
 ├── js/
-│   ├── data.js             # ⭐ 订阅计划数据 + IDE 表 + 变更记录（日常改这里）
-│   ├── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/巡检/白嫖/源健康）
+│   ├── data.js             # ⭐ 订阅计划数据 + IDE 表 + 变更记录（日常改这里；每平台带 pricedAt/pricedBy）
+│   ├── freshness.js        # 数据新鲜度纯函数层（零 DOM；浏览器与 node:test 共用同一份源码）
+│   ├── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/巡检/白嫖/源健康/新鲜度）
 │   └── snapshot.js         # models.dev 兜底快照（每日自动重新生成，勿手改）
+├── tests/                  # node:test 用例，零依赖；`node --test` 运行
+│   └── helpers.mjs         # 用 vm 从浏览器脚本里取全局量（本仓库无构建步骤）
 ├── data/
 │   ├── sources.json        # ⭐ 信息源声明清单（唯一事实来源：URL / 分级 / 关键词 / 启用状态与原因）
 │   ├── promos.json         # 人工确认的促销 / 停售记录（驱动「市场动态」时间线）
@@ -75,13 +92,16 @@
 │   ├── sourcehealth.json   # 每源抓取成败（自动维护，站点据此显示「已失效」）
 │   ├── pagehash.json       # 官方页内容哈希基线（自动维护）
 │   ├── pricebase.json      # 价格 / 免费模型基线（自动维护，用于差异检测）
-│   └── meta.json           # 最近巡检日期（自动维护）
+│   └── meta.json           # 最近巡检日期 + pipelineDegraded/failedSteps（自动维护，见 mark-pipeline.mjs）
 ├── scripts/
-│   ├── lib.mjs             # 公用：带 UA/超时抓取、JSON 读写、源健康、极简 RSS 解析、关键词匹配
+│   ├── lib.mjs             # 公用：带 UA/超时抓取、JSON 读写、源健康、极简 RSS 解析、关键词匹配、isMain
+│   ├── validate-data.mjs   # 数据契约校验（pricedAt/pricedBy/srcUrl 必填且合法）
 │   ├── update-snapshot.mjs # 兜底快照
 │   ├── check-pages.mjs     # 官方页哈希巡检 + 源健康
 │   ├── fetch-feeds.mjs     # RSS / JSON 源 → 线索
 │   ├── diff-prices.mjs     # 价格库与免费模型差异检测
+│   ├── mark-pipeline.mjs   # 巡检日期唯一写入点：脚本崩溃则保持旧日期并标 pipelineDegraded
+│   ├── build-triage.mjs    # 生成当前未决清单 → issue-body.md（配合常驻 daily-triage issue）
 │   └── publish-via-api.mjs # 走 GitHub API 发布（github.com 被阻断时替代 git push）
 └── .github/workflows/
     └── daily-update.yml    # 定时任务（cron 09:00 北京时间，可手动触发）

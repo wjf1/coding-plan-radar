@@ -23,76 +23,60 @@ jobs:
         with:
           node-version: 20
 
+      # 数据契约与纯函数层先过闸：字段坏了就别再往下跑，否则新鲜度面板会拿脏值渲染，
+      # 而且后面所有比对都建立在错误基线上。这一步不带 continue-on-error —— 它失败就是硬失败。
+      - name: ⓪ 数据契约校验 + 单元测试
+        run: |
+          node scripts/validate-data.mjs
+          node --test
+
       # 每个抓取任务互相独立：任一源失败不影响其余任务，也不中断整个巡检。
       # 源的成功/失败会写入 data/sourcehealth.json，在站点「信息源健康」里公开可见。
+      # continue-on-error 只用于隔离「单个源抓不到」这类数据问题；脚本自身崩溃是代码 bug，
+      # 由下面的 outcome 汇总负责，见 mark-pipeline.mjs。
 
       - name: ① 重新生成 models.dev 兜底快照
+        id: s_snapshot
         continue-on-error: true
         run: node scripts/update-snapshot.mjs
 
       - name: ② 官方页面变动检测（哈希）
+        id: s_pages
         continue-on-error: true
         run: node scripts/check-pages.mjs
 
       - name: ③ 抓取 changelog / 状态页 / 社区订阅源
+        id: s_feeds
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}   # GitHub API 未认证仅 60 次/小时
         run: node scripts/fetch-feeds.mjs
 
       - name: ④ 价格库与免费模型差异检测
+        id: s_diff
         continue-on-error: true
         run: node scripts/diff-prices.mjs
 
+      # 巡检日期的唯一写入点：有脚本崩溃时保持旧日期并写 pipelineDegraded，绝不推进。
+      # 逐项列举而非 steps.*.outcome 通配 —— Actions 不支持星号展开，写出来会得到字面量，
+      # 降级判定静默失效且不报错，所以宁可啰嗦。
       - name: 写入巡检日期
+        id: meta
         run: |
-          echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
+          CRASHED=""
+          [ "${{ steps.s_snapshot.outcome }}" = "failure" ] && CRASHED="$CRASHED,s_snapshot"
+          [ "${{ steps.s_pages.outcome }}" = "failure" ] && CRASHED="$CRASHED,s_pages"
+          [ "${{ steps.s_feeds.outcome }}" = "failure" ] && CRASHED="$CRASHED,s_feeds"
+          [ "${{ steps.s_diff.outcome }}" = "failure" ] && CRASHED="$CRASHED,s_diff"
+          CRASHED="${CRASHED#,}"
+          node scripts/mark-pipeline.mjs --crashed="$CRASHED"
+          echo "crashed=$CRASHED" >> "$GITHUB_OUTPUT"
 
       # 先生成待处理清单（会写入 data/reported.json 记录"已上报"的线索），
-      # 再提交，最后才开 issue —— 顺序不能颠倒，否则 reported.json 不会被持久化，
-      # 同一条线索就会天天重复开 issue。
+      # 再提交，最后才维护 issue —— 顺序不能颠倒，否则 reported.json 不会被持久化，
+      # 同一条线索就会天天重复上报。逻辑与用例见 scripts/build-triage.mjs。
       - name: 生成待人工处理清单
-        run: |
-          node -e '
-            const fs = require("fs");
-            const read = (p, d) => { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch (e) { return d; } };
-            const today = new Date().toISOString().slice(0, 10);
-            const out = [];
-
-            // 官方页变动 → 待人工核价
-            const alerts = read("data/alerts.json", []).filter(a => !a.resolved && a.detected === today);
-            if (alerts.length) {
-              out.push("### 官方页内容变动，价格待人工核实\n" +
-                alerts.map(a => `- [${a.label}](${a.url}) 检测于 ${a.detected}`).join("\n"));
-            }
-
-            // 机器线索中的官方来源信号 → 待确认后录入 promos.json
-            // 规则：① 排除状态页故障事件（kind=availability），那类不是促销线索，且状态页一忙就天天开单；
-            //       ② 排除社区情报（tier=community），它固定只作线索展示，不进入人工处理队列；
-            //       ③ 每条线索只上报一次（记录在 data/reported.json），避免同一条线索天天开 issue。
-            const reportedPath = "data/reported.json";
-            const reported = read(reportedPath, { ids: [] });
-            const reportedSet = new Set(reported.ids || []);
-            const sig = read("data/signals.json", { items: [] }).items.filter(
-              s => s.tier !== "community" && s.kind !== "availability" && !reportedSet.has(s.id)
-            );
-            if (sig.length) {
-              out.push("### 自动发现的新线索（官方源，需人工确认后才进价格表）\n" +
-                sig.slice(0, 20).map(s => `- [${s.title}](${s.url})　— ${s.sourceLabel}`).join("\n"));
-              reported.ids = [...reportedSet, ...sig.map(s => s.id)];
-              reported.updatedAt = today;
-              fs.writeFileSync(reportedPath, JSON.stringify(reported, null, 1) + "\n", "utf8");
-            }
-
-            // 连续失败的源 → 需要修监控
-            const hs = read("data/sourcehealth.json", { sources: {} }).sources || {};
-            const dead = Object.values(hs).filter(s => s.ok === false && (s.consecutiveFailures || 0) >= 3);
-            if (dead.length) {
-              out.push("### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/sources.json 中修复或停用\n" +
-                dead.map(s => `- ${s.label}（${s.url}）— 最后错误：${s.error || "未知"}`).join("\n"));
-            }
-            fs.writeFileSync("issue-body.md", out.length ? out.join("\n\n") : "", "utf8");
-          '
+        run: node scripts/build-triage.mjs
 
       - name: 提交并推送（触发 Pages 重新发布）
         id: commit
@@ -109,15 +93,38 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: 有待处理事项时开 issue
-        if: steps.commit.outputs.changed == 'true'
+      # 待办收敛为一条常驻 issue（label: daily-triage），而不是每天开一条新的：
+      # 有未决事项就覆盖正文，清空了就把这条关掉。不再受「今天有没有 git 变化」影响——
+      # 队列反映的是现实，不是提交记录。
+      - name: 维护常驻待办 issue
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          gh label create daily-triage --repo "$GITHUB_REPOSITORY" \
+            --color f5b445 --description 自动巡检产生的待人工处理队列 --force >/dev/null 2>&1 || true
+          OPEN=$(gh issue list --repo "$GITHUB_REPOSITORY" --label daily-triage --state open \
+            --json number --jq '.[0].number // empty')
           if [ -s issue-body.md ]; then
-            gh issue create --repo "$GITHUB_REPOSITORY" \
-              --title "每日巡检待处理 $(date -u +%F)" \
-              --body-file issue-body.md
+            printf '%s\n\n<sub>本 issue 由每日自动巡检维护，正文请勿手工编辑；清单为空时会自动关闭。</sub>\n' \
+              "$(cat issue-body.md)" > issue-body.md
+            if [ -n "$OPEN" ]; then
+              gh issue edit "$OPEN" --repo "$GITHUB_REPOSITORY" --body-file issue-body.md
+              echo "已更新常驻 issue #$OPEN"
+            else
+              gh issue create --repo "$GITHUB_REPOSITORY" \
+                --title "巡检待处理队列" --label daily-triage --body-file issue-body.md
+            fi
+          elif [ -n "$OPEN" ]; then
+            gh issue close "$OPEN" --repo "$GITHUB_REPOSITORY" --comment "自动巡检：当前无未决事项。"
+            echo "队列已清空，关闭 #$OPEN"
           else
-            echo "无待人工处理事项（仅有常规数据提交）"
+            echo "无未决事项，无需维护 issue"
           fi
+
+      # 必须放在最后一步：提交与 issue 都要先完成，降级状态得先被持久化下来，
+      # 否则 job 红是红了，仓库里却看不出哪一天没跑成，第二天又「看起来正常」。
+      - name: 有脚本崩溃时以失败收尾
+        if: steps.meta.outputs.crashed != ''
+        run: |
+          echo "::error::以下巡检脚本崩溃，data/meta.json 已标记 pipelineDegraded：${{ steps.meta.outputs.crashed }}"
+          exit 1
