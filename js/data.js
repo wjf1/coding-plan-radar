@@ -29,6 +29,8 @@ const PLAN_DATA = [
     srcType:"official", srcLabel:"官方直采 + 聚合补全",
     srcUrl:"https://openai.com/chatgpt/pricing/",
     srcNote:"官方页 2026-09-13 采集；Go 档价格参考 codingplan.org",
+    pricedAt:"2026-09-13",
+    pricedBy:"human",
     note:"Go 档价格在官方页为动态展示，以结账页为准"
   },
   {
@@ -44,6 +46,8 @@ const PLAN_DATA = [
     tags:["Claude Code 全付费档含","Cowork / Design","Extended Thinking","MCP"],
     srcType:"official", srcLabel:"官方直采",
     srcUrl:"https://claude.com/pricing", srcNote:"claude.com/pricing · 2026-09-13",
+    pricedAt:"2026-09-13",
+    pricedBy:"human",
     note:"所有付费计划均含 Claude Code，与聊天共享用量池"
   },
   {
@@ -58,6 +62,8 @@ const PLAN_DATA = [
     tags:["VS Code / JetBrains","Copilot Agent","模型自选","AI Credits 计量"],
     srcType:"official", srcLabel:"官方直采",
     srcUrl:"https://github.com/features/copilot/plans", srcNote:"github.com/features/copilot/plans · 2026-09-13",
+    pricedAt:"2026-09-13",
+    pricedBy:"human",
     note:"Business/Enterprise 档价格未在抓取页直列，标注为常见价，以官网为准"
   },
   {
@@ -72,6 +78,8 @@ const PLAN_DATA = [
     tags:["Agent 重度","Bugbot","云端 Agent","MCP / Skills"],
     srcType:"official", srcLabel:"官方直采",
     srcUrl:"https://cursor.com/pricing", srcNote:"cursor.com/pricing · 2026-09-13",
+    pricedAt:"2026-09-13",
+    pricedBy:"human",
     note:"学生认证可免费用一年 Pro"
   },
   {
@@ -87,6 +95,8 @@ const PLAN_DATA = [
     tags:["性价比之王","多模型轮换","限时 4× 额度"],
     srcType:"agg", srcLabel:"聚合参考",
     srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31）；4× 活动原始出处为社区视频、已从本站移除，正由官方渠道重新确认",
+    pricedAt:"2026-08-31",
+    pricedBy:"human",
     note:"当前促销期内性价比突出；活动 9/20 结束"
   },
   {
@@ -102,6 +112,8 @@ const PLAN_DATA = [
     tags:["20+ 编程工具适配","Claude Code / Codex / ZCode","非高峰 5 折"],
     srcType:"official", srcLabel:"官方直采（转述）",
     srcUrl:"https://bigmodel.cn/glm-coding", srcNote:"bigmodel.cn/glm-coding + docs.bigmodel.cn · 2026-09-13",
+    pricedAt:"2026-09-13",
+    pricedBy:"human",
     note:"2026-08 起改为 Token 积分制；老用户 Max 权益保留。三周期数据为旧版次数制口径"
   },
   {
@@ -117,6 +129,8 @@ const PLAN_DATA = [
     tags:["音乐五档命名","1M 上下文","长任务友好"],
     srcType:"agg", srcLabel:"聚合参考",
     srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31），以 platform.moonshot 官网为准",
+    pricedAt:"2026-08-31",
+    pricedBy:"human",
     note:"档位多、梯度细，可按用量精确定档"
   },
   {
@@ -132,6 +146,8 @@ const PLAN_DATA = [
     tags:["月度大 Token 包","多模态语音","月倍率最高","52.6 TPS"],
     srcType:"agg", srcLabel:"聚合参考",
     srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31），以官网为准",
+    pricedAt:"2026-08-31",
+    pricedBy:"human",
     note:"按月 Token 计量，口径直观，适合批量脚本型任务"
   },
   {
@@ -147,6 +163,8 @@ const PLAN_DATA = [
     tags:["夜间 22–8 点五折","通义 + DeepSeek 双系"],
     srcType:"agg", srcLabel:"聚合参考",
     srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31），以阿里云官网为准",
+    pricedAt:"2026-08-31",
+    pricedBy:"human",
     note:"页面标价为限时活动价，原价见括号"
   },
   {
@@ -162,6 +180,8 @@ const PLAN_DATA = [
     tags:["首购超低价","Auto 模式","豆包系","86.6 TPS 最快"],
     srcType:"agg", srcLabel:"聚合参考",
     srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31），以火山引擎官网为准",
+    pricedAt:"2026-08-31",
+    pricedBy:"human",
     note:"首购价适合低成本尝鲜，续费恢复刊例价"
   },
   {
@@ -177,6 +197,8 @@ const PLAN_DATA = [
     tags:["年额度包","夜间 0.8×","全模态"],
     srcType:"agg", srcLabel:"聚合参考",
     srcUrl:"https://codingplan.org/", srcNote:"codingplan.org（2026-08-31），以小米官网为准",
+    pricedAt:"2026-08-31",
+    pricedBy:"human",
     note:"按年度 Credit 总量计，适合用量可预期的用户"
   },
   {
@@ -191,6 +213,8 @@ const PLAN_DATA = [
     tags:["停售","不推荐新购","老用户可退款"],
     srcType:"agg", srcLabel:"社区情报（待重新核实）",
     srcUrl:"https://codingplan.org/", srcNote:"停售信息原始出处为社区视频、已从本站移除；未找到可核验的官方公告，标注待重新核实",
+    pricedAt:"2026-08-31",
+    pricedBy:"human",
     note:"已订阅用户若觉得模型速度慢可申请退款"
   }
 ];

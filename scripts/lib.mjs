@@ -1,12 +1,21 @@
 // 公用工具：带 UA/超时的抓取、JSON 读写、源健康记录
 // 所有脚本共用，保证「源失效不再静默」这一条在所有管道里一致生效。
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 export const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodingPlanRadar/1.0 (+https://wjf1.github.io/coding-plan-radar/)";
 export const TIMEOUT_MS = 25000;
 export const today = () => new Date().toISOString().slice(0, 10);
+
+/**
+ * 判断「本模块是否作为主脚本被直接运行」，用于让同一个 .mjs 既能被 import 复用又能单独跑。
+ * 不能用字符串比较 import.meta.url 与 argv[1]：Windows 下前者是 file:///F:/... 后者是 F:\...，
+ * 永远不相等，于是本地（Windows）能跑、CI（Linux）跑不通的判定会静默失效。
+ */
+export const isMain = (importMetaUrl) =>
+  !!process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(importMetaUrl));
 
 export const readJSON = (p, fallback) => {
   try {

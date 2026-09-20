@@ -34,7 +34,10 @@
       <a href="#repos">同类项目</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <div class="updated-pill">数据更新：2026-09-13 · <span id="auto-pill">自动巡检：…</span></div>
+    <div class="pillwrap">
+      <div class="updated-pill" id="auto-wrap"><span id="auto-pill">自动巡检：…</span></div>
+      <span id="fresh-pill"></span>
+    </div>
   </div>
 </header>
 
@@ -47,7 +50,7 @@
       <div class="stat"><b id="st-tier">33</b><small>付费档位</small></div>
       <div class="stat"><b id="st-models">60+</b><small>实时模型价格</small></div>
       <div class="stat"><b id="st-free">15</b><small>免费/白嫖额度</small></div>
-      <div class="stat"><b>每天 09:00</b><small>自动巡检</small></div>
+      <div class="stat"><b>每天一次</b><small>自动巡检</small></div>
     </div>
   </div>
 </div>
@@ -244,6 +247,9 @@
     <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">🔎 自动发现的线索（机器产出，未经人工确认）</h2></div>
     <div class="policy" id="signal-queue"></div>
 
+    <div class="sec-head" style="margin-top:36px" id="freshness"><h2 style="font-size:19px">🗓 数据新鲜度</h2></div>
+    <div id="freshness-box"></div>
+
     <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">🩺 信息源健康</h2></div>
     <div id="source-health"></div>
 
@@ -269,13 +275,13 @@
       <div class="ans">额度口径 = 平台怎么计费：Claude 按「5 小时滚动会话 + 每周上限」、Cursor 按模型用量金额、Copilot 按 Premium Requests / AI Credits、国内多为积分 / Token 配额。额度倍率 = 把额度折算成钱再除以月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 的方法论），倍率越高名义性价比越高；但 MiniMax 月倍率 88.65× 最高、其 5h 周期倍率却一般——请按自己的使用节奏对号入座。</div>
     </details>
     <details><summary>Token 实时价格榜的数据从哪来？会不会是假的？</summary>
-      <div class="ans">浏览器直接从 <a href="https://models.dev/api.json" target="_blank">models.dev/api.json</a> 拉取（GitHub 开源项目 sst/models.dev，社区持续提交、CDN 分发，返回体带 CORS 全开放头）。拉取成功时页面显示绿色圆点和拉取时间；网络失败时自动降级到内置快照（黄色圆点，快照日期 2026-09-13），绝不伪造"实时"假象。</div>
+      <div class="ans">浏览器直接从 <a href="https://models.dev/api.json" target="_blank">models.dev/api.json</a> 拉取（GitHub 开源项目 sst/models.dev，社区持续提交、CDN 分发，返回体带 CORS 全开放头）。拉取成功时页面显示绿色圆点和拉取时间；网络失败时自动降级到内置快照（黄色圆点，并标注该快照的生成日期），绝不伪造"实时"假象。</div>
     </details>
     <details><summary>价格会变吗？以哪个页面为准？</summary>
       <div class="ans">会。AI 订阅价格与额度调整非常频繁（如 GLM 2026 年内就经历了次数制 → 积分制整体改版）。本站价格仅供决策参考，<b>付款前请务必以平台官网为准</b>；每个卡片底部附有来源链接与采集日期。</div>
     </details>
     <details><summary>数据多久更新一次？怎么保证真实性？</summary>
-      <div class="ans">① <b>每天 09:00</b>（北京时间）GitHub Actions 自动巡检：重生成 models.dev 兜底快照、对官方定价页做内容哈希变动检测、抓取官方 changelog / 状态页与公开社区订阅源、对比价格库与 OpenRouter 免费模型清单；② 官方页或价格库有变动，<b>自动挂「待核实」并开 issue</b>，人工核价后才改表；③ <b>模型 API 价格</b>每次打开页面实时拉取 models.dev（缓存 24 小时）；④ 来源分级：官方直采（绿标）&gt; 实时数据源（青标）&gt; 聚合参考（蓝标）&gt; 社区情报（黄标，仅作线索）。<b>每个源的抓取成败都公开在「市场动态 → 信息源健康」</b>，连续失败会标注为已失效——不做假巡检。</div>
+      <div class="ans">① <b>每天自动巡检一次</b>（GitHub Actions；cron 设为北京 09:00，但 GitHub 的定时调度<b>不保证启动时点</b>，2026-09-15→09-20 六次实测均在约 13:30 起跑，故本站只承诺"每天一次"）：重生成 models.dev 兜底快照、对官方定价页做内容哈希变动检测、抓取官方 changelog / 状态页与公开社区订阅源、对比价格库与 OpenRouter 免费模型清单；② 官方页或价格库有变动，<b>自动挂「待核实」并并入常驻待办 issue</b>（未核实的事项会一直留在队列里，不会隔天消失），人工核价后才改表；③ <b>模型 API 价格</b>每次打开页面实时拉取 models.dev（缓存 24 小时）；④ 来源分级：官方直采（绿标）&gt; 实时数据源（青标）&gt; 聚合参考（蓝标）&gt; 社区情报（黄标，仅作线索）。<b>每个源的抓取成败都公开在「市场动态 → 信息源健康」</b>，连续失败会标注为已失效——不做假巡检。</div>
     </details>
     <details><summary>按量计费和订阅到底怎么选？</summary>
       <div class="ans">用上面的 Token 实时价格榜估算：轻度用户（每月折算 API 费 &lt; $10）选按量计费更便宜，如 DeepSeek V4 Flash（输出 $0.6/M）；中重度用户（每天数小时 Agent）订阅几乎必赢——Claude Pro 倍率 63.6× 意味着同等 API 用量要花 $1,272。处于中间地带就选 $10–20 档订阅 + 超出按量的混合模式（Cursor / Copilot 均支持）。</div>
@@ -300,8 +306,9 @@
       </div>
       <div class="pol"><div class="ico">🗓️</div><h4>更新频率</h4>
         <ul>
-          <li><b>每天 09:00</b>：GitHub Actions 自动巡检——重生成 models.dev 兜底快照、对官方定价页做哈希变动检测、抓取官方 changelog / 状态页 / 社区订阅源、对比价格库与免费模型清单</li>
-          <li><b>官方页有变动</b>：自动挂「待核实」横幅并开 issue，人工核价后才改表</li>
+          <li><b>本站数据分两类，更新节奏不同</b>：<b>人工核价</b>（订阅价格、额度、倍率）与<b>每日自动巡检</b>（Token 实时价、线索队列、信息源健康）。首页顶部因此拆成两枚胶囊分别标注，每个平台的核价时间与出处见「市场动态 → 数据新鲜度」</li>
+          <li><b>每天自动巡检一次</b>：cron 设为北京 09:00，但 GitHub 的定时调度<b>不保证启动时点</b>（六次实测均在约 13:30 起跑），故只承诺"每天一次"</li>
+          <li><b>官方页有变动</b>：自动挂「待核实」并并入常驻待办 issue（未核实的一直留在队列里），人工核价后才改表</li>
           <li><b>每次打开</b>：Token 价格榜实时拉取 models.dev（本地缓存 24h）</li>
           <li><b>随时</b>：促销、涨价、停售等重大变动，人工确认后录入「市场动态」</li>
         </ul>
@@ -320,6 +327,8 @@
           <li>失败不做静默跳过：早期版本曾因页面改版导致 2 个监控点长期失效而无人知晓，现已修复</li>
           <li><b>抓不到的源就承认抓不到</b>：LINUX DO 与 V2EX 经双环境实测（大陆线路 + GitHub Actions 海外出口）均无法获取——前者 403 Cloudflare、后者空响应，属数据中心 IP 被拦截，自建服务器同样无效，已停用并改为人工巡览</li>
           <li>JS 渲染的空壳页面（Qoder / CodeBuddy / 火山方舟计费页）明确标注为不可自动监控，不做假巡检</li>
+          <li><b>「抓到了」不等于「盯着价格」</b>：Kimi、GLM 的套餐价不在 HTML 里（客户端再取），MiniMax 页面含价但属语音套餐——这三页的哈希对比只能发现版式改动，发现不了价格改动，在信息源健康里标为<b>仅版式监控</b>（虚线灰底），不计入"价格正在被自动盯着"</li>
+          <li><b>区分"源抓不到"与"脚本崩了"</b>：前者是数据问题，记进信息源健康并在连续 3 天失败时标失效；后者是代码 bug，会把巡检标记为降级、<b>不推进"最近巡检"日期</b>，并让 Actions 运行变红</li>
           <li><b>变动需二次确认</b>：页面内容变了不算数，要下一次巡检仍是同一个新值才告警（代价是真实变动晚一天），避免动态渲染页面天天误报</li>
           <li><b>不稳定页面自动停用预警</b>：如 cursor.com/pricing 实测两次抓取正文长度都不同（渲染变体跳变），会被标记为「需人工核对」并停止自动告警</li>
         </ul>
@@ -339,7 +348,7 @@
 
 <footer>
   <div class="wrap">
-    <div>CodingPlan Radar · AI 编程订阅计划对比 · 数据更新 2026-09-13</div>
+    <div>CodingPlan Radar · AI 编程订阅计划对比 · 数据分「人工核价」与「每日自动巡检」两类，详见 市场动态 → 数据新鲜度</div>
     <div>官方来源：claude.com · docs.github.com · cursor.com · docs.bigmodel.cn · platform.kimi.com　实时源：models.dev / OpenRouter　方法论：awesome-coding-plan（GitHub）</div>
   </div>
   <div class="wrap disclaimer">本站为静态信息聚合页面，与所列平台无商业关系；所有商标归各自所有者。</div>
@@ -347,6 +356,7 @@
 
 <script src="js/snapshot.js"></script>
 <script src="js/data.js"></script>
+<script src="js/freshness.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

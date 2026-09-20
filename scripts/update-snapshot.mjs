@@ -37,5 +37,7 @@ const uniq = rows
 
 const today = new Date().toISOString().slice(0,10);
 const banner = `// 内置兜底快照：models.dev 第一方供应商编码模型 API 价格（$/百万Token）\n// 快照日期 ${today}（GitHub Actions 每日自动重新生成）。实时数据拉取失败时使用。\n`;
-writeFileSync("js/snapshot.js", banner + "const MODEL_SNAPSHOT=" + JSON.stringify(uniq) + ";");
+// 日期必须同时以变量形式导出：只写在注释里的话前端读不到，app.js 的降级提示就只能把日期写死，
+// 于是每天重新生成快照后，那句"已降级为内置快照（YYYY-MM-DD）"都会比真实快照更旧。
+writeFileSync("js/snapshot.js", banner + `const MODEL_SNAPSHOT_DATE="${today}";\n` + "const MODEL_SNAPSHOT=" + JSON.stringify(uniq) + ";");
 console.log(`snapshot: ${uniq.length} models, date ${today}`);
