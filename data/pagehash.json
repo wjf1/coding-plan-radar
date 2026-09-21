@@ -33,28 +33,29 @@
    "f0accd8e1d52",
    "3a67767c1dcc"
   ],
-  "pending": "91adaabc1fb2",
+  "pending": "f0accd8e1d52",
   "pendingSince": "2026-09-14"
  },
  "glm": {
   "hash": "035b26d4b76",
   "seen": [
-   "035b26d4b76"
+   "035b26d4b76",
+   "9ecfb248af3"
   ],
-  "flaps": 0
+  "flaps": 0,
+  "pending": "9ecfb248af3",
+  "pendingSince": "2026-09-21"
  },
  "kimi": {
-  "hash": "c3990aea451",
+  "hash": "6460286555a",
   "seen": [
    "d596a35940f",
    "c3990aea451",
    "6460286555a"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-17",
-  "revertCount": 1,
-  "pending": "6460286555a",
-  "pendingSince": "2026-09-20"
+  "changedAt": "2026-09-21",
+  "revertCount": 1
  },
  "trae": {
   "hash": "61b47adb196",
@@ -70,9 +71,12 @@
  "minimax": {
   "hash": "99a05bfa5df",
   "seen": [
-   "99a05bfa5df"
+   "99a05bfa5df",
+   "7cc58f655df"
   ],
-  "flaps": 0
+  "flaps": 0,
+  "pending": "7cc58f655df",
+  "pendingSince": "2026-09-21"
  },
  "aliyun-free-quota": {
   "hash": "b862acbe1ad3",
@@ -81,16 +85,20 @@
    "b862acbe1ad3"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-20"
+  "changedAt": "2026-09-20",
+  "revertCount": 1
  },
  "aliyun-university": {
   "hash": "922fc4e42588",
   "seen": [
    "f9f610c22572",
-   "922fc4e42588"
+   "922fc4e42588",
+   "310f7285258c"
   ],
   "flaps": 0,
   "changedAt": "2026-09-17",
-  "revertCount": 1
+  "revertCount": 1,
+  "pending": "310f7285258c",
+  "pendingSince": "2026-09-21"
  }
 }

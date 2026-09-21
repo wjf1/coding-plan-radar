@@ -1,6 +1,20 @@
 {
- "generatedAt": "2026-09-20",
+ "generatedAt": "2026-09-21",
  "items": [
+  {
+   "id": "github-status:c82849a033",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Pull Requests",
+   "excerpt": "<p> <small>Sep <var data-var=&apos;date&apos;>20</var>, <var data-var=&apos;time&apos;>23:22</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as s…",
+   "url": "https://www.githubstatus.com/incidents/f6yrxnz5f7bs",
+   "date": "Sun, 20 Sep 2026 23:22:16 +0000",
+   "firstSeen": "2026-09-21",
+   "lastSeen": "2026-09-21"
+  },
   {
    "id": "ithome:2ba0642f24",
    "source": "ithome",
@@ -55,7 +69,7 @@
    "url": "https://github.blog/changelog/2026-09-18-copilot-code-review-an-improved-review-experience",
    "date": "Fri, 18 Sep 2026 20:17:22 +0000",
    "firstSeen": "2026-09-19",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "gh-changelog:0493720554",
@@ -69,7 +83,7 @@
    "url": "https://github.blog/changelog/2026-09-18-github-copilot-weekly-releases-september-14",
    "date": "Fri, 18 Sep 2026 19:21:22 +0000",
    "firstSeen": "2026-09-19",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "gh-changelog:d9baa2af6e",
@@ -83,7 +97,7 @@
    "url": "https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october",
    "date": "Fri, 18 Sep 2026 19:00:00 +0000",
    "firstSeen": "2026-09-19",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "ithome:3d03604a24",
@@ -167,7 +181,7 @@
    "url": "https://github.blog/changelog/2026-09-17-copilot-impact-dashboard-now-shows-feature-engagement",
    "date": "Thu, 17 Sep 2026 21:47:27 +0000",
    "firstSeen": "2026-09-18",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "gh-changelog:89cde4de60",
@@ -181,7 +195,7 @@
    "url": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api",
    "date": "Thu, 17 Sep 2026 21:08:50 +0000",
    "firstSeen": "2026-09-18",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "github-status:adc90ae833",
@@ -195,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/nvy2q96mcmyg",
    "date": "Thu, 17 Sep 2026 21:49:01 +0000",
    "firstSeen": "2026-09-18",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "ithome:3655260924",
@@ -265,7 +279,7 @@
    "url": "https://www.githubstatus.com/incidents/nlxnbqnkdzdl",
    "date": "Wed, 16 Sep 2026 17:48:49 +0000",
    "firstSeen": "2026-09-17",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "ithome:6b69935324",
@@ -307,7 +321,7 @@
    "url": "https://www.githubstatus.com/incidents/bk7zgdcq7s9t",
    "date": "Tue, 15 Sep 2026 20:00:50 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "github-status:081248a433",
@@ -321,7 +335,7 @@
    "url": "https://www.githubstatus.com/incidents/qwdwmtqghpk5",
    "date": "Tue, 15 Sep 2026 11:17:22 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "openrouter:1efb2fd531",
@@ -377,7 +391,7 @@
    "url": "https://status.openai.com//incidents/01M2H3J1D6Y7RHAP49GRWGJAY0",
    "date": "Mon, 14 Sep 2026 23:39:21 GMT",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "claude-status:0b3c97b530",
@@ -391,7 +405,7 @@
    "url": "https://status.claude.com/incidents/r1pqn1kb4hvk",
    "date": "Fri, 11 Sep 2026 14:19:51 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "claude-status:da2cac7b30",
@@ -573,7 +587,7 @@
    "url": "https://www.githubstatus.com/incidents/0rn90wk115q9",
    "date": "Sun, 13 Sep 2026 10:44:55 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-20"
+   "lastSeen": "2026-09-21"
   },
   {
    "id": "github-status:2117f8cc33",

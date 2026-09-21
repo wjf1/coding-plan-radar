@@ -62,6 +62,17 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-20",
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-21"
+ },
+ {
+  "id": "kimi",
+  "label": "Kimi 开放平台定价文档",
+  "url": "https://platform.kimi.com/docs/pricing",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-21",
   "resolved": false
  }
 ]
