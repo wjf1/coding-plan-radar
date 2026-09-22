@@ -73,6 +73,26 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-21",
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-22"
+ },
+ {
+  "id": "minimax",
+  "label": "MiniMax 平台定价文档",
+  "url": "https://platform.minimaxi.com/document/price",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-22",
+  "resolved": false
+ },
+ {
+  "id": "aliyun-university",
+  "label": "阿里云云工开物（学生权益）",
+  "url": "https://university.aliyun.com/",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-22",
   "resolved": false
  }
 ]

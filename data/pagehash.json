@@ -18,11 +18,14 @@
    "a9a0523c57c3",
    "f354549357e4",
    "631a31e1578b",
-   "c3057b5c57a4"
+   "c3057b5c57a4",
+   "e4b96d355615"
   ],
   "flaps": 0,
   "changedAt": "2026-09-19",
-  "revertCount": 1
+  "revertCount": 1,
+  "pending": "e4b96d355615",
+  "pendingSince": "2026-09-22"
  },
  "cursor": {
   "unstable": true,
@@ -40,10 +43,11 @@
   "hash": "035b26d4b76",
   "seen": [
    "035b26d4b76",
-   "9ecfb248af3"
+   "9ecfb248af3",
+   "0ad355dfbad"
   ],
-  "flaps": 0,
-  "pending": "9ecfb248af3",
+  "flaps": 1,
+  "pending": "0ad355dfbad",
   "pendingSince": "2026-09-21"
  },
  "kimi": {
@@ -55,7 +59,8 @@
   ],
   "flaps": 0,
   "changedAt": "2026-09-21",
-  "revertCount": 1
+  "revertCount": 2,
+  "unstable": true
  },
  "trae": {
   "hash": "61b47adb196",
@@ -69,36 +74,36 @@
   "revertCount": 1
  },
  "minimax": {
-  "hash": "99a05bfa5df",
+  "hash": "7cc58f655df",
   "seen": [
    "99a05bfa5df",
    "7cc58f655df"
   ],
   "flaps": 0,
-  "pending": "7cc58f655df",
-  "pendingSince": "2026-09-21"
+  "changedAt": "2026-09-22"
  },
  "aliyun-free-quota": {
   "hash": "b862acbe1ad3",
   "seen": [
    "d08c06691ad5",
-   "b862acbe1ad3"
+   "b862acbe1ad3",
+   "636342be1af9"
   ],
   "flaps": 0,
   "changedAt": "2026-09-20",
-  "revertCount": 1
+  "revertCount": 1,
+  "pending": "636342be1af9",
+  "pendingSince": "2026-09-22"
  },
  "aliyun-university": {
-  "hash": "922fc4e42588",
+  "hash": "310f7285258c",
   "seen": [
    "f9f610c22572",
    "922fc4e42588",
    "310f7285258c"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-17",
-  "revertCount": 1,
-  "pending": "310f7285258c",
-  "pendingSince": "2026-09-21"
+  "changedAt": "2026-09-22",
+  "revertCount": 1
  }
 }
