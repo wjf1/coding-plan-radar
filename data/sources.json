@@ -2,12 +2,23 @@
   "_note": "信息源声明清单（唯一事实来源）。scripts/*.mjs 一律读本文件，不再硬编码 URL。type: feed=RSS/Atom 订阅源 | page=页面内容哈希监控 | api=JSON 接口差异检测。tier: official=官方直采 | realtime=实时数据源 | agg=聚合参考 | community=社区情报（仅进动态区）。enabled=false 表示暂不抓取，reason 说明原因——被禁用的源仍会显示在站点「数据说明」里，不做静默隐藏。",
   "_keywordNote": "keywords 为整词匹配（英文短词加词边界 + 允许复数），因此请写完整单词如 pricing/deprecation，不要写 pric/deprecat 这类前缀，否则不会命中；中文按包含匹配。留空数组表示不过滤。",
   "tiers": {
-    "official": { "label": "官方直采", "color": "var(--ok)" },
-    "realtime": { "label": "实时数据源", "color": "var(--accent2)" },
-    "agg": { "label": "聚合参考", "color": "#9db9ff" },
-    "community": { "label": "社区情报", "color": "var(--warn)" }
+    "official": {
+      "label": "官方直采",
+      "color": "var(--ok)"
+    },
+    "realtime": {
+      "label": "实时数据源",
+      "color": "var(--accent2)"
+    },
+    "agg": {
+      "label": "聚合参考",
+      "color": "#9db9ff"
+    },
+    "community": {
+      "label": "社区情报",
+      "color": "var(--warn)"
+    }
   },
-
   "feeds": [
     {
       "id": "gh-changelog",
@@ -15,7 +26,32 @@
       "url": "https://github.blog/changelog/feed/",
       "tier": "official",
       "type": "feed",
-      "keywords": ["copilot", "plan", "pricing", "price", "billing", "credit", "quota", "premium request", "deprecation", "deprecated", "usage"],
+      "keywords": [
+        "copilot",
+        "plan",
+        "pricing",
+        "price",
+        "billing",
+        "credit",
+        "quota",
+        "premium request",
+        "deprecation",
+        "deprecated",
+        "usage"
+      ],
+      "excludeKeywords": [
+        "actions",
+        "packages",
+        "security advisory",
+        "secret scanning",
+        "dependabot",
+        "codespaces",
+        "issues",
+        "discussions",
+        "profile",
+        "sponsors",
+        "pages"
+      ],
       "maxAgeDays": 30,
       "enabled": true
     },
@@ -25,7 +61,16 @@
       "url": "https://cursor.com/changelog/rss.xml",
       "tier": "official",
       "type": "feed",
-      "keywords": ["pricing", "price", "plan", "billing", "usage", "limit", "quota", "credit"],
+      "keywords": [
+        "pricing",
+        "price",
+        "plan",
+        "billing",
+        "usage",
+        "limit",
+        "quota",
+        "credit"
+      ],
       "maxAgeDays": 45,
       "enabled": true
     },
@@ -35,7 +80,16 @@
       "url": "https://openai.com/news/rss.xml",
       "tier": "official",
       "type": "feed",
-      "keywords": ["pricing", "subscription", "plan", "credit", "usage limit", "rate limit", "deprecation", "deprecated"],
+      "keywords": [
+        "pricing",
+        "subscription",
+        "plan",
+        "credit",
+        "usage limit",
+        "rate limit",
+        "deprecation",
+        "deprecated"
+      ],
       "maxAgeDays": 14,
       "enabled": true
     },
@@ -45,7 +99,14 @@
       "url": "https://status.claude.com/history.rss",
       "tier": "official",
       "type": "feed",
-      "keywords": ["incident", "outage", "degraded", "degradation", "limit", "usage"],
+      "keywords": [
+        "incident",
+        "outage",
+        "degraded",
+        "degradation",
+        "limit",
+        "usage"
+      ],
       "kind": "availability",
       "maxAgeDays": 14,
       "enabled": true,
@@ -57,7 +118,12 @@
       "url": "https://status.openai.com/history.rss",
       "tier": "official",
       "type": "feed",
-      "keywords": ["incident", "outage", "degraded", "degradation"],
+      "keywords": [
+        "incident",
+        "outage",
+        "degraded",
+        "degradation"
+      ],
       "kind": "availability",
       "maxAgeDays": 14,
       "enabled": true
@@ -68,7 +134,13 @@
       "url": "https://www.githubstatus.com/history.rss",
       "tier": "official",
       "type": "feed",
-      "keywords": ["incident", "outage", "degraded", "degradation", "copilot"],
+      "keywords": [
+        "incident",
+        "outage",
+        "degraded",
+        "degradation",
+        "copilot"
+      ],
       "kind": "availability",
       "maxAgeDays": 14,
       "enabled": true
@@ -79,7 +151,21 @@
       "url": "https://linux.do/latest.rss",
       "tier": "community",
       "type": "feed",
-      "keywords": ["claude", "cursor", "copilot", "codex", "glm", "kimi", "优惠", "免费", "额度", "订阅", "涨价", "停售", "封号"],
+      "keywords": [
+        "claude",
+        "cursor",
+        "copilot",
+        "codex",
+        "glm",
+        "kimi",
+        "优惠",
+        "免费",
+        "额度",
+        "订阅",
+        "涨价",
+        "停售",
+        "封号"
+      ],
       "maxAgeDays": 3,
       "enabled": false,
       "reason": "2026-09-14 双环境实测均失败：本机（中国大陆线路）超时；GitHub Actions 海外出口返回 HTTP 403（Cloudflare 拦截数据中心 IP）。因此这不是翻墙问题，自建 VPS 也解决不了——属 IP 信誉层面的拦截，需住宅代理或人工访问。已停用，避免站点长期挂一个「已失效」的源。",
@@ -91,7 +177,20 @@
       "url": "https://www.v2ex.com/feed/tab/hot.xml",
       "tier": "community",
       "type": "feed",
-      "keywords": ["claude", "cursor", "copilot", "codex", "glm", "kimi", "优惠", "免费", "额度", "订阅", "涨价", "合租"],
+      "keywords": [
+        "claude",
+        "cursor",
+        "copilot",
+        "codex",
+        "glm",
+        "kimi",
+        "优惠",
+        "免费",
+        "额度",
+        "订阅",
+        "涨价",
+        "合租"
+      ],
       "maxAgeDays": 3,
       "enabled": false,
       "reason": "2026-09-14 双环境实测均失败：本机超时；GitHub Actions 海外出口返回 HTTP 200 但响应体为空（接口按 IP 限流/拦截数据中心 IP）。同 LINUX DO，自建 VPS 无法解决。已停用，建议人工定期巡览。",
@@ -103,7 +202,16 @@
       "url": "https://sspai.com/feed",
       "tier": "community",
       "type": "feed",
-      "keywords": ["claude", "cursor", "copilot", "chatgpt", "订阅", "优惠", "免费额度", "涨价"],
+      "keywords": [
+        "claude",
+        "cursor",
+        "copilot",
+        "chatgpt",
+        "订阅",
+        "优惠",
+        "免费额度",
+        "涨价"
+      ],
       "maxAgeDays": 7,
       "enabled": true
     },
@@ -113,20 +221,56 @@
       "url": "https://www.ithome.com/rss/",
       "tier": "community",
       "type": "feed",
-      "keywords": ["订阅", "涨价", "降价", "免费额度", "优惠", "套餐", "价格调整"],
+      "keywords": [
+        "订阅",
+        "涨价",
+        "降价",
+        "免费额度",
+        "优惠",
+        "套餐",
+        "价格调整"
+      ],
+      "excludeKeywords": [
+        "手机",
+        "汽车",
+        "平板",
+        "耳机",
+        "手表",
+        "电视",
+        "冰箱",
+        "洗衣机",
+        "空调",
+        "小米",
+        "华为",
+        "苹果",
+        "iPhone",
+        "Android",
+        "iOS",
+        "评测",
+        "开箱",
+        "跑分",
+        "相机",
+        "拍照",
+        "续航",
+        "屏幕",
+        "芯片",
+        "处理器",
+        "发布会"
+      ],
       "maxAgeDays": 3,
       "enabled": true
     }
   ],
-
   "pages": [
     {
       "id": "claude",
       "label": "Claude 官方定价页",
       "url": "https://claude.com/pricing",
       "tier": "official",
-      "type": "page",
-      "enabled": true
+      "type": "page-unreliable",
+      "enabled": false,
+      "reason": "2026-09-23 评估：该页面对机器人返回 Cloudflare 反爬挑战页（cf-browser-verification / Just a moment...），GitHub Actions 海外出口与本机均持续触发浏览器验证。属反爬机制而非结构变更，改为 page-unreliable 停止哈希监控，避免无限 unstable 状态；价格变动改由 RSS/官方 changelog + 人工核价捕获。",
+      "note": "已停止自动哈希监控；价格变动依赖官方 RSS + 人工复核"
     },
     {
       "id": "copilot",
@@ -142,8 +286,10 @@
       "label": "Cursor 官方定价页",
       "url": "https://cursor.com/pricing",
       "tier": "official",
-      "type": "page",
-      "enabled": true
+      "type": "page-unreliable",
+      "enabled": false,
+      "reason": "2026-09-23 评估：该页面对机器人返回 Cloudflare 反爬挑战页（cf-browser-verification / Just a moment...），GitHub Actions 海外出口与本机均持续触发浏览器验证。属反爬机制而非结构变更，改为 page-unreliable 停止哈希监控，避免无限 unstable 状态；价格变动改由 RSS/官方 changelog + 人工核价捕获。",
+      "note": "已停止自动哈希监控；价格变动依赖官方 RSS + 人工复核"
     },
     {
       "id": "glm",
@@ -202,9 +348,73 @@
       "tier": "official",
       "type": "page",
       "enabled": true
+    },
+    {
+      "id": "baidu-qianfan",
+      "label": "百度千帆 Token Plan 文档",
+      "url": "https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Blfmc9dlf",
+      "tier": "official",
+      "type": "page",
+      "enabled": true,
+      "note": "计费概述页，含 Token Plan 个人版定价"
+    },
+    {
+      "id": "iflytek-tokenplan",
+      "label": "讯飞星辰 Token Plan 文档",
+      "url": "https://www.xfyun.cn/doc/spark/TokenPlan.html",
+      "tier": "official",
+      "type": "page",
+      "enabled": true,
+      "note": "Token Plan 套餐与计费官方文档"
+    },
+    {
+      "id": "tencent-tokenplan",
+      "label": "腾讯云 Token Plan 文档",
+      "url": "https://www.tencentcloud.com/document/product/1300/81315",
+      "tier": "official",
+      "type": "page",
+      "enabled": true,
+      "note": "Token Plan Personal Edition 官方文档"
+    },
+    {
+      "id": "xiaomi-mimo",
+      "label": "小米 MiMo Token Plan 定价页",
+      "url": "https://platform.xiaomimimo.com/token-plan",
+      "tier": "official",
+      "type": "page",
+      "enabled": true,
+      "note": "MiMo Token Plan 官方定价页 · 2026-09-23 双环境验证可抓取（含价格文本）"
+    },
+    {
+      "id": "aliyun-coding-plan",
+      "label": "阿里云百炼 Coding Plan 文档",
+      "url": "https://help.aliyun.com/zh/model-studio/coding-plan",
+      "tier": "official",
+      "type": "page",
+      "enabled": true,
+      "note": "阿里云百炼 Coding Plan 官方帮助文档页 · 2026-09-23 验证为服务端渲染，含价格文本"
+    },
+    {
+      "id": "devin-pricing",
+      "label": "Devin 官方定价页",
+      "url": "https://devin.ai/pricing",
+      "tier": "official",
+      "type": "page-unreliable",
+      "enabled": false,
+      "reason": "2026-09-23 评估：对无浏览器特征的请求稳定返回 429 机器人防护（带浏览器 UA 亦然）。属反爬机制而非结构变更，改为 page-unreliable 停止哈希监控；价格变动改由官方 changelog + 人工核价捕获。",
+      "note": "已停止自动哈希监控；价格变动依赖官方公告 + 人工复核"
+    },
+    {
+      "id": "poe-pricing",
+      "label": "Poe 官方定价页",
+      "url": "https://poe.com/pricing",
+      "tier": "official",
+      "type": "page-unreliable",
+      "enabled": false,
+      "reason": "2026-09-23 评估：对非浏览器请求返回反爬/登录拦截页，GitHub Actions 海外出口与本机均无法获取有效内容。属反爬机制而非结构变更，改为 page-unreliable 停止哈希监控；当前价格数据来自 toolradar 聚合验证，需人工复核官方页。",
+      "note": "已停止自动哈希监控；当前价格来自 toolradar 聚合参考（2026-09-01 验证），需人工复核"
     }
   ],
-
   "apis": [
     {
       "id": "modelsdev",
@@ -244,7 +454,17 @@
       "type": "api",
       "pipeline": "signals",
       "parser": "hn-algolia",
-      "keywords": ["claude", "cursor", "copilot", "codex", "coding plan", "subscription", "pricing", "rate limit", "usage limit"],
+      "keywords": [
+        "claude",
+        "cursor",
+        "copilot",
+        "codex",
+        "coding plan",
+        "subscription",
+        "pricing",
+        "rate limit",
+        "usage limit"
+      ],
       "enabled": true,
       "note": "低产出的补充源：Algolia 的 query 不支持 OR 语法（实测返回 0 条），故用精确短语 \"coding plan\"。宁缺毋滥——没有相关讨论时它就应当没有输出。"
     },
@@ -260,7 +480,6 @@
       "note": "用 commit 变更当「免费额度变动」事件流；CC0/MIT 许可仓库可安全引用。未认证 60 次/小时，Actions 内用 GITHUB_TOKEN 提升额度"
     }
   ],
-
   "disabled": [
     {
       "id": "linuxdo-feed",
