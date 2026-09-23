@@ -158,6 +158,14 @@ function t(key, vars){
   if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, v);
   return s;
 }
+function applyI18N(){
+  // 静态标签：首次记录原始标记，回到中文时还原，避免丢掉 <i> 等强调样式
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    if(el.dataset.i18nOrig===undefined) el.dataset.i18nOrig=el.innerHTML;
+    el.innerHTML = currentLang==="zh" ? el.dataset.i18nOrig : t(el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{ el.placeholder=t(el.dataset.i18nPh); });
+}
 function setLang(lang){
   currentLang=lang; document.documentElement.lang=lang==="zh"?"zh-CN":"en";
   const heroTitle=document.getElementById("hero-title");
@@ -167,6 +175,8 @@ function setLang(lang){
   if(heroDesc) heroDesc.innerHTML=t("heroDesc", {n: platCount});
   const platDesc=document.getElementById("st-plat-desc");
   if(platDesc) platDesc.textContent=platCount;
+  document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===currentLang));
+  applyI18N();
   syncURLState(); renderAll();
 }
 function renderAll(){ renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderTokens(); renderCompare(); }
@@ -546,6 +556,7 @@ function bind(){
     tSort = (k==="in") ? "in" : (tSort==="out"?"out-desc":"out");
     renderTokens();
   }));
+  document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
   bindCalc();
 }
 
@@ -566,11 +577,20 @@ const fetchJSON = async p => (await fetch(p,{cache:"no-cache"})).json();
 
 async function loadAutoMeta(){
   const el=document.getElementById("auto-pill");
-  if(!el) return;
+  const dd=document.getElementById("data-date");
+  const fd=document.getElementById("foot-date");
   try{
     const m=await fetchJSON("data/meta.json");
-    if(m.autoCheck) el.textContent="自动巡检："+m.autoCheck;
-  }catch(e){ el.textContent="自动巡检：待首次运行"; }
+    if(m.autoCheck){
+      if(el) el.textContent="自动巡检："+m.autoCheck;
+      if(dd) dd.textContent=m.autoCheck;
+      if(fd) fd.textContent=m.autoCheck;
+    }
+  }catch(e){
+    if(el) el.textContent="自动巡检：待首次运行";
+    if(dd) dd.textContent="待首次运行";
+    if(fd) fd.textContent="待首次运行";
+  }
 }
 
 // 页面变动提醒（alerts.json）：官方页有变动 → 人工核价
@@ -732,11 +752,13 @@ document.querySelectorAll(".chip[data-tfilter]").forEach(x=>{x.classList.toggle(
 const toolBtn=document.querySelector(".chip[data-ttool]"); if(toolBtn){toolBtn.classList.toggle("on",tToolOnly);toolBtn.setAttribute("aria-pressed",tToolOnly);}
 document.getElementById("tsearch").value=tQuery;
 document.getElementById("tsort").value=tSort;
-// 语言按钮
+// 语言按钮：首屏只同步高亮态，等价格历史与实时榜渲染完再整体应用 URL 带来的语言
 document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===currentLang));
 // 首屏渲染前同步加载价格历史，消除闪烁
 (async () => {
   await loadPriceHistory();
-  renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderCompare(); loadModels(); loadPageAlerts();
+  renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderCompare(); loadModels();
+  if(currentLang!=="zh") setLang(currentLang);
+  loadPageAlerts();
   renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();
 })();

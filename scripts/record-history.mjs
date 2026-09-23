@@ -3,7 +3,7 @@
 //   2. 追加到 data/price-history.json（按日期为 key）
 //   3. 对比昨日价格，如有变动生成 alert 进 data/alerts.json
 //   4. 保留最近 90 天，超出裁剪
-import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { readJSON, writeJSON, today } from "./lib.mjs";
 
 const d = today();
@@ -11,16 +11,14 @@ const HISTORY_PATH = "data/price-history.json";
 const ALERTS_PATH = "data/alerts.json";
 const RETENTION_DAYS = 90;
 
-// 读取 js/data.js 并安全提取 PLAN_DATA
-const dataCode = readFileSync("js/data.js", "utf8");
-// 提取 RATE
-const rateMatch = dataCode.match(/const\s+RATE\s*=\s*([\d.]+)\s*;/);
-const RATE = rateMatch ? +rateMatch[1] : 7.2;
-// 提取 PLAN_DATA 数组字面量，并将表达式（如 3*RATE）预处理为数值后 JSON.parse
-const planMatch = dataCode.match(/const\s+PLAN_DATA\s*=\s*(\[[\s\S]*?\]);\s*$/m);
-if (!planMatch) throw new Error("PLAN_DATA not found in js/data.js");
-const jsonLike = planMatch[1].replace(/(\d+(?:\.\d+)?)\s*\*\s*RATE/g, (_m, n) => String(+n * RATE));
-const PLAN_DATA = JSON.parse(jsonLike);
+// 读取 PLAN_DATA：走 js/data.js 自己暴露的 _CP_EXPORT 扩展点。
+// 该文件里是 JS 对象字面量（键名不带引号），不能直接 JSON.parse；
+// 正则截取 + JSON.parse 会在第一个键名处抛 SyntaxError 并让整个 publish 作业失败，
+// 用 require 执行后取值既不做字符串求值，也不受键名写法影响。
+const require = createRequire(import.meta.url);
+require("../js/data.js");
+const PLAN_DATA = globalThis._CP_EXPORT?.PLAN_DATA;
+if (!Array.isArray(PLAN_DATA)) throw new Error("js/data.js 未导出 PLAN_DATA（_CP_EXPORT 缺失）");
 
 // 读取现有历史
 const hist = readJSON(HISTORY_PATH, { updatedAt: null, history: {} });

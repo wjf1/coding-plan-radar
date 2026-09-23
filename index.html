@@ -36,7 +36,7 @@
       <a href="#repos">同类项目</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <div class="updated-pill">数据更新：2026-09-13 · <span id="auto-pill">自动巡检：…</span></div>
+    <div class="updated-pill">数据更新：<span id="data-date">—</span> · <span id="auto-pill">自动巡检：…</span></div>
     <div class="lang-switch"><button class="lang-btn on" data-lang="zh" aria-label="切换中文">中</button><button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button></div>
   </div>
 </header>
@@ -63,23 +63,23 @@
 <section id="compare">
   <div class="wrap">
     <div class="sec-head">
-      <h2>⚡ 快速对比表 <i>—</i> 价格 · 额度倍率 · 来源</h2>
+      <h2 data-i18n="compareTitle">⚡ 快速对比表 <i>—</i> 价格 · 额度倍率 · 来源</h2>
       <p>点击表头排序 · 起步价为最低付费档 · 倍率 = 额度折算价值 ÷ 月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 口径，社区估算仅供参考）</p>
     </div>
     <div class="toolbar">
-      <button class="chip on" data-filter="all" aria-pressed="true">全部</button>
-      <button class="chip" data-filter="intl" aria-pressed="false">国际平台</button>
-      <button class="chip" data-filter="cn" aria-pressed="false">国内平台</button>
+      <button class="chip on" data-filter="all" aria-pressed="true" data-i18n="all">全部</button>
+      <button class="chip" data-filter="intl" aria-pressed="false" data-i18n="intl">国际平台</button>
+      <button class="chip" data-filter="cn" aria-pressed="false" data-i18n="cn">国内平台</button>
       <div class="grow"></div>
-      <button id="compare-btn" class="chip" onclick="renderCompare()">查看对比</button>
-      <button class="chip" onclick="compareSelection=[];syncURLState();renderPlans();renderCompare();">清空对比</button>
-      <button class="chip" onclick="exportCSV()">导出 CSV</button>
-      <input id="search" class="s" type="text" placeholder="搜索平台 / 模型 / 价格…" aria-label="搜索平台">
+      <button id="compare-btn" class="chip" onclick="renderCompare()" data-i18n="compareView">查看对比</button>
+      <button class="chip" onclick="compareSelection=[];syncURLState();renderPlans();renderCompare();" data-i18n="compareClear">清空对比</button>
+      <button class="chip" onclick="exportCSV()" data-i18n="exportCSV">导出 CSV</button>
+      <input id="search" class="s" type="text" placeholder="搜索平台 / 模型 / 价格…" aria-label="搜索平台" data-i18n-ph="searchPlaceholder">
       <select id="sort" aria-label="排序方式">
-        <option value="ratio">按额度倍率降序（性价比）</option>
-        <option value="price">按起步价升序</option>
-        <option value="price-desc">按起步价降序</option>
-        <option value="name">按名称 A–Z</option>
+        <option value="ratio" data-i18n="ratioSort">按额度倍率降序（性价比）</option>
+        <option value="price" data-i18n="priceAsc">按起步价升序</option>
+        <option value="price-desc" data-i18n="priceDesc">按起步价降序</option>
+        <option value="name" data-i18n="nameSort">按名称 A–Z</option>
       </select>
     </div>
     <div id="compare-view" style="display:none;margin-bottom:16px"></div>
@@ -87,13 +87,13 @@
       <table>
         <thead><tr>
           <th style="width:30px"><span class="sr-only">对比</span></th>
-          <th data-k="name">平台</th>
-          <th data-k="price">起步价（付费档）</th>
-          <th data-k="ratio">额度倍率 ↑ 性价比</th>
-          <th>核心模型</th>
-          <th>额度口径</th>
-          <th>状态</th>
-          <th>数据来源</th>
+          <th data-k="name" data-i18n="platform">平台</th>
+          <th data-k="price" data-i18n="startPrice">起步价（付费档）</th>
+          <th data-k="ratio" data-i18n="ratio">额度倍率 ↑ 性价比</th>
+          <th data-i18n="coreModels">核心模型</th>
+          <th data-i18n="quota">额度口径</th>
+          <th data-i18n="status">状态</th>
+          <th data-i18n="dataSource">数据来源</th>
         </tr></thead>
         <tbody id="tbody"></tbody>
       </table>
@@ -105,30 +105,30 @@
 <section id="tokens" style="background:var(--bg2)">
   <div class="wrap">
     <div class="sec-head">
-      <h2>💰 Token 实时价格榜 <i>—</i> API 按量计费参照系</h2>
+      <h2 data-i18n="tokenTitle">💰 Token 实时价格榜 <i>—</i> API 按量计费参照系</h2>
       <p>判断订阅值不值：先看这里模型按量多少钱。数据源为 GitHub 开源数据库 <a href="https://github.com/sst/models.dev" target="_blank">models.dev</a>，浏览器直连实时拉取</p>
     </div>
     <div class="statusbar" id="token-status"><span class="dot" id="token-dot"></span><span id="token-msg">正在连接 models.dev …</span></div>
     <div class="toolbar">
-      <button class="chip on" data-tfilter="all" aria-pressed="true">全部供应商</button>
-      <button class="chip" data-tfilter="cn" aria-pressed="false">国产模型</button>
-      <button class="chip" data-tfilter="intl" aria-pressed="false">国际模型</button>
-      <button class="chip on" data-ttool="1" aria-pressed="true">仅工具调用（适合 Coding）</button>
+      <button class="chip on" data-tfilter="all" aria-pressed="true" data-i18n="allVendors">全部供应商</button>
+      <button class="chip" data-tfilter="cn" aria-pressed="false" data-i18n="cnModels">国产模型</button>
+      <button class="chip" data-tfilter="intl" aria-pressed="false" data-i18n="intlModels">国际模型</button>
+      <button class="chip on" data-ttool="1" aria-pressed="true" data-i18n="toolOnly">仅工具调用（适合 Coding）</button>
       <div class="grow"></div>
-      <input id="tsearch" class="s" type="text" placeholder="搜索模型名…" aria-label="搜索模型">
+      <input id="tsearch" class="s" type="text" placeholder="搜索模型名…" aria-label="搜索模型" data-i18n-ph="modelSearch">
       <select id="tsort" aria-label="Token价格排序">
-        <option value="out">按输出价升序（便宜优先）</option>
-        <option value="out-desc">按输出价降序</option>
-        <option value="in">按输入价升序</option>
+        <option value="out" data-i18n="outAsc">按输出价升序（便宜优先）</option>
+        <option value="out-desc" data-i18n="outDesc">按输出价降序</option>
+        <option value="in" data-i18n="inAsc">按输入价升序</option>
       </select>
     </div>
     <div class="table-scroll">
       <table style="min-width:820px">
         <thead><tr>
-          <th>模型</th><th>供应商</th>
-          <th data-tk="in">输入 $/M ↑</th>
-          <th data-tk="out">输出 $/M ↑</th>
-          <th>上下文</th><th>能力</th>
+          <th data-i18n="model">模型</th><th data-i18n="vendor">供应商</th>
+          <th data-tk="in" data-i18n="inPrice">输入 $/M ↑</th>
+          <th data-tk="out" data-i18n="outPrice">输出 $/M ↑</th>
+          <th data-i18n="context">上下文</th><th data-i18n="ability">能力</th>
         </tr></thead>
         <tbody id="ttbody"><tr><td colspan="6" style="color:var(--dim)">加载中…</td></tr></tbody>
       </table>
@@ -172,24 +172,24 @@
 <section id="calc">
   <div class="wrap">
     <div class="sec-head">
-      <h2>🧮 订阅 vs API 成本计算器 <i>—</i> 你该订阅还是按量付费？</h2>
+      <h2 data-i18n="calcTitle">🧮 订阅 vs API 成本计算器 <i>—</i> 你该订阅还是按量付费？</h2>
       <p>输入每月用量，用上方实时 API 价格估算按量成本，并匹配额度够用的最便宜订阅（社区折算口径，仅供决策参考）</p>
     </div>
     <div class="calc">
       <div class="calc-in">
         <div class="cfield">
-          <label>① 每月 Agent 输出量（百万 tokens）</label>
+          <label data-i18n="monthlyOutput">① 每月 Agent 输出量（百万 tokens）</label>
           <div class="presets">
-            <button class="chip" data-tok="30">轻度 30M</button>
-            <button class="chip" data-tok="150">中度 150M</button>
-            <button class="chip on" data-tok="500">重度 500M</button>
-            <button class="chip" data-tok="1500">超重 1500M</button>
+            <button class="chip" data-tok="30"><span data-i18n="light">轻度</span> 30M</button>
+            <button class="chip" data-tok="150"><span data-i18n="medium">中度</span> 150M</button>
+            <button class="chip on" data-tok="500"><span data-i18n="heavy">重度</span> 500M</button>
+            <button class="chip" data-tok="1500"><span data-i18n="ultra">超重</span> 1500M</button>
           </div>
           <input id="tok" class="s" type="number" min="1" value="500" style="margin-top:8px;max-width:220px">
-          <small class="hint">编码场景输入约为输出 3×（按 1 输出 : 3 输入估算总消耗）</small>
+          <small class="hint" data-i18n="hintRatio">编码场景输入约为输出 3×（按 1 输出 : 3 输入估算总消耗）</small>
         </div>
         <div class="cfield">
-          <label>② 按 API 价计费的模型档位</label>
+          <label data-i18n="modelTier">② 按 API 价计费的模型档位</label>
           <select id="calcmodel">
             <option value="0">DeepSeek V4 Flash（经济档）</option>
             <option value="1" selected>GLM-5.3（中档）</option>
@@ -207,7 +207,7 @@
 <section id="detail" style="background:var(--bg2)">
   <div class="wrap">
     <div class="sec-head">
-      <h2>📋 平台详情 <i>—</i> 全档位价格与额度</h2>
+      <h2 data-i18n="detailTitle">📋 平台详情 <i>—</i> 全档位价格与额度</h2>
       <p>「官方直采」= 采集当日从官方定价页抓取；「聚合参考」= 转引自第三方对比站；「实时」= GitHub 开源数据源拉取</p>
     </div>
     <div class="cards" id="cards"></div>
@@ -217,7 +217,7 @@
 <section id="ide">
   <div class="wrap">
     <div class="sec-head">
-      <h2>🖥️ IDE / 编辑器订阅扩展榜 <i>—</i> $10–20 档横评</h2>
+      <h2 data-i18n="ideTitle">🖥️ IDE / 编辑器订阅扩展榜 <i>—</i> $10–20 档横评</h2>
       <p>来源：awesome-coding-plan IDE Plan 表（2026-09-13 检索）；倍率为社区折算口径</p>
     </div>
     <div class="table-scroll">
@@ -232,7 +232,7 @@
 <section id="freebies" style="background:var(--bg2)">
   <div class="wrap">
     <div class="sec-head">
-      <h2>🎁 白嫖 / 免费额度 <i>—</i> 有公开出处的正规免费额度</h2>
+      <h2 data-i18n="freebieTitle">🎁 白嫖 / 免费额度 <i>—</i> 有公开出处的正规免费额度</h2>
       <p>只收录官方免费档、学生包、免费 API 额度与限时试用；<b>不收录逆向接口、共享账号、API 中转站</b>（原因见页面底部「数据说明」）。额度与规则随时可能调整，领取前请以官方页面为准</p>
     </div>
     <div id="freebies-retired"></div>
@@ -244,18 +244,18 @@
 <section id="dynamics">
   <div class="wrap">
     <div class="sec-head">
-      <h2>📡 市场动态 <i>—</i> 促销与停售追踪</h2>
+      <h2 data-i18n="dynamicsTitle">📡 市场动态 <i>—</i> 促销与停售追踪</h2>
       <p>下方条目均为<b>人工确认</b>后录入；机器发现的线索单独列在「自动发现的线索」区，未经确认不会写进价格表。来源分级：官方直采（绿）＞ 实时数据源（青）＞ 聚合参考（蓝）＞ 社区情报（黄）</p>
     </div>
     <div class="timeline" id="promo-timeline"><p style="color:var(--dim)">加载中…</p></div>
 
-    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">🔎 自动发现的线索（机器产出，未经人工确认）</h2></div>
+    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px" data-i18n="signalTitle">🔎 自动发现的线索（机器产出，未经人工确认）</h2></div>
     <div class="policy" id="signal-queue"></div>
 
-    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">🩺 信息源健康</h2></div>
+    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px" data-i18n="healthTitle">🩺 信息源健康</h2></div>
     <div id="source-health"></div>
 
-    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px">📝 本站变更记录</h2></div>
+    <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px" data-i18n="changelogTitle">📝 本站变更记录</h2></div>
     <div id="changelog"></div>
   </div>
 </section>
@@ -263,7 +263,7 @@
 <section id="repos" style="background:var(--bg2)">
   <div class="wrap">
     <div class="sec-head">
-      <h2>🔗 同类 GitHub 项目 <i>—</i> 方法论与数据源</h2>
+      <h2 data-i18n="reposTitle">🔗 同类 GitHub 项目 <i>—</i> 方法论与数据源</h2>
       <p>本站的倍率口径与实时数据均来自以下开源项目，欢迎对照阅读</p>
     </div>
     <div class="repos" id="repos-grid"></div>
@@ -272,7 +272,7 @@
 
 <section id="faq">
   <div class="wrap">
-    <div class="sec-head"><h2>❓ FAQ 常见问题</h2></div>
+    <div class="sec-head"><h2 data-i18n="faqTitle">❓ FAQ 常见问题</h2></div>
     <details open><summary>「额度口径」「额度倍率」分别是什么？</summary>
       <div class="ans">额度口径 = 平台怎么计费：Claude 按「5 小时滚动会话 + 每周上限」、Cursor 按模型用量金额、Copilot 按 Premium Requests / AI Credits、国内多为积分 / Token 配额。额度倍率 = 把额度折算成钱再除以月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 的方法论），倍率越高名义性价比越高；但 MiniMax 月倍率 88.65× 最高、其 5h 周期倍率却一般——请按自己的使用节奏对号入座。</div>
     </details>
@@ -296,7 +296,7 @@
 
 <section id="policy" style="background:var(--bg2)">
   <div class="wrap">
-    <div class="sec-head"><h2>🛡️ 数据说明与更新机制</h2></div>
+    <div class="sec-head"><h2 data-i18n="policyTitle">🛡️ 数据说明与更新机制</h2></div>
     <div class="policy">
       <div class="pol"><div class="ico">🔎</div><h4>来源分级</h4>
         <ul>
@@ -347,8 +347,8 @@
 
 <footer>
   <div class="wrap">
-    <div>CodingPlan Radar · AI 编程订阅计划对比 · 数据更新 2026-09-13</div>
-    <div>官方来源：claude.com · docs.github.com · cursor.com · docs.bigmodel.cn · platform.kimi.com　实时源：models.dev / OpenRouter　方法论：awesome-coding-plan（GitHub）</div>
+    <div>CodingPlan Radar · AI 编程订阅计划对比 · 数据更新 <span id="foot-date">—</span></div>
+    <div>官方来源：claude.com · docs.github.com · cursor.com · docs.bigmodel.cn · platform.kimi.com · trae.ai · platform.minimaxi.com · help.aliyun.com · cloud.baidu.com　实时源：models.dev / OpenRouter</div>
   </div>
   <div class="wrap disclaimer">本站为静态信息聚合页面，与所列平台无商业关系；所有商标归各自所有者。</div>
 </footer>
