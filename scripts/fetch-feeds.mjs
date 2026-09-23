@@ -21,7 +21,7 @@ const failed = [];
 
 const matchKeywords = (f, item) => {
   if (!f.keywords || !f.keywords.length) return true;
-  if (!f._match) f._match = compileMatcher(f.keywords);
+  if (!f._match) f._match = compileMatcher(f.keywords, f.excludeKeywords);
   return f._match(item.title + " " + item.desc);
 };
 
