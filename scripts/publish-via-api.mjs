@@ -43,7 +43,7 @@ const api = async (path, opts = {}) => {
 };
 
 // 收集工作区文件（跳过版本控制与临时产物）
-const SKIP = new Set([".git", "node_modules", ".DS_Store", "issue-body.md"]);
+const SKIP = new Set([".git", "node_modules", ".DS_Store", "issue-body.md", ".log", ".tmp", ".swp", "~"]);
 const files = [];
 (function walk(dir) {
   for (const name of readdirSync(dir)) {
