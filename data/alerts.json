@@ -84,7 +84,9 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-22",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-23"
  },
  {
   "id": "aliyun-university",
@@ -93,6 +95,26 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-09-22",
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-09-23"
+ },
+ {
+  "id": "glm",
+  "label": "GLM Coding Plan 官方文档",
+  "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-23",
+  "resolved": false
+ },
+ {
+  "id": "aliyun-free-quota",
+  "label": "阿里云百炼免费额度说明",
+  "url": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-09-23",
   "resolved": false
  }
 ]

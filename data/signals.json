@@ -1,6 +1,104 @@
 {
- "generatedAt": "2026-09-22",
+ "generatedAt": "2026-09-23",
  "items": [
+  {
+   "id": "gh-changelog:e7fd981f50",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "OpenTelemetry in the GitHub Copilot app",
+   "excerpt": "Understand how Copilot agents perform and interact with models and tools. The GitHub Copilot app now supports OpenTelemetry (OTel) configuration through enterprise-managed settings. OTel is an open source observability framework.&#8230; The post OpenTelemetry in the GitHub Copilot app appeared first…",
+   "url": "https://github.blog/changelog/2026-09-22-opentelemetry-in-the-github-copilot-app",
+   "date": "Wed, 23 Sep 2026 02:14:54 +0000",
+   "firstSeen": "2026-09-23",
+   "lastSeen": "2026-09-23"
+  },
+  {
+   "id": "gh-changelog:32e10d7b5f",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "New features and improvements in Copilot for JetBrains",
+   "excerpt": "GitHub Copilot for JetBrains 1.18.0 brings AI-assisted tool approvals, more control over agent conversations, and shared skills and instructions for your organization. You can also review plans with the Codex&#8230; The post New features and improvements in Copilot for JetBrains appeared first on Th…",
+   "url": "https://github.blog/changelog/2026-09-22-new-features-and-improvements-in-copilot-for-jetbrains",
+   "date": "Wed, 23 Sep 2026 00:34:18 +0000",
+   "firstSeen": "2026-09-23",
+   "lastSeen": "2026-09-23"
+  },
+  {
+   "id": "gh-changelog:8fb7617760",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Faster C++ code intelligence with whole codebase indexing",
+   "excerpt": "C++ code intelligence in GitHub Copilot CLI is now faster with support for whole codebase indexing. C++ repositories can contain millions of lines of code across deeply connected source files&#8230; The post Faster C++ code intelligence with whole codebase indexing appeared first on The GitHub Blog …",
+   "url": "https://github.blog/changelog/2026-09-22-faster-c-code-intelligence-with-whole-codebase-indexing",
+   "date": "Tue, 22 Sep 2026 22:24:48 +0000",
+   "firstSeen": "2026-09-23",
+   "lastSeen": "2026-09-23"
+  },
+  {
+   "id": "gh-changelog:d6baa9e85b",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Claude Opus 5.5 is now available in GitHub Copilot",
+   "excerpt": "Claude Opus 5.5, Anthropic&#8217;s newest Opus model, is now available in GitHub Copilot. You can use it for agentic coding, long-running agentic tasks, and knowledge work. In early testing, Opus&#8230; The post Claude Opus 5.5 is now available in GitHub Copilot appeared first on The GitHub Blog .",
+   "url": "https://github.blog/changelog/2026-09-22-claude-opus-5-5-is-now-available-in-github-copilot",
+   "date": "Tue, 22 Sep 2026 17:10:23 +0000",
+   "firstSeen": "2026-09-23",
+   "lastSeen": "2026-09-23"
+  },
+  {
+   "id": "gh-changelog:e690092d57",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "OpenAI&#8217;s GPT-6 Sol and GPT-6 Luna now available",
+   "excerpt": "OpenAI&#8217;s GPT-6 family is expanding in GitHub Copilot with two additional models: GPT-6 Sol, and GPT-6 Luna. Joining the previously released GPT-6 Astra, these new options let you select the&#8230; The post OpenAI&#8217;s GPT-6 Sol and GPT-6 Luna now available appeared first on The GitHub Blog …",
+   "url": "https://github.blog/changelog/2026-09-22-openais-gpt-6-sol-and-gpt-6-luna-now-available",
+   "date": "Tue, 22 Sep 2026 17:00:14 +0000",
+   "firstSeen": "2026-09-23",
+   "lastSeen": "2026-09-23"
+  },
+  {
+   "id": "gh-changelog:ca77533256",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Deprecation notice: All-platform CodeQL bundle",
+   "excerpt": "Starting with CodeQL CLI 2.27.0, the all-platform CodeQL bundle (i.e., codeql-bundle.tar.gz and codeql-bundle.tar.zst), which includes the binaries for all supported platforms up to this release, is marked as deprecated. In&#8230; The post Deprecation notice: All-platform CodeQL bundle appeared firs…",
+   "url": "https://github.blog/changelog/2026-09-22-deprecation-notice-all-platform-codeql-bundle",
+   "date": "Tue, 22 Sep 2026 09:21:03 +0000",
+   "firstSeen": "2026-09-23",
+   "lastSeen": "2026-09-23"
+  },
+  {
+   "id": "sspai:02e0562c1d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "派早报：OPPO Find X10 系列发布、Beats 360 头戴式耳机发布等",
+   "excerpt": "高通发布两款第六代骁龙 8 旗舰芯片，Claude Opus 5.5 与 GPT-6 Sol/Luna 发布等。<a href=&#34;https://sspai.com/post/114889&#34; target=&#34;_blank&#34;>查看全文</a>",
+   "url": "https://sspai.com/post/114889",
+   "date": "Wed, 23 Sep 2026 07:30:05 +0800",
+   "firstSeen": "2026-09-23",
+   "lastSeen": "2026-09-23"
+  },
   {
    "id": "gh-changelog:140ca79b54",
    "source": "gh-changelog",
@@ -13,7 +111,7 @@
    "url": "https://github.blog/changelog/2026-09-21-grok-4-7-is-now-available-in-github-copilot",
    "date": "Mon, 21 Sep 2026 14:54:12 +0000",
    "firstSeen": "2026-09-22",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "ithome:fe932ce324",
@@ -41,7 +139,7 @@
    "url": "https://www.githubstatus.com/incidents/f6yrxnz5f7bs",
    "date": "Sun, 20 Sep 2026 23:22:16 +0000",
    "firstSeen": "2026-09-21",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "ithome:2ba0642f24",
@@ -237,7 +335,7 @@
    "url": "https://www.githubstatus.com/incidents/nvy2q96mcmyg",
    "date": "Thu, 17 Sep 2026 21:49:01 +0000",
    "firstSeen": "2026-09-18",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "ithome:3655260924",
@@ -307,7 +405,7 @@
    "url": "https://www.githubstatus.com/incidents/nlxnbqnkdzdl",
    "date": "Wed, 16 Sep 2026 17:48:49 +0000",
    "firstSeen": "2026-09-17",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "ithome:6b69935324",
@@ -349,7 +447,7 @@
    "url": "https://www.githubstatus.com/incidents/bk7zgdcq7s9t",
    "date": "Tue, 15 Sep 2026 20:00:50 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "github-status:081248a433",
@@ -363,7 +461,7 @@
    "url": "https://www.githubstatus.com/incidents/qwdwmtqghpk5",
    "date": "Tue, 15 Sep 2026 11:17:22 +0000",
    "firstSeen": "2026-09-16",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "openrouter:1efb2fd531",
@@ -419,7 +517,7 @@
    "url": "https://status.openai.com//incidents/01M2H3J1D6Y7RHAP49GRWGJAY0",
    "date": "Mon, 14 Sep 2026 23:39:21 GMT",
    "firstSeen": "2026-09-15",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "claude-status:0b3c97b530",
@@ -433,7 +531,7 @@
    "url": "https://status.claude.com/incidents/r1pqn1kb4hvk",
    "date": "Fri, 11 Sep 2026 14:19:51 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "claude-status:da2cac7b30",
@@ -615,7 +713,7 @@
    "url": "https://www.githubstatus.com/incidents/0rn90wk115q9",
    "date": "Sun, 13 Sep 2026 10:44:55 +0000",
    "firstSeen": "2026-09-14",
-   "lastSeen": "2026-09-22"
+   "lastSeen": "2026-09-23"
   },
   {
    "id": "github-status:2117f8cc33",
