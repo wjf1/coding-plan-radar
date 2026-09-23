@@ -37,7 +37,25 @@ for (const p of pages) {
     const r = await fetchText(p.url);
     status = r.status;
     text = stripTags(r.text);
+    // 反爬壳检测：长度检查 + 已知反爬特征
     if (text.length < 200) throw new Error(`正文过短（${text.length} 字符），疑似 JS 渲染空壳或被拦截`);
+    const antiBotMarkers = [
+      "cf-browser-verification",
+      "Just a moment",
+      "Checking your browser",
+      "DDoS protection",
+      "cloudflare",
+      "challenge-platform",
+      "turnstile",
+      "Please wait while we check your browser",
+      "Ray ID",
+    ];
+    const lowerText = text.toLowerCase();
+    for (const marker of antiBotMarkers) {
+      if (lowerText.includes(marker.toLowerCase())) {
+        throw new Error(`检测到反爬/验证页面特征（${marker}），内容不可信`);
+      }
+    }
   } catch (e) {
     failed.push({ id: p.id, label: p.label, error: e.message });
     recordHealth(health, p, { ok: false, status, error: e.message });
@@ -80,6 +98,20 @@ for (const p of pages) {
       ex.resolved = true;
       ex.resolvedBy = "auto-revert";
       ex.resolvedAt = d;
+      // 记录原始变更到 transients.json，供人工回溯
+      const transients = readJSON("data/transients.json", { items: [] });
+      transients.items.push({
+        id: p.id,
+        label: p.label,
+        url: p.url,
+        detected: ex.detected,
+        resolvedAt: d,
+        resolvedBy: "auto-revert",
+        note: "内容回到基线，原始变动可能为临时促销/渲染变体"
+      });
+      // 保留最近 100 条
+      transients.items = transients.items.slice(-100);
+      writeJSON("data/transients.json", transients);
       // 确认后又在短期内回滚 → 计一次"跳变"，累计到阈值即停止自动预警
       if (ex.detected && (Date.now() - Date.parse(ex.detected)) / 86400000 <= 14) {
         rec.revertCount = (rec.revertCount || 0) + 1;
