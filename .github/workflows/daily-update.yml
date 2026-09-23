@@ -14,44 +14,97 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  update:
+  update-snapshot:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.run.outputs.result }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: ① 重新生成 models.dev 兜底快照
+        id: run
+        run: |
+          node scripts/update-snapshot.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
+
+  check-pages:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.run.outputs.result }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: ② 官方页面变动检测（哈希）
+        id: run
+        continue-on-error: true
+        run: |
+          node scripts/check-pages.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
+
+  fetch-feeds:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.run.outputs.result }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: ③ 抓取 changelog / 状态页 / 社区订阅源
+        id: run
+        run: |
+          node scripts/fetch-feeds.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}   # GitHub API 未认证仅 60 次/小时
+
+  diff-prices:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.run.outputs.result }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: ④ 价格库与免费模型差异检测
+        id: run
+        continue-on-error: true
+        run: |
+          node scripts/diff-prices.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: [update-snapshot, check-pages, fetch-feeds, diff-prices]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 每个抓取任务互相独立：任一源失败不影响其余任务，也不中断整个巡检。
-      # 源的成功/失败会写入 data/sourcehealth.json，在站点「信息源健康」里公开可见。
-
-      - name: ① 重新生成 models.dev 兜底快照
-        continue-on-error: true
-        run: node scripts/update-snapshot.mjs
-
-      - name: ② 官方页面变动检测（哈希）
-        continue-on-error: true
-        run: node scripts/check-pages.mjs
-
-      - name: ③ 抓取 changelog / 状态页 / 社区订阅源
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ github.token }}   # GitHub API 未认证仅 60 次/小时
-        run: node scripts/fetch-feeds.mjs
-
-      - name: ④ 价格库与免费模型差异检测
-        continue-on-error: true
-        run: node scripts/diff-prices.mjs
+      - name: outcome 汇总
+        id: outcomes
+        run: |
+          echo "snapshot=${{ needs.update-snapshot.result }}" >> "$GITHUB_OUTPUT"
+          echo "pages=${{ needs.check-pages.result }}" >> "$GITHUB_OUTPUT"
+          echo "feeds=${{ needs.fetch-feeds.result }}" >> "$GITHUB_OUTPUT"
+          echo "prices=${{ needs.diff-prices.result }}" >> "$GITHUB_OUTPUT"
+          has_failure="false"
+          if [ "${{ needs.update-snapshot.result }}" = "failure" ] || [ "${{ needs.check-pages.result }}" = "failure" ] || [ "${{ needs.fetch-feeds.result }}" = "failure" ] || [ "${{ needs.diff-prices.result }}" = "failure" ]; then
+            has_failure="true"
+          fi
+          echo "has_failure=$has_failure" >> "$GITHUB_OUTPUT"
 
       - name: 写入巡检日期
         run: |
           echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
 
-      # 先生成待处理清单（会写入 data/reported.json 记录"已上报"的线索），
-      # 再提交，最后才开 issue —— 顺序不能颠倒，否则 reported.json 不会被持久化，
-      # 同一条线索就会天天重复开 issue。
-      - name: 生成待人工处理清单
+      - name: ⑤ 记录订阅计划价格历史快照
+        run: |
+          node scripts/record-history.mjs
+
+      - name: 生成待处理清单
         run: |
           node -e '
             const fs = require("fs");
@@ -67,9 +120,6 @@ jobs:
             }
 
             // 机器线索中的官方来源信号 → 待确认后录入 promos.json
-            // 规则：① 排除状态页故障事件（kind=availability），那类不是促销线索，且状态页一忙就天天开单；
-            //       ② 排除社区情报（tier=community），它固定只作线索展示，不进入人工处理队列；
-            //       ③ 每条线索只上报一次（记录在 data/reported.json），避免同一条线索天天开 issue。
             const reportedPath = "data/reported.json";
             const reported = read(reportedPath, { ids: [] });
             const reportedSet = new Set(reported.ids || []);
@@ -91,6 +141,15 @@ jobs:
               out.push("### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/sources.json 中修复或停用\n" +
                 dead.map(s => `- ${s.label}（${s.url}）— 最后错误：${s.error || "未知"}`).join("\n"));
             }
+
+            // 标注 auto-revert 条目
+            const transients = read("data/transients.json", { items: [] });
+            const todayReverts = transients.items.filter(t => t.resolvedAt === today);
+            if (todayReverts.length) {
+              out.push("### 🔄 今日 auto-revert 记录（内容回到基线，可能为临时促销/渲染变体）\n" +
+                todayReverts.map(t => `- ${t.label}（${t.url}）：${t.detected} 检测到变动，今日自动恢复`).join("\n"));
+            }
+
             fs.writeFileSync("issue-body.md", out.length ? out.join("\n\n") : "", "utf8");
           '
 
@@ -110,7 +169,7 @@ jobs:
           fi
 
       - name: 有待处理事项时开 issue
-        if: steps.commit.outputs.changed == 'true'
+        if: steps.commit.outputs.changed == 'true' || steps.outcomes.outputs.has_failure == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -118,6 +177,10 @@ jobs:
             gh issue create --repo "$GITHUB_REPOSITORY" \
               --title "每日巡检待处理 $(date -u +%F)" \
               --body-file issue-body.md
+          elif [ "${{ steps.outcomes.outputs.has_failure }}" = "true" ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "每日巡检部分任务失败 $(date -u +%F)" \
+              --body "部分巡检任务失败，请查看 Actions 日志排查。\n\n- update-snapshot: ${{ steps.outcomes.outputs.snapshot }}\n- check-pages: ${{ steps.outcomes.outputs.pages }}\n- fetch-feeds: ${{ steps.outcomes.outputs.feeds }}\n- diff-prices: ${{ steps.outcomes.outputs.prices }}"
           else
             echo "无待人工处理事项（仅有常规数据提交）"
           fi
