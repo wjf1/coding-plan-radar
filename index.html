@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" dir="ltr">
 <!--
   CodingPlan Radar — AI 编程订阅计划对比（纯静态，零依赖）
   页面区块自上而下：header 导航 → hero 统计 → 市场动态横幅(#hero-promos / #page-alerts 为数据产物)
@@ -15,10 +15,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CodingPlan Radar — AI 编程订阅计划对比（官方数据 + GitHub 实时源）</title>
-<meta name="description" content="AI Coding Plan 对比：ChatGPT / Claude / Copilot / Cursor / GLM / Kimi / MiniMax 等 11 个平台的价格、额度倍率横评；模型 Token API 价格实时榜接入 GitHub 开源数据库 models.dev。">
+<meta name="description" content="AI Coding Plan 对比：ChatGPT / Claude / Copilot / Cursor / GLM / Kimi / MiniMax 等多个主流平台的价格、额度倍率横评；模型 Token API 价格实时榜接入 GitHub 开源数据库 models.dev。">
 <link rel="stylesheet" href="css/styles.css">
+<style>.skip-link{position:absolute;top:-40px;left:0;background:var(--accent);color:#fff;padding:8px 16px;z-index:100;font-size:14px;border-radius:0 0 8px 0;transition:top .2s}.skip-link:focus{top:0}.lang-switch{display:flex;gap:4px;margin-left:8px}.lang-btn{padding:3px 10px;border-radius:99px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;cursor:pointer}.lang-btn.on{background:var(--grad);color:#04121f;font-weight:700;border-color:transparent}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.compare-table{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg2)}.compare-table table{min-width:auto}.compare-table th{background:#101828;padding:10px 14px;font-size:13px;color:var(--text);border-bottom:1px solid var(--border)}.compare-table td{padding:10px 14px;border-bottom:1px solid #1b2438;font-size:13px}</style>
 </head>
 <body>
+<a href="#compare" class="skip-link">Skip to content</a>
 
 <header>
   <div class="wrap nav">
@@ -35,13 +37,14 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="updated-pill">数据更新：2026-09-13 · <span id="auto-pill">自动巡检：…</span></div>
+    <div class="lang-switch"><button class="lang-btn on" data-lang="zh" aria-label="切换中文">中</button><button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button></div>
   </div>
 </header>
 
 <div class="hero">
   <div class="wrap">
-    <h1>AI Coding Plan <em>横评对比</em><br>看得见来源的订阅指南</h1>
-    <p>11 个主流平台、30+ 付费档位：价格、额度口径与<b>额度倍率</b>（参考 GitHub 开源项目方法论）；另接入 models.dev 实时数据源，呈现 60+ 款编码模型的 Token API 价格性价比。</p>
+    <h1 id="hero-title">AI Coding Plan <em>横评对比</em><br>看得见来源的订阅指南</h1>
+    <p id="hero-desc"><span id="st-plat-desc">11</span> 个主流平台、30+ 付费档位：价格、额度口径与<b>额度倍率</b>（参考 GitHub 开源项目方法论）；另接入 models.dev 实时数据源，呈现 60+ 款编码模型的 Token API 价格性价比。</p>
     <div class="stats">
       <div class="stat"><b id="st-plat">11</b><small>对比平台</small></div>
       <div class="stat"><b id="st-tier">33</b><small>付费档位</small></div>
@@ -53,8 +56,8 @@
 </div>
 
 <div class="wrap">
-  <div class="alerts" id="hero-promos"></div>
-  <div class="alerts" id="page-alerts" style="margin-top:-14px"></div>
+  <div class="alerts" id="hero-promos" role="alert" aria-live="polite"></div>
+  <div class="alerts" id="page-alerts" style="margin-top:-14px" role="alert" aria-live="polite"></div>
 </div>
 
 <section id="compare">
@@ -64,21 +67,26 @@
       <p>点击表头排序 · 起步价为最低付费档 · 倍率 = 额度折算价值 ÷ 月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 口径，社区估算仅供参考）</p>
     </div>
     <div class="toolbar">
-      <button class="chip on" data-filter="all">全部</button>
-      <button class="chip" data-filter="intl">国际平台</button>
-      <button class="chip" data-filter="cn">国内平台</button>
+      <button class="chip on" data-filter="all" aria-pressed="true">全部</button>
+      <button class="chip" data-filter="intl" aria-pressed="false">国际平台</button>
+      <button class="chip" data-filter="cn" aria-pressed="false">国内平台</button>
       <div class="grow"></div>
-      <input id="search" class="s" type="text" placeholder="搜索平台 / 模型 / 价格…">
-      <select id="sort">
+      <button id="compare-btn" class="chip" onclick="renderCompare()">查看对比</button>
+      <button class="chip" onclick="compareSelection=[];syncURLState();renderPlans();renderCompare();">清空对比</button>
+      <button class="chip" onclick="exportCSV()">导出 CSV</button>
+      <input id="search" class="s" type="text" placeholder="搜索平台 / 模型 / 价格…" aria-label="搜索平台">
+      <select id="sort" aria-label="排序方式">
         <option value="ratio">按额度倍率降序（性价比）</option>
         <option value="price">按起步价升序</option>
         <option value="price-desc">按起步价降序</option>
         <option value="name">按名称 A–Z</option>
       </select>
     </div>
+    <div id="compare-view" style="display:none;margin-bottom:16px"></div>
     <div class="table-scroll">
       <table>
         <thead><tr>
+          <th style="width:30px"><span class="sr-only">对比</span></th>
           <th data-k="name">平台</th>
           <th data-k="price">起步价（付费档）</th>
           <th data-k="ratio">额度倍率 ↑ 性价比</th>
@@ -102,13 +110,13 @@
     </div>
     <div class="statusbar" id="token-status"><span class="dot" id="token-dot"></span><span id="token-msg">正在连接 models.dev …</span></div>
     <div class="toolbar">
-      <button class="chip on" data-tfilter="all">全部供应商</button>
-      <button class="chip" data-tfilter="cn">国产模型</button>
-      <button class="chip" data-tfilter="intl">国际模型</button>
-      <button class="chip on" data-ttool="1">仅工具调用（适合 Coding）</button>
+      <button class="chip on" data-tfilter="all" aria-pressed="true">全部供应商</button>
+      <button class="chip" data-tfilter="cn" aria-pressed="false">国产模型</button>
+      <button class="chip" data-tfilter="intl" aria-pressed="false">国际模型</button>
+      <button class="chip on" data-ttool="1" aria-pressed="true">仅工具调用（适合 Coding）</button>
       <div class="grow"></div>
-      <input id="tsearch" class="s" type="text" placeholder="搜索模型名…">
-      <select id="tsort">
+      <input id="tsearch" class="s" type="text" placeholder="搜索模型名…" aria-label="搜索模型">
+      <select id="tsort" aria-label="Token价格排序">
         <option value="out">按输出价升序（便宜优先）</option>
         <option value="out-desc">按输出价降序</option>
         <option value="in">按输入价升序</option>
