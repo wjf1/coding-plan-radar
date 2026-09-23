@@ -175,14 +175,29 @@ export const daysAgo = (dateStr) => {
   return (Date.now() - t) / 86400000;
 };
 
-/** 关键词匹配器：短英文词加词边界，避免 "pro" 命中 "product" 这类假阳性；中文按包含匹配 */
-export function compileMatcher(keywords) {
-  if (!keywords || !keywords.length) return () => true;
-  const rules = keywords.map((k) => {
-    const escaped = k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const ascii = /^[\x00-\x7F]+$/.test(k);
-    // 允许简单复数，其余按词边界整词匹配
-    return new RegExp(ascii ? `\\b${escaped}s?\\b` : escaped, "i");
-  });
-  return (text) => rules.some((r) => r.test(text));
+/** 关键词匹配器：短英文词加词边界，避免 "pro" 命中 "product" 这类假阳性；中文按包含匹配
+ *  支持 excludeKeywords：命中排除词的条目直接过滤掉
+ */
+export function compileMatcher(keywords, excludeKeywords) {
+  const include = (!keywords || !keywords.length)
+    ? () => true
+    : (() => {
+        const rules = keywords.map((k) => {
+          const escaped = k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const ascii = /^[\x00-\x7F]+$/.test(k);
+          return new RegExp(ascii ? `\\b${escaped}s?\\b` : escaped, "i");
+        });
+        return (text) => rules.some((r) => r.test(text));
+      })();
+  const exclude = (!excludeKeywords || !excludeKeywords.length)
+    ? () => false
+    : (() => {
+        const rules = excludeKeywords.map((k) => {
+          const escaped = k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const ascii = /^[\x00-\x7F]+$/.test(k);
+          return new RegExp(ascii ? `\\b${escaped}s?\\b` : escaped, "i");
+        });
+        return (text) => rules.some((r) => r.test(text));
+      })();
+  return (text) => include(text) && !exclude(text);
 }
