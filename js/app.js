@@ -30,6 +30,146 @@ const statusMap = { ok:["b-ok","正常"], promo:["b-warn","促销中"], bad:["b-
 let planFilter="all", planSort="ratio", planQuery="";
 let tFilter="all", tToolOnly=true, tSort="out", tQuery="";
 let modelRows=[]; // {p,pid,id,n,i,o,c,t,r}
+let compareSelection=[]; // 多选对比选中项（item 9）
+let currentLang="zh"; // 当前语言（item 10）
+let priceHistory={}; // 价格历史缓存（data/price-history.json）
+
+/* ================= URL 状态持久化（item 11） ================= */
+function syncURLState(){
+  const u=new URLSearchParams();
+  if(planFilter!=="all") u.set("region",planFilter);
+  if(planSort!=="ratio") u.set("sort",planSort);
+  if(planQuery) u.set("q",planQuery);
+  if(tFilter!=="all") u.set("tregion",tFilter);
+  if(!tToolOnly) u.set("ttool","0");
+  if(tSort!=="out") u.set("tsort",tSort);
+  if(tQuery) u.set("tq",tQuery);
+  if(compareSelection.length) u.set("compare",compareSelection.join(","));
+  if(currentLang!=="zh") u.set("lang",currentLang);
+  const s=u.toString();
+  history.replaceState(null,"",s?"?"+s:location.pathname);
+}
+function restoreURLState(){
+  const u=new URLSearchParams(location.search);
+  planFilter=u.get("region")||"all";
+  planSort=u.get("sort")||"ratio";
+  planQuery=u.get("q")||"";
+  tFilter=u.get("tregion")||"all";
+  tToolOnly=u.get("ttool")!=="0";
+  tSort=u.get("tsort")||"out";
+  tQuery=u.get("tq")||"";
+  const cmp=u.get("compare");
+  if(cmp) compareSelection=cmp.split(",").filter(x=>x).slice(0,4);
+  const lng=u.get("lang");
+  if(lng&&(lng==="zh"||lng==="en")) currentLang=lng;
+}
+
+/* ================= 语言切换（item 10） ================= */
+const I18N={
+  zh:{
+    langLabel:"English",
+    heroTitle:"AI Coding Plan <em>横评对比</em><br>看得见来源的订阅指南",
+    heroDesc:"{n} 个主流平台、30+ 付费档位：价格、额度口径与<b>额度倍率</b>（参考 GitHub 开源项目方法论）；另接入 models.dev 实时数据源，呈现 60+ 款编码模型的 Token API 价格性价比。",
+    compareTitle:"⚡ 快速对比表 — 价格 · 额度倍率 · 来源",
+    compareDesc:"点击表头排序 · 起步价为最低付费档 · 倍率 = 额度折算价值 ÷ 月价",
+    all:"全部", intl:"国际平台", cn:"国内平台",
+    searchPlaceholder:"搜索平台 / 模型 / 价格…",
+    ratioSort:"按额度倍率降序（性价比）",
+    priceAsc:"按起步价升序", priceDesc:"按起步价降序", nameSort:"按名称 A–Z",
+    platform:"平台", startPrice:"起步价（付费档）", ratio:"额度倍率 ↑ 性价比",
+    coreModels:"核心模型", quota:"额度口径", status:"状态", dataSource:"数据来源",
+    official:"官方直采", agg:"聚合参考",
+    compareBtn:"加入对比", compareClear:"清空对比", compareView:"查看对比",
+    compareEmpty:"请勾选 2-4 个平台进行对比",
+    exportCSV:"导出 CSV",
+    tokenTitle:"💰 Token 实时价格榜 — API 按量计费参照系",
+    tokenDesc:"判断订阅值不值：先看这里模型按量多少钱。",
+    allVendors:"全部供应商", cnModels:"国产模型", intlModels:"国际模型",
+    toolOnly:"仅工具调用（适合 Coding）",
+    modelSearch:"搜索模型名…", outAsc:"按输出价升序（便宜优先）",
+    outDesc:"按输出价降序", inAsc:"按输入价升序",
+    model:"模型", vendor:"供应商", inPrice:"输入 $/M", outPrice:"输出 $/M",
+    context:"上下文", ability:"能力",
+    calcTitle:"🧮 订阅 vs API 成本计算器 — 你该订阅还是按量付费？",
+    calcDesc:"输入每月用量，用上方实时 API 价格估算按量成本",
+    monthlyOutput:"① 每月 Agent 输出量（百万 tokens）",
+    modelTier:"② 按 API 价计费的模型档位",
+    light:"轻度", medium:"中度", heavy:"重度", ultra:"超重",
+    hintRatio:"编码场景输入约为输出 3×",
+    detailTitle:"📋 平台详情 — 全档位价格与额度",
+    detailDesc:"官方直采 = 采集当日从官方定价页抓取；聚合参考 = 转引自第三方对比站",
+    ideTitle:"🖥️ IDE / 编辑器订阅扩展榜 — $10–20 档横评",
+    freebieTitle:"🎁 白嫖 / 免费额度 — 有公开出处的正规免费额度",
+    dynamicsTitle:"📡 市场动态 — 促销与停售追踪",
+    signalTitle:"🔎 自动发现的线索（机器产出，未经人工确认）",
+    healthTitle:"🩺 信息源健康",
+    changelogTitle:"📝 本站变更记录",
+    faqTitle:"❓ FAQ 常见问题",
+    policyTitle:"🛡️ 数据说明与更新机制",
+    reposTitle:"🔗 同类 GitHub 项目 — 方法论与数据源",
+    priceTrend:"价格趋势", priceChange30:"近 30 天变动", priceUp:"↑ 涨价", priceDown:"↓ 降价", priceStable:"— 持平",
+  },
+  en:{
+    langLabel:"中文",
+    heroTitle:"AI Coding Plan <em>Comparison</em><br>A Subscription Guide with Sources",
+    heroDesc:"{n} mainstream platforms, 30+ paid tiers: prices, quota definitions and <b>quota ratio</b> (methodology from GitHub open-source projects); plus real-time models.dev data for 60+ coding model Token API prices.",
+    compareTitle:"⚡ Quick Comparison — Price · Quota Ratio · Source",
+    compareDesc:"Click headers to sort · Starting price = lowest paid tier · Ratio = quota value ÷ monthly price",
+    all:"All", intl:"International", cn:"China",
+    searchPlaceholder:"Search platform / model / price…",
+    ratioSort:"Sort by quota ratio (value)",
+    priceAsc:"Sort by price ascending", priceDesc:"Sort by price descending", nameSort:"Sort by name A–Z",
+    platform:"Platform", startPrice:"Starting Price", ratio:"Quota Ratio ↑ Value",
+    coreModels:"Core Models", quota:"Quota", status:"Status", dataSource:"Data Source",
+    official:"Official", agg:"Aggregated",
+    compareBtn:"Compare", compareClear:"Clear", compareView:"View Compare",
+    compareEmpty:"Select 2-4 platforms to compare",
+    exportCSV:"Export CSV",
+    tokenTitle:"💰 Token Price Board — API Pay-as-you-go Reference",
+    tokenDesc:"Check API prices before subscribing.",
+    allVendors:"All Vendors", cnModels:"China Models", intlModels:"International Models",
+    toolOnly:"Tool-calling only (Coding)",
+    modelSearch:"Search model…", outAsc:"Output price ascending",
+    outDesc:"Output price descending", inAsc:"Input price ascending",
+    model:"Model", vendor:"Vendor", inPrice:"Input $/M", outPrice:"Output $/M",
+    context:"Context", ability:"Ability",
+    calcTitle:"🧮 Subscription vs API Cost Calculator",
+    calcDesc:"Enter monthly usage to estimate API cost",
+    monthlyOutput:"① Monthly Agent Output (M tokens)",
+    modelTier:"② API Pricing Model Tier",
+    light:"Light", medium:"Medium", heavy:"Heavy", ultra:"Ultra",
+    hintRatio:"Input is ~3× output for coding",
+    detailTitle:"📋 Platform Details — Full Tiers & Quotas",
+    detailDesc:"Official = scraped from pricing page; Aggregated = from third-party sites",
+    ideTitle:"🖥️ IDE / Editor Subscription Board",
+    freebieTitle:"🎁 Free Tiers & Credits",
+    dynamicsTitle:"📡 Market Dynamics — Promos & Delistings",
+    signalTitle:"🔎 Auto-discovered Signals (unconfirmed)",
+    healthTitle:"🩺 Source Health",
+    changelogTitle:"📝 Changelog",
+    faqTitle:"❓ FAQ",
+    policyTitle:"🛡️ Data Policy & Update Mechanism",
+    reposTitle:"🔗 Related GitHub Projects",
+    priceTrend:"Price Trend", priceChange30:"30-day change", priceUp:"↑ Up", priceDown:"↓ Down", priceStable:"— Stable",
+  }
+};
+function t(key, vars){
+  let s = (I18N[currentLang]||I18N.zh)[key]||key;
+  if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, v);
+  return s;
+}
+function setLang(lang){
+  currentLang=lang; document.documentElement.lang=lang==="zh"?"zh-CN":"en";
+  const heroTitle=document.getElementById("hero-title");
+  const heroDesc=document.getElementById("hero-desc");
+  const platCount=PLAN_DATA.filter(d=>d.status!=="bad").length;
+  if(heroTitle) heroTitle.innerHTML=t("heroTitle");
+  if(heroDesc) heroDesc.innerHTML=t("heroDesc", {n: platCount});
+  const platDesc=document.getElementById("st-plat-desc");
+  if(platDesc) platDesc.textContent=platCount;
+  syncURLState(); renderAll();
+}
+function renderAll(){ renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderTokens(); renderCompare(); }
 
 /* ================= 订阅计划对比表 ================= */
 function renderPlans(){
@@ -51,26 +191,104 @@ function renderPlans(){
   });
   tbody.innerHTML=rows.map(d=>{
     const [cls,label]=statusMap[d.status];
-    const regionTag=d.region==="intl"?"国际":"国内";
+    const regionTag=d.region==="intl"?(currentLang==="en"?"International":"国际"):(currentLang==="en"?"China":"国内");
     const srcType=d.srcType==="official"
-      ?'<span class="srcbadge src-official">官方直采</span>'
-      :'<span class="srcbadge src-agg">聚合参考</span>';
+      ?'<span class="srcbadge src-official">'+t("official")+'</span>'
+      :'<span class="srcbadge src-agg">'+t("agg")+'</span>';
     const ratio=d.ratio
       ?`<span class="ratio">${d.ratio}×<small>${d.ratioTier}</small></span>`
-      :`<span class="ratio" style="color:var(--dim)">—<small>暂无折算数据</small></span>`;
+      :`<span class="ratio" style="color:var(--dim)">—<small>${currentLang==="en"?"No data":"暂无折算数据"}</small></span>`;
     const speed=d.speed?`<span class="speedb">⚡ ≈${d.speed} TPS</span>`:"";
+    const checked=compareSelection.includes(d.name)?"checked":"";
     return `<tr>
+      <td><input type="checkbox" class="compare-chk" data-name="${d.name}" ${checked} aria-label="${t("compareBtn")} ${d.name}"></td>
       <td class="p-name">${d.name}<small>${d.vendor} · ${regionTag}</small>${speed}</td>
       <td class="price">${d.start}</td>
       <td>${ratio}</td>
       <td class="models">${d.models}</td>
       <td class="quota">${d.quota}</td>
       <td><span class="badge ${cls}">${label}</span></td>
-      <td class="src">${srcType}<br><a href="${d.srcUrl}" target="_blank">来源链接 ↗</a></td>
+      <td class="src">${srcType}<br><a href="${d.srcUrl}" target="_blank">${currentLang==="en"?"Source ↗":"来源链接 ↗"}</a></td>
     </tr>`;
   }).join("");
+  // 绑定对比复选框事件
+  tbody.querySelectorAll(".compare-chk").forEach(chk=>{
+    chk.addEventListener("change",e=>{
+      const name=e.target.dataset.name;
+      if(e.target.checked){
+        if(!compareSelection.includes(name)) compareSelection.push(name);
+      }else{
+        compareSelection=compareSelection.filter(n=>n!==name);
+      }
+      syncURLState(); renderCompare();
+    });
+  });
 }
 
+
+
+/* ================= 价格历史趋势（纯 SVG 迷你图） ================= */
+async function loadPriceHistory(){
+  try{
+    const j=await fetchJSON("data/price-history.json");
+    priceHistory=j.history||{};
+  }catch(e){ priceHistory={}; }
+}
+function sparklineSVG(points, w, h){
+  if(!points||points.length<2) return "";
+  const vals=points.map(p=>p.v);
+  const min=Math.min(...vals), max=Math.max(...vals);
+  const pad=2;
+  const range=max-min||1;
+  const coords=points.map((p,i)=>{
+    const x=pad+(i/(points.length-1))*(w-pad*2);
+    const y=pad+(1-(p.v-min)/range)*(h-pad*2);
+    return `${x},${y}`;
+  });
+  const color=vals[vals.length-1]>vals[0]?"#ff6b6b":vals[vals.length-1]<vals[0]?"#51cf66":"#adb5bd";
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="vertical-align:middle;margin-left:6px" aria-hidden="true">
+    <polyline points="${coords.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <circle cx="${coords[coords.length-1].split(',')[0]}" cy="${coords[coords.length-1].split(',')[1]}" r="2" fill="${color}"/>
+  </svg>`;
+}
+function priceTrendHTML(name){
+  const hist=priceHistory[name];
+  if(!hist) return "";
+  const dates=Object.keys(hist).sort();
+  if(dates.length<2) return "";
+  const points=dates.map(d=>({d,v:hist[d].startVal||0}));
+  const first=points[0].v, last=points[points.length-1].v;
+  const change=first?((last-first)/first*100):0;
+  const absChange=Math.abs(change).toFixed(1);
+  let label=t("priceStable");
+  if(change>1) label=t("priceUp")+` ${absChange}%`;
+  else if(change<-1) label=t("priceDown")+` ${absChange}%`;
+  const svg=sparklineSVG(points, 100, 28);
+  return `<div class="kv" style="font-size:12.5px"><b>${t("priceTrend")}：</b>${svg}<span style="margin-left:6px;color:${change>1?'#ff6b6b':change<-1?'#51cf66':'var(--dim)'}">${label}</span></div>`;
+}
+
+/* ================= 多选对比视图（item 9） ================= */
+function renderCompare(){
+  const box=document.getElementById("compare-view");
+  if(!box) return;
+  const btn=document.getElementById("compare-btn");
+  const count=compareSelection.length;
+  if(btn) btn.textContent=count?`${t("compareView")} (${count})`:t("compareView");
+  if(!count){ box.innerHTML=""; box.style.display="none"; return; }
+  const items=PLAN_DATA.filter(d=>compareSelection.includes(d.name));
+  if(items.length<2){ box.innerHTML=`<p style="color:var(--dim)">${t("compareEmpty")}</p>`; box.style.display="block"; return; }
+  const rows=[
+    {k:currentLang==="en"?"Platform":"平台", v:items.map(d=>d.name)},
+    {k:currentLang==="en"?"Starting Price":"起步价", v:items.map(d=>d.start)},
+    {k:currentLang==="en"?"Quota Ratio":"额度倍率", v:items.map(d=>d.ratio?d.ratio+"×":"—")},
+    {k:currentLang==="en"?"Core Models":"核心模型", v:items.map(d=>d.models)},
+    {k:currentLang==="en"?"Quota":"额度口径", v:items.map(d=>d.quota)},
+    {k:currentLang==="en"?"Status":"状态", v:items.map(d=>{const s=statusMap[d.status]; return s?s[1]:d.status;})},
+    {k:currentLang==="en"?"Price Trend":"价格趋势", v:items.map(d=>priceTrendHTML(d.name)||"—")},
+  ];
+  box.innerHTML=`<div class="compare-table"><table><thead><tr>${items.map(d=>`<th>${esc(d.name)}</th>`).join("")}</tr></thead><tbody>${rows.map((r,ri)=>`<tr><th>${esc(r.k)}</th>${r.v.map(v=>`<td>${ri===6?v:esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  box.style.display="block";
+}
 function renderCards(){
   document.getElementById("cards").innerHTML=PLAN_DATA.filter(d=>d.status!=="bad").map(d=>{
     const [cls,label]=statusMap[d.status];
@@ -84,6 +302,7 @@ function renderCards(){
       <div><b>每月额度</b>${d.periods.mo||"—"}</div>
     </div>`:"";
     const speedLine=d.speed?`<div class="kv"><b>实测速度：</b>≈ ${d.speed} TPS（awesome-coding-plan 实测口径）</div>`:"";
+    const trendLine=priceTrendHTML(d.name);
     const pitfall=d.pitfalls?`<div class="pitfall">⚠ <b>坑点与社区反馈：</b>${d.pitfalls}</div>`:"";
     return `<div class="card">
       <div class="head"><h3>${d.name}</h3><span class="badge b-chip">${d.vendor}</span><span class="badge ${cls}">${label}</span></div>
@@ -91,7 +310,7 @@ function renderCards(){
       <div class="tiers">${d.tiers.map(t=>`<div class="t-row"><span class="t-name">${t[0]}</span><span class="t-price">${t[1]}</span>${t[2]?`<span class="t-note">${t[2]}</span>`:""}</div>`).join("")}</div>
       <div class="kv"><b>核心模型：</b>${d.models}</div>
       <div class="kv"><b>额度口径：</b>${d.quota}</div>
-      ${ratioLine}${speedLine}${periods}${pitfall}
+      ${ratioLine}${speedLine}${trendLine}${periods}${pitfall}
       <div class="tags">${d.tags.map(t=>`<span class="tag2">${t}</span>`).join("")}</div>
       ${d.note?`<div class="kv" style="color:var(--warn);font-size:12.5px">⚠ ${d.note}</div>`:""}
       <div class="foot">${srcType}<span>${d.srcNote}</span><a href="${d.srcUrl}" target="_blank">查看来源 ↗</a></div>
@@ -126,11 +345,13 @@ function livePrice(m){
   // 优先用实时拉取到的第一方 API 价：精确名 > 含关键词的最短名（避免 GLM-5.3 误匹配 GLM-5.3-Flash）
   const kw=m.match.toLowerCase();
   const hits=modelRows.filter(r=>r.pid===m.pid && r.n.toLowerCase().includes(kw) && r.o>0);
+  if(!hits.length) return null; // 显式返回 null，避免 Math.min(...[]) → Infinity 导致静默降级
   const hit=hits.find(r=>r.n.toLowerCase()===kw) || hits.find(r=>r.n.length===Math.min(...hits.map(h=>h.n.length)));
   return hit?{i:hit.i,o:hit.o,live:true}:null;
 }
 function renderCalc(){
-  const m=CALC_MODELS[+document.getElementById("calcmodel").value];
+  const pool=window._CALC_MODEL_POOL||CALC_MODELS;
+  const m=pool[+document.getElementById("calcmodel").value]||pool[0];
   const pr=livePrice(m);
   const fIn=pr?pr.i:m.fIn, fOut=pr?pr.o:m.fOut;
   document.getElementById("calcprice").textContent=
@@ -165,6 +386,20 @@ function renderCalc(){
       <td class="quota">${c.note}</td>
       <td>${c.fit===true?'<span class="badge b-ok">够用</span>':c.fit===false?'<span class="badge b-bad">不够</span>':'<span class="badge b-chip">未知</span>'}</td>
     </tr>`).join("")}</tbody></table>`;
+}
+function populateCalcModels(){
+  const sel=document.getElementById("calcmodel");
+  if(!sel) return;
+  // 动态选取热门模型（优先有 tool_call 的）+ CALC_MODELS 中指定的
+  const hot=modelRows.filter(r=>r.t&&r.o>0).sort((a,b)=>a.o-b.o).slice(0,20);
+  const extras=[];
+  for(const m of CALC_MODELS){
+    const found=hot.find(r=>r.pid===m.pid && r.n.toLowerCase().includes(m.match.toLowerCase()));
+    if(found && !extras.some(e=>e.pid===m.pid)) extras.push({pid:m.pid, match:m.match, label:m.label, fIn:m.fIn, fOut:m.fOut});
+  }
+  const all=[...extras, ...hot.filter(r=>!extras.some(e=>e.pid===r.pid)).map(r=>({pid:r.pid, match:r.n, label:r.n+" ("+r.p+")", fIn:r.i||0.5, fOut:r.o}))].slice(0,30);
+  sel.innerHTML=all.map((m,i)=>`<option value="${i}">${m.label}</option>`).join("");
+  window._CALC_MODEL_POOL=all;
 }
 function bindCalc(){
   document.querySelectorAll(".presets .chip").forEach(b=>b.addEventListener("click",()=>{
@@ -243,26 +478,51 @@ function renderTokens(){
   rows.sort((a,b)=> tSort==="in"?a.i-b.i : tSort==="out-desc"?b.o-a.o : a.o-b.o);
   if(!rows.length){ tbody.innerHTML='<tr><td colspan="6" style="color:var(--dim)">无匹配模型</td></tr>'; return; }
   // 输出价最低的前 8 名标记高性价比
-  const cheapSet=new Set(rows.slice(0,8).map(r=>r.pid+r.n));
+  const cheapSet=new Set(rows.slice(0,8).map(r=>JSON.stringify({v:r.pid,m:r.n})));
   const fmtC=c=>c>=1e6?(c/1e6)+"M":c>=1000?Math.round(c/1000)+"K":c;
   tbody.innerHTML=rows.slice(0,80).map(m=>`<tr>
     <td class="p-name">${m.n}<small>${m.id}</small></td>
     <td><span class="badge b-chip">${m.p}</span></td>
     <td class="num">$${m.i}</td>
-    <td class="num ${cheapSet.has(m.pid+m.n)?"cheap":""}">$${m.o}${cheapSet.has(m.pid+m.n)?' <span class="spark">⚡性价比</span>':""}</td>
+    <td class="num ${cheapSet.has(JSON.stringify({v:m.pid,m:m.n}))?"cheap":""}">$${m.o}${cheapSet.has(JSON.stringify({v:m.pid,m:m.n}))?' <span class="spark">⚡性价比</span>':""}</td>
     <td class="num">${fmtC(m.c)||"—"}</td>
     <td>${m.t?'<span class="tag2">工具</span> ':""}${m.r?'<span class="tag2">推理</span>':""}</td>
   </tr>`).join("");
 }
 
+
+
+/* ================= CSV 导出（item 13） ================= */
+function exportCSV(){
+  const rows=PLAN_DATA.filter(d=>{
+    if(planFilter!=="all" && d.region!==planFilter) return false;
+    if(planQuery){
+      const s=(d.name+d.models+d.start+d.quota+d.vendor).toLowerCase();
+      if(!s.includes(planQuery.toLowerCase())) return false;
+    }
+    return true;
+  });
+  const header=["平台","厂商","区域","起步价","额度倍率","核心模型","额度口径","状态","数据来源","来源链接"];
+  const lines=[header.join(",")];
+  for(const d of rows){
+    const line=[d.name,d.vendor,d.region,d.start,d.ratio||"",d.models,d.quota,statusMap[d.status]?statusMap[d.status][1]:d.status,d.srcType,d.srcUrl].map(v=>`"${String(v).replace(/[\r\n]+/g,' ').replace(/"/g,'""')}"`);
+    lines.push(line.join(","));
+  }
+  const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download="coding-plan-radar.csv"; a.click();
+  URL.revokeObjectURL(url);
+}
 /* ================= 交互绑定 ================= */
 function bind(){
+  restoreURLState();
   document.querySelectorAll(".chip[data-filter]").forEach(c=>c.addEventListener("click",()=>{
-    document.querySelectorAll(".chip[data-filter]").forEach(x=>x.classList.remove("on"));
-    c.classList.add("on"); planFilter=c.dataset.filter; renderPlans();
+    document.querySelectorAll(".chip[data-filter]").forEach(x=>{x.classList.remove("on");x.setAttribute("aria-pressed","false");});
+    c.classList.add("on"); c.setAttribute("aria-pressed","true"); planFilter=c.dataset.filter; syncURLState(); renderPlans(); renderCompare();
   }));
-  document.getElementById("search").addEventListener("input",e=>{planQuery=e.target.value.trim();renderPlans();});
-  document.getElementById("sort").addEventListener("change",e=>{planSort=e.target.value;renderPlans();});
+  document.getElementById("search").addEventListener("input",e=>{planQuery=e.target.value.trim();syncURLState();renderPlans();});
+  document.getElementById("sort").addEventListener("change",e=>{planSort=e.target.value;syncURLState();renderPlans();});
   document.querySelectorAll("#compare thead th[data-k]").forEach(th=>th.addEventListener("click",()=>{
     const k=th.dataset.k;
     if(k==="price") planSort=planSort==="price"?"price-desc":"price";
@@ -272,15 +532,15 @@ function bind(){
   }));
 
   document.querySelectorAll(".chip[data-tfilter]").forEach(c=>c.addEventListener("click",()=>{
-    document.querySelectorAll(".chip[data-tfilter]").forEach(x=>x.classList.remove("on"));
-    c.classList.add("on"); tFilter=c.dataset.tfilter; renderTokens();
+    document.querySelectorAll(".chip[data-tfilter]").forEach(x=>{x.classList.remove("on");x.setAttribute("aria-pressed","false");});
+    c.classList.add("on"); c.setAttribute("aria-pressed","true"); tFilter=c.dataset.tfilter; syncURLState(); renderTokens();
   }));
   const toolBtn=document.querySelector(".chip[data-ttool]");
   toolBtn.addEventListener("click",()=>{
-    tToolOnly=!tToolOnly; toolBtn.classList.toggle("on",tToolOnly); renderTokens();
+    tToolOnly=!tToolOnly; toolBtn.classList.toggle("on",tToolOnly); toolBtn.setAttribute("aria-pressed",tToolOnly); renderTokens();
   });
-  document.getElementById("tsearch").addEventListener("input",e=>{tQuery=e.target.value.trim();renderTokens();});
-  document.getElementById("tsort").addEventListener("change",e=>{tSort=e.target.value;renderTokens();});
+  document.getElementById("tsearch").addEventListener("input",e=>{tQuery=e.target.value.trim();syncURLState();renderTokens();});
+  document.getElementById("tsort").addEventListener("change",e=>{tSort=e.target.value;syncURLState();renderTokens();});
   document.querySelectorAll("#tokens thead th[data-tk]").forEach(th=>th.addEventListener("click",()=>{
     const k=th.dataset.tk;
     tSort = (k==="in") ? "in" : (tSort==="out"?"out-desc":"out");
@@ -457,8 +717,26 @@ async function renderSourceHealth(){
 }
 
 /* ================= init ================= */
-document.getElementById("st-plat").textContent=PLAN_DATA.filter(d=>d.status!=="bad").length;
+const platCount=PLAN_DATA.filter(d=>d.status!=="bad").length;
+document.getElementById("st-plat").textContent=platCount;
+const platDesc=document.getElementById("st-plat-desc");
+if(platDesc) platDesc.textContent=platCount;
 document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
 loadAutoMeta();
-bind(); renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); loadModels(); loadPageAlerts();
-renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();
+bind();
+// 应用 URL 恢复的状态
+document.querySelectorAll(".chip[data-filter]").forEach(x=>{x.classList.toggle("on",x.dataset.filter===planFilter);x.setAttribute("aria-pressed",x.dataset.filter===planFilter);});
+document.getElementById("search").value=planQuery;
+document.getElementById("sort").value=planSort;
+document.querySelectorAll(".chip[data-tfilter]").forEach(x=>{x.classList.toggle("on",x.dataset.tfilter===tFilter);x.setAttribute("aria-pressed",x.dataset.tfilter===tFilter);});
+const toolBtn=document.querySelector(".chip[data-ttool]"); if(toolBtn){toolBtn.classList.toggle("on",tToolOnly);toolBtn.setAttribute("aria-pressed",tToolOnly);}
+document.getElementById("tsearch").value=tQuery;
+document.getElementById("tsort").value=tSort;
+// 语言按钮
+document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===currentLang));
+// 首屏渲染前同步加载价格历史，消除闪烁
+(async () => {
+  await loadPriceHistory();
+  renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderCompare(); loadModels(); loadPageAlerts();
+  renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();
+})();
