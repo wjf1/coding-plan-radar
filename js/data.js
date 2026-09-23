@@ -192,6 +192,126 @@ const PLAN_DATA = [
     srcType:"agg", srcLabel:"社区情报（待重新核实）",
     srcUrl:"https://codingplan.org/", srcNote:"停售信息原始出处为社区视频、已从本站移除；未找到可核验的官方公告，标注待重新核实",
     note:"已订阅用户若觉得模型速度慢可申请退款"
+  },
+  {
+    name:"DeepSeek API", region:"cn", vendor:"DeepSeek", status:"ok",
+    start:"按量计费（无固定月费）", startVal:0,
+    models:"DeepSeek-V4-Pro · DeepSeek-V4-Flash · DeepSeek-V3.2 · DeepSeek-R1",
+    quota:"纯 API 按量计费，无订阅套餐；Token Plan 用户可通过第三方平台接入",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"无官方 Coding Plan 订阅，纯 API 按量；对高频编码场景需自行估算成本。第三方 Token Plan（如百度千帆、腾讯云）已接入 DeepSeek 模型。",
+    tiers:[["API 按量","¥0–按需","输入 ¥1–12 / 百万 tokens，输出 ¥2–24 / 百万 tokens"]],
+    tags:["API 按量","无订阅","高性价比","第三方 Token Plan 可接入"],
+    srcType:"official", srcLabel:"官方直采",
+    srcUrl:"https://api-docs.deepseek.com/quick_start/pricing",
+    srcNote:"api-docs.deepseek.com · 2026-09-23 采集；无固定月费订阅，仅 API 按量",
+    note:"DeepSeek 官方暂未推出固定月费订阅制，表中价格为 API 按量参考价"
+  },
+  {
+    name:"百度千帆 Token Plan", region:"cn", vendor:"百度", status:"ok",
+    start:"¥9.9 / 月（Mini 首购）", startVal:9.9,
+    models:"GLM-5.3 · GLM-5.2 · DeepSeek-V4-Pro · DeepSeek-V4-Flash · ERNIE 5.1 · ERNIE 4.5 Turbo · Kimi-K2.6",
+    quota:"双轨制：Token 制（1:1 抵扣，不区分模型）+ 积分制（按模型系数折算）；首购五折、续费六折",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"双轨制复杂：Token 制对旗舰模型更划算（1:1 抵扣），积分制对 Flash 模型更省；梯度折扣仅明确覆盖 GLM-5.2 与 DeepSeek-V4-Pro-0813，GLM-5.3 是否同享需控制台确认。",
+    tiers:[["Mini","首购 ¥4.9 / 原价 ¥9.9","1400 积分 / 1000 万 Token"],["Lite","首购 ¥19.9 / 原价 ¥40","6600 积分 / 4200 万 Token"],["Pro","首购 ¥99.9 / 原价 ¥200","45000 积分 / 2.3 亿 Token"],["Max","首购 ¥299.9 / 原价 ¥600","165000 积分 / 7 亿 Token"]],
+    tags:["双轨制","首购五折","续费六折","工作日 2 折 / 夜间 0.5 折 / 周末 1 折"],
+    srcType:"official", srcLabel:"官方直采（转述）",
+    srcUrl:"https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Blfmc9dlf",
+    srcNote:"IT之家官方报道 + CSDN 引用千帆官方文档 · 2026-09-23 采集；折扣与 GLM-5.3 覆盖范围需人工复核",
+    note:"双轨制并存：Token 制 1:1 抵扣适合旗舰模型，积分制适合 Flash 模型；梯度折扣时段以控制台实际展示为准"
+  },
+  {
+    name:"讯飞星辰 Token Plan", region:"cn", vendor:"科大讯飞", status:"ok",
+    start:"¥200 / 月（标准成员）", startVal:200,
+    models:"Spark-X2.5 · Spark-X2-Flash · GLM-5.2 · DeepSeek-V4-Pro · DeepSeek-V4-Flash · Kimi-K2.6",
+    quota:"积分制：标准 20000 积分 / 高级 60000 积分 / 尊享 200000 积分；支持 OpenAI + Anthropic 双协议",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"企业级定位，单价高于个人平台；限时折扣（6–8 折）已过期，当前按原价计费；高峰期权益到账可能有 1–3 分钟延迟。",
+    tiers:[["标准成员","¥200 / 月","20000 积分 / 月，TPM 200w"],["高级成员","¥600 / 月","60000 积分 / 月，TPM 300w"],["尊享成员","¥2000 / 月","200000 积分 / 月，TPM 500w"]],
+    tags:["企业级","双协议接入","错峰 0.8 折","国产算力"],
+    srcType:"official", srcLabel:"官方直采",
+    srcUrl:"https://www.xfyun.cn/doc/spark/TokenPlan.html",
+    srcNote:"xfyun.cn 官方 Token Plan 文档 · 2026-09-23 采集；限时折扣状态需人工复核",
+    note:"企业/团队订阅制，按成员计费；支持 Cursor、Claude Code、OpenCode 等工具配置"
+  },
+  {
+    name:"腾讯云 Token Plan", region:"cn", vendor:"腾讯云", status:"ok",
+    start:"$7 / 月（Lite）", startVal:7*RATE,
+    models:"GLM-5.3-Flash · GLM-5.2 · Kimi K3 · Kimi-K2.6 · DeepSeek-V4-Flash · MiniMax-M3",
+    quota:"积分制：Lite 1000 / Standard 2600 / Pro 7900 / Max 15900 credits / 月；自动路由最优模型",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"仅新加坡区域可用；Credits 按月清零不结转；每个根账号只能购买一个计划；不支持降级。",
+    tiers:[["Lite","$7 / 月","1000 credits / 月"],["Standard","$17 / 月","2600 credits / 月"],["Pro","$51 / 月","7900 credits / 月"],["Max","$103 / 月","15900 credits / 月"]],
+    tags:["多模型切换","自动路由","国际版","新加坡区域"],
+    srcType:"official", srcLabel:"官方直采",
+    srcUrl:"https://www.tencentcloud.com/document/product/1300/81315",
+    srcNote:"tencentcloud.com 官方 Token Plan 文档 · 2026-09-23 采集",
+    note:"支持 OpenClaw、Claude Code、Cursor、Cline 等主流工具；Credits 不结转、不可退款"
+  },
+  {
+    name:"Gemini API", region:"intl", vendor:"Google", status:"ok",
+    start:"按量计费（无固定月费）", startVal:0,
+    models:"Gemini 3.8 Flash · Gemini 3.8 Pro · Gemini 3.8 Ultra · Gemini 3.8 Nano",
+    quota:"纯 API 按量计费；Google AI Pro $19.99/月含 1000 AI credits（非 Token 订阅）",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"无传统 Coding Plan 订阅；Gemini 3.8 Flash 输入 $0.75/百万、输出 $3.75/百万（2026-12-31 前促销价，2027-01-01 起翻倍）；Google AI Pro 的 credits 与 API 按量体系不同。",
+    tiers:[["API 按量","$0–按需","Flash 输入 $0.75/M 输出 $3.75/M；Pro 输入 $1.35/M 输出 $6.75/M"],["Google AI Pro","$19.99 / 月","1000 AI credits + Antigravity；Ultra $249.99/月"]],
+    tags:["API 按量","长上下文","Google 生态","促销价限时"],
+    srcType:"official", srcLabel:"官方直采",
+    srcUrl:"https://ai.google.dev/gemini-api/docs/pricing",
+    srcNote:"ai.google.dev 官方定价页 · 2026-09-23 采集；2026-12-31 前为促销价",
+    note:"Gemini 无固定月费 Token Plan，API 按量为主；Google AI Pro 为 credits 体系，非 Token 订阅"
+  },
+  {
+    name:"TRAE", region:"intl", vendor:"字节跳动", status:"ok",
+    start:"$3 / 月（Lite）", startVal:3*RATE,
+    models:"GPT-4.1 · Gemini-2.5-Pro · DeepSeek-V3 · DeepSeek-R1 · GLM-5.2 等",
+    quota:"Token 按量计费；含月度 Dollar Usage：Lite $5 / Pro $20 / Pro+ $90 / Ultra $400",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"2026-02 起改为 Token 积分制（原 Fast Request 制）；国际版与国内版（trae.com.cn）计费体系不同，国内版为积分制。Free 档限 5000 次补全/月。",
+    tiers:[["Free","$0","5000 次补全/月；有限 AI 用量"],["Lite","$3 / 月","$5 Basic Usage"],["Pro","$10 / 月","$20 Basic Usage；全模型 + SOLO 模式"],["Pro+","$30 / 月","$90 Basic Usage"],["Ultra","$100 / 月","$400 Basic Usage；新模型优先体验"]],
+    tags:["AI IDE","SOLO 模式","Token 计费","字节系"],
+    srcType:"official", srcLabel:"官方直采",
+    srcUrl:"https://docs.trae.ai/ide/new-plans-and-billing",
+    srcNote:"docs.trae.ai 官方定价文档 · 2026-09-23 采集；国内版 pricing 见 trae.com.cn",
+    note:"国际版与国内版定价不同；Pro 档含 $20 usage，月费 $10，对标 Cursor Pro"
+  },
+  {
+    name:"Devin", region:"intl", vendor:"Cognition Labs", status:"ok",
+    start:"$20 / 月（Pro）", startVal:20*RATE,
+    models:"SWE-2 · GPT 系列 · Claude · Gemini · SpaceXAI 等",
+    quota:"按消息/任务计费；Pro 含更高额度，Max 显著更高；超出按 API 价购买",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"原 Windsurf 产品已并入 Devin 品牌；Devin Cloud 为云端 Agent，Devin Desktop 为本地 IDE。Free 档模型可用性受限。",
+    tiers:[["Free","$0","轻量 Agent 额度；无限 inline edit / Tab 补全"],["Pro","$20 / 月","全模型；Devin Cloud 访问；可按 API 价购买额外用量"],["Max","$200 / 月","显著更高额度"],["Team","$80 + $40/席 / 月","协作 + 管理后台"],["Enterprise","定制","SAML/SSO + 专属部署"]],
+    tags:["AI 软件工程师","SWE-2","Devin Cloud","原 Windsurf"],
+    srcType:"official", srcLabel:"官方直采",
+    srcUrl:"https://devin.ai/pricing",
+    srcNote:"devin.ai/pricing · 2026-09-23 采集",
+    note:"SWE-2 Free 在 Desktop/CLI 限时免费至 2026-10-10"
+  },
+  {
+    name:"Poe", region:"intl", vendor:"Quora", status:"ok",
+    start:"$19.99 / 月（Subscriber）", startVal:19.99*RATE,
+    models:"Claude 3 · GPT-4 · Gemini · 自定义 Bot 等",
+    quota:"Subscriber 档无限消息；Free 档每日有限条数",
+    ratio:null, ratioTier:"",
+    periods:null, speed:null,
+    pitfalls:"非专门 Coding IDE，为 AI 聊天聚合平台；编程场景需自建 Bot。Annual 档 $199.99/年折合 $16.67/月。",
+    tiers:[["Free","$0","每日有限消息；免费 Bot"],["Subscriber","$19.99 / 月","无限消息；全模型访问"],["Annual","$199.99 / 年","折合 $16.67/月；优先支持"]],
+    tags:["AI 聚合平台","多模型","自定义 Bot","非 IDE"],
+    srcType:"agg", srcLabel:"聚合参考（官方页待复核）",
+    srcUrl:"https://poe.com/pricing",
+    srcNote:"toolradar.com 聚合自 poe.com 官方页（2026-09-01 验证），需人工复核官方定价页",
+    note:"编程场景可通过自定义 Bot 接入 Claude/GPT，但非专门 Coding Plan"
   }
 ];
 
@@ -210,7 +330,11 @@ const CALC_PLANS = [
 const CALC_MODELS = [
   {pid:"deepseek", match:"V4 Flash", label:"DeepSeek V4 Flash（经济档）", fIn:0.15, fOut:0.6},
   {pid:"zhipuai", match:"GLM-5.3", label:"GLM-5.3（中档）", fIn:1.4, fOut:4.4},
-  {pid:"anthropic", match:"Claude Sonnet 5", label:"Claude Sonnet 5（高档）", fIn:2, fOut:10}
+  {pid:"anthropic", match:"Claude Sonnet 5", label:"Claude Sonnet 5（高档）", fIn:2, fOut:10},
+  {pid:"baidu", match:"ERNIE", label:"百度千帆 ERNIE 5.1（国产旗舰）", fIn:4, fOut:18},
+  {pid:"tencent", match:"GLM-5.3-Flash", label:"腾讯云 GLM-5.3-Flash（经济档）", fIn:0.8, fOut:2.8},
+  {pid:"iflytek", match:"Spark-X2.5", label:"讯飞星火 X2.5（国产旗舰）", fIn:1.6, fOut:6},
+  {pid:"google", match:"Gemini 3.8 Flash", label:"Gemini 3.8 Flash（经济档）", fIn:0.75, fOut:3.75}
 ];
 
 // ===== IDE / 编辑器订阅扩展榜（来源：awesome-coding-plan IDE 表，2026-09-13）=====
@@ -247,3 +371,8 @@ const GH_REPOS = [
   {name:"mnfst/awesome-free-llm-apis", desc:"「永久免费」LLM API 清单，本站「白嫖 / 免费额度」板块的参考来源之一；仓库 README 的提交变更被用作免费额度变动的事件流", stars:"7601★ · CC0", url:"https://github.com/mnfst/awesome-free-llm-apis", tag:"白嫖参考"},
   {name:"open-free-llm-api/awesome-freellm-apis", desc:"134+ 免费 API 汇总，含 Claude Code / Cursor / Codex 的一键配置思路，更新频繁（MIT 许可，可安全引用）", stars:"2985★ · 活跃更新", url:"https://github.com/open-free-llm-api/awesome-freellm-apis", tag:"白嫖参考"}
 ];
+
+// 条件导出，供 Node.js 每日巡检脚本读取价格数据（不影响浏览器端）
+if (typeof globalThis !== 'undefined' && globalThis.process && globalThis.process.versions && globalThis.process.versions.node) {
+  globalThis._CP_EXPORT = { RATE, PLAN_DATA, CALC_PLANS, CALC_MODELS, IDE_PLANS, CHANGELOG, GH_REPOS };
+}
