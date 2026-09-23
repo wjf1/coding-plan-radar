@@ -1,0 +1,119 @@
+{
+ "updatedAt": "2026-09-23",
+ "history": {
+  "ChatGPT (Codex)": {
+   "2026-09-23": {
+    "startVal": 57.6,
+    "start": "$8 / 月（Go）"
+   }
+  },
+  "Claude": {
+   "2026-09-23": {
+    "startVal": 144,
+    "start": "$20 / 月（年付 $17）"
+   }
+  },
+  "GitHub Copilot": {
+   "2026-09-23": {
+    "startVal": 72,
+    "start": "$10 / 月（Pro）"
+   }
+  },
+  "Cursor": {
+   "2026-09-23": {
+    "startVal": 144,
+    "start": "$20 / 月（年付 $16）"
+   }
+  },
+  "OpenCode Go": {
+   "2026-09-23": {
+    "startVal": 72,
+    "start": "$10 / 月"
+   }
+  },
+  "GLM Coding Plan": {
+   "2026-09-23": {
+    "startVal": 118,
+    "start": "¥118 / 月（年付折合 ¥94.4）"
+   }
+  },
+  "Kimi For Coding": {
+   "2026-09-23": {
+    "startVal": 49,
+    "start": "¥49 / 月（Andante）"
+   }
+  },
+  "MiniMax Coding": {
+   "2026-09-23": {
+    "startVal": 49,
+    "start": "¥49 / 月（Plus）"
+   }
+  },
+  "阿里云百炼 Coding": {
+   "2026-09-23": {
+    "startVal": 39,
+    "start": "¥39 / 月（Lite）"
+   }
+  },
+  "火山方舟 Coding": {
+   "2026-09-23": {
+    "startVal": 9.9,
+    "start": "¥9.9 首购（Lite，刊例 ¥40）"
+   }
+  },
+  "小米 MiMo Coding": {
+   "2026-09-23": {
+    "startVal": 39,
+    "start": "¥39 / 月（Lite）"
+   }
+  },
+  "DeepSeek API": {
+   "2026-09-23": {
+    "startVal": 0,
+    "start": "按量计费（无固定月费）"
+   }
+  },
+  "百度千帆 Token Plan": {
+   "2026-09-23": {
+    "startVal": 9.9,
+    "start": "¥9.9 / 月（Mini 首购）"
+   }
+  },
+  "讯飞星辰 Token Plan": {
+   "2026-09-23": {
+    "startVal": 200,
+    "start": "¥200 / 月（标准成员）"
+   }
+  },
+  "腾讯云 Token Plan": {
+   "2026-09-23": {
+    "startVal": 50.4,
+    "start": "$7 / 月（Lite）"
+   }
+  },
+  "Gemini API": {
+   "2026-09-23": {
+    "startVal": 0,
+    "start": "按量计费（无固定月费）"
+   }
+  },
+  "TRAE": {
+   "2026-09-23": {
+    "startVal": 21.6,
+    "start": "$3 / 月（Lite）"
+   }
+  },
+  "Devin": {
+   "2026-09-23": {
+    "startVal": 144,
+    "start": "$20 / 月（Pro）"
+   }
+  },
+  "Poe": {
+   "2026-09-23": {
+    "startVal": 143.928,
+    "start": "$19.99 / 月（Subscriber）"
+   }
+  }
+ }
+}
