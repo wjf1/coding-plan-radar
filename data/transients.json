@@ -1,0 +1,13 @@
+{
+ "items": [
+  {
+   "id": "aliyun-free-quota",
+   "label": "阿里云百炼免费额度说明",
+   "url": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+   "detected": "2026-09-23",
+   "resolvedAt": "2026-09-30",
+   "resolvedBy": "auto-revert",
+   "note": "内容回到基线，原始变动可能为临时促销/渲染变体"
+  }
+ ]
+}

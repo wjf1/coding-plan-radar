@@ -1,68 +1,47 @@
 {
- "claude": {
-  "hash": "1a0e38e65194",
-  "seen": [
-   "1a0e38e65194",
-   "0dea2636519a",
-   "67c307f05119",
-   "f92d29a45139",
-   "052f91fe51e9"
-  ],
-  "flaps": 2,
-  "pending": "052f91fe51e9",
-  "pendingSince": "2026-09-16",
-  "unstable": true
- },
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "a9a0523c57c3",
    "f354549357e4",
    "631a31e1578b",
    "c3057b5c57a4",
    "e4b96d355615",
-   "3e1ebe3d567a"
+   "3e1ebe3d567a",
+   "4cc175f55711"
   ],
-  "flaps": 1,
+  "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "3e1ebe3d567a",
-  "pendingSince": "2026-09-22"
- },
- "cursor": {
-  "unstable": true,
-  "revertCount": 2,
-  "note": "2026-09-14 实测：cursor.com/pricing 连续两次抓取的正文长度不同（7506 / 8114 字符），内容在多个渲染变体间跳变，哈希对比会产生假变动。已判定为不可稳定监控，只记录不预警，价格需人工核对。",
-  "seen": [
-   "91adaabc1fb2",
-   "f0accd8e1d52",
-   "3a67767c1dcc"
-  ],
-  "pending": "f0accd8e1d52",
-  "pendingSince": "2026-09-14"
+  "pending": "4cc175f55711",
+  "pendingSince": "2026-09-22",
+  "unstable": true
  },
  "glm": {
   "hash": "0ad355dfbad",
   "seen": [
    "035b26d4b76",
    "9ecfb248af3",
-   "0ad355dfbad"
+   "0ad355dfbad",
+   "497b317abb8"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-23"
+  "changedAt": "2026-09-23",
+  "pending": "497b317abb8",
+  "pendingSince": "2026-09-30"
  },
  "kimi": {
   "hash": "6460286555a",
   "seen": [
    "d596a35940f",
    "c3990aea451",
-   "6460286555a"
+   "6460286555a",
+   "e9401ee3559"
   ],
   "flaps": 0,
   "changedAt": "2026-09-21",
   "revertCount": 2,
   "unstable": true,
-  "pending": "6460286555a",
+  "pending": "e9401ee3559",
   "pendingSince": "2026-09-23"
  },
  "trae": {
@@ -80,11 +59,14 @@
   "hash": "7cc58f655df",
   "seen": [
    "99a05bfa5df",
-   "7cc58f655df"
+   "7cc58f655df",
+   "035267b45dd"
   ],
   "flaps": 0,
   "changedAt": "2026-09-22",
-  "revertCount": 1
+  "revertCount": 1,
+  "pending": "035267b45dd",
+  "pendingSince": "2026-09-30"
  },
  "aliyun-free-quota": {
   "hash": "636342be1af9",
@@ -95,7 +77,8 @@
   ],
   "flaps": 0,
   "changedAt": "2026-09-23",
-  "revertCount": 1
+  "revertCount": 2,
+  "unstable": true
  },
  "aliyun-university": {
   "hash": "310f7285258c",
@@ -107,6 +90,32 @@
   "flaps": 0,
   "changedAt": "2026-09-22",
   "revertCount": 2,
-  "unstable": true
+  "unstable": true,
+  "pending": "310f7285258c",
+  "pendingSince": "2026-09-30"
+ },
+ "baidu-qianfan": {
+  "hash": "4b552805b10",
+  "seen": [
+   "4b552805b10"
+  ]
+ },
+ "iflytek-tokenplan": {
+  "hash": "7ee4a76a37ae",
+  "seen": [
+   "7ee4a76a37ae"
+  ]
+ },
+ "tencent-tokenplan": {
+  "hash": "8907d64e3a10",
+  "seen": [
+   "8907d64e3a10"
+  ]
+ },
+ "aliyun-coding-plan": {
+  "hash": "729cce29ec3",
+  "seen": [
+   "729cce29ec3"
+  ]
  }
 }
