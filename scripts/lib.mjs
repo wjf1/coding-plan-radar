@@ -130,8 +130,28 @@ export const stripTags = (s) =>
     .replace(/\s+/g, " ")
     .trim();
 
+/** 清理 RSS 摘要尾部的站点签名（如 GitHub Changelog 的 "The post … appeared first on …"） */
+const stripFeedTail = (s) =>
+  String(s || "")
+    .replace(/\s*The post [\s\S]*? appeared first on [\s\S]*?\.?\s*$/i, "")
+    .trim();
+
+/** 解码 HTML 命名/数字实体（&#8230; / &hellip; 等），未识别的实体替换为空格 */
+const decodeEntities = (s) =>
+  String(s || "")
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => {
+      try { return String.fromCodePoint(parseInt(n, 16)); } catch { return " "; }
+    })
+    .replace(/&#(\d+);/g, (_, n) => {
+      try { return String.fromCodePoint(+n); } catch { return " "; }
+    })
+    .replace(/&([a-z]+);/gi, (_, n) =>
+      ({ amp: "&", quot: '"', apos: "'", nbsp: " ", hellip: "…", rsquo: "’", lsquo: "‘", rdquo: "”", ldquo: "“", mdash: "—", ndash: "–", middot: "·" })[n.toLowerCase()] ?? " "
+    );
+
 export const excerpt = (s, n = 180) => {
-  const t = stripTags(s);
+  let t = stripTags(s);
+  t = decodeEntities(stripFeedTail(t)).replace(/\s+/g, " ").trim();
   return t.length > n ? t.slice(0, n) + "…" : t;
 };
 

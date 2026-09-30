@@ -29,7 +29,7 @@
 | 🖥️ IDE 订阅榜 | 12 个 $10–20 档 IDE/编辑器订阅横评（Trae / Copilot / Zed / Kiro / Windsurf…） |
 | 🎁 白嫖 / 免费额度 | 官方免费档、学生包、免费 API 额度、限时试用；标注额度 / 门槛 / 证据强度，**每条每日自动核对来源页**（正常 / 待复核 / 需人工核对三态徽标 + 最近核对日期），并列出已失效的坑（如 GitHub Models 已下线） |
 | 📡 市场动态 | 促销与停售追踪（人工确认记录，**到期自动标「已结束」**；官方渠道机器线索按日期混排，标注「待人工确认」）+ 线索队列 + 信息源健康看板 + 本站变更记录 |
-| 🌐 中英双语 | 页面右上角一键切换中/英：首屏与全部**结构标签**（章节标题、表格表头、工具条、计算器标签、搜索占位符）随语言切换，长文正文与导航仍为中文；语言选择随 URL 一起保留 |
+| 🌐 中英双语 | 页面右上角一键切换中/英：首屏与全部**结构标签**（章节标题、表格表头、工具条、计算器标签、搜索占位符）随语言切换；中文界面下机器线索按官方公告句式译为中文（产品名保留原文），英文为主的摘要不整段展示；语言选择随 URL 一起保留 |
 | 🔗 链接可分享 | 筛选、排序、搜索词、对比选中的平台、语言全部同步到 URL，复制链接即可复现同一视图 |
 | 📤 CSV 导出 | 对比表一键导出 CSV（含换行、引号的安全转义，可直接进 Excel） |
 | ♿ 无障碍 | 语义化表格 + ARIA 标签（`aria-pressed` 与选中态同步）、键盘可达的「跳到主内容」链接、移动端触摸滚动 |
@@ -210,7 +210,7 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 | 🖥️ IDE subscription board | 12 IDE/editor subscriptions in the $10–20 band (Trae / Copilot / Zed / Kiro / Windsurf…) |
 | 🎁 Free tiers & freebies | Official free tiers, student packs, free API quotas, limited-time trials — each with quota / eligibility / evidence strength, **verified against its source page daily** (three-state badge: OK / needs review / manual-only, plus the last-checked date), plus retired offers (e.g. GitHub Models is gone) |
 | 📡 Market dynamics | Promo and discontinuation tracking (human-confirmed records, **expired promos are auto-marked "ended"**; official machine leads are interleaved by date and labelled "unconfirmed") + a lead queue + a source-health dashboard + site changelog |
-| 🌐 Bilingual UI | One-click Chinese / English switch in the header: the hero and all **structural labels** (section titles, table headers, toolbars, calculator labels, search placeholders) follow the language; long-form prose and the nav stay Chinese. The choice persists in the URL |
+| 🌐 Bilingual UI | One-click Chinese / English switch in the header: the hero and all **structural labels** (section titles, table headers, toolbars, calculator labels, search placeholders) follow the language. In Chinese mode, machine leads are translated via common announcement patterns (product names stay in original), and mostly-English excerpts are not shown inline; the choice persists in the URL |
 | 🔗 Shareable links | Filters, sorting, search terms, compared platforms and language all sync to the URL — copy the link to reproduce the exact view |
 | 📤 CSV export | One-click CSV export of the comparison table (safe escaping of newlines and quotes, Excel-ready) |
 | ♿ Accessibility | Semantic tables with ARIA labels (`aria-pressed` kept in sync with selection state), a keyboard-reachable "skip to content" link, touch scrolling on mobile |

@@ -177,7 +177,7 @@ function setLang(lang){
   if(platDesc) platDesc.textContent=platCount;
   document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===currentLang));
   applyI18N();
-  syncURLState(); renderAll();
+  syncURLState(); renderAll(); renderPromos(); renderSignals();
 }
 function renderAll(){ renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderTokens(); renderCompare(); }
 
@@ -639,8 +639,8 @@ async function renderPromos(){
   };
   const sigRow=i=>`<div class="tl-item is-signal">
     <div class="date">${esc(fmtISODate(i.date||i.firstSeen||""))} · 机器线索</div>
-    <h4><a href="${esc(i.url)}" target="_blank">${esc(i.title)}</a></h4>
-    ${i.excerpt?`<p>${esc(i.excerpt)}</p>`:""}
+    <h4><a href="${esc(i.url)}" target="_blank">${esc(leadTitle(i))}</a></h4>
+    ${leadExcerpt(i)?`<p>${esc(leadExcerpt(i))}</p>`:""}
     <div class="src-line">${tierBadge(i.tier)}<span class="badge b-chip">待人工确认</span><span>来源：${esc(i.sourceLabel)}</span></div>
   </div>`;
 
@@ -706,11 +706,57 @@ async function renderFreebies(){
 }
 
 /* ================= 自动发现的线索队列（data/signals.json，机器产出） ================= */
+/* ---------- 线索文案处理：实体解码、RSS 尾巴清理、中文界面句式翻译 ---------- */
+const ENTITY_MAP={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" ",hellip:"…",rsquo:"’",lsquo:"‘",rdquo:"”",ldquo:"“",mdash:"—",ndash:"–",middot:"·"};
+function decodeEntities(s){
+  return String(s??"")
+    .replace(/&#x([0-9a-f]+);/gi,(_,n)=>{try{return String.fromCodePoint(parseInt(n,16))}catch(e){return " "}})
+    .replace(/&#(\d+);/g,(_,n)=>{try{return String.fromCodePoint(+n)}catch(e){return " "}})
+    .replace(/&([a-z]+);/gi,(_,n)=>ENTITY_MAP[n.toLowerCase()] ?? " ");
+}
+function stripFeedTail(s){
+  return String(s??"").replace(/\s*The post [\s\S]*? appeared first on [\s\S]*?\.?\s*$/i,"").trim();
+}
+// 高英文占比判断（中文字符占比高的标题不会误伤）
+function isMostlyEnglish(s){
+  const t=String(s??""); if(!t.trim()) return false;
+  return (t.match(/[A-Za-z]/g)||[]).length/t.length>0.55;
+}
+// 官方公告高频句式 → 中文；产品名/专有名词保留原文；未匹配返回 null
+function leadTitleZh(title){
+  const t=String(title??"");
+  const rules=[
+    [/^(.+?) is now generally available.*$/i,"$1 正式全量可用"],
+    [/^(.+?) is now available in (.+?)\.?$/i,"$1 已上线 $2"],
+    [/^(.+?) is now (rolling out|being rolled out).*$/i,"$1 正在推送"],
+    [/^(.+?) is now available.*$/i,"$1 现已可用"],
+    [/^Deprecation notice:\s*(.+)$/i,"弃用预告：$1"],
+    [/^New features and improvements in (.+)$/i,"$1 的新功能与改进"],
+    [/^(.+?) in (GitHub Copilot|Cursor|Claude Code|ChatGPT|OpenRouter|Gemini)$/i,"$1 已上线 $2"],
+    [/^Introducing (.+)$/i,"全新推出 $1"],
+    [/^Announcing (.+)$/i,"官宣：$1"],
+    [/^(.+?) is (now|finally) here.*$/i,"$1 正式发布"],
+  ];
+  for(const [re,tpl] of rules){ const m=t.match(re); if(m) return tpl.replace(/\$(\d)/g,(_,i)=>m[+i].trim()); }
+  return null;
+}
+function leadTitle(i){
+  const raw=stripFeedTail(decodeEntities(i.title));
+  return (currentLang==="zh" && isMostlyEnglish(raw) && leadTitleZh(raw)) || raw;
+}
+function leadExcerpt(i){
+  const raw=stripFeedTail(decodeEntities(i.excerpt||""));
+  if(!raw) return "";
+  // 中文界面不整段展示英文摘要（避免大段英文）；英文界面原样
+  if(currentLang==="zh" && isMostlyEnglish(raw)) return "";
+  return raw;
+}
 function sigRow(s){
+  const title=leadTitle(s), excerpt=leadExcerpt(s);
   return `<div class="sig">
-    <div class="sh">${tierBadge(s.tier)}<a href="${esc(s.url)}" target="_blank">${esc(s.title)}</a></div>
-    <div class="sd">${esc(s.sourceLabel)} · 本站发现于 ${esc(s.firstSeen)}${s.date?` · 原文时间 ${esc(String(s.date).slice(0,16))}`:""}</div>
-    ${s.excerpt?`<div class="sd">${esc(s.excerpt)}</div>`:""}
+    <div class="sh">${tierBadge(s.tier)}<a href="${esc(s.url)}" target="_blank">${esc(title)}</a></div>
+    <div class="sd">${esc(s.sourceLabel)} · 本站发现于 ${esc(s.firstSeen)}${s.date?` · 原文时间 ${esc(fmtISODate(String(s.date).slice(0,16)))}`:""}</div>
+    ${excerpt?`<div class="sd">${esc(excerpt)}</div>`:""}
   </div>`;
 }
 async function renderSignals(){
