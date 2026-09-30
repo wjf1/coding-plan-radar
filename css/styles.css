@@ -202,3 +202,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .sig .sd{color:var(--dim);font-size:12px;margin-top:2px}
 .vflag{font-size:11px;color:var(--warn);border:1px solid #f5b44544;background:#f5b44512;border-radius:99px;padding:1px 8px}
 .tl-item .src-line{font-size:12px;color:var(--dim);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px}
+
+/* 市场动态时间线：已结束条目沉底弱化 + 机器线索区分样式（v6.2） */
+.b-expired{background:#8b93a718;color:var(--dim);border:1px solid #8b93a744;font-weight:500}
+.tl-item.is-expired{opacity:.62}
+.tl-item.is-expired::before{background:#8b93a7}
+.tl-item.is-signal{border:1px dashed var(--border);border-radius:var(--radius);padding:12px 16px}
+.tl-item.is-signal::before{background:transparent;border:2px dashed var(--accent2)}
+.tl-item.is-signal h4 a{color:var(--text)}

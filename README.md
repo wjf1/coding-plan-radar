@@ -27,8 +27,8 @@
 | 💰 Token 实时价格榜 | 浏览器直连 [models.dev](https://github.com/sst/models.dev) 拉取第一方模型 API 价（$/百万 Token），当前渲染 80 款编码模型，输出价升序 + ⚡性价比标记 |
 | 🧮 订阅 vs API 计算器 | 输入月输出量与模型档位（7 档），实时估算按量成本，对比候选订阅给出「订阅还是按量」结论 |
 | 🖥️ IDE 订阅榜 | 12 个 $10–20 档 IDE/编辑器订阅横评（Trae / Copilot / Zed / Kiro / Windsurf…） |
-| 🎁 白嫖 / 免费额度 | 官方免费档、学生包、免费 API 额度、限时试用；标注额度 / 门槛 / 证据强度，并列出已失效的坑（如 GitHub Models 已下线） |
-| 📡 市场动态 | 促销与停售追踪（人工确认）+ 自动发现的线索队列 + 信息源健康看板 + 本站变更记录 |
+| 🎁 白嫖 / 免费额度 | 官方免费档、学生包、免费 API 额度、限时试用；标注额度 / 门槛 / 证据强度，**每条每日自动核对来源页**（正常 / 待复核 / 需人工核对三态徽标 + 最近核对日期），并列出已失效的坑（如 GitHub Models 已下线） |
+| 📡 市场动态 | 促销与停售追踪（人工确认记录，**到期自动标「已结束」**；官方渠道机器线索按日期混排，标注「待人工确认」）+ 线索队列 + 信息源健康看板 + 本站变更记录 |
 | 🌐 中英双语 | 页面右上角一键切换中/英：首屏与全部**结构标签**（章节标题、表格表头、工具条、计算器标签、搜索占位符）随语言切换，长文正文与导航仍为中文；语言选择随 URL 一起保留 |
 | 🔗 链接可分享 | 筛选、排序、搜索词、对比选中的平台、语言全部同步到 URL，复制链接即可复现同一视图 |
 | 📤 CSV 导出 | 对比表一键导出 CSV（含换行、引号的安全转义，可直接进 Excel） |
@@ -43,18 +43,22 @@
 
 ![市场动态与信息源健康](docs/screenshots/05-dynamics.jpg)
 
+![白嫖 / 免费额度（每日自动核对状态）](docs/screenshots/06-freebies.jpg)
+
 ### 🔄 每日自动更新（GitHub Actions）
 
 仓库每天 **北京时间 09:00**（cron `0 1 * * *` UTC）自动运行 [daily-update.yml](.github/workflows/daily-update.yml)。
-四个采集任务互相独立、任一失败不影响其余（`continue-on-error`），最后汇入一个 `publish` 作业：
+所有巡检步骤在**同一个 job 内顺序执行**（v6.2 修复：此前拆成并行 job 时各自 checkout 且无 artifact 传递，
+导致 `signals.json` 等产物连续 7 天未进仓库），每步独立记录成败，最后统一汇总、提交、开 issue：
 
 1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `js/snapshot.js` 兜底快照
 2. **`scripts/check-pages.mjs`** —— 按 `data/sources.json` 对官方定价页/文档做内容哈希变动检测
-   - 有变动 → 写入 `data/alerts.json`，站点顶部自动挂「待核实」横幅并开 issue
+   - 有变动 → 写入 `data/alerts.json` 并列入每日巡检 issue，待人工核价
    - 页面回到基线哈希时**自动 resolved**；抓取失败不再静默跳过，而是计入源健康
 3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/signals.json` 线索
 4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
-5. **`publish` 作业**（依赖以上四项）：写入巡检日期 → `record-history.mjs` 记录价格历史快照 → 生成待人工处理清单（去重后写入 `data/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
+5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/freebies.json`）+ 促销条目到期自动标「已结束」
+6. **收尾**：`record-history.mjs` 记录价格历史快照 → 写入巡检日期 → 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
 
 **诚实原则**：
 
@@ -73,7 +77,7 @@
 1. 打开 issue 中列出的官方页面，核对新价格 / 新额度
 2. 更新本地 `js/data.js` 对应平台条目（含新的采集日期）
 3. 将 `data/alerts.json` 中该条目的 `"resolved": false` 改为 `true`（或等着它自动回滚解决）
-4. 提交推送，横幅自动消失
+4. 提交推送，该条目从下一日的 issue 清单中消失
 
 #### 处理「自动发现的线索」的流程
 
@@ -92,8 +96,8 @@
 │   └── snapshot.js         # models.dev 兜底快照（每日自动重新生成，勿手改）
 ├── data/
 │   ├── sources.json        # ⭐ 信息源声明清单（唯一事实来源：URL / 分级 / 关键词 / 启用状态与原因）
-│   ├── promos.json         # 人工确认的促销 / 停售记录（驱动「市场动态」时间线）
-│   ├── freebies.json       # 人工维护的白嫖 / 免费额度条目
+│   ├── promos.json         # 人工确认的促销 / 停售记录（驱动「市场动态」时间线；到期自动标「已结束」）
+│   ├── freebies.json       # 白嫖 / 免费额度条目（每日自动核对来源页，status / lastChecked 脚本维护）
 │   ├── alerts.json         # 「待核实」预警状态（人工 resolved，或自动回滚解决）
 │   ├── price-history.json  # 起步价每日快照（保留 90 天，自动维护，驱动价格趋势图）
 │   ├── reported.json       # 已进入待处理清单的线索去重表（自动维护，避免 issue 重复列同一条）
@@ -108,6 +112,7 @@
 │   ├── check-pages.mjs     # 官方页哈希巡检 + 源健康
 │   ├── fetch-feeds.mjs     # RSS / JSON 源 → 线索
 │   ├── diff-prices.mjs     # 价格库与免费模型差异检测
+│   ├── verify-listings.mjs # 白嫖额度来源页每日核对 + 促销到期自动归档
 │   ├── record-history.mjs  # 记录每日起步价快照（90 天滚动）+ 调价告警
 │   └── publish-via-api.mjs # 走 GitHub API 发布（github.com 被阻断时替代 git push）
 ├── docs/screenshots/       # README 配图
@@ -131,7 +136,7 @@ node scripts/publish-via-api.mjs "update: ..."         # 需要 GITHUB_TOKEN 或
 # 手动跑一次完整巡检
 node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
   && node scripts/fetch-feeds.mjs && node scripts/diff-prices.mjs \
-  && node scripts/record-history.mjs
+  && node scripts/verify-listings.mjs && node scripts/record-history.mjs
 ```
 
 无构建步骤、零 npm 依赖（含 RSS 解析，未引入 YAML / XML 库）、纯静态 —— fork 后开启 Pages 即可获得自己的实例。
@@ -203,26 +208,39 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 | 💰 Live Token price board | Fetched directly in the browser from [models.dev](https://github.com/sst/models.dev) ($/million tokens); currently renders 80 coding models, sorted by output price with a ⚡ value flag |
 | 🧮 Subscription vs. API calculator | Enter monthly output volume and an API model tier (7 tiers) to estimate pay-as-you-go cost and decide "subscribe or pay per token" |
 | 🖥️ IDE subscription board | 12 IDE/editor subscriptions in the $10–20 band (Trae / Copilot / Zed / Kiro / Windsurf…) |
-| 🎁 Free tiers & freebies | Official free tiers, student packs, free API quotas, limited-time trials — each with quota / eligibility / evidence strength, plus retired offers (e.g. GitHub Models is gone) |
-| 📡 Market dynamics | Promo and discontinuation tracking (human-confirmed) + an auto-discovered lead queue + a source-health dashboard + site changelog |
+| 🎁 Free tiers & freebies | Official free tiers, student packs, free API quotas, limited-time trials — each with quota / eligibility / evidence strength, **verified against its source page daily** (three-state badge: OK / needs review / manual-only, plus the last-checked date), plus retired offers (e.g. GitHub Models is gone) |
+| 📡 Market dynamics | Promo and discontinuation tracking (human-confirmed records, **expired promos are auto-marked "ended"**; official machine leads are interleaved by date and labelled "unconfirmed") + a lead queue + a source-health dashboard + site changelog |
 | 🌐 Bilingual UI | One-click Chinese / English switch in the header: the hero and all **structural labels** (section titles, table headers, toolbars, calculator labels, search placeholders) follow the language; long-form prose and the nav stay Chinese. The choice persists in the URL |
 | 🔗 Shareable links | Filters, sorting, search terms, compared platforms and language all sync to the URL — copy the link to reproduce the exact view |
 | 📤 CSV export | One-click CSV export of the comparison table (safe escaping of newlines and quotes, Excel-ready) |
 | ♿ Accessibility | Semantic tables with ARIA labels (`aria-pressed` kept in sync with selection state), a keyboard-reachable "skip to content" link, touch scrolling on mobile |
 | 🛡️ Source tiers | Official direct (green) > real-time data source (cyan) > aggregated reference (blue) > community intel (yellow, leads only — never enters the price table) |
 
+![Hero](docs/screenshots/01-hero.jpg)
+
+![Quick comparison table](docs/screenshots/02-compare.jpg)
+
+![Live token price board](docs/screenshots/03-token.jpg)
+
+![Market dynamics & source health](docs/screenshots/05-dynamics.jpg)
+
+![Free tiers with daily verification status](docs/screenshots/06-freebies.jpg)
+
 ### 🔄 Daily automated updates (GitHub Actions)
 
 Every day at **09:00 Beijing time** (cron `0 1 * * *` UTC) the repo runs [daily-update.yml](.github/workflows/daily-update.yml).
-Four collection jobs run independently — one failing does not affect the others (`continue-on-error`) — then a `publish` job ties them together:
+All inspection steps run **sequentially inside a single job** (fixed in v6.2: the previous parallel jobs each
+checked out their own copy with no artifact passing, so `signals.json` and friends went unpublished for 7 days).
+Each step records its own success/failure; at the end everything is summarized, committed and turned into an issue:
 
 1. **`scripts/update-snapshot.mjs`** — refetch models.dev and regenerate the `js/snapshot.js` fallback snapshot
 2. **`scripts/check-pages.mjs`** — content-hash change detection on official pricing/documentation pages, driven by `data/sources.json`
-   - On change → write to `data/alerts.json`, show a "pending verification" banner on the site and open an issue
+   - On change → write to `data/alerts.json` and list it in the daily inspection issue for manual price verification
    - Auto-resolves when a page returns to its baseline hash; fetch failures are no longer silently skipped — they count against source health
 3. **`scripts/fetch-feeds.mjs`** — fetch official changelogs / status pages / community feeds and normalize them into leads in `data/signals.json`
 4. **`scripts/diff-prices.mjs`** — compare models.dev / OpenRouter / LiteLLM: price moves, free-model additions and removals, disagreements between price sources
-5. **`publish` job** (depends on the four above): write the inspection date → record price-history snapshots via `record-history.mjs` → build the human review list (deduplicated into `data/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
+5. **`scripts/verify-listings.mjs`** — verify every freebie against its source page (five states written back to `data/freebies.json`: `ok` / `warn` / `stale` / `changed` / `manual`) and auto-mark expired promos as "ended"
+6. **Wrap-up**: `record-history.mjs` records price-history snapshots → write the inspection date → build the human review list (official page changes / new leads / freebie anomalies / promos that expired today, deduplicated into `data/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
 
 **Honesty principles**
 
@@ -237,7 +255,7 @@ Four collection jobs run independently — one failing does not affect the other
 1. Open the official page listed in the issue and verify the new price / quota
 2. Update the matching platform entry in `js/data.js` (including a new collection date)
 3. Set `"resolved": false` to `true` in `data/alerts.json` for that entry (or wait for the automatic rollback to resolve it)
-4. Commit and push — the banner disappears
+4. Commit and push — the entry disappears from the next day's issue list
 
 #### Handling "auto-discovered leads"
 
@@ -256,8 +274,8 @@ Four collection jobs run independently — one failing does not affect the other
 │   └── snapshot.js         # models.dev fallback snapshot (regenerated daily — do not edit by hand)
 ├── data/
 │   ├── sources.json        # ⭐ Source manifest (single source of truth: URLs / tiers / keywords / enabled state and reasons)
-│   ├── promos.json         # Human-confirmed promos and discontinuations (drives the "market dynamics" timeline)
-│   ├── freebies.json       # Human-maintained free-tier / freebie entries
+│   ├── promos.json         # Human-confirmed promos and discontinuations (drives the "market dynamics" timeline; expired promos are auto-marked "ended")
+│   ├── freebies.json       # Free-tier / freebie entries (source pages verified daily; status / lastChecked are script-maintained)
 │   ├── alerts.json         # "Pending verification" alert state (resolved by hand, or by automatic rollback)
 │   ├── price-history.json  # Daily starting-price snapshots (90-day retention, auto-maintained, drives the price trend chart)
 │   ├── reported.json       # Dedup table of leads already surfaced for review (auto-maintained, keeps issues from repeating)
@@ -272,6 +290,7 @@ Four collection jobs run independently — one failing does not affect the other
 │   ├── check-pages.mjs     # Official page hash inspection + source health
 │   ├── fetch-feeds.mjs     # RSS / JSON sources -> leads
 │   ├── diff-prices.mjs     # Price-base and free-model diffing
+│   ├── verify-listings.mjs # Daily freebie source-page verification + auto-expiry of promos
 │   ├── record-history.mjs  # Record daily starting-price snapshots (90-day rolling) + price-change alerts
 │   └── publish-via-api.mjs # Publish through the GitHub API (fallback when github.com is blocked)
 ├── docs/screenshots/       # README images
@@ -295,7 +314,7 @@ node scripts/publish-via-api.mjs "update: ..."         # needs GITHUB_TOKEN or a
 # Run one full inspection by hand
 node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
   && node scripts/fetch-feeds.mjs && node scripts/diff-prices.mjs \
-  && node scripts/record-history.mjs
+  && node scripts/verify-listings.mjs && node scripts/record-history.mjs
 ```
 
 No build step, zero npm dependencies (including the RSS parser — no YAML/XML library), purely static — fork it, enable Pages, and you have your own instance.

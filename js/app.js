@@ -9,9 +9,9 @@
  *   5. Token 实时价格榜  —— loadModels() 三级数据保障：
  *        本地缓存(24h) → models.dev 在线拉取 → 内置快照降级
  *   6. 成本计算器        —— renderCalc()（API 价 × 用量 vs 订阅额度）
- *   7. 每日巡检状态      —— loadAutoMeta() / loadPageAlerts()（Actions 产物）
+ *   7. 每日巡检状态      —— loadAutoMeta()（Actions 产物）
  *   8. 信息源与白嫖板块  —— renderPromos() / renderFreebies() / renderSignals() / renderSourceHealth()
- *        数据分别来自 data/promos.json（人工确认的促销停售）、data/freebies.json（白嫖/免费额度）、
+ *        数据分别来自 data/promos.json（人工确认 + 每日自动过期归档）、data/freebies.json（每日来源页核对）、
  *        data/signals.json（机器发现的线索）、data/sourcehealth.json（每源抓取成败，失效会如实标注）
  * 数据均来自 js/data.js 与 js/snapshot.js；页面结构见 index.html。
  * ============================================================ */
@@ -593,61 +593,84 @@ async function loadAutoMeta(){
   }
 }
 
-// 页面变动提醒（alerts.json）：官方页有变动 → 人工核价
-async function loadPageAlerts(){
-  try{
-    const list=await fetchJSON("data/alerts.json");
-    const open=list.filter(a=>!a.resolved);
-    const box=document.getElementById("page-alerts");
-    if(!open.length || !box) return;
-    box.innerHTML=open.map(a=>`
-      <div class="alert warn"><span class="ico">🔎</span><div>
-        <b>${esc(a.label)} 内容有变动，价格待人工核实</b>
-        <small>${tierBadge(a.tier||"official")} 自动巡检发现于 ${esc(a.detected)} · 原始页面：<a href="${esc(a.url)}" target="_blank">${esc(a.url)}</a></small>
-      </div></div>`).join("");
-  }catch(e){/* alerts 数据不存在时静默 */}
-}
+// 页面变动提醒（alerts.json）：由每日巡检生成并写入每日 issue，不再在首页展示横幅
 
-/* ================= 促销 / 停售（data/promos.json，人工确认） ================= */
+/* ================= 促销 / 停售（data/promos.json + data/signals.json） =================
+ * 时间线由两部分动态合成：
+ *   1. promos.json —— 人工确认的记录；verify-listings.mjs 每日把到期促销标 expired，前端显示「已结束」并沉底
+ *   2. signals.json 官方源线索 —— 机器每日新发现，标注「待人工确认」，核实后才写入 promos.json
+ */
 async function renderPromos(){
   const box=document.getElementById("promo-timeline");
-  const hero=document.getElementById("hero-promos");
-  let j;
+  if(!box) return;
+  let j, sig={items:[]};
   try{ j=await fetchJSON("data/promos.json"); }
   catch(e){
-    if(box) box.innerHTML='<p style="color:var(--dim)">动态数据加载失败（data/promos.json）</p>';
+    box.innerHTML='<p style="color:var(--dim)">动态数据加载失败（data/promos.json）</p>';
     return;
   }
-  const items=(j.items||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  try{ sig=await fetchJSON("data/signals.json"); }catch(e){/* 线索缺失时只展示人工记录 */}
   const stOf=k=>(j.statusMap||{})[k]||{label:k,cls:""};
 
-  if(hero){
-    const top=items.filter(p=>p.kind==="promo"||p.kind==="delist").slice(0,2);
-    hero.innerHTML=top.map(p=>`
-      <div class="alert ${p.kind==="delist"?"bad":"warn"}"><span class="ico">${p.kind==="delist"?"⛔":"🔥"}</span><div>
-        <b>${esc(p.title)}</b>
-        <small>${p.expires?`${p.kind==="promo"?"活动截止":"生效"} ${esc(p.expires)} · `:""}来源：${p.source&&p.source.url?`<a href="${esc(p.source.url)}" target="_blank">${esc(p.source.label)}</a>`:esc(p.source&&p.source.label||"待补")} · ${esc(p.date)}${p.verified?"":' · <span class="vflag">⚠ 待重新核实</span>'}</small>
-      </div></div>`).join("");
-  }
+  const confirmed=(j.items||[]).slice().sort((a,b)=>{
+    // 未过期在前（日期降序），已结束的沉底
+    if(!!a.expired!==!!b.expired) return a.expired?1:-1;
+    return String(b.date).localeCompare(String(a.date));
+  });
+  const signals=(sig.items||[])
+    .filter(i=>i.tier!=="community" && i.kind!=="availability")
+    .slice(0,8);
 
-  if(!box) return;
-  if(!items.length){ box.innerHTML='<p style="color:var(--dim)">暂无记录</p>'; return; }
-  box.innerHTML=items.map(p=>{
+  const tl=p=>{
     const st=stOf(p.kind);
     const src=p.source&&p.source.url
       ? `<a href="${esc(p.source.url)}" target="_blank">${esc(p.source.label)}</a>`
       : esc(p.source&&p.source.label||"来源待补");
-    return `<div class="tl-item">
+    const badge=p.expired
+      ?'<span class="badge b-expired">已结束</span>'
+      :`<span class="badge b-chip">${esc(st.label)}</span>`;
+    return `<div class="tl-item${p.expired?" is-expired":""}">
       <div class="date">${esc(p.date)}${p.expires?` · ${p.kind==="promo"?"截止":"生效"} ${esc(p.expires)}`:""}</div>
       <h4>${esc(p.title)}</h4>
       <p>${esc(p.body)}</p>
-      <div class="src-line">${tierBadge(p.source&&p.source.tier)}<span class="badge b-chip">${esc(st.label)}</span>${p.verified?"":'<span class="vflag">⚠ 待重新核实</span>'}<span>来源：${src}</span></div>
+      <div class="src-line">${tierBadge(p.source&&p.source.tier)}${badge}${p.verified?"":'<span class="vflag">⚠ 待重新核实</span>'}<span>来源：${src}</span></div>
       ${p.note?`<div class="src-line">${esc(p.note)}</div>`:""}
     </div>`;
-  }).join("");
+  };
+  const sigRow=i=>`<div class="tl-item is-signal">
+    <div class="date">${esc(fmtISODate(i.date||i.firstSeen||""))} · 机器线索</div>
+    <h4><a href="${esc(i.url)}" target="_blank">${esc(i.title)}</a></h4>
+    ${i.excerpt?`<p>${esc(i.excerpt)}</p>`:""}
+    <div class="src-line">${tierBadge(i.tier)}<span class="badge b-chip">待人工确认</span><span>来源：${esc(i.sourceLabel)}</span></div>
+  </div>`;
+
+  // 人工记录与机器线索按日期混排：已结束条目沉底，其余按日期降序
+  const merged=[
+    ...confirmed.map(p=>({expired:!!p.expired,date:String(p.date),html:tl(p)})),
+    ...signals.map(s=>({expired:false,date:fmtISODate(s.date||s.firstSeen||""),html:sigRow(s)})),
+  ].sort((a,b)=>{
+    if(a.expired!==b.expired) return a.expired?1:-1;
+    return b.date.localeCompare(a.date);
+  });
+
+  box.innerHTML=merged.length?merged.map(m=>m.html).join(""):'<p style="color:var(--dim)">暂无记录</p>';
 }
 
-/* ================= 白嫖 / 免费额度（data/freebies.json，人工确认） ================= */
+/** RFC2822 / ISO 日期统一转 YYYY-MM-DD；解析失败时截前 10 位兜底 */
+function fmtISODate(s){
+  const t=Date.parse(String(s));
+  return Number.isNaN(t)?String(s).slice(0,10):new Date(t).toISOString().slice(0,10);
+}
+
+/* ================= 白嫖 / 免费额度（data/freebies.json，每日自动核对） ================= */
+// 核对状态徽标：verify-listings.mjs 每日抓取来源页后写回 status
+const FREEBIE_STATUS = {
+  ok:     ['b-ok',  '✓ 来源页核对正常'],
+  warn:   ['b-warn','⚠ 来源页本次抓取失败，观察中'],
+  changed:['b-warn','⚠ 来源页特征有变化，待人工复核'],
+  stale:  ['b-bad', '⛔ 来源页连续无法访问，待人工复核'],
+  manual: ['',     '需人工核对'],
+};
 async function renderFreebies(){
   const box=document.getElementById("freebies-grid");
   if(!box) return;
@@ -656,15 +679,20 @@ async function renderFreebies(){
     const items=j.items||[];
     const cnt=document.getElementById("st-free");
     if(cnt) cnt.textContent=items.length;
-    box.innerHTML=items.map(f=>`
+    box.innerHTML=items.map(f=>{
+      const [cls,label]=FREEBIE_STATUS[f.status]||FREEBIE_STATUS.manual;
+      const badge=cls?`<span class="badge ${cls}">${label}</span>`:`<span class="badge b-chip">${label}</span>`;
+      const checkedDate=f.lastChecked||j.checked||"—";
+      return `
       <div class="free">
         <div class="fh"><h3>${esc(f.name)}</h3><span class="badge b-chip">${esc(f.vendor)}</span>${tierBadge(f.tier)}</div>
         <div class="offer">${esc(f.offer)}</div>
         <div class="kv"><b>额度：</b>${esc(f.limit||"—")}</div>
         <div class="kv"><b>门槛：</b>${esc(f.requires||"—")}</div>
         ${f.note?`<div class="kv">${esc(f.note)}</div>`:""}
-        <div class="foot"><span>证据：${esc(f.evidence||"—")} · 核对 ${esc(j.checked||"—")}</span><a href="${esc(f.source)}" target="_blank">查看来源 ↗</a></div>
-      </div>`).join("");
+        ${f.statusNote?`<div class="kv" style="color:var(--warn)">⚠ ${esc(f.statusNote)}</div>`:""}
+        <div class="foot"><span>${badge}<br>核对 ${esc(checkedDate)} · 证据：${esc(f.evidence||"—")}</span><a href="${esc(f.source)}" target="_blank">查看来源 ↗</a></div>
+      </div>`}).join("");
     const retBox=document.getElementById("freebies-retired");
     const ret=j.retired||[];
     if(retBox) retBox.innerHTML=ret.map(r=>`
@@ -759,6 +787,5 @@ document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.data
   await loadPriceHistory();
   renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderCompare(); loadModels();
   if(currentLang!=="zh") setLang(currentLang);
-  loadPageAlerts();
   renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();
 })();

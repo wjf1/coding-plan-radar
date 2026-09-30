@@ -13,96 +13,71 @@ concurrency:
   group: daily-data-update
   cancel-in-progress: false
 
+# 注意：所有巡检步骤必须在同一个 job 内顺序执行。
+# 2026-09-24 ~ 09-30 曾拆成 4 个并行 job，但每个 job 独立 checkout、没有 artifact 传递，
+# publish 再 checkout 一次拿不到前序产物 → signals/sourcehealth/alerts/snapshot 连续 7 天停更。
 jobs:
-  update-snapshot:
+  update:
     runs-on: ubuntu-latest
     outputs:
-      result: ${{ steps.run.outputs.result }}
+      has_failure: ${{ steps.outcomes.outputs.has_failure }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: ① 重新生成 models.dev 兜底快照
-        id: run
-        run: |
-          node scripts/update-snapshot.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
 
-  check-pages:
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ steps.run.outputs.result }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: ① 重新生成 models.dev 兜底快照
+        id: snapshot
+        run: |
+          if node scripts/update-snapshot.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
+
       - name: ② 官方页面变动检测（哈希）
-        id: run
+        id: pages
         continue-on-error: true
         run: |
-          node scripts/check-pages.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
+          if node scripts/check-pages.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
 
-  fetch-feeds:
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ steps.run.outputs.result }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
       - name: ③ 抓取 changelog / 状态页 / 社区订阅源
-        id: run
+        id: feeds
         run: |
-          node scripts/fetch-feeds.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
+          if node scripts/fetch-feeds.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
         env:
           GITHUB_TOKEN: ${{ github.token }}   # GitHub API 未认证仅 60 次/小时
 
-  diff-prices:
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ steps.run.outputs.result }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
       - name: ④ 价格库与免费模型差异检测
-        id: run
+        id: prices
         continue-on-error: true
         run: |
-          node scripts/diff-prices.mjs && echo "result=success" >> "$GITHUB_OUTPUT" || echo "result=failure" >> "$GITHUB_OUTPUT"
+          if node scripts/diff-prices.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
 
-  publish:
-    needs: [update-snapshot, check-pages, fetch-feeds, diff-prices]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: ⑤ 白嫖额度来源页核对 + 促销自动过期归档
+        id: listings
+        continue-on-error: true
+        run: |
+          if node scripts/verify-listings.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: ⑥ 记录订阅计划价格历史快照 + 写入巡检日期
+        run: |
+          node scripts/record-history.mjs || echo "ok=false: record-history" >> "$GITHUB_OUTPUT"
+          echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
 
       - name: outcome 汇总
         id: outcomes
         run: |
-          echo "snapshot=${{ needs.update-snapshot.result }}" >> "$GITHUB_OUTPUT"
-          echo "pages=${{ needs.check-pages.result }}" >> "$GITHUB_OUTPUT"
-          echo "feeds=${{ needs.fetch-feeds.result }}" >> "$GITHUB_OUTPUT"
-          echo "prices=${{ needs.diff-prices.result }}" >> "$GITHUB_OUTPUT"
-          has_failure="false"
-          if [ "${{ needs.update-snapshot.result }}" = "failure" ] || [ "${{ needs.check-pages.result }}" = "failure" ] || [ "${{ needs.fetch-feeds.result }}" = "failure" ] || [ "${{ needs.diff-prices.result }}" = "failure" ]; then
-            has_failure="true"
+          fails=""
+          [ "${{ steps.snapshot.outputs.ok }}" = "true" ] || fails="$fails snapshot"
+          [ "${{ steps.pages.outputs.ok }}" = "true" ] || fails="$fails pages"
+          [ "${{ steps.feeds.outputs.ok }}" = "true" ] || fails="$fails feeds"
+          [ "${{ steps.prices.outputs.ok }}" = "true" ] || fails="$fails prices"
+          [ "${{ steps.listings.outputs.ok }}" = "true" ] || fails="$fails listings"
+          if [ -n "$fails" ]; then
+            echo "has_failure=true" >> "$GITHUB_OUTPUT"
+            echo "failed_steps=$fails" >> "$GITHUB_OUTPUT"
+            echo "失败步骤：$fails"
+          else
+            echo "has_failure=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "has_failure=$has_failure" >> "$GITHUB_OUTPUT"
-
-      - name: 写入巡检日期
-        run: |
-          echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
-
-      - name: ⑤ 记录订阅计划价格历史快照
-        run: |
-          node scripts/record-history.mjs
 
       - name: 生成待处理清单
         run: |
@@ -132,6 +107,22 @@ jobs:
               reported.ids = [...reportedSet, ...sig.map(s => s.id)];
               reported.updatedAt = today;
               fs.writeFileSync(reportedPath, JSON.stringify(reported, null, 1) + "\n", "utf8");
+            }
+
+            // 白嫖额度条目异常 → 待人工复核
+            const fb = read("data/freebies.json", { items: [] });
+            const fbIssues = (fb.items || []).filter(f => f.status === "stale" || f.status === "changed" || f.status === "warn");
+            if (fbIssues.length) {
+              out.push("### 🎁 白嫖/免费额度条目需要人工复核\n" +
+                fbIssues.map(f => `- **${f.name}**（${f.status}）${f.source} — ${f.statusNote || f.lastError || ""}`).join("\n"));
+            }
+
+            // 促销今日到期 → 已自动标「已结束」，提醒确认时间线上是否需要补一条后续动态
+            const pm = read("data/promos.json", { items: [] });
+            const justExpired = (pm.items || []).filter(p => p.expired && p.expiredOn === today);
+            if (justExpired.length) {
+              out.push("### ⏰ 促销活动今日到期（已自动标记为「已结束」）\n" +
+                justExpired.map(p => `- ${p.title}（截止 ${p.expires}）`).join("\n"));
             }
 
             // 连续失败的源 → 需要修监控
@@ -180,7 +171,7 @@ jobs:
           elif [ "${{ steps.outcomes.outputs.has_failure }}" = "true" ]; then
             gh issue create --repo "$GITHUB_REPOSITORY" \
               --title "每日巡检部分任务失败 $(date -u +%F)" \
-              --body "部分巡检任务失败，请查看 Actions 日志排查。\n\n- update-snapshot: ${{ steps.outcomes.outputs.snapshot }}\n- check-pages: ${{ steps.outcomes.outputs.pages }}\n- fetch-feeds: ${{ steps.outcomes.outputs.feeds }}\n- diff-prices: ${{ steps.outcomes.outputs.prices }}"
+              --body "部分巡检任务失败，请查看 Actions 日志排查。失败步骤：${{ steps.outcomes.outputs.failed_steps }}"
           else
             echo "无待人工处理事项（仅有常规数据提交）"
           fi

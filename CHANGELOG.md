@@ -5,7 +5,22 @@
 
 日期均为北京时间。数据类变更（每日自动巡检提交）不在本文件逐条记录，只记录代码与内容层面的版本变更。
 
+
+## [v6.2] - 2026-09-30
+
+**动态性修复（4 项）** —— 修复两块界面"静态化"的根因并移除首页横幅区。
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 1 | 每日巡检产物丢失修复 | v4 合入时 workflow 拆成 4 个并行 job：各自 checkout、无 artifact 传递，publish 再 checkout 拿不到前序产物——signals.json / sourcehealth.json / alerts.json / snapshot.js 自 09-24 起连续 7 天停更（每日提交只剩 meta.json + price-history.json）。现合并回**单 job 顺序执行**，每步独立记录成败并汇总 |
+| 2 | 白嫖/免费额度每日自动核对 | 新增 scripts/verify-listings.mjs：逐条抓取来源页 → ok（正常）/ warn（本次抓取失败，观察中）/ stale（连续 ≥3 天失败）/ changed（特征关键词消失）/ manual（JS 空壳等不可自动核对，如实标注）。核对徽标与日期显示在每张卡片上；异常条目写入每日巡检 issue |
+| 3 | 市场动态时间线动态化 | 到期促销自动标记「已结束」（expired）并沉底，不再挂着"促销中"；signals.json 官方源线索按日期混入时间线（虚线框 + 「待人工确认」标注），核实后才写入价格表——时间线每天随巡检更新 |
+| 4 | 首页横幅区移除 | hero 下方的促销/变动横幅（#hero-promos / #page-alerts）整体移除，信息合并进「市场动态」时间线；alerts.json 机制保留（继续驱动每日 issue），只是不再上首页 |
+
+数据文件的连带变更：freebies.json 每条新增 status / lastChecked 字段（脚本自动维护），CodeBuddy 条目标记 autoCheck:false；promos.json 中 OpenCode Go 活动已自动标记过期。
+
 ---
+
 
 ## [v6] - 2026-09-23
 
