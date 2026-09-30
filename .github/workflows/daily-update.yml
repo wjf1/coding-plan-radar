@@ -151,12 +151,18 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "无数据变化，跳过提交"
+            echo "无数据变化"
           else
             git commit -m "chore(daily): 自动数据巡检 $(date -u +%Y-%m-%d)"
+          fi
+          # 推送前变基到远端最新：巡检运行期间若有人工提交合入 main，避免 fetch first 拒绝
+          git pull --rebase origin main
+          if [ -n "$(git log origin/main..HEAD --oneline)" ]; then
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "无数据变化，跳过提交"
           fi
 
       - name: 有待处理事项时开 issue
