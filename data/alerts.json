@@ -105,7 +105,7 @@
   "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
   "tier": "official",
   "kind": "page-change",
-  "detected": "2026-09-23",
+  "detected": "2026-10-01",
   "resolved": false
  },
  {
@@ -118,5 +118,14 @@
   "resolved": true,
   "resolvedBy": "auto-revert",
   "resolvedAt": "2026-09-30"
+ },
+ {
+  "id": "minimax",
+  "label": "MiniMax 平台定价文档",
+  "url": "https://platform.minimaxi.com/document/price",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-10-01",
+  "resolved": false
  }
 ]

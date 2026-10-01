@@ -2,22 +2,22 @@
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "f354549357e4",
    "631a31e1578b",
    "c3057b5c57a4",
    "e4b96d355615",
    "3e1ebe3d567a",
-   "4cc175f55711"
+   "4cc175f55711",
+   "17b1d91156f3"
   ],
   "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "4cc175f55711",
+  "pending": "17b1d91156f3",
   "pendingSince": "2026-09-22",
   "unstable": true
  },
  "glm": {
-  "hash": "0ad355dfbad",
+  "hash": "497b317abb8",
   "seen": [
    "035b26d4b76",
    "9ecfb248af3",
@@ -25,9 +25,7 @@
    "497b317abb8"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-23",
-  "pending": "497b317abb8",
-  "pendingSince": "2026-09-30"
+  "changedAt": "2026-10-01"
  },
  "kimi": {
   "hash": "6460286555a",
@@ -56,17 +54,15 @@
   "revertCount": 1
  },
  "minimax": {
-  "hash": "7cc58f655df",
+  "hash": "035267b45dd",
   "seen": [
    "99a05bfa5df",
    "7cc58f655df",
    "035267b45dd"
   ],
   "flaps": 0,
-  "changedAt": "2026-09-22",
-  "revertCount": 1,
-  "pending": "035267b45dd",
-  "pendingSince": "2026-09-30"
+  "changedAt": "2026-10-01",
+  "revertCount": 1
  },
  "aliyun-free-quota": {
   "hash": "636342be1af9",
@@ -78,7 +74,9 @@
   "flaps": 0,
   "changedAt": "2026-09-23",
   "revertCount": 2,
-  "unstable": true
+  "unstable": true,
+  "pending": "636342be1af9",
+  "pendingSince": "2026-10-01"
  },
  "aliyun-university": {
   "hash": "310f7285258c",
@@ -98,24 +96,28 @@
   "hash": "4b552805b10",
   "seen": [
    "4b552805b10"
-  ]
+  ],
+  "flaps": 0
  },
  "iflytek-tokenplan": {
   "hash": "7ee4a76a37ae",
   "seen": [
    "7ee4a76a37ae"
-  ]
+  ],
+  "flaps": 0
  },
  "tencent-tokenplan": {
   "hash": "8907d64e3a10",
   "seen": [
    "8907d64e3a10"
-  ]
+  ],
+  "flaps": 0
  },
  "aliyun-coding-plan": {
   "hash": "729cce29ec3",
   "seen": [
    "729cce29ec3"
-  ]
+  ],
+  "flaps": 0
  }
 }
