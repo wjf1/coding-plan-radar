@@ -1,6 +1,90 @@
 {
- "generatedAt": "2026-10-01",
+ "generatedAt": "2026-10-02",
  "items": [
+  {
+   "id": "gh-changelog:8554b54c5a",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot can now interact with desktop apps with computer use",
+   "excerpt": "Computer use is now available in public preview in GitHub Copilot CLI and the GitHub Copilot app on macOS and Windows. Copilot can interact with desktop applications on your behalf…",
+   "url": "https://github.blog/changelog/2026-10-01-github-copilot-can-now-interact-with-desktop-apps",
+   "date": "Thu, 01 Oct 2026 19:11:26 +0000",
+   "firstSeen": "2026-10-02",
+   "lastSeen": "2026-10-02"
+  },
+  {
+   "id": "gh-changelog:8d7a8e785a",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot in VS Code, September 2026 releases",
+   "excerpt": "This changelog covers VS Code v1.136 through v1.140, shipped throughout September 2026. September’s releases streamline agent-driven development from implementation through pull request merge. Automations handle repeatable tasks, agent merge helps…",
+   "url": "https://github.blog/changelog/2026-10-01-github-copilot-in-vs-code-september-2026-releases",
+   "date": "Thu, 01 Oct 2026 19:09:10 +0000",
+   "firstSeen": "2026-10-02",
+   "lastSeen": "2026-10-02"
+  },
+  {
+   "id": "gh-changelog:715bbbad5d",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Dynamic workflows in Copilot CLI and the Copilot app",
+   "excerpt": "Dynamic workflows are now available in Copilot CLI, the GitHub Copilot app, and the GitHub Copilot SDK. These let you define an orchestration in code to get the reliability and…",
+   "url": "https://github.blog/changelog/2026-10-01-dynamic-workflows-in-copilot-cli-and-the-copilot-app",
+   "date": "Thu, 01 Oct 2026 16:30:10 +0000",
+   "firstSeen": "2026-10-02",
+   "lastSeen": "2026-10-02"
+  },
+  {
+   "id": "github-status:8162b8af33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Actions Job Delays",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 1</var>, <var data-var='time'>17:56</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/2dpbcq5j165n",
+   "date": "Thu, 01 Oct 2026 17:56:54 +0000",
+   "firstSeen": "2026-10-02",
+   "lastSeen": "2026-10-02"
+  },
+  {
+   "id": "github-status:673e6f3f33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated request latency",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 1</var>, <var data-var='time'>13:57</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/c8466lzvnmsv",
+   "date": "Thu, 01 Oct 2026 13:57:59 +0000",
+   "firstSeen": "2026-10-02",
+   "lastSeen": "2026-10-02"
+  },
+  {
+   "id": "openrouter:8b6bc8e93b",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-new",
+   "title": "OpenRouter 新增免费模型：apodex/apodex-1.1-mini:free",
+   "excerpt": "可作为白嫖/零成本验证模型的候选，额度与限速以 OpenRouter 页面为准。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-10-02",
+   "firstSeen": "2026-10-02",
+   "lastSeen": "2026-10-02"
+  },
   {
    "id": "gh-changelog:d6a0a35358",
    "source": "gh-changelog",
@@ -125,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/169pg72gg9jr",
    "date": "Mon, 28 Sep 2026 22:08:20 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-01"
+   "lastSeen": "2026-10-02"
   },
   {
    "id": "github-status:b838ed2c33",
@@ -153,7 +237,7 @@
    "url": "https://www.githubstatus.com/incidents/8zc63m64hy36",
    "date": "Thu, 24 Sep 2026 04:55:33 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-01"
+   "lastSeen": "2026-10-02"
   },
   {
    "id": "hn-algolia:454a84152d",
@@ -167,7 +251,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-01"
+   "lastSeen": "2026-10-02"
   },
   {
    "id": "ithome:99745cd324",
@@ -223,7 +307,7 @@
    "url": "https://openai.com/index/lenfest-ai-collaborative-expansion",
    "date": "Mon, 28 Sep 2026 07:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-01"
+   "lastSeen": "2026-10-02"
   },
   {
    "id": "openai-news:3e47da2b38",
@@ -237,7 +321,7 @@
    "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
    "date": "Wed, 23 Sep 2026 12:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-01"
+   "lastSeen": "2026-10-02"
   },
   {
    "id": "openai-status:6d5a67be3f",
@@ -349,7 +433,7 @@
    "url": "https://sspai.com/prime/story/dev-env-on-android-with-termux",
    "date": "Mon, 28 Sep 2026 17:33:03 +0800",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-01"
+   "lastSeen": "2026-10-02"
   },
   {
    "id": "gh-changelog:e7fd981f50",
@@ -489,7 +573,7 @@
    "url": "https://www.githubstatus.com/incidents/f6yrxnz5f7bs",
    "date": "Sun, 20 Sep 2026 23:22:16 +0000",
    "firstSeen": "2026-09-21",
-   "lastSeen": "2026-10-01"
+   "lastSeen": "2026-10-02"
   },
   {
    "id": "ithome:2ba0642f24",

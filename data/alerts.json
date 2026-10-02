@@ -106,7 +106,9 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-10-01",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-10-02"
  },
  {
   "id": "aliyun-free-quota",
@@ -126,6 +128,8 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-10-01",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-10-02"
  }
 ]

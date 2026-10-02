@@ -8,6 +8,24 @@
    "resolvedAt": "2026-09-30",
    "resolvedBy": "auto-revert",
    "note": "内容回到基线，原始变动可能为临时促销/渲染变体"
+  },
+  {
+   "id": "glm",
+   "label": "GLM Coding Plan 官方文档",
+   "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
+   "detected": "2026-10-01",
+   "resolvedAt": "2026-10-02",
+   "resolvedBy": "auto-revert",
+   "note": "内容回到基线，原始变动可能为临时促销/渲染变体"
+  },
+  {
+   "id": "minimax",
+   "label": "MiniMax 平台定价文档",
+   "url": "https://platform.minimaxi.com/document/price",
+   "detected": "2026-10-01",
+   "resolvedAt": "2026-10-02",
+   "resolvedBy": "auto-revert",
+   "note": "内容回到基线，原始变动可能为临时促销/渲染变体"
   }
  ]
 }
