@@ -1,6 +1,6 @@
 {
  "_note": "白嫖 / 免费额度条目：只收录有公开可核验出处的正规免费额度、学生优惠与试用，不收录逆向接口、共享账号、中转站等违规来源。evidence 标注该条额的证据强度：官方页面=本次实测可访问且页面直载；官方文档=官方帮助文档；社区转述=权威度较低。requires 标注门槛。额度与规则随时可能调整，领取前请以官方页面为准。",
- "checked": "2026-10-03",
+ "checked": "2026-10-04",
  "evidenceTiers": {
   "官方页面": "官方页面直采，本次实测可访问且正文含相关信息",
   "官方文档": "官方帮助/文档页，实测可访问",
@@ -21,7 +21,7 @@
    "tier": "official",
    "note": "本站对比表已收录该档位。付费档位变动由每日哈希巡检跟踪。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -37,7 +37,7 @@
    "tier": "official",
    "note": "权益变动缓慢，按周巡检即可；认证流程需人工完成。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -53,7 +53,7 @@
    "tier": "official",
    "note": "额度规则随新模型发布调整，已纳入每日哈希巡检，变动会自动挂「待核实」。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -69,7 +69,7 @@
    "tier": "official",
    "note": "规则与名额随官网通知变更，已纳入巡检；领取需人工完成。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -85,7 +85,7 @@
    "tier": "realtime",
    "note": "免费模型清单由 scripts/diff-prices.mjs 每日对比，新增/下架会自动产生信号。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -101,7 +101,7 @@
    "tier": "official",
    "note": "适合零成本做脚本类小任务。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -117,7 +117,7 @@
    "tier": "official",
    "note": "已纳入每日哈希巡检。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -133,7 +133,7 @@
    "tier": "official",
    "note": "Qoder 定价页为 JS 渲染，无法自动核验，需人工确认。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -149,7 +149,7 @@
    "tier": "official",
    "note": "无免费试用、无学生折扣；具体限额官方仅给「有限」定性描述。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -165,7 +165,7 @@
    "tier": "official",
    "note": "严格说是「半价」而非免费，但属最高性价比用法；已纳入巡检。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -181,7 +181,7 @@
    "tier": "official",
    "note": "需实名才可调用免费模型。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -197,7 +197,7 @@
    "tier": "agg",
    "note": "定价页实测为 JS 渲染空壳，无法自动核验，需人工确认。",
    "failCount": 1,
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "lastError": "正文过短（32 字符），疑似 JS 渲染空壳或被拦截",
    "status": "manual",
    "statusNote": "该来源为 JS 渲染页面，无法自动化核对（实测正文仅 32 字符），需人工巡览，领取前请以官方页面为准",
@@ -216,7 +216,7 @@
    "tier": "agg",
    "note": "社区反馈：首月免费资格一旦退出付款页即失效，需一次走完流程。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   },
   {
@@ -232,7 +232,7 @@
    "tier": "agg",
    "note": "试用条款各平台差异大，以官网为准；来源为 awesome-coding-plan 的 IDE Plan 表。",
    "status": "ok",
-   "lastChecked": "2026-10-03",
+   "lastChecked": "2026-10-04",
    "failCount": 0
   }
  ],
