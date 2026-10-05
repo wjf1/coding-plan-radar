@@ -32,7 +32,7 @@
 | 🌐 中英双语 | 页面右上角一键切换中/英：首屏与全部**结构标签**（章节标题、表格表头、工具条、计算器标签、搜索占位符）随语言切换；中文界面下机器线索按官方公告句式译为中文（产品名保留原文），英文为主的摘要不整段展示；语言选择随 URL 一起保留 |
 | 🔗 链接可分享 | 筛选、排序、搜索词、对比选中的平台、语言全部同步到 URL，复制链接即可复现同一视图 |
 | 📤 CSV 导出 | 对比表一键导出 CSV（含换行、引号的安全转义，可直接进 Excel） |
-| ♿ 无障碍 | 语义化表格 + ARIA 标签（`aria-pressed` 与选中态同步）、键盘可达的「跳到主内容」链接、移动端触摸滚动 |
+| ♿ 无障碍 | 语义化表格（`scope="col"` / `scope="row"`）+ ARIA 标签（`aria-pressed` 与选中态同步、`aria-sort` 播报排序方向）；**全站脚注对比度达 WCAG AA**（`--dim` 实测 5.0–5.5:1）；**键盘可完整操作**——全局 `:focus-visible` 焦点环 + 「跳到主内容」链接 + Tab 可达的筛选/排序/对比控件；装饰性 emoji 对读屏隐藏，外链均带 `rel="noopener noreferrer"`；尊重 `prefers-reduced-motion`；移动端触摸滚动 |
 | 🛡️ 来源分级 | 官方直采（绿）＞ 实时数据源（青）＞ 聚合参考（蓝）＞ 社区情报（黄，仅作线索，不进价格表） |
 
 ![快速对比表](docs/screenshots/02-compare.jpg)
@@ -238,7 +238,7 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 | 🌐 Bilingual UI | One-click Chinese / English switch in the header: the hero and all **structural labels** (section titles, table headers, toolbars, calculator labels, search placeholders) follow the language. In Chinese mode, machine leads are translated via common announcement patterns (product names stay in original), and mostly-English excerpts are not shown inline; the choice persists in the URL |
 | 🔗 Shareable links | Filters, sorting, search terms, compared platforms and language all sync to the URL — copy the link to reproduce the exact view |
 | 📤 CSV export | One-click CSV export of the comparison table (safe escaping of newlines and quotes, Excel-ready) |
-| ♿ Accessibility | Semantic tables with ARIA labels (`aria-pressed` kept in sync with selection state), a keyboard-reachable "skip to content" link, touch scrolling on mobile |
+| ♿ Accessibility | Semantic tables (`scope="col"` / `scope="row"`) with ARIA labels (`aria-pressed` kept in sync with selection state, `aria-sort` announces the sort direction); **all footnotes meet WCAG AA** (`--dim` measures 5.0–5.5:1); **fully keyboard-operable** — a global `:focus-visible` ring plus a "skip to content" link, with every filter / sort / compare control reachable by Tab; decorative emoji hidden from screen readers, all external links carry `rel="noopener noreferrer"`; respects `prefers-reduced-motion`; touch scrolling on mobile |
 | 🛡️ Source tiers | Official direct (green) > real-time data source (cyan) > aggregated reference (blue) > community intel (yellow, leads only — never enters the price table) |
 
 ![Hero](docs/screenshots/01-hero.jpg)

@@ -6,6 +6,48 @@
 日期均为北京时间。数据类变更（每日自动巡检提交）不在本文件逐条记录，只记录代码与内容层面的版本变更。
 
 
+## [v7.1] - 2026-10-05
+
+**对比度、键盘可达性与两处真实交互 Bug（12 项）** —— 按「CodingPlan Radar UI 设计提升方案」评审结论执行，
+只落地判定为「真实缺陷且改动面小」的部分；纯视觉重构类任务（字号/间距 Token 化、浅色主题、scrollspy、
+sparkline 交互、骨架屏）本轮不做。仓库仍保持无构建、零 npm 依赖。
+
+> **方案原文不可直接作为实施依据**：该 PDF 的附录 A.1–A.8 与正文 6.1–6.8 的「修复：」代码框**全部为空框**
+> （框高仅一行，源文件里未写入代码）；§4.2 字号替换表约 10/16 行选择器标注有误。本轮代码按代码库实况重新编写。
+
+### 无障碍
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 1 | 脚注对比度达标 | `--dim` 由 `#6b7a99` 改为 `#7c8aa6`。原值在 `--bg` / `--bg2` / `--card` 上仅 4.45 / 4.23 / 4.03:1，**全部低于 WCAG AA 的 4.5:1**，而它正是全站 12px 脚注、表格小字、区块说明的专用色。新值实测 5.52 / 5.25 / 5.00:1，一行改动修复全站脚注可读性 |
+| 2 | 页脚免责声明对比度 | `.disclaimer` 的 `#58657f` 实测仅 **3.27:1**（比 `--dim` 原值更差），改为 `var(--dim)` |
+| 3 | 全局焦点环 | 新增 `:focus-visible`（`2px solid var(--accent)` + 2px offset）。此前全站只有 `input.s:focus { border-color }` 一处焦点反馈，**键盘用户 Tab 到 chip / button / select / summary 时完全看不到焦点位置**。`--accent` 对比度 6.06:1，满足 1.4.11 非文本对比度 ≥3:1 |
+| 4 | 焦点环三处覆盖 | `input.s` / `select` 原有 `outline:none` 会盖掉全局环，显式提权重写；`details` 带 `overflow:hidden` 会裁掉 FAQ summary 的外扩描边，改用 `outline-offset:-2px` 内缩 |
+| 5 | 表头 `scope` | 三个表格 18 个 `<th>` 全部补 `scope="col"`；对比视图的行标题补 `scope="row"` |
+| 6 | 外链 `rel` | 全站 `target="_blank"` 补 `rel="noopener noreferrer"`（HTML 4 处 + JS 模板 8 处），浏览器实测 103 个外链 `rel` 齐全 |
+| 7 | 装饰性 emoji | 新增 `hideDecorativeGlyphs()`：把章节标题 / 图标位开头的 emoji 包进 `aria-hidden` 的 `<span>`。此前读屏会逐字念出符号名（"high voltage sign, money-mouth face, abacus…"）。只处理元素首个文本节点，故切语言后重复调用安全 |
+| 8 | 动效降级 | 新增 `@media (prefers-reduced-motion: reduce)`：`scroll-behavior:auto` + `skip-link` 过渡置 `none` |
+
+### 修复的 Bug
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 9 | 对比表搜索无空状态 | `renderPlans()` 在无匹配时把 `tbody.innerHTML` 置空即返回，用户搜到空白表格会以为页面坏了。现显示「没有匹配的平台」+「清空搜索与筛选」按钮（事件委托绑在 `tbody` 上，渲染重建后仍有效）。`renderTokens()` 早有同类处理，此处只是漏了 |
+| 10 | 对比选择上限未在交互层拦截 | 复选框 change 处理原先只 `push` 不校验上限，4 个上限仅靠 `restoreURLState()` 的 `.slice(0,4)` 兜底——结果是**勾第 5 个照样渲染 5 列，刷新一次又变回 4 列**的自相矛盾状态。现改为在 change 里拦截、回滚勾选并提示「最多同时对比 4 个平台」（4 秒后自动收起） |
+| 11 | hero 静态数与实测不符 | `index.html` 兜底写死 `11 / 33 / 15`，而 `app.js` 首帧覆盖为 `19 / 69 / 14`，**首屏先闪一下错数据**；且 `st-models`（`60+`）在 `app.js` 中根本没有来源、永远不会被覆盖。已把 HTML 兜底值改为实测值。注：`19` 是排除 1 个已停售后的在售数，`69` 是全部 20 个条目的档位合计（**含**已停售）——两处口径本就不同，本次保持与 `app.js` 一致 |
+| 12 | 排序无方向指示 | 新增 `updateSortIndicator()`：给可排序列写 `data-sort` + `aria-sort`，箭头由 CSS `::after` 生成。另修正**整行表头（含不可排序的「核心模型」等）都是手型**的问题——现仅 `th[data-k]` / `th[data-tk]` 给手型与 hover |
+
+**行为变化提示**：`target="_blank"` 的 3 处行内 `onclick` 已按方案 §6.6 迁到 `bind()`，HTML 端仅留
+`data-action="compare|clear|export"` 标识（便于日后收紧 CSP）；排序箭头改为 CSS 生成，不会被 `applyI18N()`
+的 `data-i18n-orig` 快照记进 DOM。
+
+验证证据：`node scripts/validate.mjs` 通过；`node tests/selfcheck.mjs` 15/15 通过；浏览器实测（本地 HTTP + Chrome
+DevTools）确认搜索空状态与复位、勾第 5 个被拦截且提示、点价格表头 `aria-sort` 在 ascending/descending 间切换、
+真实 Tab 后 `skip-link` 的 `:focus-visible` 计算样式为 `2px solid rgb(91,140,255)`、18/18 `<th scope>`、
+103 个外链 `rel` 齐全、14 处 emoji 已隐藏。
+
+---
+
 ## [v7.0] - 2026-10-05
 
 **安全边界、数据写入可靠性与巡检可见性（14 项）** —— 把第三方数据的安全边界、数据文件的写入可靠性，
