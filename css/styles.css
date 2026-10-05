@@ -1,7 +1,7 @@
 /* ===== base ===== */
 :root{
   --bg:#0b0f17; --bg2:#0f1522; --card:#121a2b;
-  --border:#23304a; --text:#e8edf7; --muted:#93a1bd; --dim:#6b7a99;
+  --border:#23304a; --text:#e8edf7; --muted:#93a1bd; --dim:#7c8aa6;
   --accent:#5b8cff; --accent2:#38d4c3; --grad:linear-gradient(90deg,#5b8cff,#38d4c3);
   --ok:#3ecf8e; --warn:#f5b445; --bad:#f26d6d; --chip:#1b2740; --radius:14px;
 }
@@ -11,6 +11,19 @@ body{background:var(--bg);color:var(--text);font-family:"Segoe UI","PingFang SC"
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ===== 无障碍基线（2026-10-05） ===== */
+/* 此前全站只有 input.s:focus 一处焦点反馈，键盘 Tab 到 chip / button / select / summary 时
+   完全看不到焦点落在哪。用 :focus-visible 而非 :focus，鼠标操作不会留下常驻描边。 */
+/* 输入框与 select 原本写了 outline:none，需要显式提高优先级才能拿到焦点环 */
+:focus-visible,input.s:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* details 带 overflow:hidden，FAQ 的 summary 外扩描边会被裁掉，改为内缩 */
+summary:focus-visible{outline-offset:-2px}
+/* --accent 在本站深色底上对比度 6.06:1，满足 WCAG 1.4.11 非文本对比度 ≥3:1 */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .skip-link{transition:none}
+}
 
 /* ===== header / hero ===== */
 header{position:sticky;top:0;z-index:50;background:#0b0f17ee;backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
@@ -64,8 +77,13 @@ select{background:var(--card);border:1px solid var(--border);color:var(--text);b
 /* ===== tables ===== */
 .table-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg2);-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:14px;min-width:960px}
-thead th{position:sticky;top:0;background:#101828;font-size:12.5px;color:var(--muted);text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
-thead th:hover{color:var(--text)}
+thead th{position:sticky;top:0;background:#101828;font-size:12.5px;color:var(--muted);text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);white-space:nowrap;user-select:none}
+/* 只有真正可排序的表头给手型与 hover —— 此前整行表头（含「核心模型」这类不可排序列）都是手型，误导点击 */
+#compare thead th[data-k],#tokens thead th[data-tk]{cursor:pointer}
+#compare thead th[data-k]:hover,#tokens thead th[data-tk]:hover{color:var(--text)}
+/* 排序方向指示用 ::after 生成内容，不写进 DOM —— 否则会被 applyI18N 连同原始标记一起记进 data-i18n-orig */
+thead th[data-sort]::after{content:" ▲";color:var(--accent2);font-size:10px}
+thead th[data-sort="desc"]::after{content:" ▼"}
 tbody td{padding:13px 14px;border-bottom:1px solid #1b2438;vertical-align:top}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:hover{background:#16203a66}
@@ -86,6 +104,12 @@ tbody tr:hover{background:#16203a66}
 .src-official{background:#3ecf8e15;color:var(--ok);border:1px solid #3ecf8e3d}
 .src-agg{background:#5b8cff15;color:#9db9ff;border:1px solid #5b8cff3d}
 .src-live{background:#38d4c315;color:var(--accent2);border:1px solid #38d4c33d}
+
+/* ===== 空状态与轻量动作（2026-10-05） ===== */
+/* 对比表搜索无结果时此前直接留空 tbody，用户以为页面坏了 */
+.empty-cell{padding:26px 14px;color:var(--dim);font-size:13.5px;text-align:center}
+.linklike{border:0;background:none;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline;padding:0 2px}
+.cnote{margin:0 0 10px;padding:8px 12px;border:1px solid #f5b44544;background:#f5b44512;border-radius:10px;color:var(--warn);font-size:13px}
 
 /* ===== picks / cards / repos ===== */
 .picks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -182,7 +206,7 @@ details .ans a{word-break:break-all}
 footer{border-top:1px solid var(--border);padding:30px 0 40px;color:var(--dim);font-size:12.5px;margin-top:30px}
 
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.disclaimer{margin-top:10px;color:#58657f}
+.disclaimer{margin-top:10px;color:var(--dim)}
 
 /* ===== 信息源分级 / 白嫖板块 / 源健康 / 信号队列（2026-09-14 新增） ===== */
 .src-community{background:#f5b44515;color:var(--warn);border:1px solid #f5b4453d}

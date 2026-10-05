@@ -36,6 +36,9 @@ let modelRows=[]; // {p,pid,id,n,i,o,c,t,r}
 let compareSelection=[]; // 多选对比选中项（item 9）
 let currentLang="zh"; // 当前语言（item 10）
 let priceHistory={}; // 价格历史缓存（data/price-history.json）
+const COMPARE_MAX=4;   // 对比选择上限：此前只在 restoreURLState 里 slice，交互层不拦截
+let compareNotice="";  // 触达上限时的提示文案（展示数秒后自动清除）
+let compareNoticeTimer=0;
 
 /* ================= 数据容器与加载 =================
  * 数据统一放在 data/*.json。旧实现把数据写在 js/data.js 里，Node 巡检脚本要靠
@@ -151,6 +154,7 @@ const I18N={
     policyTitle:"🛡️ 数据说明与更新机制",
     reposTitle:"🔗 同类 GitHub 项目 — 方法论与数据源",
     priceTrend:"价格趋势", priceChange30:"近 30 天变动", priceUp:"↑ 涨价", priceDown:"↓ 降价", priceStable:"— 持平",
+    planEmpty:"没有匹配的平台。", planEmptyReset:"清空搜索与筛选", compareLimit:"最多同时对比 4 个平台，请先取消一个。",
   },
   en:{
     langLabel:"中文",
@@ -194,6 +198,7 @@ const I18N={
     policyTitle:"🛡️ Data Policy & Update Mechanism",
     reposTitle:"🔗 Related GitHub Projects",
     priceTrend:"Price Trend", priceChange30:"30-day change", priceUp:"↑ Up", priceDown:"↓ Down", priceStable:"— Stable",
+    planEmpty:"No matching platforms.", planEmptyReset:"Clear search & filters", compareLimit:"Compare up to 4 platforms at a time; deselect one first.",
   }
 };
 function t(key, vars){
@@ -208,6 +213,24 @@ function applyI18N(){
     el.innerHTML = currentLang==="zh" ? el.dataset.i18nOrig : t(el.dataset.i18n);
   });
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>{ el.placeholder=t(el.dataset.i18nPh); });
+  hideDecorativeGlyphs();
+}
+/* 装饰性 emoji（章节标题、图标位）依赖平台字体，读屏会逐字念出符号名（"high voltage sign"…）。
+ * 包一层 aria-hidden 让辅助技术只读标题文字。只处理元素开头的文本节点，因此重复调用安全。
+ * 必须放在 applyI18N 之后：切语言会整体替换 innerHTML，得在这之后再包一次。 */
+const LEAD_GLYPH=/^\s*(\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic})*\s?)/u;
+function hideDecorativeGlyphs(root){
+  (root||document).querySelectorAll("h1,h2,h3,h4,.ico,.speedb").forEach(el=>{
+    const n=el.firstChild;
+    if(!n||n.nodeType!==3) return;
+    const m=n.nodeValue.match(LEAD_GLYPH);
+    if(!m) return;
+    const span=document.createElement("span");
+    span.setAttribute("aria-hidden","true");
+    span.textContent=m[0];
+    n.nodeValue=n.nodeValue.slice(m[0].length);
+    el.insertBefore(span,n);
+  });
 }
 function setLang(lang){
   currentLang=lang; document.documentElement.lang=lang==="zh"?"zh-CN":"en";
@@ -242,6 +265,11 @@ function renderPlans(){
     // ratio: 无倍率的排最后
     return (b.ratio||0)-(a.ratio||0);
   });
+  if(!rows.length){
+    tbody.innerHTML=`<tr><td colspan="8" class="empty-cell">${t("planEmpty")} <button type="button" class="linklike" data-plan-reset>${t("planEmptyReset")}</button></td></tr>`;
+    updateSortIndicator();
+    return;
+  }
   tbody.innerHTML=rows.map(d=>{
     const [cls,label]=statusMap[d.status];
     const regionTag=d.region==="intl"?(currentLang==="en"?"International":"国际"):(currentLang==="en"?"China":"国内");
@@ -261,7 +289,7 @@ function renderPlans(){
       <td class="models">${esc(d.models)}</td>
       <td class="quota">${esc(d.quota)}</td>
       <td><span class="badge ${cls}">${label}</span></td>
-      <td class="src">${srcType}<br><a href="${safeHref(d.srcUrl)}" target="_blank">${currentLang==="en"?"Source ↗":"来源链接 ↗"}</a></td>
+      <td class="src">${srcType}<br><a href="${safeHref(d.srcUrl)}" target="_blank" rel="noopener noreferrer">${currentLang==="en"?"Source ↗":"来源链接 ↗"}</a></td>
     </tr>`;
   }).join("");
   // 绑定对比复选框事件
@@ -269,12 +297,48 @@ function renderPlans(){
     chk.addEventListener("change",e=>{
       const name=e.target.dataset.name;
       if(e.target.checked){
+        // 上限必须在交互层拦住：此前只 push 不校验，靠 restoreURLState 的 slice 兜底，
+        // 结果是「勾满 5 个照样渲染 5 列，刷新一次又变回 4 列」的自相矛盾状态。
+        if(compareSelection.length>=COMPARE_MAX && !compareSelection.includes(name)){
+          e.target.checked=false;
+          showCompareNotice(t("compareLimit"));
+          return;
+        }
         if(!compareSelection.includes(name)) compareSelection.push(name);
       }else{
         compareSelection=compareSelection.filter(n=>n!==name);
       }
+      compareNotice="";
       syncURLState(); renderCompare();
     });
+  });
+  updateSortIndicator();
+}
+
+/* 对比上限提示：借 compare-view 区域展示，数秒后自动收起，不引入新组件 */
+function showCompareNotice(msg){
+  compareNotice=msg; renderCompare();
+  clearTimeout(compareNoticeTimer);
+  compareNoticeTimer=setTimeout(()=>{ compareNotice=""; renderCompare(); },4000);
+}
+
+/* 排序方向指示：只写 data-sort / aria-sort，箭头交给 CSS ::after 生成。
+ * 一旦把箭头写进 DOM，applyI18N 会连它一起记进 data-i18n-orig，切到中文就再也去不掉。 */
+function updateSortIndicator(){
+  document.querySelectorAll("#compare thead th[data-k]").forEach(th=>{
+    const k=th.dataset.k;
+    const dir = k==="ratio"&&planSort==="ratio" ? "desc"
+      : k==="price"&&planSort==="price" ? "asc"
+      : k==="price"&&planSort==="price-desc" ? "desc"
+      : k==="name"&&planSort==="name" ? "asc" : "";
+    if(dir) th.dataset.sort=dir; else delete th.dataset.sort;
+    th.setAttribute("aria-sort", dir==="asc"?"ascending":dir==="desc"?"descending":"none");
+  });
+  document.querySelectorAll("#tokens thead th[data-tk]").forEach(th=>{
+    const on = th.dataset.tk==="in" ? tSort==="in" : (tSort==="out"||tSort==="out-desc");
+    const dir = on ? (th.dataset.tk==="in"?"asc":tSort==="out-desc"?"desc":"asc") : "";
+    if(dir) th.dataset.sort=dir; else delete th.dataset.sort;
+    th.setAttribute("aria-sort", dir==="asc"?"ascending":dir==="desc"?"descending":"none");
   });
 }
 
@@ -329,7 +393,8 @@ function renderCompare(){
   if(btn) btn.textContent=count?`${t("compareView")} (${count})`:t("compareView");
   if(!count){ box.innerHTML=""; box.style.display="none"; return; }
   const items=PLAN_DATA.filter(d=>compareSelection.includes(d.name));
-  if(items.length<2){ box.innerHTML=`<p style="color:var(--dim)">${t("compareEmpty")}</p>`; box.style.display="block"; return; }
+  const notice=compareNotice?`<p class="cnote" role="status">${esc(compareNotice)}</p>`:"";
+  if(items.length<2){ box.innerHTML=notice+`<p style="color:var(--dim)">${t("compareEmpty")}</p>`; box.style.display="block"; return; }
   const rows=[
     {k:currentLang==="en"?"Platform":"平台", v:items.map(d=>d.name)},
     {k:currentLang==="en"?"Starting Price":"起步价", v:items.map(d=>d.start)},
@@ -339,7 +404,7 @@ function renderCompare(){
     {k:currentLang==="en"?"Status":"状态", v:items.map(d=>{const s=statusMap[d.status]; return s?s[1]:d.status;})},
     {k:currentLang==="en"?"Price Trend":"价格趋势", v:items.map(d=>priceTrendHTML(d.name)||"—")},
   ];
-  box.innerHTML=`<div class="compare-table"><table><thead><tr>${items.map(d=>`<th>${esc(d.name)}</th>`).join("")}</tr></thead><tbody>${rows.map((r,ri)=>`<tr><th>${esc(r.k)}</th>${r.v.map(v=>`<td>${ri===6?v:esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  box.innerHTML=notice+`<div class="compare-table"><table><thead><tr>${items.map(d=>`<th scope="col">${esc(d.name)}</th>`).join("")}</tr></thead><tbody>${rows.map((r,ri)=>`<tr><th scope="row">${esc(r.k)}</th>${r.v.map(v=>`<td>${ri===6?v:esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
   box.style.display="block";
 }
 function renderCards(){
@@ -366,7 +431,7 @@ function renderCards(){
       ${ratioLine}${speedLine}${trendLine}${periods}${pitfall}
       <div class="tags">${d.tags.map(t=>`<span class="tag2">${esc(t)}</span>`).join("")}</div>
       ${d.note?`<div class="kv" style="color:var(--warn);font-size:12.5px">⚠ ${esc(d.note)}</div>`:""}
-      <div class="foot">${srcType}<span>${esc(d.srcNote)}</span><a href="${safeHref(d.srcUrl)}" target="_blank">查看来源 ↗</a></div>
+      <div class="foot">${srcType}<span>${esc(d.srcNote)}</span><a href="${safeHref(d.srcUrl)}" target="_blank" rel="noopener noreferrer">查看来源 ↗</a></div>
     </div>`;
   }).join("");
 }
@@ -374,7 +439,7 @@ function renderCards(){
 function renderRepos(){
   document.getElementById("repos-grid").innerHTML=GH_REPOS.map(r=>`
     <div class="repo">
-      <div class="rt"><h3><a href="${safeHref(r.url)}" target="_blank">${esc(r.name)} ↗</a></h3><span class="tag2">${esc(r.tag)}</span></div>
+      <div class="rt"><h3><a href="${safeHref(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.name)} ↗</a></h3><span class="tag2">${esc(r.tag)}</span></div>
       <p>${esc(r.desc)}</p>
       <div class="meta"><span>${esc(r.stars)}</span></div>
     </div>`).join("");
@@ -543,6 +608,7 @@ function renderTokens(){
     <td class="num">${fmtC(m.c)||"—"}</td>
     <td>${m.t?'<span class="tag2">工具</span> ':""}${m.r?'<span class="tag2">推理</span>':""}</td>
   </tr>`).join("");
+  updateSortIndicator();
 }
 
 
@@ -610,6 +676,23 @@ function bind(){
     renderTokens();
   }));
   document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+  // 三个内联 onclick（查看对比 / 清空对比 / 导出 CSV）迁到这里：HTML 只留 data-action 标识，便于收紧 CSP
+  document.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>{
+    const a=b.dataset.action;
+    if(a==="compare") renderCompare();
+    else if(a==="clear"){ compareSelection=[]; compareNotice=""; syncURLState(); renderPlans(); renderCompare(); }
+    else if(a==="export") exportCSV();
+  }));
+  // 空状态里的「清空搜索与筛选」：tbody 每次渲染都会重建，用事件委托绑在 tbody 上才不会失效
+  document.getElementById("tbody").addEventListener("click",e=>{
+    if(!e.target.closest("[data-plan-reset]")) return;
+    planQuery=""; planFilter="all";
+    document.getElementById("search").value="";
+    document.querySelectorAll(".chip[data-filter]").forEach(x=>{
+      const on=x.dataset.filter==="all"; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on);
+    });
+    syncURLState(); renderPlans(); renderCompare();
+  });
   bindCalc();
 }
 
@@ -684,7 +767,7 @@ async function renderPromos(){
   const tl=p=>{
     const st=stOf(p.kind);
     const src=p.source&&p.source.url
-      ? `<a href="${safeHref(p.source.url)}" target="_blank">${esc(p.source.label)}</a>`
+      ? `<a href="${safeHref(p.source.url)}" target="_blank" rel="noopener noreferrer">${esc(p.source.label)}</a>`
       : esc(p.source&&p.source.label||"来源待补");
     const badge=p.expired
       ?'<span class="badge b-expired">已结束</span>'
@@ -699,7 +782,7 @@ async function renderPromos(){
   };
   const sigRow=i=>`<div class="tl-item is-signal">
     <div class="date">${esc(fmtISODate(i.date||i.firstSeen||""))} · 机器线索</div>
-    <h4><a href="${safeHref(i.url)}" target="_blank">${esc(leadTitle(i))}</a></h4>
+    <h4><a href="${safeHref(i.url)}" target="_blank" rel="noopener noreferrer">${esc(leadTitle(i))}</a></h4>
     ${leadExcerpt(i)?`<p>${esc(leadExcerpt(i))}</p>`:""}
     <div class="src-line">${tierBadge(i.tier)}<span class="badge b-chip">待人工确认</span><span>来源：${esc(i.sourceLabel)}</span></div>
   </div>`;
@@ -751,15 +834,16 @@ async function renderFreebies(){
         <div class="kv"><b>门槛：</b>${esc(f.requires||"—")}</div>
         ${f.note?`<div class="kv">${esc(f.note)}</div>`:""}
         ${f.statusNote?`<div class="kv" style="color:var(--warn)">⚠ ${esc(f.statusNote)}</div>`:""}
-        <div class="foot"><span>${badge}<br>核对 ${esc(checkedDate)} · 证据：${esc(f.evidence||"—")}</span><a href="${safeHref(f.source)}" target="_blank">查看来源 ↗</a></div>
+        <div class="foot"><span>${badge}<br>核对 ${esc(checkedDate)} · 证据：${esc(f.evidence||"—")}</span><a href="${safeHref(f.source)}" target="_blank" rel="noopener noreferrer">查看来源 ↗</a></div>
       </div>`}).join("");
     const retBox=document.getElementById("freebies-retired");
     const ret=j.retired||[];
     if(retBox) retBox.innerHTML=ret.map(r=>`
       <div class="alert bad"><span class="ico">⛔</span><div>
         <b>${esc(r.name)} 已失效，不要再照着旧教程折腾</b>
-        <small>${esc(r.reason)}${r.source?` · <a href="${safeHref(r.source)}" target="_blank">官方说明 ↗</a>`:""}</small>
+        <small>${esc(r.reason)}${r.source?` · <a href="${safeHref(r.source)}" target="_blank" rel="noopener noreferrer">官方说明 ↗</a>`:""}</small>
       </div></div>`).join("");
+    hideDecorativeGlyphs(box);
   }catch(e){
     box.innerHTML='<p style="color:var(--dim)">白嫖数据加载失败（data/freebies.json）</p>';
   }
@@ -814,7 +898,7 @@ function leadExcerpt(i){
 function sigRow(s){
   const title=leadTitle(s), excerpt=leadExcerpt(s);
   return `<div class="sig">
-    <div class="sh">${tierBadge(s.tier)}<a href="${safeHref(s.url)}" target="_blank">${esc(title)}</a></div>
+    <div class="sh">${tierBadge(s.tier)}<a href="${safeHref(s.url)}" target="_blank" rel="noopener noreferrer">${esc(title)}</a></div>
     <div class="sd">${esc(s.sourceLabel)} · 本站发现于 ${esc(s.firstSeen)}${s.date?` · 原文时间 ${esc(fmtISODate(String(s.date).slice(0,16)))}`:""}</div>
     ${excerpt?`<div class="sd">${esc(excerpt)}</div>`:""}
   </div>`;
@@ -845,6 +929,7 @@ async function renderSignals(){
       <p style="margin-bottom:6px">黄色标注，<b>仅作线索提示，不作为数据结论</b>。若长期为空，请查看下方「信息源健康」，那里会如实显示哪个源没抓到东西。</p>
       ${comm.length?comm.map(sigRow).join(""):'<p style="color:var(--dim);font-size:13px">暂无线索</p>'}
     </div>`;
+  hideDecorativeGlyphs(box);
 }
 
 /* ================= 信息源健康（data/sourcehealth.json，机器产出） ================= */
@@ -895,4 +980,5 @@ bind();
   renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderCompare(); loadModels();
   if(currentLang!=="zh") setLang(currentLang);
   renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();
+  hideDecorativeGlyphs();
 })();

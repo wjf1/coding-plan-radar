@@ -48,12 +48,12 @@
 <div class="hero">
   <div class="wrap">
     <h1 id="hero-title">AI Coding Plan <em>横评对比</em><br>看得见来源的订阅指南</h1>
-    <p id="hero-desc"><span id="st-plat-desc">11</span> 个主流平台、30+ 付费档位：价格、额度口径与<b>额度倍率</b>（参考 GitHub 开源项目方法论）；另接入 models.dev 实时数据源，呈现 60+ 款编码模型的 Token API 价格性价比。</p>
+    <p id="hero-desc"><span id="st-plat-desc">19</span> 个主流平台、30+ 付费档位：价格、额度口径与<b>额度倍率</b>（参考 GitHub 开源项目方法论）；另接入 models.dev 实时数据源，呈现 60+ 款编码模型的 Token API 价格性价比。</p>
     <div class="stats">
-      <div class="stat"><b id="st-plat">11</b><small>对比平台</small></div>
-      <div class="stat"><b id="st-tier">33</b><small>付费档位</small></div>
+      <div class="stat"><b id="st-plat">19</b><small>对比平台</small></div>
+      <div class="stat"><b id="st-tier">69</b><small>付费档位</small></div>
       <div class="stat"><b id="st-models">60+</b><small>实时模型价格</small></div>
-      <div class="stat"><b id="st-free">15</b><small>免费/白嫖额度</small></div>
+      <div class="stat"><b id="st-free">14</b><small>免费/白嫖额度</small></div>
       <div class="stat"><b>每天 09:00</b><small>自动巡检</small></div>
     </div>
   </div>
@@ -63,16 +63,16 @@
   <div class="wrap">
     <div class="sec-head">
       <h2 data-i18n="compareTitle">⚡ 快速对比表 <i>—</i> 价格 · 额度倍率 · 来源</h2>
-      <p>点击表头排序 · 起步价为最低付费档 · 倍率 = 额度折算价值 ÷ 月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 口径，社区估算仅供参考）</p>
+      <p>点击表头排序 · 起步价为最低付费档 · 倍率 = 额度折算价值 ÷ 月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank" rel="noopener noreferrer">awesome-coding-plan</a> 口径，社区估算仅供参考）</p>
     </div>
     <div class="toolbar">
       <button class="chip on" data-filter="all" aria-pressed="true" data-i18n="all">全部</button>
       <button class="chip" data-filter="intl" aria-pressed="false" data-i18n="intl">国际平台</button>
       <button class="chip" data-filter="cn" aria-pressed="false" data-i18n="cn">国内平台</button>
       <div class="grow"></div>
-      <button id="compare-btn" class="chip" onclick="renderCompare()" data-i18n="compareView">查看对比</button>
-      <button class="chip" onclick="compareSelection=[];syncURLState();renderPlans();renderCompare();" data-i18n="compareClear">清空对比</button>
-      <button class="chip" onclick="exportCSV()" data-i18n="exportCSV">导出 CSV</button>
+      <button id="compare-btn" class="chip" data-action="compare" data-i18n="compareView">查看对比</button>
+      <button class="chip" data-action="clear" data-i18n="compareClear">清空对比</button>
+      <button class="chip" data-action="export" data-i18n="exportCSV">导出 CSV</button>
       <input id="search" class="s" type="text" placeholder="搜索平台 / 模型 / 价格…" aria-label="搜索平台" data-i18n-ph="searchPlaceholder">
       <select id="sort" aria-label="排序方式">
         <option value="ratio" data-i18n="ratioSort">按额度倍率降序（性价比）</option>
@@ -85,14 +85,14 @@
     <div class="table-scroll">
       <table>
         <thead><tr>
-          <th style="width:30px"><span class="sr-only">对比</span></th>
-          <th data-k="name" data-i18n="platform">平台</th>
-          <th data-k="price" data-i18n="startPrice">起步价（付费档）</th>
-          <th data-k="ratio" data-i18n="ratio">额度倍率 ↑ 性价比</th>
-          <th data-i18n="coreModels">核心模型</th>
-          <th data-i18n="quota">额度口径</th>
-          <th data-i18n="status">状态</th>
-          <th data-i18n="dataSource">数据来源</th>
+          <th scope="col" style="width:30px"><span class="sr-only">对比</span></th>
+          <th scope="col" data-k="name" data-i18n="platform">平台</th>
+          <th scope="col" data-k="price" data-i18n="startPrice">起步价（付费档）</th>
+          <th scope="col" data-k="ratio" data-i18n="ratio">额度倍率 ↑ 性价比</th>
+          <th scope="col" data-i18n="coreModels">核心模型</th>
+          <th scope="col" data-i18n="quota">额度口径</th>
+          <th scope="col" data-i18n="status">状态</th>
+          <th scope="col" data-i18n="dataSource">数据来源</th>
         </tr></thead>
         <tbody id="tbody"></tbody>
       </table>
@@ -105,7 +105,7 @@
   <div class="wrap">
     <div class="sec-head">
       <h2 data-i18n="tokenTitle">💰 Token 实时价格榜 <i>—</i> API 按量计费参照系</h2>
-      <p>判断订阅值不值：先看这里模型按量多少钱。数据源为 GitHub 开源数据库 <a href="https://github.com/sst/models.dev" target="_blank">models.dev</a>，浏览器直连实时拉取</p>
+      <p>判断订阅值不值：先看这里模型按量多少钱。数据源为 GitHub 开源数据库 <a href="https://github.com/sst/models.dev" target="_blank" rel="noopener noreferrer">models.dev</a>，浏览器直连实时拉取</p>
     </div>
     <div class="statusbar" id="token-status"><span class="dot" id="token-dot"></span><span id="token-msg">正在连接 models.dev …</span></div>
     <div class="toolbar">
@@ -124,10 +124,10 @@
     <div class="table-scroll">
       <table style="min-width:820px">
         <thead><tr>
-          <th data-i18n="model">模型</th><th data-i18n="vendor">供应商</th>
-          <th data-tk="in" data-i18n="inPrice">输入 $/M ↑</th>
-          <th data-tk="out" data-i18n="outPrice">输出 $/M ↑</th>
-          <th data-i18n="context">上下文</th><th data-i18n="ability">能力</th>
+          <th scope="col" data-i18n="model">模型</th><th scope="col" data-i18n="vendor">供应商</th>
+          <th scope="col" data-tk="in" data-i18n="inPrice">输入 $/M ↑</th>
+          <th scope="col" data-tk="out" data-i18n="outPrice">输出 $/M ↑</th>
+          <th scope="col" data-i18n="context">上下文</th><th scope="col" data-i18n="ability">能力</th>
         </tr></thead>
         <tbody id="ttbody"><tr><td colspan="6" style="color:var(--dim)">加载中…</td></tr></tbody>
       </table>
@@ -221,7 +221,7 @@
     </div>
     <div class="table-scroll">
       <table style="min-width:760px">
-        <thead><tr><th>工具</th><th>价格</th><th>额度倍率</th><th>要点</th></tr></thead>
+        <thead><tr><th scope="col">工具</th><th scope="col">价格</th><th scope="col">额度倍率</th><th scope="col">要点</th></tr></thead>
         <tbody id="idetbody"></tbody>
       </table>
     </div>
@@ -273,10 +273,10 @@
   <div class="wrap">
     <div class="sec-head"><h2 data-i18n="faqTitle">❓ FAQ 常见问题</h2></div>
     <details open><summary>「额度口径」「额度倍率」分别是什么？</summary>
-      <div class="ans">额度口径 = 平台怎么计费：Claude 按「5 小时滚动会话 + 每周上限」、Cursor 按模型用量金额、Copilot 按 Premium Requests / AI Credits、国内多为积分 / Token 配额。额度倍率 = 把额度折算成钱再除以月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank">awesome-coding-plan</a> 的方法论），倍率越高名义性价比越高；但 MiniMax 月倍率 88.65× 最高、其 5h 周期倍率却一般——请按自己的使用节奏对号入座。</div>
+      <div class="ans">额度口径 = 平台怎么计费：Claude 按「5 小时滚动会话 + 每周上限」、Cursor 按模型用量金额、Copilot 按 Premium Requests / AI Credits、国内多为积分 / Token 配额。额度倍率 = 把额度折算成钱再除以月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank" rel="noopener noreferrer">awesome-coding-plan</a> 的方法论），倍率越高名义性价比越高；但 MiniMax 月倍率 88.65× 最高、其 5h 周期倍率却一般——请按自己的使用节奏对号入座。</div>
     </details>
     <details><summary>Token 实时价格榜的数据从哪来？会不会是假的？</summary>
-      <div class="ans">浏览器直接从 <a href="https://models.dev/api.json" target="_blank">models.dev/api.json</a> 拉取（GitHub 开源项目 sst/models.dev，社区持续提交、CDN 分发，返回体带 CORS 全开放头）。拉取成功时页面显示绿色圆点和拉取时间；网络失败时自动降级到内置快照（黄色圆点，快照日期 2026-09-13），绝不伪造"实时"假象。</div>
+      <div class="ans">浏览器直接从 <a href="https://models.dev/api.json" target="_blank" rel="noopener noreferrer">models.dev/api.json</a> 拉取（GitHub 开源项目 sst/models.dev，社区持续提交、CDN 分发，返回体带 CORS 全开放头）。拉取成功时页面显示绿色圆点和拉取时间；网络失败时自动降级到内置快照（黄色圆点，快照日期 2026-09-13），绝不伪造"实时"假象。</div>
     </details>
     <details><summary>价格会变吗？以哪个页面为准？</summary>
       <div class="ans">会。AI 订阅价格与额度调整非常频繁（如 GLM 2026 年内就经历了次数制 → 积分制整体改版）。本站价格仅供决策参考，<b>付款前请务必以平台官网为准</b>；每个卡片底部附有来源链接与采集日期。</div>
