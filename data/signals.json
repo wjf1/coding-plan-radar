@@ -1,6 +1,34 @@
 {
- "generatedAt": "2026-10-04",
+ "generatedAt": "2026-10-05",
  "items": [
+  {
+   "id": "ithome:e45ae5be24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "德国电力公司推出游戏玩家专属电价套餐：瞄准高耗电家庭，电力 100% 来自可再生能源",
+   "excerpt": "<p data-vmark=\"585d\">IT之家 10 月 5 日消息，德国公用事业与电力零售企业 SWK Energie 推出了一项面向游戏玩家的全新营销策略。据 ComputerBase 报道，这项名为 meinGAMING 的业务围绕游戏玩家展开大量营销宣传，例如将供电的稳定性比作“你最喜爱的游戏服务器”，还邀约 Limcube 这类游戏主播开展网红推广。</p><p style=\"text-align: center;\" data-vmark=\"bf0c\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/10/c45c147…",
+   "url": "https://www.ithome.com/1/009/790.htm",
+   "date": "Mon, 05 Oct 2026 04:01:45 GMT",
+   "firstSeen": "2026-10-05",
+   "lastSeen": "2026-10-05"
+  },
+  {
+   "id": "ithome:7dbdfb2724",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "再涨价！消息称台积电先进晶圆价格 2027Q1 拟计划再上调 6%~8%",
+   "excerpt": "<p data-vmark=\"1be8\">IT之家 10 月 5 日消息，韩媒 ddaily 于 10 月 2 日发布博文，报道称<a href=\"https://www.ithome.com/1/003/824.htm\" target=\"_blank\">在决定上调 10%~20% 基础上</a>，台积电计划 2027 年第一季度针对最先进晶圆出货价格，<strong>再次上调约 6%~8%，</strong>理由是制造成本和电力费用上涨。</p><p data-vmark=\"fbc0\">报道援引半导体业界消息称，台积电 2 纳米制程订单激增，公司已将晶圆订单目标较原计划提高 15% 至 20…",
+   "url": "https://www.ithome.com/1/009/740.htm",
+   "date": "Sun, 04 Oct 2026 23:29:15 GMT",
+   "firstSeen": "2026-10-05",
+   "lastSeen": "2026-10-05"
+  },
   {
    "id": "ithome:74e4c87a24",
    "source": "ithome",
@@ -41,7 +69,7 @@
    "url": "https://github.blog/changelog/2026-10-02-copilot-code-review-api-support-and-new-default-effort-level",
    "date": "Fri, 02 Oct 2026 19:13:50 +0000",
    "firstSeen": "2026-10-03",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "gh-changelog:2118478855",
@@ -55,7 +83,7 @@
    "url": "https://github.blog/changelog/2026-10-02-selected-models-in-github-copilot-deprecated",
    "date": "Fri, 02 Oct 2026 18:24:19 +0000",
    "firstSeen": "2026-10-03",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "ithome:401301b224",
@@ -125,7 +153,7 @@
    "url": "https://github.blog/changelog/2026-10-01-github-copilot-can-now-interact-with-desktop-apps",
    "date": "Thu, 01 Oct 2026 19:11:26 +0000",
    "firstSeen": "2026-10-02",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "gh-changelog:8d7a8e785a",
@@ -167,7 +195,7 @@
    "url": "https://www.githubstatus.com/incidents/2dpbcq5j165n",
    "date": "Thu, 01 Oct 2026 17:56:54 +0000",
    "firstSeen": "2026-10-02",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "github-status:673e6f3f33",
@@ -181,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/c8466lzvnmsv",
    "date": "Thu, 01 Oct 2026 13:57:59 +0000",
    "firstSeen": "2026-10-02",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "openrouter:8b6bc8e93b",
@@ -321,7 +349,7 @@
    "url": "https://www.githubstatus.com/incidents/169pg72gg9jr",
    "date": "Mon, 28 Sep 2026 22:08:20 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "github-status:b838ed2c33",
@@ -349,7 +377,7 @@
    "url": "https://www.githubstatus.com/incidents/8zc63m64hy36",
    "date": "Thu, 24 Sep 2026 04:55:33 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "hn-algolia:454a84152d",
@@ -363,7 +391,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "ithome:99745cd324",
@@ -419,7 +447,7 @@
    "url": "https://openai.com/index/lenfest-ai-collaborative-expansion",
    "date": "Mon, 28 Sep 2026 07:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "openai-news:3e47da2b38",
@@ -433,7 +461,7 @@
    "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
    "date": "Wed, 23 Sep 2026 12:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-04"
+   "lastSeen": "2026-10-05"
   },
   {
    "id": "openai-status:6d5a67be3f",
