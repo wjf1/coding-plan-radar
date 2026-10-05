@@ -87,21 +87,21 @@ test("readJSON：损坏文件回落默认值——这正是必须先原子写的
 /* ---------------- 3. record-history 幂等性 ---------------- */
 const runInTmp = (scriptRel, extra = {}) => {
   const dir = tmpRoot();
-  mkdirSync(join(dir, "data"), { recursive: true });
-  cpSync(join(ROOT, "data", "plans.json"), join(dir, "data", "plans.json"));
+  mkdirSync(join(dir, "data", "manual"), { recursive: true });
+  cpSync(join(ROOT, "data", "manual", "plans.json"), join(dir, "data", "manual", "plans.json"));
   execFileSync(process.execPath, [join(ROOT, scriptRel)], { cwd: dir, stdio: "pipe", ...extra });
   return dir;
 };
 
 test("record-history：同一天连跑两次，价格历史与告警字节级不变", () => {
   const dir = runInTmp("scripts/record-history.mjs");
-  const hist1 = readFileSync(join(dir, "data", "price-history.json"), "utf8");
+  const hist1 = readFileSync(join(dir, "data", "auto", "price-history.json"), "utf8");
   execFileSync(process.execPath, [join(ROOT, "scripts/record-history.mjs")], { cwd: dir, stdio: "pipe" });
-  const hist2 = readFileSync(join(dir, "data", "price-history.json"), "utf8");
+  const hist2 = readFileSync(join(dir, "data", "auto", "price-history.json"), "utf8");
   assert.equal(hist2, hist1, "第二次运行改动了价格历史，幂等性被破坏");
   // 每个平台当日只应有一条记录
   const hist = JSON.parse(hist2);
-  const planCount = JSON.parse(readFileSync(join(dir, "data", "plans.json"), "utf8")).plans.filter((p) => p.status !== "bad").length;
+  const planCount = JSON.parse(readFileSync(join(dir, "data", "manual", "plans.json"), "utf8")).plans.filter((p) => p.status !== "bad").length;
   assert.equal(Object.keys(hist.history).length, planCount);
   for (const dates of Object.values(hist.history)) assert.equal(Object.keys(dates).length, 1);
   rmSync(dir, { recursive: true, force: true });
@@ -109,10 +109,10 @@ test("record-history：同一天连跑两次，价格历史与告警字节级不
 
 test("record-history：plans.json 缺失时明确报错（而不是写出一份空历史）", () => {
   const dir = tmpRoot();
-  mkdirSync(join(dir, "data"), { recursive: true });
-  writeFileSync(join(dir, "data", "plans.json"), "{}");
+  mkdirSync(join(dir, "data", "manual"), { recursive: true });
+  writeFileSync(join(dir, "data", "manual", "plans.json"), "{}");
   assert.throws(() => execFileSync(process.execPath, [join(ROOT, "scripts/record-history.mjs")], { cwd: dir, stdio: "pipe" }));
-  assert.equal(existsSync(join(dir, "data", "price-history.json")), false, "不应产出空历史文件");
+  assert.equal(existsSync(join(dir, "data", "auto", "price-history.json")), false, "不应产出空历史文件");
   rmSync(dir, { recursive: true, force: true });
 });
 
@@ -137,14 +137,14 @@ test("validate：当前仓库数据通过校验", () => {
 });
 
 test("validate：拦住写坏的 JSON（本来会安静上线，页面少一块内容）", () => {
-  const r = validateInTmp((d) => writeFileSync(join(d, "data", "ide-plans.json"), '[{"name":"x",'));
+  const r = validateInTmp((d) => writeFileSync(join(d, "data", "manual", "ide-plans.json"), '[{"name":"x",'));
   assert.notEqual(r.code, 0);
   assert.match(r.out, /ide-plans\.json/);
 });
 
 test("validate：拦住空快照（兜底数据为空等于没有降级能力）", () => {
   const r = validateInTmp((d) =>
-    writeFileSync(join(d, "data", "snapshot.json"), JSON.stringify({ generatedAt: "2026-10-05", models: [] }))
+    writeFileSync(join(d, "data", "auto", "snapshot.json"), JSON.stringify({ generatedAt: "2026-10-05", models: [] }))
   );
   assert.notEqual(r.code, 0);
   assert.match(r.out, /snapshot\.json/);
@@ -152,7 +152,7 @@ test("validate：拦住空快照（兜底数据为空等于没有降级能力）
 
 test("validate：拦住缺字段的计划条目（数据必须可溯源）", () => {
   const r = validateInTmp((d) => {
-    const p = join(d, "data", "plans.json");
+    const p = join(d, "data", "manual", "plans.json");
     const doc = JSON.parse(readFileSync(p, "utf8"));
     delete doc.plans[0].srcUrl;
     writeFileSync(p, JSON.stringify(doc, null, 1));

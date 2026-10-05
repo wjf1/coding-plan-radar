@@ -1,17 +1,17 @@
 // 每日任务③：外部信息源抓取 → 归一化为「信号」
 // 覆盖两类源：type=feed（RSS/Atom）+ type=api & pipeline=signals（HN 搜索、GitHub commit 流）
 // 信号只是线索不是结论：官方源信号可进「待核实」，社区源信号固定标黄、不进价格表。
-// 产物 data/signals.json 为 90 天滚动窗口，避免仓库无限膨胀。
+// 产物 data/auto/signals.json 为 90 天滚动窗口，避免仓库无限膨胀。
 import { readJSON, writeJSON, fetchText, parseFeed, daysAgo, hash16, today, loadHealth, recordHealth, saveHealth, isDead, FAIL_THRESHOLD, ghHeaders, excerpt, compileMatcher } from "./lib.mjs";
 
 const KEEP_DAYS = 90;          // 信号保留窗口
 const MAX_NEW_PER_SOURCE = 15; // 单源单次最多新增，防止个别源刷屏
 const MAX_ITEMS = 600;         // 文件总量上限
 
-const sources = readJSON("data/sources.json", {});
+const sources = readJSON("data/manual/sources.json", {});
 const feeds = (sources.feeds || []).filter((f) => f.type === "feed" && f.enabled !== false);
 const apiSources = (sources.apis || []).filter((a) => a.type === "api" && a.pipeline === "signals" && a.enabled !== false);
-const store = readJSON("data/signals.json", { generatedAt: null, items: [] });
+const store = readJSON("data/auto/signals.json", { generatedAt: null, items: [] });
 const health = loadHealth();
 const d = today();
 
@@ -128,7 +128,7 @@ for (const it of byId.values()) {
 }
 keep.sort((a, b) => String(b.firstSeen).localeCompare(String(a.firstSeen)) || String(a.source).localeCompare(String(b.source)));
 
-writeJSON("data/signals.json", { generatedAt: d, items: keep.slice(0, MAX_ITEMS) });
+writeJSON("data/auto/signals.json", { generatedAt: d, items: keep.slice(0, MAX_ITEMS) });
 saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);

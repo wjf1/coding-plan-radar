@@ -1,5 +1,5 @@
 // 每日任务④：结构性数据差异检测（价格 / 免费模型）
-//   1. models.dev  —— 第一方 API 刊例价变动（与 data/snapshot.json 同源）
+//   1. models.dev  —— 第一方 API 刊例价变动（与 data/auto/snapshot.json 同源）
 //   2. OpenRouter  —— :free 免费模型的新增与消失（白嫖板块的自动数据来源）
 //   3. LiteLLM     —— 只做健康检查与参考基线，不产生告警（理由见文件内注释）
 // 首次运行只落基线、不发信号，避免一天内灌入上百条噪声。
@@ -10,12 +10,12 @@ const WATCH_MARKERS = ["claude-sonnet", "claude-opus", "gpt-5", "glm-5", "deepse
 // 第一方 API 价供应商（与 js/app.js 的 OFFICIAL_PROVIDERS 保持一致）
 const WATCHED = ["anthropic", "openai", "google", "xai", "zhipuai", "zai", "moonshotai", "minimax", "deepseek", "volcengine", "xiaomi", "alibaba"];
 
-const sources = readJSON("data/sources.json", {});
+const sources = readJSON("data/manual/sources.json", {});
 const apis = (sources.apis || []).filter((a) => a.type === "api" && a.pipeline === "diff" && a.enabled !== false);
 const byIdSrc = Object.fromEntries(apis.map((a) => [a.id, a]));
 
-const base = readJSON("data/pricebase.json", null);
-const store = readJSON("data/signals.json", { generatedAt: null, items: [] });
+const base = readJSON("data/auto/pricebase.json", null);
+const store = readJSON("data/auto/signals.json", { generatedAt: null, items: [] });
 const health = loadHealth();
 const d = today();
 
@@ -173,8 +173,8 @@ const num = (v) => (Number.isFinite(+v) ? +v : null);
 /* ---------- 落盘 ---------- */
 // 基线只在抓取成功时更新，避免一次失败把好基线清空
 if (firstRun) {
-  writeJSON("data/pricebase.json", { updatedAt: d, ...next });
-  console.log("· 首跑：已写入 data/pricebase.json 基线");
+  writeJSON("data/auto/pricebase.json", { updatedAt: d, ...next });
+  console.log("· 首跑：已写入 data/auto/pricebase.json 基线");
 } else {
   const merged = {
     updatedAt: d,
@@ -182,7 +182,7 @@ if (firstRun) {
     openrouterFree: next.openrouterFree.length ? next.openrouterFree : base.openrouterFree || [],
     litellm: Object.keys(next.litellm).length ? next.litellm : base.litellm || {},
   };
-  writeJSON("data/pricebase.json", merged);
+  writeJSON("data/auto/pricebase.json", merged);
 }
 
 const keep = [];
@@ -191,7 +191,7 @@ for (const it of byId.values()) {
   if (Number.isNaN(age) || age <= 90) keep.push(it);
 }
 keep.sort((a, b) => String(b.firstSeen).localeCompare(String(a.firstSeen)) || String(a.source).localeCompare(String(b.source)));
-writeJSON("data/signals.json", { generatedAt: d, items: keep.slice(0, 600) });
+writeJSON("data/auto/signals.json", { generatedAt: d, items: keep.slice(0, 600) });
 saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);

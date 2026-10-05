@@ -1,6 +1,11 @@
 [
  {
   "date": "2026-10-05",
+  "v": "v7.2",
+  "text": "数据目录语义化与死代码清理（4 项）：① data 目录按维护方式拆为 manual/（人工录入：plans / calc-plans / calc-models / ide-plans / changelog / repos / sources / promos / freebies）与 auto/（机器每日生成：snapshot / alerts / price-history / reported / signals / sourcehealth / pagehash / pricebase / transients / meta），全仓库 99 处路径引用同步改写，并在 GitHub 上折叠 auto 目录的 diff——此前 19 个 JSON 平铺一处，「哪个文件会被巡检覆盖」只能靠读脚本判断；② 删除从未被调用的死函数 populateCalcModels() 及其 window._CALC_MODEL_POOL 回退分支，计算器改用 CALC_MODELS（刻意选择删除而非接线：接线会让下拉从固定 3 档变成 20+ 个动态模型，属于线上可见的行为变更）；④ 补齐计算器候选表 4 个表头的 scope（合并 v7.1 a11y 后验收时发现该表被漏掉），全站 33 个 th 现已全部带 scope。③ 文档同步：README 中英双语目录结构与全部内联路径、HANDOFF 数据归属与避坑段一并更新。"
+ },
+ {
+  "date": "2026-10-05",
   "v": "v7.1",
   "text": "对比度、键盘可达性与两处交互 Bug（12 项）：① --dim 由 #6b7a99 改为 #7c8aa6——原值在三种底色上仅 4.45/4.23/4.03:1，全部低于 WCAG AA 的 4.5:1，而它正是全站 12px 脚注、表格小字、区块说明的专用色；② 页脚 .disclaimer 的 #58657f 实测仅 3.27:1（比 --dim 原值更差），一并改掉；③ 新增全局 :focus-visible 焦点环——此前全站只有 input.s:focus 一处反馈，键盘用户 Tab 到 chip/button/select/summary 时完全看不到焦点位置；④ 外链 target=_blank 全部补 rel=\"noopener noreferrer\"；⑤ 三个表格 18 个表头补 scope=\"col\"；⑥ 章节标题与图标位的装饰性 emoji 包进 aria-hidden，读屏不再逐字念出符号名；⑦ 新增 prefers-reduced-motion 兜底；⑧ 修复对比表搜索无结果时表格直接空白（现显示「没有匹配的平台」+「清空搜索与筛选」按钮）；⑨ 修复对比选择上限未在交互层生效——原先只 push 不校验，勾第 5 个照样渲染 5 列、刷新一次又变回 4 列，现改为拦截并回滚勾选 + 提示；⑩ 修复 hero 静态统计数与实测不符导致首屏闪错（11/33/15 → 19/69/14；另 st-models 的 60+ 在 JS 中根本没有来源，永远不会被覆盖）；⑪ 排序表头新增方向指示与 aria-sort（箭头由 CSS 生成，不会被 i18n 快照记进 DOM），并修正整行表头都显示手型、包括不可排序列的问题；⑫ 三处行内 onclick 按方案建议迁到 bind()，HTML 端仅留 data-action 标识。"
  },

@@ -1,7 +1,7 @@
 // 每日任务②：官方页面变动检测（内容哈希对比）
 // 设计要点（2026-09-14）：
-//   1. 页清单不再硬编码，统一读 data/sources.json（含被禁用源及原因）
-//   2. 抓取失败不再 catch 后静默 skip —— 写入 data/sourcehealth.json 累计失败，连续失败即视为失效
+//   1. 页清单不再硬编码，统一读 data/manual/sources.json（含被禁用源及原因）
+//   2. 抓取失败不再 catch 后静默 skip —— 写入 data/auto/sourcehealth.json 累计失败，连续失败即视为失效
 //   3. 【二次确认】页面内容变了不算数，必须"下一次巡检仍旧是同一个新值"才报警。
 //      原因：cursor.com/pricing 实测两次抓取正文长度就不同（7506 vs 8114 字符，动态渲染/轮播），
 //      朴素哈希对比会天天误报，把真正的价格变动淹没。代价是真实变动晚一天告警。
@@ -16,12 +16,12 @@ const UNSTABLE_FLAPS = 2;   // 出现多少个"不同的新值"后判定页面�
 const UNSTABLE_REVERTS = 2; // 确认后又回滚几次后判定页面不可稳定监控
 const SEEN_KEEP = 6;        // 每页保留的历史哈希条数
 
-const sources = readJSON("data/sources.json", { pages: [] });
+const sources = readJSON("data/manual/sources.json", { pages: [] });
 const pages = (sources.pages || []).filter((p) => p.type === "page" && p.enabled !== false);
 const disabled = (sources.pages || []).filter((p) => p.enabled === false);
 
-const raw = readJSON("data/pagehash.json", {});
-const alerts = readJSON("data/alerts.json", []);
+const raw = readJSON("data/auto/pagehash.json", {});
+const alerts = readJSON("data/auto/alerts.json", []);
 const health = loadHealth();
 const d = today();
 
@@ -99,7 +99,7 @@ for (const p of pages) {
       ex.resolvedBy = "auto-revert";
       ex.resolvedAt = d;
       // 记录原始变更到 transients.json，供人工回溯
-      const transients = readJSON("data/transients.json", { items: [] });
+      const transients = readJSON("data/auto/transients.json", { items: [] });
       transients.items.push({
         id: p.id,
         label: p.label,
@@ -111,7 +111,7 @@ for (const p of pages) {
       });
       // 保留最近 100 条
       transients.items = transients.items.slice(-100);
-      writeJSON("data/transients.json", transients);
+      writeJSON("data/auto/transients.json", transients);
       // 确认后又在短期内回滚 → 计一次"跳变"，累计到阈值即停止自动预警
       if (ex.detected && (Date.now() - Date.parse(ex.detected)) / 86400000 <= 14) {
         rec.revertCount = (rec.revertCount || 0) + 1;
@@ -161,8 +161,8 @@ for (const p of disabled) {
   if (hashes[p.id] || raw[p.id]) console.log(`- 已停用监控：${p.id}`);
 }
 
-writeJSON("data/pagehash.json", hashes);
-writeJSON("data/alerts.json", alerts);
+writeJSON("data/auto/pagehash.json", hashes);
+writeJSON("data/auto/alerts.json", alerts);
 saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);

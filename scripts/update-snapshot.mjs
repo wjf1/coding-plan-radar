@@ -1,4 +1,4 @@
-// 每日任务①：从 models.dev 重新生成 data/snapshot.json（兜底快照，与线上实时数据同源）
+// 每日任务①：从 models.dev 重新生成 data/auto/snapshot.json（兜底快照，与线上实时数据同源）
 // 由 .github/workflows/daily-update.yml 每天调度，也可手动运行：node scripts/update-snapshot.mjs
 import { writeJSON } from "./lib.mjs";
 
@@ -50,7 +50,7 @@ function validateSnapshot(models){
   return models;
 }
 
-writeJSON("data/snapshot.json", {
+writeJSON("data/auto/snapshot.json", {
   generatedAt: today,
   source: "https://models.dev/api.json",
   models: validateSnapshot(uniq),

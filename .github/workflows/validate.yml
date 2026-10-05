@@ -1,7 +1,7 @@
 name: validate
 
 # 数据与脚本的校验闸门：任何 push / PR 都跑一遍 node scripts/validate.mjs
-# 站点内容全部由 data/*.json 驱动，而这些文件既有人工编辑、也有每日自动巡检写入；
+# 站点内容全部由 data/manual/ 与 data/auto/ 下的 JSON 驱动，这些文件既有人工编辑、也有每日自动巡检写入；
 # 这里挡住的正是「一个逗号或一次写坏的文件被直接推上线」这类问题（零依赖，不需要 npm install）。
 on:
   push:

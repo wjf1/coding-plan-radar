@@ -8,7 +8,7 @@
 - **定位**：AI 编程订阅计划（Coding Plan）对比站。纯静态站，无构建、零 npm 依赖，GitHub Pages 托管。
 - **线上地址**：https://wjf1.github.io/coding-plan-radar/ ｜ 仓库：https://github.com/wjf1/coding-plan-radar
 - **覆盖**：20 个条目（19 个在售平台 + 1 个已停售留档）、69 个付费档位；Token 实时价格榜接 models.dev。
-- **当前版本**：**v7.1（2026-10-05）**。上一版本 v7.0（2026-10-05，数据 JSON 化重构）。
+- **当前版本**：**v7.2（2026-10-05）**。上一版本 v7.1（2026-10-05，a11y P0 修复）、v7.0（2026-10-05）。
 - **自动化**：GitHub Actions 每天北京时间 09:00 巡检 → 更新数据 → 提交推送（触发 Pages 重新发布）→ 有事项时开 issue。
 - **受众现状**：1 star / 0 fork，仓库 issue 全部是机器人每日巡检开出的（无真人反馈）。功能开发的边际收益很低，
   维护重点应放在**自动化管道不静默失效**上。
@@ -39,15 +39,18 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 
 | 内容 | 文件 | 谁在写 |
 |---|---|---|
-| 订阅计划价格 / 档位 / 额度 / 坑点 | `data/plans.json` | **人工**（日常主要改这里） |
-| 计算器候选订阅 / 预设模型 | `data/calc-plans.json`、`data/calc-models.json` | 人工 |
-| IDE 订阅榜 / 站内变更记录 / 同类项目 | `data/ide-plans.json`、`data/changelog.json`、`data/repos.json` | 人工（changelog 与 `CHANGELOG.md` 同步） |
-| 信息源清单（URL / 分级 / 关键词 / 启停原因） | `data/sources.json` | 人工（**改巡检范围只改这里**） |
-| models.dev 兜底快照 | `data/snapshot.json` | 机器（`update-snapshot.mjs`，每日） |
-| 促销停售 / 白嫖额度 | `data/promos.json`、`data/freebies.json` | 人工确认 + 机器核对状态回写 |
-| 线索 / 源健康 / 价格历史 / 基线 / 巡检日期 | `data/signals.json`、`sourcehealth.json`、`price-history.json`、`pricebase.json`、`pagehash.json`、`meta.json`、`alerts.json`、`reported.json`、`transients.json` | 机器（每日） |
+| 订阅计划价格 / 档位 / 额度 / 坑点 | `data/manual/plans.json` | **人工**（日常主要改这里） |
+| 计算器候选订阅 / 预设模型 | `data/manual/calc-plans.json`、`data/manual/calc-models.json` | 人工 |
+| IDE 订阅榜 / 站内变更记录 / 同类项目 | `data/manual/ide-plans.json`、`data/manual/changelog.json`、`data/manual/repos.json` | 人工（changelog 与 `CHANGELOG.md` 同步） |
+| 信息源清单（URL / 分级 / 关键词 / 启停原因） | `data/manual/sources.json` | 人工（**改巡检范围只改这里**） |
+| models.dev 兜底快照 | `data/auto/snapshot.json` | 机器（`update-snapshot.mjs`，每日） |
+| 促销停售 / 白嫖额度 | `data/manual/promos.json`、`data/manual/freebies.json` | 人工确认 + 机器核对状态回写 |
+| 线索 / 源健康 / 价格历史 / 基线 / 巡检日期 | `data/auto/signals.json`、`sourcehealth.json`、`price-history.json`、`pricebase.json`、`pagehash.json`、`meta.json`、`alerts.json`、`reported.json`、`transients.json` | 机器（每日） |
 
-**数据流**：`data/sources.json` 声明源 → 六个巡检脚本抓取/比对 → 写回 `data/*.json` → `validate.mjs` 校验 →
+**目录约定**：`data/manual/` = 人工录入，`data/auto/` = 机器每日生成（勿手改，GitHub 上折叠 diff）。
+改数据先改 manual，改巡检范围只改 `data/manual/sources.json`。
+
+**数据流**：`data/manual/sources.json` 声明源 → 六个巡检脚本抓取/比对 → 写回 `data/auto/*.json` → `validate.mjs` 校验 →
 `git commit && git push` → Pages 重新发布 → 浏览器端 `app.js` 通过 `fetch` 读取 `data/*.json` 渲染。
 
 **前端**：`js/app.js` 单文件（约 840 行）。`init` 里先 `bind()`（表单/筛选，不依赖数据），
@@ -55,8 +58,27 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 单文件失败只让对应板块为空（`loadJSONOr`）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
+## 最近一轮变更与交付成果（v7.2，2026-10-05）
 
-## 最近一轮变更与交付成果（v7.1，2026-10-05）
+### v7.2 —— 数据目录语义化 + 死代码清理（含与 v7.1 并行改动合并）
+
+1. **data 目录按维护方式分离**：`data/manual/`（9 个人工录入文件）与 `data/auto/`（10 个机器每日生成文件）。
+   全仓库 99 处路径引用同步改写（脚本 / 前端 / workflow / 校验 / 测试夹具），新增 `.gitattributes` 让 GitHub 折叠 auto 目录的 diff。
+   动机：此前 19 个 JSON 平铺在一个目录里，「哪些能手改、哪些会被巡检覆盖」只能靠记忆或读脚本，
+   而工作流里甚至有一处把人工文件与机器产物混在一起 `git add -A`。分离后这件事由目录结构本身表达。
+2. **删除死代码 `populateCalcModels()`**：该函数（v4 合入时引入）从未被调用，与之配套的
+   `window._CALC_MODEL_POOL` 回退分支也永远是 `undefined`，一并清除，`renderCalc()` 直接用 `CALC_MODELS`。
+   删除而非接线是刻意的：接线会让计算器下拉从固定 3 档变成 20+ 个动态模型，属于面向线上页面的行为变更，
+   不该混在整理类改动里。相关取舍见下方 Backlog 的 P2 行。
+3. **补齐计算器表头的 `scope`**：与并行的 v7.1（a11y）合并后验收时发现，`renderCalc()` 生成的候选订阅表 4 个 `<th>` 没有 `scope`——v7.1 覆盖了 3 个静态表格但漏了这张 JS 生成的表。已补齐，运行时全站 33 个 `<th>` 全部带 `scope`。
+4. **更正 v7.0 的一处误报**：先前记录「`data/transients.json` 没有产出方」有误——
+   `scripts/check-pages.mjs:101-114` 正常写入 auto-revert 记录，workflow 读取的字段也一致，该分支可正常触发。
+
+验证：`node scripts/validate.mjs` 通过（manual 9 + auto 10）；`node tests/selfcheck.mjs` 15/15；
+浏览器端确认九个数据板块在新路径下全部正常渲染。
+
+
+### v7.1 —— 对比度、键盘可达性与交互 Bug（a11y P0，12 项）
 
 依据「CodingPlan Radar UI 设计提升方案」（PDF）评审执行，**只做判定为真实缺陷的部分**。
 
@@ -104,8 +126,7 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
 **未做**（判定为收益/风险不划算，见下节 Backlog）：字号/间距/阴影 Token 化、浅色主题、scrollspy / 返回顶部 /
 进度条、sticky 表头修复、sparkline 交互、计算器图表、骨架屏、i18n 长文本全量翻译。
 
-## 最近一轮变更与交付成果（v7.0，2026-10-05）
-
+### v7.0 —— 安全边界、数据写入可靠性与巡检可见性
 本次由「CodingPlan Radar 开发执行计划」评审结论驱动，**只做按 ROI 排在前面的项，砍掉了架构洁癖类任务**。
 
 修复的真实问题（均先复现、再修、再验）：
@@ -123,7 +144,7 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
 7. **巡检失败静默**：`record-history` 的失败原先写成 `ok=false: record-history` 挂在一个无 `id` 的步骤上，
    既拿不到 outcome 也不进失败汇总；现纳入 `failed_steps` 并开 issue。
 8. **Node 侧 hack**：`record-history.mjs` 原靠 `require("../js/data.js")` + `globalThis._CP_EXPORT` 取数据，
-   该 hack 只要 data.js 引入 ESM 语法即崩。数据已 JSON 化（`data/plans.json` 等 6 个文件），
+   该 hack 只要 data.js 引入 ESM 语法即崩。数据已 JSON 化（`data/manual/plans.json` 等 6 个文件），
    `js/data.js`、`js/snapshot.js` 删除，浏览器与脚本共用同一份来源。
 9. **零校验**：新增 `scripts/validate.mjs`（数据契约 + `node --check`）与 `tests/selfcheck.mjs`（15 例）；
    `daily-update.yml` 里校验不通过**则不提交**，并新增 `validate.yml` 在 push/PR 时运行。
@@ -165,11 +186,11 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
 
 ### 值得做但本次未做
 
+> v7.2 已完成其中两项（数据目录语义化、删除 `populateCalcModels()`），下表为剩余项。
+
 | 优先级 | 待办 | 说明 |
 |---|---|---|
-| P1 | **数据目录语义化**（计划 D2-1） | `data/manual/` 与 `data/auto/` 分离人工与机器产物，配合 `.gitattributes` 折叠 auto 目录 diff。0.5h，纯整理，收益是可读性 |
-| P2 | **`populateCalcModels()` 是死代码** | `js/app.js` 里该函数从未被调用：计算器的模型下拉实际用的是 `index.html` 里写死的 3 个 `<option>`（value 0/1/2），动态池从未生效。要么接上（`loadModels()` 成功后调用），要么删掉函数并清理 `window._CALC_MODEL_POOL` |
-| P2 | **`data/transients.json` 被 workflow 读取但仓库里可能不存在** | 读取侧有容错（`read(p, {items:[]})`），但 auto-revert 记录实际未生成，相关 issue 分支永远不触发。需要哪个脚本产出它，或删掉该分支 |
+| P2 | **计算器只暴露 7 个预设中的 3 个（真缺陷）** | `data/manual/calc-models.json` 配了 7 个档位，但 `index.html` 的 `<select id="calcmodel">` 只写死 3 个 `<option>`（value 0/1/2），另外 4 个（百度千帆 ERNIE 5.1 / 腾讯云 GLM-5.3-Flash / 讯飞星火 X2.5 / Gemini 3.8 Flash）用户选不到；且这 3 个 option 的标签与 `calc-models.json` 的 label 重复维护，改一处不同步就漂移。修法：初始化时用 `CALC_MODELS` 渲染 `<option>`（保留「GLM-5.3（中档）」为默认选中），删掉 index.html 里写死的三项 |
 | P3 | **LICENSE 缺失** | 公开仓库建议补 MIT LICENSE 与 `CONTRIBUTING.md`（计划 E1-1） |
 | P3 | **功能类需求**（计划 P1-2-1 散点图 / P1-3-1 最近 7 天变更面板 / P1-5-1 场景标签过滤） | 在零受众前提下边际收益≈0；若把项目当作品集则优先做这些（而不是 store 与 lint），并同步补 README 配图 |
 | P3 | **localStorage 缓存版本化**（计划 S3-2） | 当前 `CACHE_KEY = "cp_modelsdev_cache_v1"` 无 schema 版本与过期清理。缓存结构一变就会读到旧结构，建议加 `schema` 字段 |
@@ -189,11 +210,12 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
 - ⚠️ **`data/*.json` 一律原子写**：新增脚本请用 `lib.mjs` 的 `writeJSON` / `writeFileAtomic`，不要直接 `writeFileSync`。
   半截 JSON 会被读取容错误判为「文件不存在」，静默丢掉整块数据。
 - ⚠️ **`.tmp` 中间文件**：已加进 `.gitignore`；若在仓库里看到 `*.tmp`，说明上次写入被中断，需人工确认目标文件完整性。
-- ⚠️ **改巡检范围只改 `data/sources.json`**，不要硬编码 URL 到脚本里；源健康（`sourcehealth.json`）会如实反映抓取失败。
+- ⚠️ **改巡检范围只改 `data/manual/sources.json`**，不要硬编码 URL 到脚本里；源健康（`sourcehealth.json`）会如实反映抓取失败。
 - ⚠️ **社区源在大陆线路不可达**（LINUX DO / V2EX 等，数据中心 IP 被拦 403/空响应），本地跑必然失败并记入源健康，
   这是预期行为，不是 bug；只有 GitHub Actions 的海外出口能抓到。
 - ⚠️ **CI 里 `continue-on-error` 会把 job 结果变成 success**：判断某步骤是否成功必须读它自己写进
   `steps.<id>.outputs` 的标记（本 workflow 用 `ok=true/false`），**不能读 `needs.<job>.result`**——那是 job 级结果。
 - ⚠️ **`esc()` 只处理 `&<>"`**：任何写进属性或 URL 的场景请用 `safeHref()`（放行 http/https）而不是裸 `esc()`。
-- ⚠️ **公众号式数据条目字段含义**见 `data/plans.json` 顶部的 `_readme`；新增平台条目必须带 `srcUrl`（校验会拦）。
+- ⚠️ **公众号式数据条目字段含义**见 `data/manual/plans.json` 顶部的 `_readme`；新增平台条目必须带 `srcUrl`（校验会拦）。
+- ⚠️ **数据分两处**：`data/manual/`（人工）与 `data/auto/`（机器）。新脚本写产物请落到 `data/auto/`，不要写进 `data/manual/`——后者是人工录入区，机器回写只允许改 status 一类核对字段。
 - 📌 Windows 环境下 `renameSync` 覆盖已存在文件是可行的（等价 `MOVEFILE_REPLACE_EXISTING`），原子写入无需额外处理。

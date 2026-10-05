@@ -22,7 +22,7 @@ const d = today();
 const health = loadHealth();
 
 /* ---------- ① 白嫖 / 免费额度来源页核对 ---------- */
-const fb = readJSON("data/freebies.json", { items: [], retired: [] });
+const fb = readJSON("data/manual/freebies.json", { items: [], retired: [] });
 fb.items = fb.items || [];
 let fbOk = 0, fbChanged = 0, fbStale = 0, fbSkipped = 0;
 
@@ -84,10 +84,10 @@ for (const it of fb.items) {
   }
 }
 fb.checked = d;
-writeJSON("data/freebies.json", fb);
+writeJSON("data/manual/freebies.json", fb);
 
 /* ---------- ② 促销条目自动过期归档 ---------- */
-const pm = readJSON("data/promos.json", { items: [] });
+const pm = readJSON("data/manual/promos.json", { items: [] });
 pm.items = pm.items || [];
 const justExpired = [];
 for (const p of pm.items) {
@@ -99,7 +99,7 @@ for (const p of pm.items) {
     console.log(`⏰ EXPIRED ${p.id} — ${p.title}（截止 ${p.expires}）`);
   }
 }
-writeJSON("data/promos.json", pm);
+writeJSON("data/manual/promos.json", pm);
 
 saveHealth(health);
 

@@ -65,7 +65,9 @@ jobs:
           # 既拿不到 outcome，也不会进下面的失败汇总——record-history 崩掉时
           # 巡检会安静地少掉当天价格历史，而且流程仍然是绿的。
           if node scripts/record-history.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
-          echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
+          # 与各脚本保持一致：先写 .tmp 再 mv，避免中途被杀留下半截 JSON（读取容错会当成「文件不存在」）
+          echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/auto/meta.json.tmp
+          mv data/auto/meta.json.tmp data/auto/meta.json
 
       - name: 校验数据与脚本（坏数据不进仓库）
         id: validate
@@ -101,17 +103,17 @@ jobs:
             const out = [];
 
             // 官方页变动 → 待人工核价
-            const alerts = read("data/alerts.json", []).filter(a => !a.resolved && a.detected === today);
+            const alerts = read("data/auto/alerts.json", []).filter(a => !a.resolved && a.detected === today);
             if (alerts.length) {
               out.push("### 官方页内容变动，价格待人工核实\n" +
                 alerts.map(a => `- [${a.label}](${a.url}) 检测于 ${a.detected}`).join("\n"));
             }
 
             // 机器线索中的官方来源信号 → 待确认后录入 promos.json
-            const reportedPath = "data/reported.json";
+            const reportedPath = "data/auto/reported.json";
             const reported = read(reportedPath, { ids: [] });
             const reportedSet = new Set(reported.ids || []);
-            const sig = read("data/signals.json", { items: [] }).items.filter(
+            const sig = read("data/auto/signals.json", { items: [] }).items.filter(
               s => s.tier !== "community" && s.kind !== "availability" && !reportedSet.has(s.id)
             );
             if (sig.length) {
@@ -123,7 +125,7 @@ jobs:
             }
 
             // 白嫖额度条目异常 → 待人工复核
-            const fb = read("data/freebies.json", { items: [] });
+            const fb = read("data/manual/freebies.json", { items: [] });
             const fbIssues = (fb.items || []).filter(f => f.status === "stale" || f.status === "changed" || f.status === "warn");
             if (fbIssues.length) {
               out.push("### 🎁 白嫖/免费额度条目需要人工复核\n" +
@@ -131,7 +133,7 @@ jobs:
             }
 
             // 促销今日到期 → 已自动标「已结束」，提醒确认时间线上是否需要补一条后续动态
-            const pm = read("data/promos.json", { items: [] });
+            const pm = read("data/manual/promos.json", { items: [] });
             const justExpired = (pm.items || []).filter(p => p.expired && p.expiredOn === today);
             if (justExpired.length) {
               out.push("### ⏰ 促销活动今日到期（已自动标记为「已结束」）\n" +
@@ -139,15 +141,15 @@ jobs:
             }
 
             // 连续失败的源 → 需要修监控
-            const hs = read("data/sourcehealth.json", { sources: {} }).sources || {};
+            const hs = read("data/auto/sourcehealth.json", { sources: {} }).sources || {};
             const dead = Object.values(hs).filter(s => s.ok === false && (s.consecutiveFailures || 0) >= 3);
             if (dead.length) {
-              out.push("### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/sources.json 中修复或停用\n" +
+              out.push("### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/manual/sources.json 中修复或停用\n" +
                 dead.map(s => `- ${s.label}（${s.url}）— 最后错误：${s.error || "未知"}`).join("\n"));
             }
 
             // 标注 auto-revert 条目
-            const transients = read("data/transients.json", { items: [] });
+            const transients = read("data/auto/transients.json", { items: [] });
             const todayReverts = transients.items.filter(t => t.resolvedAt === today);
             if (todayReverts.length) {
               out.push("### 🔄 今日 auto-revert 记录（内容回到基线，可能为临时促销/渲染变体）\n" +

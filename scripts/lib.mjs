@@ -59,7 +59,7 @@ export const ghHeaders = () => {
 };
 
 /* ---------------- 源健康记录 ---------------- */
-const HEALTH_PATH = "data/sourcehealth.json";
+const HEALTH_PATH = "data/auto/sourcehealth.json";
 
 export function loadHealth() {
   return readJSON(HEALTH_PATH, { updatedAt: null, sources: {} });

@@ -5,6 +5,21 @@
 
 日期均为北京时间。数据类变更（每日自动巡检提交）不在本文件逐条记录，只记录代码与内容层面的版本变更。
 
+## [v7.2] - 2026-10-05
+
+**数据目录语义化与死代码清理（3 项）** —— 让「哪些数据能手改」由目录结构回答，而不是靠记忆。
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 1 | data 目录按维护方式分离 | 拆为 `data/manual/`（9 个：plans / calc-plans / calc-models / ide-plans / changelog / repos / sources / promos / freebies，人工录入）与 `data/auto/`（10 个：snapshot / alerts / price-history / reported / signals / sourcehealth / pagehash / pricebase / transients / meta，机器每日生成）。全仓库 99 处路径引用同步改写（脚本 / 前端 / workflow / 校验脚本 / 测试夹具），新增 `.gitattributes` 让 GitHub 折叠 `data/auto/**` 的 diff。此前 19 个 JSON 平铺一处，「哪些会被巡检覆盖」只能靠读脚本判断 |
+| 2 | 删除死代码 | `populateCalcModels()`（v4 合入时引入）从未被调用，配套的 `window._CALC_MODEL_POOL` 回退分支永远取不到值，一并清除，`renderCalc()` 直接用 `CALC_MODELS`。**刻意选择删除而非接线**：接线会把计算器下拉从固定 3 档变成 20+ 个动态模型，属于面向线上页面的行为变更，不宜混在整理类改动里 |
+| 3 | 文档同步 | README 中英双语目录结构与全部内联路径、HANDOFF 的数据归属表 / 数据流 / 避坑段同步更新；更正 v7.0 记录中的一处误报（`transients.json` 并非无产出方，`check-pages.mjs` 正常写入） |
+
+| 4 | 补齐计算器表头 `scope` | 合并 v7.1（a11y）后验收时发现：`renderCalc()` 生成的候选订阅表 4 个 `<th>` 没有 `scope`（v7.1 只覆盖了 3 个静态表格），运行时全站 33 个 `<th>` 已全部带 `scope` |
+
+**新增待办（本次排查发现，未修）**：`data/manual/calc-models.json` 配置了 7 个模型档位，但 `index.html` 的 `<select id="calcmodel">` 只写死 3 个 `<option>`（value 0/1/2），另外 4 个档位用户无法选择；同时这 3 个 option 的标签与 `calc-models.json` 的 `label` 重复维护，存在漂移风险。修法见 `HANDOFF.md` 的 Backlog。
+
+---
 
 ## [v7.1] - 2026-10-05
 

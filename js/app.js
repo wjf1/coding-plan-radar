@@ -11,10 +11,11 @@
  *   6. 成本计算器        —— renderCalc()（API 价 × 用量 vs 订阅额度）
  *   7. 每日巡检状态      —— loadAutoMeta()（Actions 产物）
  *   8. 信息源与白嫖板块  —— renderPromos() / renderFreebies() / renderSignals() / renderSourceHealth()
- *        数据分别来自 data/promos.json（人工确认 + 每日自动过期归档）、data/freebies.json（每日来源页核对）、
- *        data/signals.json（机器发现的线索）、data/sourcehealth.json（每源抓取成败，失效会如实标注）
- * 数据均来自 data/*.json（plans / calc-plans / calc-models / ide-plans / changelog / repos /
- * snapshot / price-history / meta / promos / freebies / signals / sourcehealth / alerts）；
+ *        数据分别来自 data/manual/promos.json（人工确认 + 每日自动过期归档）、data/manual/freebies.json（每日来源页核对）、
+ *        data/auto/signals.json（机器发现的线索）、data/auto/sourcehealth.json（每源抓取成败，失效会如实标注）
+ * 数据均来自 data/manual/（人工录入：plans / calc-plans / calc-models / ide-plans / changelog /
+ * repos / sources / promos / freebies）与 data/auto/（机器生成：snapshot / price-history /
+ * pricebase / pagehash / meta / alerts / reported / transients / signals / sourcehealth）；
  * 页面结构见 index.html。数据为纯 JSON，浏览器与 Node 巡检脚本读同一份来源。
  * ============================================================ */
 const MODELS_DEV_API = "https://models.dev/api.json";
@@ -35,18 +36,18 @@ let tFilter="all", tToolOnly=true, tSort="out", tQuery="";
 let modelRows=[]; // {p,pid,id,n,i,o,c,t,r}
 let compareSelection=[]; // 多选对比选中项（item 9）
 let currentLang="zh"; // 当前语言（item 10）
-let priceHistory={}; // 价格历史缓存（data/price-history.json）
+let priceHistory={}; // 价格历史缓存（data/auto/price-history.json）
 const COMPARE_MAX=4;   // 对比选择上限：此前只在 restoreURLState 里 slice，交互层不拦截
 let compareNotice="";  // 触达上限时的提示文案（展示数秒后自动清除）
 let compareNoticeTimer=0;
 
 /* ================= 数据容器与加载 =================
- * 数据统一放在 data/*.json。旧实现把数据写在 js/data.js 里，Node 巡检脚本要靠
+ * 数据统一放在 data/manual/ 与 data/auto/。旧实现把数据写在 js/data.js 里，Node 巡检脚本要靠
  * `require("../js/data.js")` 执行这个浏览器脚本、再读 globalThis._CP_EXPORT 才能拿到数据
  * （因为 JS 对象字面量的键名不带引号，无法直接 JSON.parse）。那个 hack 很脆：该文件只要
  * 引入任何 ESM 语法，require 就会抛错，直接打断每日价格历史记录。改成纯 JSON 后，
  * 浏览器与脚本共用一份来源，Node 侧也不再需要在运行时执行浏览器代码。
- * 字段含义见 data/plans.json 的 _readme。 */
+ * 字段含义见 data/manual/plans.json 的 _readme。 */
 let PLAN_DATA=[], CALC_MODELS=[], CALC_PLANS=[], IDE_PLANS=[], CHANGELOG=[], GH_REPOS=[];
 let MODEL_SNAPSHOT=[], SNAPSHOT_DATE="";
 
@@ -57,12 +58,12 @@ async function loadJSONOr(pathname, fallback){
 }
 async function loadData(){
   const [plans, calcModels, calcPlans, ide, clog, repos] = await Promise.all([
-    loadJSONOr("data/plans.json", {plans:[]}),
-    loadJSONOr("data/calc-models.json", []),
-    loadJSONOr("data/calc-plans.json", []),
-    loadJSONOr("data/ide-plans.json", []),
-    loadJSONOr("data/changelog.json", []),
-    loadJSONOr("data/repos.json", []),
+    loadJSONOr("data/manual/plans.json", {plans:[]}),
+    loadJSONOr("data/manual/calc-models.json", []),
+    loadJSONOr("data/manual/calc-plans.json", []),
+    loadJSONOr("data/manual/ide-plans.json", []),
+    loadJSONOr("data/manual/changelog.json", []),
+    loadJSONOr("data/manual/repos.json", []),
   ]);
   PLAN_DATA=plans.plans||[];
   CALC_MODELS=calcModels; CALC_PLANS=calcPlans; IDE_PLANS=ide; CHANGELOG=clog; GH_REPOS=repos;
@@ -71,7 +72,7 @@ async function loadData(){
 let snapshotPromise=null;
 function loadSnapshot(){
   if(!snapshotPromise){
-    snapshotPromise=loadJSONOr("data/snapshot.json", {models:[]}).then(j=>{
+    snapshotPromise=loadJSONOr("data/auto/snapshot.json", {models:[]}).then(j=>{
       MODEL_SNAPSHOT=Array.isArray(j.models)?j.models:[];
       SNAPSHOT_DATE=j.generatedAt||"";
       return MODEL_SNAPSHOT;
@@ -347,7 +348,7 @@ function updateSortIndicator(){
 /* ================= 价格历史趋势（纯 SVG 迷你图） ================= */
 async function loadPriceHistory(){
   try{
-    const j=await fetchJSON("data/price-history.json");
+    const j=await fetchJSON("data/auto/price-history.json");
     priceHistory=j.history||{};
   }catch(e){ priceHistory={}; }
 }
@@ -468,8 +469,9 @@ function livePrice(m){
   return hit?{i:hit.i,o:hit.o,live:true}:null;
 }
 function renderCalc(){
-  const pool=window._CALC_MODEL_POOL||CALC_MODELS;
-  const m=pool[+document.getElementById("calcmodel").value]||pool[0];
+  // 模型档位池来自 data/manual/calc-models.json；下拉选项由 index.html 提供，
+  // 其 value 即池内下标。实时价匹配成功时用 models.dev 现价，否则回落到池内的内置价。
+  const m=CALC_MODELS[+document.getElementById("calcmodel").value]||CALC_MODELS[0];
   const pr=livePrice(m);
   const fIn=pr?pr.i:m.fIn, fOut=pr?pr.o:m.fOut;
   document.getElementById("calcprice").textContent=
@@ -498,26 +500,12 @@ function renderCalc(){
       API 成本约 ${fmt$(apiCost)}/月；没有已折算额度的订阅能完全覆盖，选低价档（如 OpenCode Go / Cursor Pro）覆盖日常、峰值按量后付。</div>`;
   }
   document.getElementById("calc-out").innerHTML=verdict+`
-    <table><thead><tr><th>候选订阅</th><th>月费</th><th>月额度（社区折算）</th><th>覆盖你的用量?</th></tr></thead><tbody>
+    <table><thead><tr><th scope="col">候选订阅</th><th scope="col">月费</th><th scope="col">月额度（社区折算）</th><th scope="col">覆盖你的用量?</th></tr></thead><tbody>
     ${cands.slice(0,6).map(c=>`<tr>
       <td class="p-name">${c.name}</td><td class="price">${fmt$(c.price)}</td>
       <td class="quota">${c.note}</td>
       <td>${c.fit===true?'<span class="badge b-ok">够用</span>':c.fit===false?'<span class="badge b-bad">不够</span>':'<span class="badge b-chip">未知</span>'}</td>
     </tr>`).join("")}</tbody></table>`;
-}
-function populateCalcModels(){
-  const sel=document.getElementById("calcmodel");
-  if(!sel) return;
-  // 动态选取热门模型（优先有 tool_call 的）+ CALC_MODELS 中指定的
-  const hot=modelRows.filter(r=>r.t&&r.o>0).sort((a,b)=>a.o-b.o).slice(0,20);
-  const extras=[];
-  for(const m of CALC_MODELS){
-    const found=hot.find(r=>r.pid===m.pid && r.n.toLowerCase().includes(m.match.toLowerCase()));
-    if(found && !extras.some(e=>e.pid===m.pid)) extras.push({pid:m.pid, match:m.match, label:m.label, fIn:m.fIn, fOut:m.fOut});
-  }
-  const all=[...extras, ...hot.filter(r=>!extras.some(e=>e.pid===r.pid)).map(r=>({pid:r.pid, match:r.n, label:r.n+" ("+r.p+")", fIn:r.i||0.5, fOut:r.o}))].slice(0,30);
-  sel.innerHTML=all.map((m,i)=>`<option value="${i}">${m.label}</option>`).join("");
-  window._CALC_MODEL_POOL=all;
 }
 function bindCalc(){
   document.querySelectorAll(".presets .chip").forEach(b=>b.addEventListener("click",()=>{
@@ -577,7 +565,7 @@ async function loadModels(){
     localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),rows:modelRows}));
     setStatus("live",`实时数据源：models.dev（GitHub: sst/models.dev）· 拉取成功 ${new Date().toLocaleString("zh-CN")} · ${modelRows.length} 款模型`);
   }catch(err){
-    // 3) 降级到内置快照（data/snapshot.json，由 Actions 每日重新生成）
+    // 3) 降级到内置快照（data/auto/snapshot.json，由 Actions 每日重新生成）
     const snap=await loadSnapshot();
     modelRows=snap.map(m=>({...m,t:!!m.t,r:!!m.r}));
     const when=SNAPSHOT_DATE?`快照日期 ${SNAPSHOT_DATE} · `:"";
@@ -723,7 +711,7 @@ async function loadAutoMeta(){
   const dd=document.getElementById("data-date");
   const fd=document.getElementById("foot-date");
   try{
-    const m=await fetchJSON("data/meta.json");
+    const m=await fetchJSON("data/auto/meta.json");
     if(m.autoCheck){
       if(el) el.textContent="自动巡检："+m.autoCheck;
       if(dd) dd.textContent=m.autoCheck;
@@ -738,7 +726,7 @@ async function loadAutoMeta(){
 
 // 页面变动提醒（alerts.json）：由每日巡检生成并写入每日 issue，不再在首页展示横幅
 
-/* ================= 促销 / 停售（data/promos.json + data/signals.json） =================
+/* ================= 促销 / 停售（data/manual/promos.json + data/auto/signals.json） =================
  * 时间线由两部分动态合成：
  *   1. promos.json —— 人工确认的记录；verify-listings.mjs 每日把到期促销标 expired，前端显示「已结束」并沉底
  *   2. signals.json 官方源线索 —— 机器每日新发现，标注「待人工确认」，核实后才写入 promos.json
@@ -747,12 +735,12 @@ async function renderPromos(){
   const box=document.getElementById("promo-timeline");
   if(!box) return;
   let j, sig={items:[]};
-  try{ j=await fetchJSON("data/promos.json"); }
+  try{ j=await fetchJSON("data/manual/promos.json"); }
   catch(e){
-    box.innerHTML='<p style="color:var(--dim)">动态数据加载失败（data/promos.json）</p>';
+    box.innerHTML='<p style="color:var(--dim)">动态数据加载失败（data/manual/promos.json）</p>';
     return;
   }
-  try{ sig=await fetchJSON("data/signals.json"); }catch(e){/* 线索缺失时只展示人工记录 */}
+  try{ sig=await fetchJSON("data/auto/signals.json"); }catch(e){/* 线索缺失时只展示人工记录 */}
   const stOf=k=>(j.statusMap||{})[k]||{label:k,cls:""};
 
   const confirmed=(j.items||[]).slice().sort((a,b)=>{
@@ -805,7 +793,7 @@ function fmtISODate(s){
   return Number.isNaN(t)?String(s).slice(0,10):new Date(t).toISOString().slice(0,10);
 }
 
-/* ================= 白嫖 / 免费额度（data/freebies.json，每日自动核对） ================= */
+/* ================= 白嫖 / 免费额度（data/manual/freebies.json，每日自动核对） ================= */
 // 核对状态徽标：verify-listings.mjs 每日抓取来源页后写回 status
 const FREEBIE_STATUS = {
   ok:     ['b-ok',  '✓ 来源页核对正常'],
@@ -818,7 +806,7 @@ async function renderFreebies(){
   const box=document.getElementById("freebies-grid");
   if(!box) return;
   try{
-    const j=await fetchJSON("data/freebies.json");
+    const j=await fetchJSON("data/manual/freebies.json");
     const items=j.items||[];
     const cnt=document.getElementById("st-free");
     if(cnt) cnt.textContent=items.length;
@@ -845,11 +833,11 @@ async function renderFreebies(){
       </div></div>`).join("");
     hideDecorativeGlyphs(box);
   }catch(e){
-    box.innerHTML='<p style="color:var(--dim)">白嫖数据加载失败（data/freebies.json）</p>';
+    box.innerHTML='<p style="color:var(--dim)">白嫖数据加载失败（data/manual/freebies.json）</p>';
   }
 }
 
-/* ================= 自动发现的线索队列（data/signals.json，机器产出） ================= */
+/* ================= 自动发现的线索队列（data/auto/signals.json，机器产出） ================= */
 /* ---------- 线索文案处理：实体解码、RSS 尾巴清理、中文界面句式翻译 ---------- */
 const ENTITY_MAP={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" ",hellip:"…",rsquo:"’",lsquo:"‘",rdquo:"”",ldquo:"“",mdash:"—",ndash:"–",middot:"·"};
 function decodeEntities(s){
@@ -907,8 +895,8 @@ async function renderSignals(){
   const box=document.getElementById("signal-queue");
   if(!box) return;
   let j;
-  try{ j=await fetchJSON("data/signals.json"); }
-  catch(e){ box.innerHTML='<div class="pol"><p style="color:var(--dim)">线索数据尚未生成（data/signals.json），首次自动巡检后出现。</p></div>'; return; }
+  try{ j=await fetchJSON("data/auto/signals.json"); }
+  catch(e){ box.innerHTML='<div class="pol"><p style="color:var(--dim)">线索数据尚未生成（data/auto/signals.json），首次自动巡检后出现。</p></div>'; return; }
   const items=j.items||[];
   const promo=items.filter(i=>i.tier!=="community" && i.kind!=="availability").slice(0,12);
   const avail=items.filter(i=>i.kind==="availability").slice(0,8);
@@ -932,12 +920,12 @@ async function renderSignals(){
   hideDecorativeGlyphs(box);
 }
 
-/* ================= 信息源健康（data/sourcehealth.json，机器产出） ================= */
+/* ================= 信息源健康（data/auto/sourcehealth.json，机器产出） ================= */
 async function renderSourceHealth(){
   const box=document.getElementById("source-health");
   if(!box) return;
   try{
-    const j=await fetchJSON("data/sourcehealth.json");
+    const j=await fetchJSON("data/auto/sourcehealth.json");
     const list=Object.values(j.sources||{});
     if(!list.length){ box.innerHTML=""; return; }
     const chips=list.map(s=>{
@@ -956,7 +944,7 @@ async function renderSourceHealth(){
 }
 
 /* ================= init ================= */
-// 数据在 data/*.json，必须先取回才能渲染；页面骨架（导航、表单、静态文案）不依赖数据，先行绑定，
+// 数据在 data/manual/ 与 data/auto/，必须先取回才能渲染；页面骨架（导航、表单、静态文案）不依赖数据，先行绑定，
 // 这样数据失败时筛选/搜索等控件仍可用，且只在数据到位后统一做一次首屏渲染（避免半渲染闪烁）。
 bind();
 (async () => {

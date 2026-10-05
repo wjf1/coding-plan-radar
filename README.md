@@ -51,21 +51,21 @@
 所有巡检步骤在**同一个 job 内顺序执行**（v6.2 修复：此前拆成并行 job 时各自 checkout 且无 artifact 传递，
 导致 `signals.json` 等产物连续 7 天未进仓库），每步独立记录成败，最后统一汇总、提交、开 issue：
 
-1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `data/snapshot.json` 兜底快照（落盘前做 schema 校验：条目缺字段或整体为空即报错退出——宁可当天不更新，也不让坏快照变成降级来源）
-2. **`scripts/check-pages.mjs`** —— 按 `data/sources.json` 对官方定价页/文档做内容哈希变动检测
-   - 有变动 → 写入 `data/alerts.json` 并列入每日巡检 issue，待人工核价
+1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `data/auto/snapshot.json` 兜底快照（落盘前做 schema 校验：条目缺字段或整体为空即报错退出——宁可当天不更新，也不让坏快照变成降级来源）
+2. **`scripts/check-pages.mjs`** —— 按 `data/manual/sources.json` 对官方定价页/文档做内容哈希变动检测
+   - 有变动 → 写入 `data/auto/alerts.json` 并列入每日巡检 issue，待人工核价
    - 页面回到基线哈希时**自动 resolved**；抓取失败不再静默跳过，而是计入源健康
-3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/signals.json` 线索
+3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/auto/signals.json` 线索
 4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
-5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/freebies.json`）+ 促销条目到期自动标「已结束」
-6. **收尾**：`record-history.mjs` 记录价格历史快照（失败会进失败汇总并在 issue 中列出，不再静默跳过）→ 写入巡检日期 → **`validate.mjs` 校验数据契约与脚本语法** → 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
+5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/manual/freebies.json`）+ 促销条目到期自动标「已结束」
+6. **收尾**：`record-history.mjs` 记录价格历史快照（失败会进失败汇总并在 issue 中列出，不再静默跳过）→ 写入巡检日期 → **`validate.mjs` 校验数据契约与脚本语法** → 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/auto/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
 
 任一步骤失败都会写进 `failed_steps` 并在 issue 中列出；**校验不通过则不提交** —— 坏数据宁可不上线，也不能推上生产页面。
 
 **诚实原则**：
 
 - 机器只负责**发现**，所有价格与促销数字一律人工确认后才进对比表；机器线索单独陈列
-- 每个信息源的抓取成败写入 `data/sourcehealth.json`，在站点「市场动态 → 信息源健康」公开可见，
+- 每个信息源的抓取成败写入 `data/auto/sourcehealth.json`，在站点「市场动态 → 信息源健康」公开可见，
   **连续 3 天失败即标注「已失效」**，不再假装巡检成功
 - JS 渲染的空壳页面（Qoder / CodeBuddy / 火山方舟计费页）与对机器人返回验证页的站点（OpenAI 定价页实测 403）
   明确标注为不可自动监控，不做假巡检
@@ -77,14 +77,14 @@
 #### 处理「官方页变动」issue 的流程
 
 1. 打开 issue 中列出的官方页面，核对新价格 / 新额度
-2. 更新本地 `data/plans.json` 中对应平台条目（含新的采集日期）
-3. 将 `data/alerts.json` 中该条目的 `"resolved": false` 改为 `true`（或等着它自动回滚解决）
+2. 更新本地 `data/manual/plans.json` 中对应平台条目（含新的采集日期）
+3. 将 `data/auto/alerts.json` 中该条目的 `"resolved": false` 改为 `true`（或等着它自动回滚解决）
 4. 提交推送，该条目从下一日的 issue 清单中消失
 
 #### 处理「自动发现的线索」的流程
 
 1. 看站点「市场动态 → 自动发现的线索」，或 issue 里的线索列表
-2. 人工核实后，促销/停售写进 `data/promos.json`，白嫖/免费额度写进 `data/freebies.json`
+2. 人工核实后，促销/停售写进 `data/manual/promos.json`，白嫖/免费额度写进 `data/manual/freebies.json`
 3. 社区情报（黄标）默认**不录入**，除非能追到官方出处
 
 ### 📁 目录结构
@@ -95,24 +95,27 @@
 ├── js/
 │   └── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/对比/CSV/多语言/价格趋势/巡检）
 ├── data/
-│   ├── plans.json          # ⭐ 订阅计划数据（价格/档位/额度/坑点，日常改这里；含 rate 与字段说明）
-│   ├── calc-plans.json     # ⭐ 成本计算器的候选订阅（月费 + 折算额度）
-│   ├── calc-models.json    # ⭐ 计算器预设模型档位（实时价匹配不到时的内置价）
-│   ├── ide-plans.json      # ⭐ IDE / 编辑器订阅扩展榜
-│   ├── changelog.json      # ⭐ 站内「变更记录」板块（与 CHANGELOG.md 同步维护）
-│   ├── repos.json          # ⭐ 同类 GitHub 项目板块
-│   ├── snapshot.json       # models.dev 兜底快照（每日自动重新生成，勿手改）
-│   ├── sources.json        # ⭐ 信息源声明清单（唯一事实来源：URL / 分级 / 关键词 / 启用状态与原因）
-│   ├── promos.json         # 人工确认的促销 / 停售记录（驱动「市场动态」时间线；到期自动标「已结束」）
-│   ├── freebies.json       # 白嫖 / 免费额度条目（每日自动核对来源页，status / lastChecked 脚本维护）
-│   ├── alerts.json         # 「待核实」预警状态（人工 resolved，或自动回滚解决）
-│   ├── price-history.json  # 起步价每日快照（保留 90 天，自动维护，驱动价格趋势图）
-│   ├── reported.json       # 已进入待处理清单的线索去重表（自动维护，避免 issue 重复列同一条）
-│   ├── signals.json        # 机器发现的线索（90 天滚动窗口，自动维护）
-│   ├── sourcehealth.json   # 每源抓取成败（自动维护，站点据此显示「已失效」）
-│   ├── pagehash.json       # 官方页内容哈希基线（自动维护）
-│   ├── pricebase.json      # 价格 / 免费模型基线（自动维护，用于差异检测）
-│   └── meta.json           # 最近巡检日期（自动维护，页脚与「信息源健康」据此显示）
+│   ├── manual/             # ⭐ 人工维护 —— 日常只改这里（改完跑 node scripts/validate.mjs）
+│   │   ├── plans.json          # 订阅计划数据：价格 / 档位 / 额度 / 坑点（含 rate 与字段说明）
+│   │   ├── calc-plans.json     # 成本计算器的候选订阅（月费 + 折算额度）
+│   │   ├── calc-models.json    # 计算器预设模型档位（实时价匹配不到时的内置价）
+│   │   ├── ide-plans.json      # IDE / 编辑器订阅扩展榜
+│   │   ├── changelog.json      # 站内「变更记录」板块（与 CHANGELOG.md 同步维护）
+│   │   ├── repos.json          # 同类 GitHub 项目板块
+│   │   ├── sources.json        # 信息源声明清单（唯一事实来源：URL / 分级 / 关键词 / 启用状态与原因）
+│   │   ├── promos.json         # 人工确认的促销 / 停售记录（到期自动标「已结束」）
+│   │   └── freebies.json       # 白嫖 / 免费额度条目（每日自动核对来源页，回写 status / lastChecked）
+│   └── auto/               # 机器每日生成，勿手改（GitHub 上折叠 diff）
+│       ├── snapshot.json       # models.dev 兜底快照
+│       ├── alerts.json         # 「待核实」预警状态（人工 resolved，或自动回滚解决）
+│       ├── price-history.json  # 起步价每日快照（保留 90 天，驱动价格趋势图）
+│       ├── reported.json       # 已进入待处理清单的线索去重表（避免 issue 重复）
+│       ├── signals.json        # 机器发现的线索（90 天滚动窗口）
+│       ├── sourcehealth.json   # 每源抓取成败（站点据此显示「已失效」）
+│       ├── pagehash.json       # 官方页内容哈希基线
+│       ├── pricebase.json      # 价格 / 免费模型基线（用于差异检测）
+│       ├── transients.json     # 内容回到基线的 auto-revert 回溯记录
+│       └── meta.json           # 最近巡检日期（页脚与「信息源健康」据此显示）
 ├── scripts/
 │   ├── lib.mjs             # 公用：带 UA/超时抓取、JSON 读写、源健康、极简 RSS 解析、关键词匹配
 │   ├── update-snapshot.mjs # 兜底快照
@@ -166,7 +169,7 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 - **原子写入**：所有 `data/*.json` 经 `.tmp` + `rename` 落盘。写入中途被杀不会留下半截 JSON——而半截 JSON 会被读取容错当成「文件不存在」，等于静默清空整块数据
 - **降级可控**：models.dev 超过 5 秒一律判为不可用并降级到内置快照，不让第三方接口拖住首屏；降级提示会显示快照的真实生成日期
 
-> 注：`data/sources.json` 里的社区源（LINUX DO / V2EX 等）在中国大陆线路不可达，只在 GitHub Actions
+> 注：`data/manual/sources.json` 里的社区源（LINUX DO / V2EX 等）在中国大陆线路不可达，只在 GitHub Actions
 > 的海外出口能抓到；本地跑时它们会正常报失败并记录到 `sourcehealth.json`，这属预期行为。
 
 ### 📚 数据来源
@@ -258,21 +261,21 @@ All inspection steps run **sequentially inside a single job** (fixed in v6.2: th
 checked out their own copy with no artifact passing, so `signals.json` and friends went unpublished for 7 days).
 Each step records its own success/failure; at the end everything is summarized, committed and turned into an issue:
 
-1. **`scripts/update-snapshot.mjs`** — refetch models.dev and regenerate the `data/snapshot.json` fallback snapshot (schema-validated before writing: missing fields or an empty snapshot abort the step — better a stale fallback than a broken one)
-2. **`scripts/check-pages.mjs`** — content-hash change detection on official pricing/documentation pages, driven by `data/sources.json`
-   - On change → write to `data/alerts.json` and list it in the daily inspection issue for manual price verification
+1. **`scripts/update-snapshot.mjs`** — refetch models.dev and regenerate the `data/auto/snapshot.json` fallback snapshot (schema-validated before writing: missing fields or an empty snapshot abort the step — better a stale fallback than a broken one)
+2. **`scripts/check-pages.mjs`** — content-hash change detection on official pricing/documentation pages, driven by `data/manual/sources.json`
+   - On change → write to `data/auto/alerts.json` and list it in the daily inspection issue for manual price verification
    - Auto-resolves when a page returns to its baseline hash; fetch failures are no longer silently skipped — they count against source health
-3. **`scripts/fetch-feeds.mjs`** — fetch official changelogs / status pages / community feeds and normalize them into leads in `data/signals.json`
+3. **`scripts/fetch-feeds.mjs`** — fetch official changelogs / status pages / community feeds and normalize them into leads in `data/auto/signals.json`
 4. **`scripts/diff-prices.mjs`** — compare models.dev / OpenRouter / LiteLLM: price moves, free-model additions and removals, disagreements between price sources
-5. **`scripts/verify-listings.mjs`** — verify every freebie against its source page (five states written back to `data/freebies.json`: `ok` / `warn` / `stale` / `changed` / `manual`) and auto-mark expired promos as "ended"
-6. **Wrap-up**: `record-history.mjs` records price-history snapshots (a failure is now counted in the failure summary and listed in the issue instead of being silently skipped) → write the inspection date → **`validate.mjs` checks data contracts and script syntax** → build the human review list (official page changes / new leads / freebie anomalies / promos that expired today, deduplicated into `data/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
+5. **`scripts/verify-listings.mjs`** — verify every freebie against its source page (five states written back to `data/manual/freebies.json`: `ok` / `warn` / `stale` / `changed` / `manual`) and auto-mark expired promos as "ended"
+6. **Wrap-up**: `record-history.mjs` records price-history snapshots (a failure is now counted in the failure summary and listed in the issue instead of being silently skipped) → write the inspection date → **`validate.mjs` checks data contracts and script syntax** → build the human review list (official page changes / new leads / freebie anomalies / promos that expired today, deduplicated into `data/auto/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
 
 Any failing step is recorded in `failed_steps` and listed in the issue; **if validation fails nothing is committed** — bad data must not reach the live page.
 
 **Honesty principles**
 
 - Machines only **discover**; every price and promo number is human-confirmed before it enters the comparison table. Machine leads are listed separately.
-- Per-source fetch success/failure is written to `data/sourcehealth.json` and shown publicly under "Market dynamics → Source health". **Three consecutive days of failure marks a source as dead** — no pretending the inspection succeeded.
+- Per-source fetch success/failure is written to `data/auto/sourcehealth.json` and shown publicly under "Market dynamics → Source health". **Three consecutive days of failure marks a source as dead** — no pretending the inspection succeeded.
 - JavaScript-only shell pages (Qoder / CodeBuddy / 火山方舟 billing pages) and sites that serve a challenge page to bots (OpenAI's pricing page returns 403) are explicitly labelled as not monitorable — no fake monitoring.
 - **Changes require double confirmation**: a changed page must still show the same new value on the next run before it alerts (so a real change is reported one day late). This prevents dynamic pages from generating false alarms every day.
 - **Unstable pages are automatically dropped from alerting**: cursor.com/pricing returns a different body length on two consecutive fetches (rendering variants jump around). Once confirmed, it is marked "needs manual review" and alerting stops — better to admit a page cannot be monitored than to spam false alarms.
@@ -280,14 +283,14 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 #### Handling a "official page changed" issue
 
 1. Open the official page listed in the issue and verify the new price / quota
-2. Update the matching platform entry in `data/plans.json` (including a new collection date)
-3. Set `"resolved": false` to `true` in `data/alerts.json` for that entry (or wait for the automatic rollback to resolve it)
+2. Update the matching platform entry in `data/manual/plans.json` (including a new collection date)
+3. Set `"resolved": false` to `true` in `data/auto/alerts.json` for that entry (or wait for the automatic rollback to resolve it)
 4. Commit and push — the entry disappears from the next day's issue list
 
 #### Handling "auto-discovered leads"
 
 1. Look at "Market dynamics → Auto-discovered leads" on the site, or the lead list in the issue
-2. After verifying by hand, write promos/discontinuations into `data/promos.json` and freebies into `data/freebies.json`
+2. After verifying by hand, write promos/discontinuations into `data/manual/promos.json` and freebies into `data/manual/freebies.json`
 3. Community intel (yellow) is **not** entered by default unless an official source can be traced
 
 ### 📁 Repository layout
@@ -298,24 +301,27 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 ├── js/
 │   └── app.js              # Rendering and interaction (tables/cards/calculator/live board/compare/CSV/i18n/price trend/inspection)
 ├── data/
-│   ├── plans.json          # ⭐ Subscription plan data (prices / tiers / quotas / pitfalls — edit this day to day; includes rate + field docs)
-│   ├── calc-plans.json     # ⭐ Candidate subscriptions for the cost calculator (monthly price + converted quota)
-│   ├── calc-models.json    # ⭐ Calculator model presets (built-in prices when live matching fails)
-│   ├── ide-plans.json      # ⭐ IDE / editor subscription board
-│   ├── changelog.json      # ⭐ In-site changelog section (kept in sync with CHANGELOG.md)
-│   ├── repos.json          # ⭐ Related GitHub projects section
-│   ├── snapshot.json       # models.dev fallback snapshot (regenerated daily — do not edit by hand)
-│   ├── sources.json        # ⭐ Source manifest (single source of truth: URLs / tiers / keywords / enabled state and reasons)
-│   ├── promos.json         # Human-confirmed promos and discontinuations (drives the "market dynamics" timeline; expired promos are auto-marked "ended")
-│   ├── freebies.json       # Free-tier / freebie entries (source pages verified daily; status / lastChecked are script-maintained)
-│   ├── alerts.json         # "Pending verification" alert state (resolved by hand, or by automatic rollback)
-│   ├── price-history.json  # Daily starting-price snapshots (90-day retention, auto-maintained, drives the price trend chart)
-│   ├── reported.json       # Dedup table of leads already surfaced for review (auto-maintained, keeps issues from repeating)
-│   ├── signals.json        # Machine-discovered leads (90-day rolling window, auto-maintained)
-│   ├── sourcehealth.json   # Per-source fetch success/failure (auto-maintained; drives the "dead" badge)
-│   ├── pagehash.json       # Official page content-hash baselines (auto-maintained)
-│   ├── pricebase.json      # Price / free-model baselines (auto-maintained, used for diffing)
-│   └── meta.json           # Last inspection date (auto-maintained; shown in the footer and "source health")
+│   ├── manual/             # ⭐ Human-maintained — edit these day to day (then run node scripts/validate.mjs)
+│   │   ├── plans.json          # Subscription plan data: prices / tiers / quotas / pitfalls (includes rate + field docs)
+│   │   ├── calc-plans.json     # Candidate subscriptions for the cost calculator (monthly price + converted quota)
+│   │   ├── calc-models.json    # Calculator model presets (built-in prices when live matching fails)
+│   │   ├── ide-plans.json      # IDE / editor subscription board
+│   │   ├── changelog.json      # In-site changelog section (kept in sync with CHANGELOG.md)
+│   │   ├── repos.json          # Related GitHub projects section
+│   │   ├── sources.json        # Source manifest (single source of truth: URLs / tiers / keywords / enabled state and reasons)
+│   │   ├── promos.json         # Human-confirmed promos and discontinuations (expired ones are auto-marked "ended")
+│   │   └── freebies.json       # Free-tier entries (source pages verified daily; status / lastChecked written back)
+│   └── auto/               # Generated daily by CI — do not edit (diff collapsed on GitHub)
+│       ├── snapshot.json       # models.dev fallback snapshot
+│       ├── alerts.json         # "Pending verification" alert state
+│       ├── price-history.json  # Daily starting-price snapshots (90-day retention, drives the trend chart)
+│       ├── reported.json       # Dedup table of leads already surfaced for review
+│       ├── signals.json        # Machine-discovered leads (90-day rolling window)
+│       ├── sourcehealth.json   # Per-source fetch success/failure (drives the "dead" badge)
+│       ├── pagehash.json       # Official page content-hash baselines
+│       ├── pricebase.json      # Price / free-model baselines (used for diffing)
+│       ├── transients.json     # Auto-revert trail (pages that returned to their baseline)
+│       └── meta.json           # Last inspection date (shown in the footer and "source health")
 ├── scripts/
 │   ├── lib.mjs             # Shared helpers: fetch with UA/timeout, JSON IO, source health, minimal RSS parser, keyword matching
 │   ├── update-snapshot.mjs # Fallback snapshot
@@ -369,7 +375,7 @@ No build step, zero npm dependencies (RSS parser and tests included — no YAML/
 - **Atomic writes**: every `data/*.json` is written to `.tmp` and then `rename`d. A process killed mid-write can no longer leave a truncated JSON file — and a truncated file is silently treated as "missing" by the read fallback, which would wipe that block of data
 - **Bounded degradation**: models.dev is considered unavailable after 5 seconds and the built-in snapshot takes over, so a stuck third party cannot hold up the first paint; the fallback banner shows the snapshot's real generation date
 
-> Note: the community sources in `data/sources.json` (LINUX DO / V2EX and friends) are unreachable from mainland
+> Note: the community sources in `data/manual/sources.json` (LINUX DO / V2EX and friends) are unreachable from mainland
 > China routes and can only be fetched from GitHub Actions' overseas egress. Running locally, they will report
 > failure and be recorded in `sourcehealth.json` — that is expected behaviour.
 
