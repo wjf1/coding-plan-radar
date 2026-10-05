@@ -7,7 +7,8 @@
   → #detail 平台详情卡片 → #ide IDE 订阅榜 → #freebies 白嫖/免费额度
   → #dynamics 市场动态+线索队列+源健康+变更记录 → #repos 同类 GitHub 项目 → #faq → #policy → footer
   （注：官方页变动告警 alerts.json 仍由每日巡检生成并用于开 issue，只是不再在首页展示横幅）
-  数据文件：js/data.js（人工维护）+ js/snapshot.js（Actions 每日生成）
+  数据文件：data/plans.json（人工维护的价格与档位）、data/snapshot.json（Actions 每日生成的兜底快照）、
+             data/calc-plans.json、data/calc-models.json、data/ide-plans.json、data/changelog.json、data/repos.json
   运行时数据：data/promos.json（人工确认的促销停售）、data/freebies.json（白嫖/免费额度）、
              data/signals.json（机器发现的线索）、data/sourcehealth.json（每源抓取成败）、
              data/alerts.json（官方页变动待核实）、data/meta.json（巡检日期）
@@ -351,8 +352,6 @@
   <div class="wrap disclaimer">本站为静态信息聚合页面，与所列平台无商业关系；所有商标归各自所有者。</div>
 </footer>
 
-<script src="js/snapshot.js"></script>
-<script src="js/data.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

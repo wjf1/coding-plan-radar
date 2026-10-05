@@ -58,9 +58,20 @@ jobs:
           if node scripts/verify-listings.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: ⑥ 记录订阅计划价格历史快照 + 写入巡检日期
+        id: history
+        continue-on-error: true
         run: |
-          node scripts/record-history.mjs || echo "ok=false: record-history" >> "$GITHUB_OUTPUT"
+          # 旧写法把成败写成 `ok=false: record-history` 挂在一个没有 id 的步骤上，
+          # 既拿不到 outcome，也不会进下面的失败汇总——record-history 崩掉时
+          # 巡检会安静地少掉当天价格历史，而且流程仍然是绿的。
+          if node scripts/record-history.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
           echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/meta.json
+
+      - name: 校验数据与脚本（坏数据不进仓库）
+        id: validate
+        continue-on-error: true
+        run: |
+          if node scripts/validate.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: outcome 汇总
         id: outcomes
@@ -71,6 +82,8 @@ jobs:
           [ "${{ steps.feeds.outputs.ok }}" = "true" ] || fails="$fails feeds"
           [ "${{ steps.prices.outputs.ok }}" = "true" ] || fails="$fails prices"
           [ "${{ steps.listings.outputs.ok }}" = "true" ] || fails="$fails listings"
+          [ "${{ steps.history.outputs.ok }}" = "true" ] || fails="$fails history"
+          [ "${{ steps.validate.outputs.ok }}" = "true" ] || fails="$fails validate"
           if [ -n "$fails" ]; then
             echo "has_failure=true" >> "$GITHUB_OUTPUT"
             echo "failed_steps=$fails" >> "$GITHUB_OUTPUT"
@@ -146,6 +159,8 @@ jobs:
 
       - name: 提交并推送（触发 Pages 重新发布）
         id: commit
+        # 校验没过就不提交：宁可当天没有数据更新，也不要把坏数据推上线上
+        if: steps.validate.outputs.ok == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

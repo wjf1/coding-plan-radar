@@ -1,6 +1,6 @@
-// 每日任务①：从 models.dev 重新生成 js/snapshot.js（兜底快照，与线上实时数据同源）
+// 每日任务①：从 models.dev 重新生成 data/snapshot.json（兜底快照，与线上实时数据同源）
 // 由 .github/workflows/daily-update.yml 每天调度，也可手动运行：node scripts/update-snapshot.mjs
-import { writeFileSync } from "node:fs";
+import { writeJSON } from "./lib.mjs";
 
 const PROV = {
   anthropic:"Anthropic", openai:"OpenAI", google:"Google", zhipuai:"智谱", zai:"Z.ai",
@@ -36,6 +36,23 @@ const uniq = rows
   .sort((a,b) => a.o - b.o);
 
 const today = new Date().toISOString().slice(0,10);
-const banner = `// 内置兜底快照：models.dev 第一方供应商编码模型 API 价格（$/百万Token）\n// 快照日期 ${today}（GitHub Actions 每日自动重新生成）。实时数据拉取失败时使用。\n`;
-writeFileSync("js/snapshot.js", banner + "const MODEL_SNAPSHOT=" + JSON.stringify(uniq) + ";");
+
+// 快照是「models.dev 拉取失败时」的唯一兜底。它自己坏了，等于全站没有任何降级能力，
+// 而且坏了不会报错——页面只会安静地少掉一批模型。所以先校验再落盘：
+// 字段不完整或整体为空时直接抛错，宁可当天不更新快照，也不要把坏快照写进仓库。
+function validateSnapshot(models){
+  if(!Array.isArray(models)) throw new Error("快照必须是数组");
+  if(!models.length) throw new Error("快照为空（models.dev 可能改版，或返回了空数据）");
+  for(const m of models){
+    if(!m || !m.pid || !m.id || !m.n || !Number.isFinite(m.i) || !Number.isFinite(m.o))
+      throw new Error(`快照条目字段不完整：${JSON.stringify(m).slice(0,120)}`);
+  }
+  return models;
+}
+
+writeJSON("data/snapshot.json", {
+  generatedAt: today,
+  source: "https://models.dev/api.json",
+  models: validateSnapshot(uniq),
+});
 console.log(`snapshot: ${uniq.length} models, date ${today}`);

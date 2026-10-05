@@ -1,0 +1,51 @@
+[
+ {
+  "pid": "deepseek",
+  "match": "V4 Flash",
+  "label": "DeepSeek V4 Flash（经济档）",
+  "fIn": 0.15,
+  "fOut": 0.6
+ },
+ {
+  "pid": "zhipuai",
+  "match": "GLM-5.3",
+  "label": "GLM-5.3（中档）",
+  "fIn": 1.4,
+  "fOut": 4.4
+ },
+ {
+  "pid": "anthropic",
+  "match": "Claude Sonnet 5",
+  "label": "Claude Sonnet 5（高档）",
+  "fIn": 2,
+  "fOut": 10
+ },
+ {
+  "pid": "baidu",
+  "match": "ERNIE",
+  "label": "百度千帆 ERNIE 5.1（国产旗舰）",
+  "fIn": 4,
+  "fOut": 18
+ },
+ {
+  "pid": "tencent",
+  "match": "GLM-5.3-Flash",
+  "label": "腾讯云 GLM-5.3-Flash（经济档）",
+  "fIn": 0.8,
+  "fOut": 2.8
+ },
+ {
+  "pid": "iflytek",
+  "match": "Spark-X2.5",
+  "label": "讯飞星火 X2.5（国产旗舰）",
+  "fIn": 1.6,
+  "fOut": 6
+ },
+ {
+  "pid": "google",
+  "match": "Gemini 3.8 Flash",
+  "label": "Gemini 3.8 Flash（经济档）",
+  "fIn": 0.75,
+  "fOut": 3.75
+ }
+]

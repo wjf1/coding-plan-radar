@@ -51,14 +51,16 @@
 所有巡检步骤在**同一个 job 内顺序执行**（v6.2 修复：此前拆成并行 job 时各自 checkout 且无 artifact 传递，
 导致 `signals.json` 等产物连续 7 天未进仓库），每步独立记录成败，最后统一汇总、提交、开 issue：
 
-1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `js/snapshot.js` 兜底快照
+1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `data/snapshot.json` 兜底快照（落盘前做 schema 校验：条目缺字段或整体为空即报错退出——宁可当天不更新，也不让坏快照变成降级来源）
 2. **`scripts/check-pages.mjs`** —— 按 `data/sources.json` 对官方定价页/文档做内容哈希变动检测
    - 有变动 → 写入 `data/alerts.json` 并列入每日巡检 issue，待人工核价
    - 页面回到基线哈希时**自动 resolved**；抓取失败不再静默跳过，而是计入源健康
 3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/signals.json` 线索
 4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
 5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/freebies.json`）+ 促销条目到期自动标「已结束」
-6. **收尾**：`record-history.mjs` 记录价格历史快照 → 写入巡检日期 → 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
+6. **收尾**：`record-history.mjs` 记录价格历史快照（失败会进失败汇总并在 issue 中列出，不再静默跳过）→ 写入巡检日期 → **`validate.mjs` 校验数据契约与脚本语法** → 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
+
+任一步骤失败都会写进 `failed_steps` 并在 issue 中列出；**校验不通过则不提交** —— 坏数据宁可不上线，也不能推上生产页面。
 
 **诚实原则**：
 
@@ -75,7 +77,7 @@
 #### 处理「官方页变动」issue 的流程
 
 1. 打开 issue 中列出的官方页面，核对新价格 / 新额度
-2. 更新本地 `js/data.js` 对应平台条目（含新的采集日期）
+2. 更新本地 `data/plans.json` 中对应平台条目（含新的采集日期）
 3. 将 `data/alerts.json` 中该条目的 `"resolved": false` 改为 `true`（或等着它自动回滚解决）
 4. 提交推送，该条目从下一日的 issue 清单中消失
 
@@ -91,10 +93,15 @@
 ├── index.html              # 页面骨架（对比表 / Token 榜 / 计算器 / IDE 榜 / 白嫖 / 动态 / FAQ）
 ├── css/styles.css          # 全部样式（深色主题，无框架）
 ├── js/
-│   ├── data.js             # ⭐ 订阅计划数据 + IDE 表 + 站内变更记录（日常改这里）
-│   ├── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/对比/CSV/多语言/价格趋势/巡检）
-│   └── snapshot.js         # models.dev 兜底快照（每日自动重新生成，勿手改）
+│   └── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/对比/CSV/多语言/价格趋势/巡检）
 ├── data/
+│   ├── plans.json          # ⭐ 订阅计划数据（价格/档位/额度/坑点，日常改这里；含 rate 与字段说明）
+│   ├── calc-plans.json     # ⭐ 成本计算器的候选订阅（月费 + 折算额度）
+│   ├── calc-models.json    # ⭐ 计算器预设模型档位（实时价匹配不到时的内置价）
+│   ├── ide-plans.json      # ⭐ IDE / 编辑器订阅扩展榜
+│   ├── changelog.json      # ⭐ 站内「变更记录」板块（与 CHANGELOG.md 同步维护）
+│   ├── repos.json          # ⭐ 同类 GitHub 项目板块
+│   ├── snapshot.json       # models.dev 兜底快照（每日自动重新生成，勿手改）
 │   ├── sources.json        # ⭐ 信息源声明清单（唯一事实来源：URL / 分级 / 关键词 / 启用状态与原因）
 │   ├── promos.json         # 人工确认的促销 / 停售记录（驱动「市场动态」时间线；到期自动标「已结束」）
 │   ├── freebies.json       # 白嫖 / 免费额度条目（每日自动核对来源页，status / lastChecked 脚本维护）
@@ -114,10 +121,13 @@
 │   ├── diff-prices.mjs     # 价格库与免费模型差异检测
 │   ├── verify-listings.mjs # 白嫖额度来源页每日核对 + 促销到期自动归档
 │   ├── record-history.mjs  # 记录每日起步价快照（90 天滚动）+ 调价告警
+│   ├── validate.mjs        # 数据契约 + 脚本语法校验（CI 与本地共用，坏数据不进仓库）
 │   └── publish-via-api.mjs # 走 GitHub API 发布（github.com 被阻断时替代 git push）
+├── tests/selfcheck.mjs     # 零依赖自检（Node 内建 node:test）：纯函数 / 原子写入 / 幂等性 / 校验负向用例
 ├── docs/screenshots/       # README 配图
 └── .github/workflows/
-    └── daily-update.yml    # 定时任务（cron 09:00 北京时间，可手动触发）
+    ├── daily-update.yml    # 定时任务（cron 09:00 北京时间，可手动触发）
+    └── validate.yml        # push / PR 时校验数据契约与脚本语法
 ```
 
 ### 🚀 本地运行与部署
@@ -133,13 +143,28 @@ git add . && git commit -m "update: ..." && git push   # Pages 自动重新发�
 # 若所在网络阻断了 github.com 的 HTTPS（git push 报 connection reset），改用 API 发布：
 node scripts/publish-via-api.mjs "update: ..."         # 需要 GITHUB_TOKEN 或已登录的 gh CLI
 
+# 校验数据与脚本（改完 data/*.json 先跑这个）
+node scripts/validate.mjs
+
+# 零依赖自检（Node 内建 node:test，无需 npm install）
+node tests/selfcheck.mjs
+
 # 手动跑一次完整巡检
 node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
   && node scripts/fetch-feeds.mjs && node scripts/diff-prices.mjs \
   && node scripts/verify-listings.mjs && node scripts/record-history.mjs
 ```
 
-无构建步骤、零 npm 依赖（含 RSS 解析，未引入 YAML / XML 库）、纯静态 —— fork 后开启 Pages 即可获得自己的实例。
+无构建步骤、零 npm 依赖（含 RSS 解析与测试，未引入 YAML / XML 库或测试框架）、纯静态 —— fork 后开启 Pages 即可获得自己的实例。
+
+> ⚠️ 页面数据全部通过 `fetch` 读取 `data/*.json`，**必须经 HTTP 打开**（`file://` 下会被 CORS 拦截，页面只剩空壳）。本地预览请用上面的 `python -m http.server` / `npx serve`。
+
+### 🔒 安全与数据可靠性
+
+- **外部数据一律转义**：所有写进页面的第三方内容（models.dev 返回的模型名、RSS 线索、人工录入的链接）都经过 `esc()`；`href` 再加一层 `safeHref()`，只放行 `http(s)`，`javascript:` 等协议降级为不可点击的 `#`
+- **CSV 公式注入防护**：导出 CSV 时对以 `=` `+` `-` `@` 开头的单元格前置单引号，避免在 Excel / WPS 打开时被当作公式执行
+- **原子写入**：所有 `data/*.json` 经 `.tmp` + `rename` 落盘。写入中途被杀不会留下半截 JSON——而半截 JSON 会被读取容错当成「文件不存在」，等于静默清空整块数据
+- **降级可控**：models.dev 超过 5 秒一律判为不可用并降级到内置快照，不让第三方接口拖住首屏；降级提示会显示快照的真实生成日期
 
 > 注：`data/sources.json` 里的社区源（LINUX DO / V2EX 等）在中国大陆线路不可达，只在 GitHub Actions
 > 的海外出口能抓到；本地跑时它们会正常报失败并记录到 `sourcehealth.json`，这属预期行为。
@@ -233,14 +258,16 @@ All inspection steps run **sequentially inside a single job** (fixed in v6.2: th
 checked out their own copy with no artifact passing, so `signals.json` and friends went unpublished for 7 days).
 Each step records its own success/failure; at the end everything is summarized, committed and turned into an issue:
 
-1. **`scripts/update-snapshot.mjs`** — refetch models.dev and regenerate the `js/snapshot.js` fallback snapshot
+1. **`scripts/update-snapshot.mjs`** — refetch models.dev and regenerate the `data/snapshot.json` fallback snapshot (schema-validated before writing: missing fields or an empty snapshot abort the step — better a stale fallback than a broken one)
 2. **`scripts/check-pages.mjs`** — content-hash change detection on official pricing/documentation pages, driven by `data/sources.json`
    - On change → write to `data/alerts.json` and list it in the daily inspection issue for manual price verification
    - Auto-resolves when a page returns to its baseline hash; fetch failures are no longer silently skipped — they count against source health
 3. **`scripts/fetch-feeds.mjs`** — fetch official changelogs / status pages / community feeds and normalize them into leads in `data/signals.json`
 4. **`scripts/diff-prices.mjs`** — compare models.dev / OpenRouter / LiteLLM: price moves, free-model additions and removals, disagreements between price sources
 5. **`scripts/verify-listings.mjs`** — verify every freebie against its source page (five states written back to `data/freebies.json`: `ok` / `warn` / `stale` / `changed` / `manual`) and auto-mark expired promos as "ended"
-6. **Wrap-up**: `record-history.mjs` records price-history snapshots → write the inspection date → build the human review list (official page changes / new leads / freebie anomalies / promos that expired today, deduplicated into `data/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
+6. **Wrap-up**: `record-history.mjs` records price-history snapshots (a failure is now counted in the failure summary and listed in the issue instead of being silently skipped) → write the inspection date → **`validate.mjs` checks data contracts and script syntax** → build the human review list (official page changes / new leads / freebie anomalies / promos that expired today, deduplicated into `data/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
+
+Any failing step is recorded in `failed_steps` and listed in the issue; **if validation fails nothing is committed** — bad data must not reach the live page.
 
 **Honesty principles**
 
@@ -253,7 +280,7 @@ Each step records its own success/failure; at the end everything is summarized, 
 #### Handling a "official page changed" issue
 
 1. Open the official page listed in the issue and verify the new price / quota
-2. Update the matching platform entry in `js/data.js` (including a new collection date)
+2. Update the matching platform entry in `data/plans.json` (including a new collection date)
 3. Set `"resolved": false` to `true` in `data/alerts.json` for that entry (or wait for the automatic rollback to resolve it)
 4. Commit and push — the entry disappears from the next day's issue list
 
@@ -269,10 +296,15 @@ Each step records its own success/failure; at the end everything is summarized, 
 ├── index.html              # Page skeleton (comparison table / token board / calculator / IDE board / freebies / dynamics / FAQ)
 ├── css/styles.css          # All styling (dark theme, no framework)
 ├── js/
-│   ├── data.js             # ⭐ Subscription plan data + IDE table + in-site changelog (edit this day to day)
-│   ├── app.js              # Rendering and interaction (tables/cards/calculator/live board/compare/CSV/i18n/price trend/inspection)
-│   └── snapshot.js         # models.dev fallback snapshot (regenerated daily — do not edit by hand)
+│   └── app.js              # Rendering and interaction (tables/cards/calculator/live board/compare/CSV/i18n/price trend/inspection)
 ├── data/
+│   ├── plans.json          # ⭐ Subscription plan data (prices / tiers / quotas / pitfalls — edit this day to day; includes rate + field docs)
+│   ├── calc-plans.json     # ⭐ Candidate subscriptions for the cost calculator (monthly price + converted quota)
+│   ├── calc-models.json    # ⭐ Calculator model presets (built-in prices when live matching fails)
+│   ├── ide-plans.json      # ⭐ IDE / editor subscription board
+│   ├── changelog.json      # ⭐ In-site changelog section (kept in sync with CHANGELOG.md)
+│   ├── repos.json          # ⭐ Related GitHub projects section
+│   ├── snapshot.json       # models.dev fallback snapshot (regenerated daily — do not edit by hand)
 │   ├── sources.json        # ⭐ Source manifest (single source of truth: URLs / tiers / keywords / enabled state and reasons)
 │   ├── promos.json         # Human-confirmed promos and discontinuations (drives the "market dynamics" timeline; expired promos are auto-marked "ended")
 │   ├── freebies.json       # Free-tier / freebie entries (source pages verified daily; status / lastChecked are script-maintained)
@@ -292,10 +324,13 @@ Each step records its own success/failure; at the end everything is summarized, 
 │   ├── diff-prices.mjs     # Price-base and free-model diffing
 │   ├── verify-listings.mjs # Daily freebie source-page verification + auto-expiry of promos
 │   ├── record-history.mjs  # Record daily starting-price snapshots (90-day rolling) + price-change alerts
+│   ├── validate.mjs        # Data-contract + script syntax validation (used by CI and locally; keeps bad data out)
 │   └── publish-via-api.mjs # Publish through the GitHub API (fallback when github.com is blocked)
+├── tests/selfcheck.mjs     # Zero-dependency self-check (built-in node:test): pure helpers / atomic writes / idempotency / negative cases
 ├── docs/screenshots/       # README images
 └── .github/workflows/
-    └── daily-update.yml    # Scheduled job (cron 09:00 Beijing time, manually triggerable)
+    ├── daily-update.yml    # Scheduled job (cron 09:00 Beijing time, manually triggerable)
+    └── validate.yml        # Validates data contracts and script syntax on push / PR
 ```
 
 ### 🚀 Running and deploying locally
@@ -311,13 +346,28 @@ git add . && git commit -m "update: ..." && git push   # Pages redeploys automat
 # If your network blocks github.com over HTTPS (git push reports connection reset), publish via the API:
 node scripts/publish-via-api.mjs "update: ..."         # needs GITHUB_TOKEN or a logged-in gh CLI
 
+# Validate data and scripts (run this after editing data/*.json)
+node scripts/validate.mjs
+
+# Zero-dependency self-check (built-in node:test — no npm install)
+node tests/selfcheck.mjs
+
 # Run one full inspection by hand
 node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
   && node scripts/fetch-feeds.mjs && node scripts/diff-prices.mjs \
   && node scripts/verify-listings.mjs && node scripts/record-history.mjs
 ```
 
-No build step, zero npm dependencies (including the RSS parser — no YAML/XML library), purely static — fork it, enable Pages, and you have your own instance.
+No build step, zero npm dependencies (RSS parser and tests included — no YAML/XML library, no test framework), purely static — fork it, enable Pages, and you have your own instance.
+
+> ⚠️ All page data is loaded from `data/*.json` via `fetch`, so the site **must be opened over HTTP** (`file://` is blocked by CORS and you get an empty shell). Use `python -m http.server` / `npx serve` as shown above.
+
+### 🔒 Security and data reliability
+
+- **External data is always escaped**: everything third-party that reaches the DOM (model names from models.dev, RSS leads, hand-entered links) goes through `esc()`; `href` values additionally go through `safeHref()`, which only allows `http(s)` and downgrades `javascript:` and friends to a non-clickable `#`
+- **CSV formula-injection guard**: cells starting with `=` `+` `-` `@` get a leading apostrophe so Excel / WPS treat them as text instead of executing them
+- **Atomic writes**: every `data/*.json` is written to `.tmp` and then `rename`d. A process killed mid-write can no longer leave a truncated JSON file — and a truncated file is silently treated as "missing" by the read fallback, which would wipe that block of data
+- **Bounded degradation**: models.dev is considered unavailable after 5 seconds and the built-in snapshot takes over, so a stuck third party cannot hold up the first paint; the fallback banner shows the snapshot's real generation date
 
 > Note: the community sources in `data/sources.json` (LINUX DO / V2EX and friends) are unreachable from mainland
 > China routes and can only be fetched from GitHub Actions' overseas egress. Running locally, they will report

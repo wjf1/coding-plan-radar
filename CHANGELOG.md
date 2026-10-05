@@ -1,17 +1,54 @@
 # 变更记录 / Changelog
 
-本文件记录 CodingPlan Radar 的版本变更。站点内的「本站变更记录」板块（`js/data.js` 的 `CHANGELOG` 数组）
+本文件记录 CodingPlan Radar 的版本变更。站点内的「本站变更记录」板块（`data/changelog.json`）
 是本文件的精简子集，两者需同步维护。
 
 日期均为北京时间。数据类变更（每日自动巡检提交）不在本文件逐条记录，只记录代码与内容层面的版本变更。
 
 
-## [v6.2] - 2026-09-30
+## [v7.0] - 2026-10-05
 
-**动态性修复（4 项）** —— 修复两块界面"静态化"的根因并移除首页横幅区。
+**安全边界、数据写入可靠性与巡检可见性（14 项）** —— 把第三方数据的安全边界、数据文件的写入可靠性，
+以及几处「出错了但没人知道」的静默路径一次性补齐。仓库仍保持无构建、零 npm 依赖。
+
+### 安全加固
 
 | # | 项目 | 说明 |
-|
+|---|---|---|
+| 1 | Token 榜 XSS | `renderTokens()` 把 models.dev 返回的模型名 / ID / 厂商直接插入 `innerHTML`，未转义——这是全站唯一「第三方不可信数据进 DOM」的路径。三个字段全部过 `esc()` |
+| 2 | 链接协议校验 | `esc()` 只处理 `&<>"`，挡不住 `javascript:`。新增 `safeHref()`：所有动态 `href`（对比表 / 详情卡片 / 同类项目 / 促销 / 白嫖 / 线索 / 榜单）只放行 `http(s)`，其余降级为不可点击的 `#` |
+| 3 | 全站转义补齐 | 对比表、详情卡片、IDE 榜、变更记录、同类项目中的平台名 / 厂商 / 档位 / 额度 / 坑点等字段统一过 `esc()` |
+| 4 | CSV 公式注入 | 导出 CSV 时对以 `=` `+` `-` `@` 开头的单元格前置单引号，避免在 Excel / WPS 打开时被当作公式执行（`=HYPERLINK(...)` 可在打开表格时外发本机数据） |
+
+### 数据可靠性
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 5 | 原子写入 | `lib.mjs` 的 `writeJSON` 改为 `.tmp` + `rename`。原先直接 `writeFileSync` 会先截断目标文件，进程中途被杀即留下半截 JSON；而 `readJSON` 的容错会把损坏文件当成「不存在」并回落默认值——等于静默清空整库数据。所有脚本（含 `update-snapshot`、`publish-via-api`）一并受益 |
+| 6 | 快照 schema 校验 | `update-snapshot.mjs` 落盘前校验：条目缺 `pid/id/n`、价格非数字、或整体为空时直接抛错退出。快照是 models.dev 失败时的唯一兜底，坏快照比旧快照更危险 |
+| 7 | 快速降级 | models.dev 拉取加 5 秒 `AbortSignal.timeout`，超时即降级到内置快照，不再让第三方接口拖住首屏 |
+| 8 | 降级提示日期 | 兜底提示原先把快照日期硬编码为「2026-09-13」，与每日重新生成的快照不符。现读 `data/snapshot.json` 的 `generatedAt` 显示真实日期 |
+| 9 | 巡检失败可见 | `record-history` 的失败原先被写成 `ok=false: record-history` 挂在一个没有 `id` 的步骤上，既拿不到 outcome、也不进失败汇总——它崩掉时巡检会安静地少掉当天价格历史，而流程仍然是绿的。现纳入 `failed_steps` 并开 issue |
+
+### 数据结构重构
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 10 | 数据 JSON 化 | `js/data.js`（订阅计划 / 计算器 / IDE 榜 / 变更记录 / 同类项目）拆为 `data/plans.json`、`calc-plans.json`、`calc-models.json`、`ide-plans.json`、`changelog.json`、`repos.json`；`js/snapshot.js` 改为 `data/snapshot.json`。两个 JS 数据文件已删除 |
+| 11 | 移除 Node 侧 hack | `record-history.mjs` 原先靠 `require("../js/data.js")` 执行浏览器脚本、再读 `globalThis._CP_EXPORT` 取数据（因为 JS 对象字面量无法 `JSON.parse`）。该 hack 只要 data.js 引入任何 ESM 语法就会崩，并连带打断整个每日巡检。现改为直接读 JSON，浏览器与脚本共用同一份来源 |
+| 12 | 前端异步加载 | `app.js` 改为并行 `fetch` 六个数据文件后再首屏渲染；单个文件失败只让对应板块为空，不拖垮整页 |
+
+### 质量保障
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 13 | 数据契约校验 | 新增 `scripts/validate.mjs`：校验 19 个 `data/*.json` 的语法与契约（计划条目必填字段与名称唯一性、快照非空且字段完整、价格历史结构、`meta.json` 日期格式等）+ 对所有脚本与 `app.js` 跑 `node --check`。已接入 `daily-update.yml` 作为提交前闸门（**校验不通过则不提交**），并新增 `validate.yml` 在 push / PR 时运行 |
+| 14 | 零依赖自检 | 新增 `tests/selfcheck.mjs`（Node 内建 `node:test`，不引入测试框架）：15 个用例覆盖哈希 / 关键词匹配 / 文本清洗 / RSS 解析、原子写入不残留 `.tmp`、`record-history` 同一天连跑两次字节级不变、以及 `validate.mjs` 的四类负向用例（坏 JSON / 空快照 / 缺字段 / 语法错误） |
+
+**行为变化提示**：页面数据改为 `fetch` 读取 `data/*.json`，用 `file://` 直接打开将只剩空壳——本地预览必须走 HTTP（`python -m http.server` 或 `npx serve`）。
+
+---
+
 ## [v6.3] - 2026-09-30
 
 **排版与本地化（3 项）**
@@ -23,7 +60,13 @@
 | 3 | 数据源头清理 | fetch-feeds 入库时即解码实体并清理尾巴（lib.mjs excerpt 管道），新旧数据渲染一致 |
 
 ---
-|---|---|
+
+## [v6.2] - 2026-09-30
+
+**动态性修复（4 项）** —— 修复两块界面「静态化」的根因并移除首页横幅区。
+
+| # | 项目 | 说明 |
+|---|---|---|
 | 1 | 每日巡检产物丢失修复 | v4 合入时 workflow 拆成 4 个并行 job：各自 checkout、无 artifact 传递，publish 再 checkout 拿不到前序产物——signals.json / sourcehealth.json / alerts.json / snapshot.js 自 09-24 起连续 7 天停更（每日提交只剩 meta.json + price-history.json）。现合并回**单 job 顺序执行**，每步独立记录成败并汇总 |
 | 2 | 白嫖/免费额度每日自动核对 | 新增 scripts/verify-listings.mjs：逐条抓取来源页 → ok（正常）/ warn（本次抓取失败，观察中）/ stale（连续 ≥3 天失败）/ changed（特征关键词消失）/ manual（JS 空壳等不可自动核对，如实标注）。核对徽标与日期显示在每张卡片上；异常条目写入每日巡检 issue |
 | 3 | 市场动态时间线动态化 | 到期促销自动标记「已结束」（expired）并沉底，不再挂着"促销中"；signals.json 官方源线索按日期混入时间线（虚线框 + 「待人工确认」标注），核实后才写入价格表——时间线每天随巡检更新 |
@@ -32,7 +75,6 @@
 数据文件的连带变更：freebies.json 每条新增 status / lastChecked 字段（脚本自动维护），CodeBuddy 条目标记 autoCheck:false；promos.json 中 OpenCode Go 活动已自动标记过期。
 
 ---
-
 
 ## [v6] - 2026-09-23
 

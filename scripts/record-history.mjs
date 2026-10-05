@@ -1,9 +1,10 @@
 // 每日任务：记录订阅计划价格历史快照
-//   1. 读取 js/data.js 提取 PLAN_DATA 起步价
+//   1. 读取 data/plans.json 提取起步价
 //   2. 追加到 data/price-history.json（按日期为 key）
 //   3. 对比昨日价格，如有变动生成 alert 进 data/alerts.json
 //   4. 保留最近 90 天，超出裁剪
-import { createRequire } from "node:module";
+// 幂等性：历史按日期为 key 覆盖写；告警按 `price:<平台>:<日期>` 去重，
+// 因此同一天重复运行不会产生重复记录或重复告警。
 import { readJSON, writeJSON, today } from "./lib.mjs";
 
 const d = today();
@@ -11,14 +12,13 @@ const HISTORY_PATH = "data/price-history.json";
 const ALERTS_PATH = "data/alerts.json";
 const RETENTION_DAYS = 90;
 
-// 读取 PLAN_DATA：走 js/data.js 自己暴露的 _CP_EXPORT 扩展点。
-// 该文件里是 JS 对象字面量（键名不带引号），不能直接 JSON.parse；
-// 正则截取 + JSON.parse 会在第一个键名处抛 SyntaxError 并让整个 publish 作业失败，
-// 用 require 执行后取值既不做字符串求值，也不受键名写法影响。
-const require = createRequire(import.meta.url);
-require("../js/data.js");
-const PLAN_DATA = globalThis._CP_EXPORT?.PLAN_DATA;
-if (!Array.isArray(PLAN_DATA)) throw new Error("js/data.js 未导出 PLAN_DATA（_CP_EXPORT 缺失）");
+// 直接读 JSON：与浏览器同一份数据源（data/plans.json）。
+// 旧实现靠 `require("../js/data.js")` 执行浏览器脚本、再读它挂在 globalThis 上的 _CP_EXPORT，
+// 只要该文件引入任何 ESM 语法这一步就会抛错，并连带打断整个每日巡检。
+const PLAN_DATA = readJSON("data/plans.json", { plans: [] }).plans;
+if (!Array.isArray(PLAN_DATA) || !PLAN_DATA.length) {
+  throw new Error("data/plans.json 未读到价格数据（plans 缺失或为空）");
+}
 
 // 读取现有历史
 const hist = readJSON(HISTORY_PATH, { updatedAt: null, history: {} });

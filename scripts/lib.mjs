@@ -1,6 +1,6 @@
 // 公用工具：带 UA/超时的抓取、JSON 读写、源健康记录
 // 所有脚本共用，保证「源失效不再静默」这一条在所有管道里一致生效。
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, renameSync, unlinkSync } from "node:fs";
 import { dirname } from "node:path";
 
 export const UA =
@@ -19,7 +19,24 @@ export const readJSON = (p, fallback) => {
 
 export const writeJSON = (p, obj) => {
   mkdirSync(dirname(p), { recursive: true });
-  writeFileSync(p, JSON.stringify(obj, null, 1) + "\n");
+  writeFileAtomic(p, JSON.stringify(obj, null, 1) + "\n");
+};
+
+/** 原子写入：先写同目录 .tmp，再 rename 覆盖目标。
+ *  writeFileSync 会先截断目标文件，进程若在写入中途退出（Actions 取消、超时、磁盘满），
+ *  仓库里就留下半截 JSON；而 readJSON 的容错会把损坏文件当成「不存在」并回落到默认值，
+ *  等于整库数据被静默清空。rename 在同一文件系统内是原子的，读到的只可能是完整的新版或旧版。 */
+export const writeFileAtomic = (p, text) => {
+  const tmp = `${p}.tmp`;
+  try {
+    writeFileSync(tmp, text);
+    renameSync(tmp, p);
+  } catch (e) {
+    try {
+      if (existsSync(tmp)) unlinkSync(tmp);
+    } catch {}
+    throw e;
+  }
 };
 
 /** 抓取文本；失败抛出带可读信息的错误，绝不返回空字符串让人误以为成功 */

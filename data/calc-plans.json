@@ -1,0 +1,50 @@
+[
+ {
+  "name": "MiniMax Plus",
+  "price": 49,
+  "quota": 2400000000,
+  "note": "24 亿 tokens/月（社区折算）"
+ },
+ {
+  "name": "Claude Pro",
+  "price": 144,
+  "quota": 1590000000,
+  "note": "≈15.9 亿 tokens/月（社区折算）"
+ },
+ {
+  "name": "Kimi Allegretto",
+  "price": 199,
+  "quota": 1428000000,
+  "note": "14.28 亿 tokens/月"
+ },
+ {
+  "name": "火山 Lite（刊例）",
+  "price": 40,
+  "quota": 320000000,
+  "note": "3.2 亿 tokens/月"
+ },
+ {
+  "name": "ChatGPT Plus",
+  "price": 144,
+  "quota": 616000000,
+  "note": "≈6.16 亿 tokens/月（社区折算）"
+ },
+ {
+  "name": "Kimi Andante",
+  "price": 49,
+  "quota": 84000000,
+  "note": "8400 万 tokens/月"
+ },
+ {
+  "name": "OpenCode Go",
+  "price": 72,
+  "quota": null,
+  "note": "月 $60 API 额度"
+ },
+ {
+  "name": "Cursor Pro",
+  "price": 144,
+  "quota": null,
+  "note": "$20 模型用量 + 后付"
+ }
+]

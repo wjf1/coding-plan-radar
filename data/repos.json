@@ -1,0 +1,44 @@
+[
+ {
+  "name": "mahonzhan/awesome-coding-plan",
+  "desc": "各厂家 Coding Plan 实际价值对比：额度价值 / 三周期额度倍率 / TPS 实测 / IDE Plan 表 / 能力测试。本站倍率、速度与坑点数据的方法论来源（2857★，2026-09-01 更新）",
+  "stars": "活跃维护 · 2857★",
+  "url": "https://github.com/mahonzhan/awesome-coding-plan",
+  "tag": "方法论 + 数据"
+ },
+ {
+  "name": "sst/models.dev",
+  "desc": "开源模型数据库，含 800+ 供应商、每百万 Token 的 API 价格、上下文窗口；本站「Token 实时价格榜」的数据源",
+  "stars": "实时更新",
+  "url": "https://github.com/sst/models.dev",
+  "tag": "实时数据源"
+ },
+ {
+  "name": "wmpeng/codingplan",
+  "desc": "国内主流 AI 平台 Coding Plan 对比（智谱 / Kimi / MiniMax 等），覆盖 Agent 高强度编码场景",
+  "stars": "社区维护",
+  "url": "https://github.com/wmpeng/codingplan",
+  "tag": "参考"
+ },
+ {
+  "name": "berriai/litellm",
+  "desc": "LLM 网关，其 model_prices_and_context_window.json 是业界常用的模型价格实时数据源（3900+ 模型），可作 models.dev 的交叉校验源",
+  "stars": "42k+ stars 生态",
+  "url": "https://raw.githubusercontent.com/berriai/litellm/main/model_prices_and_context_window.json",
+  "tag": "备用数据源"
+ },
+ {
+  "name": "mnfst/awesome-free-llm-apis",
+  "desc": "「永久免费」LLM API 清单，本站「白嫖 / 免费额度」板块的参考来源之一；仓库 README 的提交变更被用作免费额度变动的事件流",
+  "stars": "7601★ · CC0",
+  "url": "https://github.com/mnfst/awesome-free-llm-apis",
+  "tag": "白嫖参考"
+ },
+ {
+  "name": "open-free-llm-api/awesome-freellm-apis",
+  "desc": "134+ 免费 API 汇总，含 Claude Code / Cursor / Codex 的一键配置思路，更新频繁（MIT 许可，可安全引用）",
+  "stars": "2985★ · 活跃更新",
+  "url": "https://github.com/open-free-llm-api/awesome-freellm-apis",
+  "tag": "白嫖参考"
+ }
+]

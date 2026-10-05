@@ -1,0 +1,25 @@
+name: validate
+
+# 数据与脚本的校验闸门：任何 push / PR 都跑一遍 node scripts/validate.mjs
+# 站点内容全部由 data/*.json 驱动，而这些文件既有人工编辑、也有每日自动巡检写入；
+# 这里挡住的正是「一个逗号或一次写坏的文件被直接推上线」这类问题（零依赖，不需要 npm install）。
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: 数据契约与脚本语法校验
+        run: node scripts/validate.mjs
+      - name: 自检（纯函数 / 原子写入 / 幂等性 / 校验脚本负向用例）
+        run: node tests/selfcheck.mjs
