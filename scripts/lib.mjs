@@ -119,7 +119,7 @@ export function saveHealth(health, sources = null) {
 /** 删除健康表中已不在启用清单里的源 */
 export function pruneHealth(health, sources) {
   const active = new Set(
-    ["feeds", "pages", "apis"].flatMap((k) =>
+    ["feeds", "pages", "lists", "apis"].flatMap((k) =>
       (sources[k] || []).filter((s) => s.enabled !== false).map((s) => s.id)
     )
   );
@@ -154,7 +154,7 @@ const stripFeedTail = (s) =>
     .trim();
 
 /** 解码 HTML 命名/数字实体（&#8230; / &hellip; 等），未识别的实体替换为空格 */
-const decodeEntities = (s) =>
+export const decodeEntities = (s) =>
   String(s || "")
     .replace(/&#x([0-9a-f]+);/gi, (_, n) => {
       try { return String.fromCodePoint(parseInt(n, 16)); } catch { return " "; }
@@ -238,3 +238,210 @@ export function compileMatcher(keywords, excludeKeywords) {
       })();
   return (text) => include(text) && !exclude(text);
 }
+
+/* ---------------- 极简 HTML 条目抽取（零依赖，type=list 页面源专用，v7.3） ----------------
+ * 动机：整页哈希只能得出「这个 800KB 页面变了」，然后人工上去找哪一行变了；
+ * 条目级抽取直接给出「哪个档位的哪个字段从什么变成了什么」（借鉴 AIHOT web_list 的思路，
+ * 但选择器引擎是本仓库自己的零依赖实现，只支持一个克制的子集）。
+ *
+ * 支持的选择器语法（超出即抛错——宁可不解析，也不静默错抓）：
+ *   单级：tag / .class / #id / tag.class#id 任意组合，可加 :nth(k) 后缀取第 k 个匹配（k 从 1 起）
+ *   路径：「A B C」最多三级的后代路径，用于先定位容器再取行（如 table:nth(1) tbody tr）
+ *   四级及以上、逗号分组、属性选择器等一律不支持，parseSimpleSelector 会抛错。
+ */
+
+const VOID_ELEMENTS = new Set([
+  "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr",
+]);
+// 与 stripTags 一致：script/style 内容整体丢弃，里面的 <div 等假标签不参与配对
+const SCRIPT_STYLE_RE = /<(script|style)\b[\s\S]*?<\/\1\s*>/gi;
+// 统一的标签 token：注释/CDATA 整体吞掉；闭合标签走 g1；开放标签走 g2(名) g3(属性) g4(自闭合)
+const TOKEN_SRC =
+  String.raw`<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\/([a-zA-Z][a-zA-Z0-9-]*)[^>]*>` +
+  String.raw`|<([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*?)(\/?)>`;
+const tokenRe = () => new RegExp(TOKEN_SRC, "g");
+
+/** 解析单级选择器；语法非法直接抛错，调用方（probe / 校验）据此拒绝，绝不静默降级 */
+export function parseSimpleSelector(sel) {
+  const s = String(sel ?? "").trim();
+  const m = /^(.+?)(?::nth\((\d+)\))?$/.exec(s);
+  if (!m) throw new Error(`无法解析选择器：${s}`);
+  const nth = m[2] !== undefined ? parseInt(m[2], 10) : null;
+  if (nth !== null && (!Number.isInteger(nth) || nth < 1)) {
+    throw new Error(`:nth(k) 的 k 必须是 ≥1 的整数：${s}`);
+  }
+  const base = m[1];
+  const part = /^([a-zA-Z][a-zA-Z0-9-]*)?((?:[.#][a-zA-Z0-9_-]+)*)$/.exec(base);
+  if (!part || (!part[1] && !part[2])) {
+    throw new Error(`不支持的选择器语法：${s}（仅支持 tag/.class/#id 组合，可加 :nth(k)）`);
+  }
+  const out = { tag: part[1] ? part[1].toLowerCase() : null, id: null, classes: [], nth };
+  for (const am of (part[2] || "").matchAll(/([.#])([a-zA-Z0-9_-]+)/g)) {
+    if (am[1] === "#") {
+      if (out.id) throw new Error(`选择器出现多个 #id：${s}`);
+      out.id = am[2];
+    } else out.classes.push(am[2]);
+  }
+  return out;
+}
+
+/** 开始标签（名 + 属性串）是否命中单级选择器 */
+function tagMatches(name, attrs, sel) {
+  if (sel.tag && name !== sel.tag) return false;
+  if (sel.id || sel.classes.length) {
+    const classM = /(?:\s|^)class\s*=\s*(?:"([^"]*)"|'([^']*)'|(\S+))/.exec(attrs);
+    const classList = (classM ? (classM[1] ?? classM[2] ?? classM[3] ?? "") : "").split(/\s+/).filter(Boolean);
+    for (const c of sel.classes) if (!classList.includes(c)) return false;
+    if (sel.id) {
+      const idM = /(?:\s|^)id\s*=\s*(?:"([^"]*)"|'([^']*)'|(\S+))/.exec(attrs);
+      const elId = idM ? (idM[1] ?? idM[2] ?? idM[3] ?? "") : "";
+      if (elId !== sel.id) return false;
+    }
+  }
+  return true;
+}
+
+/** 从 from 起为 openName 找配对的闭合标签；HTML 容错（ stray 闭合忽略、未闭合的中间标签弹栈） */
+function findClosingTag(html, from, openName) {
+  const re = tokenRe();
+  re.lastIndex = from;
+  const stack = [openName];
+  let m;
+  while ((m = re.exec(html))) {
+    if (m[1] !== undefined) {
+      const closeName = m[1].toLowerCase();
+      const idx = stack.lastIndexOf(closeName);
+      if (idx >= 0) {
+        stack.length = idx;
+        if (!stack.length) return m.index;
+      }
+    } else if (m[2]) {
+      const name = m[2].toLowerCase();
+      if (!VOID_ELEMENTS.has(name) && m[4] !== "/") stack.push(name);
+    }
+  }
+  return -1;
+}
+
+/** 在单级选择器下找所有匹配元素，返回 innerHTML 数组；已先剥离 script/style/注释/CDATA */
+function matchBlocksOnce(html, sel) {
+  const out = [];
+  const re = tokenRe();
+  let m;
+  while ((m = re.exec(html))) {
+    if (m[1] !== undefined || !m[2]) continue; // 闭合 / 注释 / CDATA
+    const name = m[2].toLowerCase();
+    if (!tagMatches(name, m[3] || "", sel)) continue;
+    if (VOID_ELEMENTS.has(name) || m[4] === "/") { out.push(""); continue; }
+    const innerStart = m.index + m[0].length;
+    const closeIdx = findClosingTag(html, innerStart, name);
+    if (closeIdx < 0) continue; // 未闭合的残缺标签不猜，跳过
+    out.push(html.slice(innerStart, closeIdx));
+  }
+  return out;
+}
+
+/** 去掉 script/style/注释/CDATA —— 后续配对与抽取只看真实 DOM 文本 */
+const cleanHtml = (html) =>
+  String(html || "")
+    .replace(SCRIPT_STYLE_RE, " ")
+    .replace(/<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>/g, " ");
+
+/** 按选择器（单级或「A B」两级路径）取所有匹配元素的 innerHTML；匹配不到返回 [] */
+export function matchBlocks(html, selector) {
+  const parts = String(selector ?? "").trim().split(/\s+/);
+  if (parts.length > 3) throw new Error(`选择器最多三级（A B C）：${selector}`);
+  let scopes = [cleanHtml(html)];
+  for (const part of parts) {
+    if (!part) continue;
+    const sel = parseSimpleSelector(part);
+    const next = [];
+    for (const scope of scopes) {
+      let blocks = matchBlocksOnce(scope, sel);
+      if (sel.nth !== null) blocks = blocks.slice(sel.nth - 1, sel.nth);
+      next.push(...blocks);
+    }
+    scopes = next;
+    if (!scopes.length) break;
+  }
+  return scopes;
+}
+
+/** 块内文本：块级标签折叠为空格、内联标签直接剥掉（「¥<b>19</b>.9」→「¥19.9」）、实体解码 */
+const BLOCK_TAG_RE =
+  /<\/?(?:div|p|section|article|header|footer|main|nav|aside|li|ul|ol|tr|table|thead|tbody|tfoot|h[1-6]|br|hr|blockquote|pre|figure|figcaption|form|label|dl|dt|dd|th|td|caption|summary|details)\b[^>]*>/gi;
+export const fieldText = (html) => {
+  const t = String(html || "")
+    .replace(SCRIPT_STYLE_RE, " ")
+    .replace(BLOCK_TAG_RE, " ")
+    .replace(/<[^>]+>/g, "");
+  return decodeEntities(t).replace(/\s+/g, " ").trim();
+};
+
+/** 按 list 源配置抽取条目数组；itemSelector 匹配不到时返回 []（建基线还是报警由调用方决定，这里绝不猜） */
+export function parseListItems(html, cfg) {
+  const rows = matchBlocks(html, cfg.itemSelector);
+  const fieldKeys = Object.keys(cfg.fields || {});
+  if (!fieldKeys.length) throw new Error(`list 源 ${cfg.id || "（无 id）"} 未配置 fields`);
+  return rows.map((row, i) => {
+    const it = { __index: i };
+    for (const k of fieldKeys) it[k] = pickText(row, cfg.fields[k]);
+    return it;
+  });
+}
+
+export const pickText = (blockHtml, selector) => {
+  const blocks = matchBlocks(blockHtml, selector);
+  return blocks.length ? fieldText(blocks[0]) : "";
+};
+
+const clipChange = (s) => {
+  s = String(s ?? "");
+  return s.length > 120 ? s.slice(0, 119) + "…" : s;
+};
+
+/** 条目级 diff：字段值变化逐条列出，条目增删记为 __entry__；keyField 取条目主键（缺省 name），
+ *  同 key 多次出现按出现次序 #2/#3 区分。返回 [] 表示无变化。from/to 各截断 120 字符防 issue 刷屏。 */
+export function diffListChanges(baseItems, curItems, keyField = "name") {
+  const keyOf = (it, n) => (String(it?.[keyField] ?? "").trim() || `#${n + 1}`);
+  const keyed = (items) => {
+    const map = new Map();
+    const count = new Map();
+    items.forEach((it, i) => {
+      const k0 = keyOf(it, i);
+      const c = (count.get(k0) || 0) + 1;
+      count.set(k0, c);
+      map.set(c > 1 ? `${k0}#${c}` : k0, it);
+    });
+    return map;
+  };
+  const base = keyed(baseItems || []);
+  const cur = keyed(curItems || []);
+  const changes = [];
+  for (const [k, it] of cur) {
+    const prev = base.get(k);
+    if (!prev) { changes.push({ item: clipChange(k), field: "__entry__", from: null, to: "新增条目" }); continue; }
+    for (const f of Object.keys(it)) {
+      if (f === "__index") continue;
+      const a = String(prev[f] ?? "");
+      const b = String(it[f] ?? "");
+      if (a !== b) changes.push({ item: clipChange(k), field: f, from: clipChange(a), to: clipChange(b) });
+    }
+  }
+  for (const k of base.keys()) {
+    if (!cur.has(k)) changes.push({ item: clipChange(k), field: "__entry__", from: "已移除", to: null });
+  }
+  return changes;
+}
+
+/** 结构变更熔断：解析出 0 条，或（基线条目足够多时）过半条目变动——多半是页面改版而非数据变化，
+ *  此时逐字段 changes 没有意义，应整页告警等人工核对，且不更新基线（防把坏结构固化成新基线）。 */
+export function isStructuralBreakdown(changes, curCount, baseCount) {
+  if (baseCount > 0 && curCount === 0) return true;
+  if (baseCount >= 4 && curCount > 0 && changes.length) {
+    const touched = new Set(changes.map((c) => c.item)).size;
+    if (touched / curCount > 0.5) return true;
+  }
+  return false;
+}
+

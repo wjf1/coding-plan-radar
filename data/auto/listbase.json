@@ -1,0 +1,25 @@
+{
+ "glm": {
+  "items": [
+   {
+    "__index": 0,
+    "name": "Lite 套餐",
+    "quota5h": "2,000",
+    "quotaWeek": "10,000"
+   },
+   {
+    "__index": 1,
+    "name": "Pro 套餐",
+    "quota5h": "12,000",
+    "quotaWeek": "60,000"
+   },
+   {
+    "__index": 2,
+    "name": "Max 套餐",
+    "quota5h": "28,000",
+    "quotaWeek": "140,000"
+   }
+  ],
+  "since": "2026-10-06"
+ }
+}

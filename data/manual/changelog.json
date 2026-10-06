@@ -1,5 +1,10 @@
 [
  {
+  "date": "2026-10-06",
+  "v": "v7.3",
+  "text": "信息源采集层升级——官方页告警从「页面变了」升级为「哪个档位的哪个字段从什么变成了什么」：① sources.json 新增 lists 数组（条目级监控源声明），GLM Coding Plan 文档页率先从整页哈希迁移为条目级比对，此后该页任何无关改动不再报警，只有套餐表的 5 小时/每周积分字段变化才告警，且直接给出档位与前后值；② lib.mjs 新增零依赖极简 HTML 条目抽取引擎（tag/.class/#id + :nth(k) 后缀 + 最多三级后代路径，语法超出子集直接抛错）；③ check-pages.mjs 双通道并行：page 源沿用整页哈希，list 源走条目 diff，共用反爬检测/二次确认/auto-revert/源健康机制，另设两道保护——解析出 0 条绝不建基线（选择器失效不发言）、条目骤变按结构变更熔断（只提醒核对选择器、不更新基线，防止改版页面被固化成新基线）；④ 新增 probe-source.mjs 试抓预览（借鉴 AIHOT「先预览再创建」），改动选择器前必跑，解析 0 条即报错退出；⑤ 巡检 issue 对 list 告警逐行列出字段级变更明细；⑥ validate.mjs 新增 sources.json 契约（id 跨数组查重 / tier 白名单 / selector 语法），selfcheck 15 → 24 例。开发中由端到端验证抓住并修复两个缺陷：结构变更分支曾漏写旧基线回盘（熔断反而会固化坏结构）、跨类型 alert 复用曾致 kind/changes 错乱。验证：validate 通过、selfcheck 24/24、probe 实测智谱 3 档精确抽取、四场景 17 项断言全过。"
+ },
+ {
   "date": "2026-10-05",
   "v": "v7.2",
   "text": "数据目录语义化与死代码清理（4 项）：① data 目录按维护方式拆为 manual/（人工录入：plans / calc-plans / calc-models / ide-plans / changelog / repos / sources / promos / freebies）与 auto/（机器每日生成：snapshot / alerts / price-history / reported / signals / sourcehealth / pagehash / pricebase / transients / meta），全仓库 99 处路径引用同步改写，并在 GitHub 上折叠 auto 目录的 diff——此前 19 个 JSON 平铺一处，「哪个文件会被巡检覆盖」只能靠读脚本判断；② 删除从未被调用的死函数 populateCalcModels() 及其 window._CALC_MODEL_POOL 回退分支，计算器改用 CALC_MODELS（刻意选择删除而非接线：接线会让下拉从固定 3 档变成 20+ 个动态模型，属于线上可见的行为变更）；④ 补齐计算器候选表 4 个表头的 scope（合并 v7.1 a11y 后验收时发现该表被漏掉），全站 33 个 th 现已全部带 scope。③ 文档同步：README 中英双语目录结构与全部内联路径、HANDOFF 数据归属与避坑段一并更新。"

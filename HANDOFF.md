@@ -8,7 +8,7 @@
 - **定位**：AI 编程订阅计划（Coding Plan）对比站。纯静态站，无构建、零 npm 依赖，GitHub Pages 托管。
 - **线上地址**：https://wjf1.github.io/coding-plan-radar/ ｜ 仓库：https://github.com/wjf1/coding-plan-radar
 - **覆盖**：20 个条目（19 个在售平台 + 1 个已停售留档）、69 个付费档位；Token 实时价格榜接 models.dev。
-- **当前版本**：**v7.2（2026-10-05）**。上一版本 v7.1（2026-10-05，a11y P0 修复）、v7.0（2026-10-05）。
+- **当前版本**：**v7.3（2026-10-06）**。上一版本 v7.2（2026-10-05，数据目录语义化）、v7.1（2026-10-05，a11y P0 修复）。
 - **自动化**：GitHub Actions 每天北京时间 09:00 巡检 → 更新数据 → 提交推送（触发 Pages 重新发布）→ 有事项时开 issue。
 - **受众现状**：1 star / 0 fork，仓库 issue 全部是机器人每日巡检开出的（无真人反馈）。功能开发的边际收益很低，
   维护重点应放在**自动化管道不静默失效**上。
@@ -45,7 +45,7 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 | 信息源清单（URL / 分级 / 关键词 / 启停原因） | `data/manual/sources.json` | 人工（**改巡检范围只改这里**） |
 | models.dev 兜底快照 | `data/auto/snapshot.json` | 机器（`update-snapshot.mjs`，每日） |
 | 促销停售 / 白嫖额度 | `data/manual/promos.json`、`data/manual/freebies.json` | 人工确认 + 机器核对状态回写 |
-| 线索 / 源健康 / 价格历史 / 基线 / 巡检日期 | `data/auto/signals.json`、`sourcehealth.json`、`price-history.json`、`pricebase.json`、`pagehash.json`、`meta.json`、`alerts.json`、`reported.json`、`transients.json` | 机器（每日） |
+| 线索 / 源健康 / 价格历史 / 基线 / 巡检日期 | `data/auto/signals.json`、`sourcehealth.json`、`price-history.json`、`pricebase.json`、`pagehash.json`（page 源哈希基线）、`listbase.json`（list 源条目基线，v7.3）、`meta.json`、`alerts.json`、`reported.json`、`transients.json` | 机器（每日） |
 
 **目录约定**：`data/manual/` = 人工录入，`data/auto/` = 机器每日生成（勿手改，GitHub 上折叠 diff）。
 改数据先改 manual，改巡检范围只改 `data/manual/sources.json`。
@@ -58,7 +58,37 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 单文件失败只让对应板块为空（`loadJSONOr`）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
-## 最近一轮变更与交付成果（v7.2，2026-10-05）
+## 最近一轮变更与交付成果（v7.3，2026-10-06）
+
+### v7.3 —— 信息源采集层升级：条目级监控（list 源）
+
+官方页告警从「这个 800KB 页面变了」升级为「哪个档位的哪个字段从什么变成了什么」。
+借鉴 AIHOT `web_list` 的「选择器定位条目 + 先预览再创建」，解析引擎为本仓库自己的零依赖实现；
+架构不变（仍无 npm 依赖、无数据库、零 LLM）。方案出处见下方「信息源与线索分析改造方案」章节，本版实施的是其**步骤 1**。
+
+1. **`lib.mjs` 极简 HTML 条目抽取引擎**：`parseSimpleSelector` / `matchBlocks` / `pickText` / `parseListItems` /
+   `diffListChanges` / `isStructuralBreakdown`。选择器子集 = `tag`/`.class`/`#id` 单级组合 + `:nth(k)` 后缀 +
+   最多三级后代路径；语法超出子集**直接抛错**（宁可不解析也不静默错抓）；`script`/`style`/注释先剥离，
+   里面的假标签不参与标签配对。
+2. **`sources.json` 新增 `lists` 数组**（`itemSelector` + `fields` + `keyField`）：**GLM Coding Plan 文档页**
+   从 page 迁移为首个 list 试点——此前该页任何无关改动都触发整页哈希告警，现在只盯「套餐类型 / 5 小时积分 / 每周积分」表。
+3. **`check-pages.mjs` 双通道**：page 源沿用整页哈希（含二次确认 / 不稳定检测 / auto-revert，全部未动），
+   list 源走条目 diff（基线 `data/auto/listbase.json`），共用反爬检测与源健康；alert 新增
+   `kind: "list-change"`（带 `changes` 明细，上限 20 处）与 `kind: "structure-change"`（熔断提醒）。
+4. **两道保护**：解析出 0 条 → 绝不建基线、不写 alert、只记源健康；条目骤变/过半变动 → 只提醒人工核对选择器、
+   **不更新基线**（防把改版页面固化成新基线）。
+5. **新增 `scripts/probe-source.mjs`**：试抓预览，与正式采集同一解析逻辑，解析 0 条即非 0 退出；改选择器前必跑。
+6. **`validate.mjs`** 新增 sources.json 契约（id 跨数组查重 / tier 白名单 / selector 语法）；
+   **`tests/selfcheck.mjs` 15 → 24 例**；**`daily-update.yml`** 的 issue 对 list 告警逐行列出字段级变更明细。
+
+**开发中被端到端验证抓住、当场修复的两个缺陷**（验证脚本为一次性工具，未入仓库）：
+
+- 结构变更分支最初漏把旧基线带回写盘对象 → 下次巡检会把改版页面当「首次见面」重新建基线，熔断反而加速坏结构固化。
+- 同源存在其它类型未解决 alert（page 时代遗留）时复用旧卡只更新 `detected` → `kind` 保持旧值、`changes` 丢失。
+  改为 `kind` 一致才原卡复用，否则旧卡标 `superseded`、另开新卡。
+
+验证：`validate.mjs` 通过；`selfcheck.mjs` 24/24；probe 对智谱页实测抽出 3 档精确数据；
+临时目录四场景（字段变动→二次确认→报警 / 回滚自动关闭 / 结构变更熔断 / 0 条保护）17 项断言全过。
 
 ### v7.2 —— 数据目录语义化 + 死代码清理（含与 v7.1 并行改动合并）
 
@@ -160,6 +190,148 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
   - 桩一个「永不返回且遵守 abort 信号」的 models.dev → 5 秒后 `signal timed out` 并降级到快照（128 款，日期 2026-10-05）。
 - **未做**：功能类与重构类任务（见下节 Backlog）。
 
+## 信息源与线索分析改造方案（借鉴 AIHOT，草案 · 未实施）
+
+> **状态：步骤 1 已于 v7.3（2026-10-06）实施发布**——page 整页哈希 → 条目级选择器已完成，GLM 文档页为首个试点；
+> **步骤 2（LLM 分诊）与步骤 3（聚类热度）仍未实施**，实施前请先读下一节的「明确不建议做」，其中三条红线即出自本方案。
+>
+> **评估来源**：[KKKKhazix/AIHOT](https://github.com/KKKKhazix/AIHOT)（MIT；Node 24 + PostgreSQL 17 + Docker 的全栈资讯热点站）。
+> 关键参考文件：`docs/sources.md`（六种信源与试抓预览）、`docs/selection.md`（预筛 / 双评分 / 分级门槛 / 校准）、
+> `industry/prompts/`（全部提示词，按内容哈希做版本）、`industry/selection.ts`（门槛常量）、`.env.example`（模型 / 向量 / 付费采集配置）。
+>
+> **结论：借「线索层的智能化」，不借架构。** 本站卖的是**价格事实**（错一位即误导用户），AIHOT 卖的是**资讯筛选**（允许摘要级误差）。
+> AIHOT 的采集类型、预筛、双评分、聚类、热度只应作用在 `data/auto/signals.json` 这一段线索流上；
+> `plans.json` / `promos.json` / `freebies.json` 里的任何价格与额度数字，仍只由结构化源或人工确认产出。
+> 这条与现有「机器只负责发现，任何价格/促销数字必须人工确认」的约定完全一致——AIHOT 的模型分诊恰好能把「发现」做得更准，而不越过这条线。
+
+### 为什么不能整体对齐
+
+| | 本站 | AIHOT |
+|---|---|---|
+| 形态 | 纯静态站（Pages）+ Actions 每日脚本 + JSON 落盘仓库，零 npm 依赖 | Node 24 + PostgreSQL 17 + Docker 全栈服务，带后台 / API / MCP |
+| 数据性质 | 结构化事实：价格、5h/周/月三档额度、白嫖条款 | 非结构化资讯流 |
+| 处理方式 | **零 LLM**：整页哈希 + 关键词整词匹配 + 价格 diff + 人工核价 | LLM 六步：判重 → 预筛 → 双评分 → 结构化 → 写作 → 聚类 → 热度 |
+| 质量哲学 | 宁可当天不更新，也不让坏数据进仓库 | 宁可少选几条，也不让噪声进精选（但允许模型自主入选） |
+| 信息源 | 3 类（feed 10 / page 17 / api 5），声明在 `sources.json`，四档 tier + 健康看板 | 6 类（rss / web_list / json_list / x_search / mp_account / external），后台管理、试抓预览、付费熔断 |
+
+差异决定了取舍：**采集与分诊可以借鉴，存储与发布架构不能动**（静态站 + git 可追溯每一次价格变动，本身就是本站的核心资产之一）。
+
+### 步骤 1（P1 · 零 LLM · 零依赖）：page 源从整页哈希升级为条目级选择器
+
+**现有痛点（真实存在）**：`scripts/check-pages.mjs` 对 SSR 页做「去标签后 sha256 整页哈希」，只能得出「这个 1MB 页面变了」，
+然后人工上去找哪一行变了；而 `sources.json` 里已有一批 JS 空壳页（qoder / copilot.tencent / codebuddy / volcengine），
+hash 恒定不变，纳入监控等于自欺——`disabled` 数组里已如实记录。AIHOT 的 `web_list` 思路是用 CSS `itemSelector` 定位到**每条记录**再抽字段，
+谁变了、从什么变成什么，一目了然。
+
+**改动**：
+
+1. `data/manual/sources.json` 的 `pages` 增加可选字段（或新增 `lists` 数组，二选一，倾向后者以免污染现有 page 语义）：
+
+```json
+{
+  "id": "bigmodel-coding",
+  "label": "智谱 Coding Plan 定价",
+  "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
+  "tier": "official",
+  "type": "list",
+  "itemSelector": ".plan-card",
+  "fields": { "name": "h3", "price": ".price", "quota": ".quota" },
+  "enabled": false
+}
+```
+
+2. 新增 `scripts/probe-source.mjs <id>`：只打印解析结果（条目数 + 前 20 条的字段值），不写任何文件。
+   这是照搬 AIHOT「**先预览，再创建**」的关键工程习惯——预览与正式采集套用同一组过滤，看到的就是正式会收的。
+   **selector 一条都解析不出来时必须报错退出，绝不落基线**（否则下一轮巡检会把「全空」当成真实变动）。
+3. `scripts/check-pages.mjs` 对 `type: list` 的源改走条目级比对：逐条抽字段 → 与基线比对 → 写入 `alerts.json`，
+   且 alert 新增 `changes: [{ item, field, from, to }]`，issue 正文直接列出「某档位价格 19→25」。
+4. 新增基线文件 `data/auto/listbase.json`（与现有 `pagehash.json` 同角色，勿混用）。
+
+**验收**：对 `docs.bigmodel.cn/cn/coding-plan/overview` 人为改一个价格数字，alert 输出的是「第 N 档价格 19→25」，而不是「页面已变动」。
+`node scripts/validate.mjs` 与 `node tests/selfcheck.mjs` 保持全绿。
+
+**边界与熔断**：
+- 结构改名（CSS 类被重写）会造成「全量变动」假告警 → 设熔断：单次变动条目占比 > 50% 视为结构变更，只开 issue、不写 alert、不更新基线。
+- 现有 4 个 `page-unreliable`（Cloudflare 挑战页 / SPA 空壳）维持禁用，不因本改造复活。
+
+### 步骤 2（P2 · 引入 LLM，只做分诊）：预筛 + 双评分 + 按 tier 设门槛
+
+**现有痛点**：`signals.json` 当前 97 条线索全部是「关键词命中即收」，噪声不小——
+例如「德国电力公司推出游戏玩家专属电价套餐」这类与订阅计划无关的条目也进来了（命中的只是 `price` 一类通用词）。
+AIHOT 的做法是 `prefilter.md`（宽进，只拦明显无关）→ `selection-score.md`（同一份标准独立打两次 0–100，两次之和 ≥ 2×门槛）
+→ 门槛按信源分级（官方一手低、媒体个人高）。本站已有的四档 tier（official / realtime / agg / community）天然可映射。
+
+**改动**：
+
+1. 新增 `prompts/prefilter.md`、`prompts/score.md`——**提示词与代码分离，改名不改代码**；提示词版本取其内容哈希，写入产物，便于回溯「这条当初为什么被判 reject」。
+2. 新增 `data/manual/triage.json` 存门槛与总开关（对齐 AIHOT 把门槛常量放在代码外的习惯）：
+
+```json
+{ "enabled": false, "thresholds": { "official": 50, "realtime": 60, "agg": 70, "community": 80 } }
+```
+
+3. 新增 `scripts/triage-signals.mjs`，插在 `fetch-feeds.mjs` 之后、workflow 生成待处理清单之前，回写每条信号：
+
+```json
+"triage": { "prefilter": "PASS", "scores": [72, 68], "avg": 70, "decision": "select", "promptHash": "a1b2c3d4", "model": "deepseek-flash" }
+```
+
+4. workflow 的「生成待处理清单」按 `triage.avg` 排序、只取 `decision === "select"` 的前 20 条，替代现在的「时间序前 20 条」。
+
+**红线（务必写进代码注释）**：`triage.decision` **只影响 issue 里线索的排序与取舍**，不得写入
+`plans.json` / `promos.json` / `freebies.json` 的任何价格或额度字段。模型回答的是「值不值得看」，不是「价格是多少」。
+
+**降级**：LLM 不可用、超时或返回非 JSON → 全部标 `UNKNOWN`、保留原时间序，并把失败记入 `sourcehealth.json`（新增虚拟源 id `llm-triage`），
+当日**照常提交**，绝不因为模型故障阻塞整条巡检（延续本站「宁可当天不更新，也不让坏数据进仓库」的相反面：宁可少一次分诊，也不让管道变红）。
+
+**评测（引入 LLM 的必配项，不做等于不知道改动是变好还是变坏）**：
+- `.data/gold.jsonl`（**不进 Git**）：从现有 signals 抽 100–200 条，逐条人工标 `select` / `reject` / `either`，多放难例。
+- 新增 `scripts/eval-triage.mjs`，输出准确率 / 查准率 / 查全率，分开发集与留出集，用法对齐 AIHOT 的 `eval-selection.ts`。
+- **门槛不要照抄 AIHOT 的 60 / 65 / 76**——那是 AI 资讯领域的样本，本站必须用自己的评测集校准。
+
+**成本与密钥**：约 97 条 × 3 次调用 ≈ 300 次 flash 级小请求/天，成本可忽略。`LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL`
+放 **GitHub Actions secrets**，绝不进仓库；请求加硬超时，不依赖默认值。
+
+### 步骤 3（P3 · 事件聚类 + 热度）
+
+**收益**：一次降价可能同时被 HN、官方 changelog、社区提到，现在会显示三条；聚成一个事件后只显示一条，
+且「有多少个独立来源在说同一件事」本身就是比「时间新」更靠谱的优先级信号。
+
+**改动**：
+
+1. 候选召回**先按标题 + 摘要的关键词/字符重合**，不上 embedding 服务（现有线索量级仅百条；
+   AIHOT 自己也写明向量不配时用文字重合兜底，只是热度偏低——本站量级下够用，不值得多接一个付费依赖）。
+2. 新增 `prompts/group.md`，让模型判定「同一件事 / 后续进展 / 两件事」，拿不准的合并，写入前复核一遍。
+3. 产物 `data/auto/events.json`；`signals.json` 每条加 `eventId`。
+4. 热度按事件算：48 小时窗口，每个独立 source 只计一次，24 小时减半。
+5. 前端 `js/app.js` 把动态区从扁平日线改为按事件折叠成一组（线索卡片显示「N 个来源在说」），
+   `index.html` 结构同步调整；所有新字段渲染必须过 `esc()` / `safeHref()`（见避坑节）。
+
+### 贯穿三步的硬约束
+
+- 产物落 `data/auto/`，人工配置落 `data/manual/`；写入一律用 `lib.mjs` 的 `writeJSON`（原子写）。
+- 新增步骤一律加入 `daily-update.yml` **同一个 job 内顺序执行**，并接入现有 `ok=true/false` outcome 汇总——
+  **不要拆成并行 job**（v6.2 已踩过，见避坑节）。
+- 任一步失败都不得让当天数据不提交（除现有 `validate` 门禁外）。
+- 每条 LLM 结论都必须**可回溯**：产物里保留 `model` + `promptHash` + 判定理由，与站点「来源分级 / 诚实原则」的定位一致。
+- 建议按步骤各自独立成版本（步骤 1 → v7.3；步骤 2 → v8.0；步骤 3 → v8.1），
+  每步单独走「功能测试 + 安全验证 → CHANGELOG / README 中英 / HANDOFF → 版本号 + annotated tag → GitHub Release」四文档门禁。
+
+### 逐项对照：借什么 / 不借什么
+
+| 借鉴项 | 判定 | 落点 |
+|---|---|---|
+| `web_list` 选择器采集 + 试抓预览 | ✅ 步骤 1 | 替代整页哈希，直击现有痛点 |
+| 预筛 + 双评分 + 按 tier 设门槛 | ✅ 步骤 2 | 映射本站四档 tier，降人工核验量 |
+| 事件聚类 + 按事件算热度 | ✅ 步骤 3 | 解决重复刷屏，产出更好的优先级 |
+| 提示词与代码分离、版本 = 内容哈希 | ✅ 步骤 2 起 | 调提示词不必改代码、不必全量重跑 |
+| 金标准评测集（gold.jsonl + 开发/留出集） | ✅ 步骤 2 必配 | 引入 LLM 的验收前提 |
+| 付费采集服务（Jina 渲染 / SocialData / 极致了） | ⚠️ 可选 | 可救回现被 Cloudflare 拦死的源，但要花钱 |
+| Postgres + Docker + 后台 / API / MCP 架构 | ❌ | 破坏静态可审计、零运维定位 |
+| 让 LLM 产出价格 / 额度数字 | ❌ 红线 | 价格错一位即误导用户 |
+| 为聚类引入向量 / embedding 服务 | ❌ | 量级不需要，多一个付费依赖与失效面 |
+| 「实时」目标与常驻进程 | ❌ | 日更足够；且常驻进程有既存硬约束 |
+
 ## 接力开发指引与待办（Next Steps / Backlog）
 
 ### 明确不建议做（有事故记录或零收益）
@@ -183,6 +355,16 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
   要做就得接 GitHub Issues API。
 - ❌ **引入 vitest / ESLint + 全仓库一次性格式化**（计划 Q1-1/Q2-1）。会打破「零 npm、零构建」定位；
   测试需求已由 `tests/selfcheck.mjs` 以零依赖方式覆盖。
+- ❌ **把本站整体改成服务端应用**（Postgres + Docker + 后台 / API / MCP，即 AIHOT 的架构）。
+  会一次性丢掉静态站的全部优势：零成本零运维、数据即真相（JSON 全在仓库里、git 可追溯每一次价格变动）、可离线读、Pages 直发。
+  需要 LLM 就在 Actions 里加一个离线步骤，产物照旧落 `data/auto/*.json`，前端读法不变。**连 `package.json` 都不要引入。**
+- ❌ **让 LLM 产出价格 / 额度数字**。AIHOT 是资讯站，摘要级误差可接受；本站价格表错一位即误导用户。
+  价格只能来自结构化源（models.dev / OpenRouter / LiteLLM）或人工确认。模型只回答「值不值得看 / 属于哪一类 / 和哪条是同一件事」。
+  若将来真要做抽取，必须配二次核验（抽取值回到源页做正则或哈希校验，一致才落库）。
+- ❌ **为聚类引入向量 / embedding 服务**。现有线索量级仅百条，标题摘要的关键词/字符重合已足够召回候选；
+  多接一个付费依赖等于多一个失效面。
+- ❌ **在 Actions 里改「实时」或起常驻进程**。本站是日更的订阅对比站，实时化收益≈0；
+  且常驻后台进程有既存的硬约束（见「关键避坑与运行约束」与用户级 AGENTS.md）。
 
 ### 值得做但本次未做
 
@@ -190,6 +372,9 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
 
 | 优先级 | 待办 | 说明 |
 |---|---|---|
+| 已完成（v7.3） | ~~**信息源采集层升级：page 整页哈希 → 条目级选择器**~~（改造方案步骤 1） | **已完成**：`lib.mjs` 选择器引擎 + `lists` 数组 + `probe-source.mjs` + 熔断/0 条保护，GLM 文档页为首个试点。**后续迁移其余 11 个 page 源时逐个做**：每个都要先用 `node scripts/probe-source.mjs <id>` 验证 selector 能稳定抽出条目，SPA 空壳页与 Cloudflare 拦截页（现有 `page-unreliable` / disabled）不要尝试迁移 |
+| P2 | **线索分诊：预筛 + 双评分 + tier 门槛**（改造方案步骤 2） | 需接 LLM 与建评测集；红线是只影响线索排序、不碰任何价格字段。前置条件：`.data/gold.jsonl` 标注完成 |
+| P3 | **事件聚类 + 热度**（改造方案步骤 3） | 依赖前两步；需前端配合把动态区改为按事件折叠 |
 | P2 | **计算器只暴露 7 个预设中的 3 个（真缺陷）** | `data/manual/calc-models.json` 配了 7 个档位，但 `index.html` 的 `<select id="calcmodel">` 只写死 3 个 `<option>`（value 0/1/2），另外 4 个（百度千帆 ERNIE 5.1 / 腾讯云 GLM-5.3-Flash / 讯飞星火 X2.5 / Gemini 3.8 Flash）用户选不到；且这 3 个 option 的标签与 `calc-models.json` 的 label 重复维护，改一处不同步就漂移。修法：初始化时用 `CALC_MODELS` 渲染 `<option>`（保留「GLM-5.3（中档）」为默认选中），删掉 index.html 里写死的三项 |
 | P3 | **LICENSE 缺失** | 公开仓库建议补 MIT LICENSE 与 `CONTRIBUTING.md`（计划 E1-1） |
 | P3 | **功能类需求**（计划 P1-2-1 散点图 / P1-3-1 最近 7 天变更面板 / P1-5-1 场景标签过滤） | 在零受众前提下边际收益≈0；若把项目当作品集则优先做这些（而不是 store 与 lint），并同步补 README 配图 |
@@ -218,4 +403,5 @@ DevTools，**可编程断言而非截图判读**）——搜索 `zzzz` 出空状
 - ⚠️ **`esc()` 只处理 `&<>"`**：任何写进属性或 URL 的场景请用 `safeHref()`（放行 http/https）而不是裸 `esc()`。
 - ⚠️ **公众号式数据条目字段含义**见 `data/manual/plans.json` 顶部的 `_readme`；新增平台条目必须带 `srcUrl`（校验会拦）。
 - ⚠️ **数据分两处**：`data/manual/`（人工）与 `data/auto/`（机器）。新脚本写产物请落到 `data/auto/`，不要写进 `data/manual/`——后者是人工录入区，机器回写只允许改 status 一类核对字段。
+- ⚠️ **改 list 源（`sources.json` 的 `lists` 数组）选择器前必须先 probe**：`node scripts/probe-source.mjs <id>` 预览，解析 0 条即报错退出。运行期保护已内置：`check-pages.mjs` 对 list 源解析出 0 条时不建基线、不报警、只记源健康；条目骤变/过半变动按结构变更熔断（写 `structure-change` alert 但**不更新基线**——修复过一次「熔断丢基线导致下次巡检把坏结构固化成新基线」的缺陷，改动该分支时务必保持旧基线回盘）。list 源告警的 `changes` 明细由 `daily-update.yml` 生成 issue 时逐行展示。
 - 📌 Windows 环境下 `renameSync` 覆盖已存在文件是可行的（等价 `MOVEFILE_REPLACE_EXISTING`），原子写入无需额外处理。

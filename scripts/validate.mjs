@@ -127,6 +127,48 @@ if (hist) {
   }
 }
 
+// 2.6 sources.json：信息源声明契约（tier 白名单 + list 源的条目级配置）
+// 这里只做形态校验；选择器能否真正解析出条目由 probe-source.mjs（人工预览）与
+// check-pages.mjs 的 0 条保护兜底——校验通过不代表 selector 有效，两者缺一不可。
+const sourcesDoc = readJSONStrict("data/manual/sources.json");
+if (sourcesDoc) {
+  const tierNames = Object.keys(sourcesDoc.tiers || {});
+  const allIds = new Map(); // id → 所在数组，跨数组查重
+  const selOk = (s, { allowPath }) => {
+    const parts = String(s ?? "").trim().split(/\s+/).filter(Boolean);
+    const max = allowPath ? 3 : 1; // fields 只允许块内单级；itemSelector 允许最多三级路径
+    if (parts.length < 1 || parts.length > max) return false;
+    return parts.every((part) => /^(?:[a-zA-Z][a-zA-Z0-9-]*)?(?:[.#][a-zA-Z0-9_-]+)*(?::nth\(\d+\))?$/.test(part));
+  };
+  for (const group of ["feeds", "pages", "lists", "apis"]) {
+    for (const s of sourcesDoc[group] || []) {
+      const at = `data/manual/sources.json ${group}[].${s && s.id ? s.id : "?"}`;
+      if (!isStr(s.id)) fail(`${at}: id 缺失`);
+      else if (allIds.has(s.id)) fail(`${at}: id 与 ${allIds.get(s.id)} 重复`);
+      else allIds.set(s.id, group);
+      if (isStr(s.tier) && tierNames.length && !tierNames.includes(s.tier)) fail(`${at}: tier「${s.tier}」不在 tiers 白名单里`);
+    }
+  }
+  const lists = sourcesDoc.lists || [];
+  if (!Array.isArray(lists)) fail("data/manual/sources.json: lists 必须是数组");
+  else {
+    for (const l of lists) {
+      const at = `data/manual/sources.json lists[].${l && l.id ? l.id : "?"}`;
+      if (l.type !== "list") fail(`${at}: type 必须是 list`);
+      if (!isStr(l.url)) fail(`${at}: url 缺失`);
+      if (!isStr(l.itemSelector) || !selOk(l.itemSelector, { allowPath: true })) fail(`${at}: itemSelector 缺失或语法不支持（仅 tag/.class/#id + :nth(k)，最多三级路径）`);
+      const fields = l.fields || {};
+      const fk = Object.keys(fields);
+      if (!fk.length) fail(`${at}: fields 至少要有一个字段`);
+      for (const [k, sel] of Object.entries(fields)) {
+        if (!isStr(sel) || !selOk(sel, { allowPath: false })) fail(`${at}: fields.${k}「${sel}」必须是块内单级选择器（不支持路径）`);
+      }
+      if (l.keyField !== undefined && !fk.includes(l.keyField)) fail(`${at}: keyField「${l.keyField}」必须是 fields 的键之一`);
+    }
+    if (lists.length) ok(`data/manual/sources.json: lists ${lists.length} 个条目级监控源（${lists.map((l) => l.id).join(", ")}）`);
+  }
+}
+
 /* ---------- 3. 脚本语法（node --check，零依赖） ---------- */
 const jsFiles = ["js/app.js"];
 for (const f of readdirSync("scripts")) if (f.endsWith(".mjs")) jsFiles.push(join("scripts", f));

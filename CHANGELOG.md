@@ -5,6 +5,34 @@
 
 日期均为北京时间。数据类变更（每日自动巡检提交）不在本文件逐条记录，只记录代码与内容层面的版本变更。
 
+## [v7.3] - 2026-10-06
+
+**信息源采集层升级：条目级监控（list 源）** —— 官方页告警从「这个 800KB 页面变了」升级为
+「哪个档位的哪个字段从什么变成了什么」。借鉴 [AIHOT](https://github.com/KKKKhazix/AIHOT) `web_list` 的
+「选择器定位条目 + 先预览再创建」思路，选择器引擎为本仓库自己的零依赖实现；整体架构不变（仍无 npm 依赖、无数据库，LLM 未引入——那是改造方案步骤 2/3 的事）。
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 1 | `lib.mjs` 极简 HTML 条目抽取引擎 | `parseSimpleSelector` / `matchBlocks` / `pickText` / `parseListItems` / `diffListChanges` / `isStructuralBreakdown`。选择器子集：`tag` / `.class` / `#id` 单级任意组合 + `:nth(k)` 后缀 + 最多三级后代路径（如 `table:nth(1) tbody tr`）；语法超出子集**直接抛错**——宁可不解析也不静默错抓。`script`/`style`/注释先剥离，里面的假标签不参与标签配对 |
+| 2 | `sources.json` 新增 `lists` 数组 | 条目级监控源声明：`itemSelector` + `fields`（字段名 → 块内单级选择器）+ `keyField`（条目主键）。**GLM Coding Plan 文档页**从 `page`（整页哈希）迁移为首个 `list` 试点：该页约 800KB，此前任何无关改动（文案/导航/样式）都会触发整页哈希告警；现在只盯「套餐类型 / 5 小时积分 / 每周积分」表，基线 `data/auto/listbase.json` |
+| 3 | `check-pages.mjs` 支持 list 通道 | 与 page 通道共用反爬检测、二次确认（真实变动晚一天告警）、auto-revert 回滚、源健康机制；alert 新增 `kind: "list-change"`（带 `changes` 字段级明细，单条上限 20 处）与 `kind: "structure-change"`（结构变更熔断）。**两道保护**：`itemSelector` 解析出 0 条 → 绝不建基线、不写 alert、只记源健康（无可信数据不发言）；条目骤变或过半变动 → 只提醒人工核对选择器、**不更新基线**（防止把改版页面固化成新基线） |
+| 4 | 新增 `scripts/probe-source.mjs` | 「先预览，再创建」：`node scripts/probe-source.mjs <id>` 只打印解析结果不写盘，与正式采集同一套解析逻辑；解析出 0 条以非 0 退出。创建/修改 list 源前必须先跑 |
+| 5 | `validate.mjs` + `tests/selfcheck.mjs` | 新增 sources.json 契约：全源 id 跨数组查重（feeds/pages/lists/apis）、tier 白名单、list 源 selector 语法校验（fields 只许单级）。selfcheck 15 → **24 例**（选择器引擎 / 端到端抽取 / diff / 熔断判定 / validate 负向用例） |
+| 6 | `daily-update.yml` issue 明细 | `list-change` alert 在巡检 issue 里逐行列出 `条目 · 字段: 旧值 → 新值`；`structure-change` 附 probe-source 核对指引 |
+
+**开发过程中发现并当场修复的两个缺陷**（由四场景端到端验证脚本抓住，该脚本为一次性工具未入仓库）：
+
+1. **结构变更分支丢失旧基线**：熔断本意是「不更新基线」，但最初实现漏了把旧基线带回本轮写盘对象——
+   本轮 `listbase.json` 里没有该源，下次巡检会把改版页面当「首次见到的页面」重新建基线，熔断反而加速了坏结构固化。场景 C 抓住后修复。
+2. **alert 复用导致 kind/changes 错乱**：同一源存在其它类型（page 时代遗留）的未解决 alert 时，
+   复用旧卡只更新 `detected`，`kind` 保持旧值、`changes` 丢失。改为 `kind` 一致才原卡复用，否则旧卡标 `superseded` 关闭、另开新卡。
+
+**验证**：`node scripts/validate.mjs` 通过；`node tests/selfcheck.mjs` 24/24；
+`probe-source.mjs` 对智谱文档页实测精确抽出 3 档（Lite 2,000/10,000 · Pro 12,000/60,000 · Max 28,000/140,000）；
+临时目录四场景端到端 17 项断言全部通过（字段变动 → 二次确认 → 报警明细 / 回滚自动关闭 / 结构变更熔断不更新基线 / 0 条保护）。
+
+---
+
 ## [v7.2] - 2026-10-05
 
 **数据目录语义化与死代码清理（3 项）** —— 让「哪些数据能手改」由目录结构回答，而不是靠记忆。

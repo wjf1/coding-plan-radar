@@ -52,9 +52,14 @@
 导致 `signals.json` 等产物连续 7 天未进仓库），每步独立记录成败，最后统一汇总、提交、开 issue：
 
 1. **`scripts/update-snapshot.mjs`** —— 重新抓取 models.dev，重新生成 `data/auto/snapshot.json` 兜底快照（落盘前做 schema 校验：条目缺字段或整体为空即报错退出——宁可当天不更新，也不让坏快照变成降级来源）
-2. **`scripts/check-pages.mjs`** —— 按 `data/manual/sources.json` 对官方定价页/文档做内容哈希变动检测
-   - 有变动 → 写入 `data/auto/alerts.json` 并列入每日巡检 issue，待人工核价
-   - 页面回到基线哈希时**自动 resolved**；抓取失败不再静默跳过，而是计入源健康
+2. **`scripts/check-pages.mjs`** —— 按 `data/manual/sources.json` 监控官方定价页/文档，两类机制并存：
+   **整页哈希**（`type: page`，适合无结构可抽取的页面）与**条目级抽取**（`type: list`，`sources.json` 的 `lists` 数组，
+   v7.3 起）：按 `itemSelector` / `fields` 抽出表格行再逐字段 diff，告警直接给出「哪个档位的哪个字段从什么变成了什么」
+   （如 `Pro 套餐 · quota5h: 12,000 → 12,500`），不再让人工去 800KB 页面里找差异
+   - 有变动 → 写入 `data/auto/alerts.json` 并列入每日巡检 issue（list 源带字段级变更明细），待人工核价
+   - 页面回到基线时**自动 resolved**；抓取失败不再静默跳过，而是计入源健康
+   - 条目级监控自带两道保护：**解析出 0 条即禁建基线**（选择器失效时不发言）；
+     **条目骤变/过半变动按结构变更熔断**——只提醒人工核对选择器，不更新基线，防止把改版页面固化成新基线
 3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/auto/signals.json` 线索
 4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
 5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/manual/freebies.json`）+ 促销条目到期自动标「已结束」
@@ -112,21 +117,23 @@
 │       ├── reported.json       # 已进入待处理清单的线索去重表（避免 issue 重复）
 │       ├── signals.json        # 机器发现的线索（90 天滚动窗口）
 │       ├── sourcehealth.json   # 每源抓取成败（站点据此显示「已失效」）
-│       ├── pagehash.json       # 官方页内容哈希基线
+│       ├── pagehash.json       # 官方页内容哈希基线（type: page 源）
+│       ├── listbase.json       # 官方页条目级基线（type: list 源，v7.3）
 │       ├── pricebase.json      # 价格 / 免费模型基线（用于差异检测）
 │       ├── transients.json     # 内容回到基线的 auto-revert 回溯记录
 │       └── meta.json           # 最近巡检日期（页脚与「信息源健康」据此显示）
 ├── scripts/
-│   ├── lib.mjs             # 公用：带 UA/超时抓取、JSON 读写、源健康、极简 RSS 解析、关键词匹配
+│   ├── lib.mjs             # 公用：带 UA/超时抓取、JSON 读写、源健康、极简 RSS 解析、关键词匹配、极简 HTML 条目抽取
 │   ├── update-snapshot.mjs # 兜底快照
-│   ├── check-pages.mjs     # 官方页哈希巡检 + 源健康
+│   ├── check-pages.mjs     # 官方页巡检（整页哈希 + 条目级 diff）+ 源健康
+│   ├── probe-source.mjs    # list 源试抓预览：改选择器前必跑，解析出 0 条即报错（借鉴 AIHOT「先预览再创建」）
 │   ├── fetch-feeds.mjs     # RSS / JSON 源 → 线索
 │   ├── diff-prices.mjs     # 价格库与免费模型差异检测
 │   ├── verify-listings.mjs # 白嫖额度来源页每日核对 + 促销到期自动归档
 │   ├── record-history.mjs  # 记录每日起步价快照（90 天滚动）+ 调价告警
 │   ├── validate.mjs        # 数据契约 + 脚本语法校验（CI 与本地共用，坏数据不进仓库）
 │   └── publish-via-api.mjs # 走 GitHub API 发布（github.com 被阻断时替代 git push）
-├── tests/selfcheck.mjs     # 零依赖自检（Node 内建 node:test）：纯函数 / 原子写入 / 幂等性 / 校验负向用例
+├── tests/selfcheck.mjs     # 零依赖自检（Node 内建 node:test）：纯函数 / 原子写入 / 幂等性 / 条目抽取与熔断 / 校验负向用例
 ├── docs/screenshots/       # README 配图
 └── .github/workflows/
     ├── daily-update.yml    # 定时任务（cron 09:00 北京时间，可手动触发）
@@ -176,7 +183,7 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 
 | 层级 | 来源 | 用途 |
 |---|---|---|
-| 官方直采 | [claude.com/pricing](https://claude.com/pricing) · [docs.github.com Copilot 计划](https://docs.github.com/en/copilot/get-started/plans) · [cursor.com/pricing](https://cursor.com/pricing) · [docs.bigmodel.cn](https://docs.bigmodel.cn/cn/coding-plan/overview) · [platform.kimi.com](https://platform.kimi.com/docs/pricing) · [trae.ai](https://www.trae.ai/pricing) · [MiniMax](https://platform.minimaxi.com/document/price) · [阿里云百炼免费额度](https://help.aliyun.com/zh/model-studio/new-free-quota) · [百度智能云](https://cloud.baidu.com/) 等 | 订阅价格（人工核价）+ 每日哈希巡检 |
+| 官方直采 | [claude.com/pricing](https://claude.com/pricing) · [docs.github.com Copilot 计划](https://docs.github.com/en/copilot/get-started/plans) · [cursor.com/pricing](https://cursor.com/pricing) · [docs.bigmodel.cn](https://docs.bigmodel.cn/cn/coding-plan/overview) · [platform.kimi.com](https://platform.kimi.com/docs/pricing) · [trae.ai](https://www.trae.ai/pricing) · [MiniMax](https://platform.minimaxi.com/document/price) · [阿里云百炼免费额度](https://help.aliyun.com/zh/model-studio/new-free-quota) · [百度智能云](https://cloud.baidu.com/) 等 | 订阅价格（人工核价）+ 每日巡检（哈希 + 条目级比对）|
 | 官方订阅源 | [GitHub Changelog](https://github.blog/changelog/feed/) · [Cursor Changelog](https://cursor.com/changelog/rss.xml) · [OpenAI News](https://openai.com/news/rss.xml) · [Claude](https://status.claude.com/history.rss) / [OpenAI](https://status.openai.com/history.rss) / [GitHub](https://www.githubstatus.com/history.rss) Status | 促销与可用性事件线索（RSS/Atom） |
 | 实时数据源 | [models.dev](https://github.com/sst/models.dev)（API 直连，CORS 全开放）· [OpenRouter 模型表](https://openrouter.ai/api/v1/models) · [LiteLLM 价格表](https://github.com/BerriAI/litellm) | Token 价格榜 + 兜底快照 + 免费模型 / 价格差异检测 |
 | 方法论 | [mahonzhan/awesome-coding-plan](https://github.com/mahonzhan/awesome-coding-plan)（2857★） | 额度倍率 / TPS / 三周期额度 / 坑点 |
@@ -262,9 +269,11 @@ checked out their own copy with no artifact passing, so `signals.json` and frien
 Each step records its own success/failure; at the end everything is summarized, committed and turned into an issue:
 
 1. **`scripts/update-snapshot.mjs`** — refetch models.dev and regenerate the `data/auto/snapshot.json` fallback snapshot (schema-validated before writing: missing fields or an empty snapshot abort the step — better a stale fallback than a broken one)
-2. **`scripts/check-pages.mjs`** — content-hash change detection on official pricing/documentation pages, driven by `data/manual/sources.json`
-   - On change → write to `data/auto/alerts.json` and list it in the daily inspection issue for manual price verification
-   - Auto-resolves when a page returns to its baseline hash; fetch failures are no longer silently skipped — they count against source health
+2. **`scripts/check-pages.mjs`** — monitors official pricing/documentation pages per `data/manual/sources.json` with two coexisting mechanisms:
+   **whole-page hashing** (`type: page`, for pages with no extractable structure) and **item-level extraction** (`type: list`, the `lists` array in `sources.json`, since v7.3): rows are extracted via `itemSelector` / `fields` and diffed field by field, so an alert directly names "which tier, which field, from what to what" (e.g. `Pro 套餐 · quota5h: 12,000 → 12,500`) instead of making a human hunt through an 800 KB page
+   - On change → write to `data/auto/alerts.json` and list it in the daily inspection issue (list sources include a field-level change breakdown) for manual price verification
+   - Auto-resolves when a page returns to its baseline; fetch failures are no longer silently skipped — they count against source health
+   - Item-level monitoring ships with two guardrails: **a selector that parses to zero items can never establish a baseline** (a broken selector has nothing to say), and **a sudden entry-count jump / majority change is treated as a structural change** — it only asks a human to re-check the selector and never updates the baseline, so a redesigned page cannot be baked in as the new normal
 3. **`scripts/fetch-feeds.mjs`** — fetch official changelogs / status pages / community feeds and normalize them into leads in `data/auto/signals.json`
 4. **`scripts/diff-prices.mjs`** — compare models.dev / OpenRouter / LiteLLM: price moves, free-model additions and removals, disagreements between price sources
 5. **`scripts/verify-listings.mjs`** — verify every freebie against its source page (five states written back to `data/manual/freebies.json`: `ok` / `warn` / `stale` / `changed` / `manual`) and auto-mark expired promos as "ended"
@@ -318,21 +327,23 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 │       ├── reported.json       # Dedup table of leads already surfaced for review
 │       ├── signals.json        # Machine-discovered leads (90-day rolling window)
 │       ├── sourcehealth.json   # Per-source fetch success/failure (drives the "dead" badge)
-│       ├── pagehash.json       # Official page content-hash baselines
+│       ├── pagehash.json       # Official page content-hash baselines (type: page sources)
+│       ├── listbase.json       # Official page item-level baselines (type: list sources, v7.3)
 │       ├── pricebase.json      # Price / free-model baselines (used for diffing)
 │       ├── transients.json     # Auto-revert trail (pages that returned to their baseline)
 │       └── meta.json           # Last inspection date (shown in the footer and "source health")
 ├── scripts/
-│   ├── lib.mjs             # Shared helpers: fetch with UA/timeout, JSON IO, source health, minimal RSS parser, keyword matching
+│   ├── lib.mjs             # Shared helpers: fetch with UA/timeout, JSON IO, source health, minimal RSS parser, keyword matching, minimal HTML item extraction
 │   ├── update-snapshot.mjs # Fallback snapshot
-│   ├── check-pages.mjs     # Official page hash inspection + source health
+│   ├── check-pages.mjs     # Official page inspection (whole-page hash + item-level diff) + source health
+│   ├── probe-source.mjs    # Dry-run preview for list sources: always run before editing a selector; exits non-zero on zero items (after AIHOT's "preview before create")
 │   ├── fetch-feeds.mjs     # RSS / JSON sources -> leads
 │   ├── diff-prices.mjs     # Price-base and free-model diffing
 │   ├── verify-listings.mjs # Daily freebie source-page verification + auto-expiry of promos
 │   ├── record-history.mjs  # Record daily starting-price snapshots (90-day rolling) + price-change alerts
 │   ├── validate.mjs        # Data-contract + script syntax validation (used by CI and locally; keeps bad data out)
 │   └── publish-via-api.mjs # Publish through the GitHub API (fallback when github.com is blocked)
-├── tests/selfcheck.mjs     # Zero-dependency self-check (built-in node:test): pure helpers / atomic writes / idempotency / negative cases
+├── tests/selfcheck.mjs     # Zero-dependency self-check (built-in node:test): pure helpers / atomic writes / idempotency / item extraction & circuit breaker / negative cases
 ├── docs/screenshots/       # README images
 └── .github/workflows/
     ├── daily-update.yml    # Scheduled job (cron 09:00 Beijing time, manually triggerable)
@@ -383,7 +394,7 @@ No build step, zero npm dependencies (RSS parser and tests included — no YAML/
 
 | Tier | Source | Used for |
 |---|---|---|
-| Official direct | [claude.com/pricing](https://claude.com/pricing) · [docs.github.com Copilot plans](https://docs.github.com/en/copilot/get-started/plans) · [cursor.com/pricing](https://cursor.com/pricing) · [docs.bigmodel.cn](https://docs.bigmodel.cn/cn/coding-plan/overview) · [platform.kimi.com](https://platform.kimi.com/docs/pricing) · [trae.ai](https://www.trae.ai/pricing) · [MiniMax](https://platform.minimaxi.com/document/price) · [Alibaba Cloud Model Studio free quota](https://help.aliyun.com/zh/model-studio/new-free-quota) · [Baidu AI Cloud](https://cloud.baidu.com/) etc. | Subscription prices (human-verified) + daily hash inspection |
+| Official direct | [claude.com/pricing](https://claude.com/pricing) · [docs.github.com Copilot plans](https://docs.github.com/en/copilot/get-started/plans) · [cursor.com/pricing](https://cursor.com/pricing) · [docs.bigmodel.cn](https://docs.bigmodel.cn/cn/coding-plan/overview) · [platform.kimi.com](https://platform.kimi.com/docs/pricing) · [trae.ai](https://www.trae.ai/pricing) · [MiniMax](https://platform.minimaxi.com/document/price) · [Alibaba Cloud Model Studio free quota](https://help.aliyun.com/zh/model-studio/new-free-quota) · [Baidu AI Cloud](https://cloud.baidu.com/) etc. | Subscription prices (human-verified) + daily inspection (hash + item-level diffing) |
 | Official feeds | [GitHub Changelog](https://github.blog/changelog/feed/) · [Cursor Changelog](https://cursor.com/changelog/rss.xml) · [OpenAI News](https://openai.com/news/rss.xml) · [Claude](https://status.claude.com/history.rss) / [OpenAI](https://status.openai.com/history.rss) / [GitHub](https://www.githubstatus.com/history.rss) status | Promo and availability event leads (RSS/Atom) |
 | Real-time sources | [models.dev](https://github.com/sst/models.dev) (direct API, CORS fully open) · [OpenRouter models](https://openrouter.ai/api/v1/models) · [LiteLLM price table](https://github.com/BerriAI/litellm) | Token price board + fallback snapshot + free-model / price diffing |
 | Methodology | [mahonzhan/awesome-coding-plan](https://github.com/mahonzhan/awesome-coding-plan) (2,857★) | Quota ratios / TPS / three-period quotas / pitfalls |

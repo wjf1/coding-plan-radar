@@ -1,35 +1,68 @@
-// 每日任务②：官方页面变动检测（内容哈希对比）
+// 每日任务②：官方页面变动检测
+// 两类监控并存（v7.3）：
+//   A. type=page  —— 整页「去标签后 sha256 哈希」对比（历史机制，适合无结构可抽取的页面）
+//   B. type=list  —— 条目级抽取对比（sources.json 的 lists 数组）：按 itemSelector/fields 抽出
+//      行数据再 diff，alert 直接给出「哪个档位的哪个字段从什么变成了什么」，
+//      不再让人工去 800KB 页面里找差异（借鉴 AIHOT web_list 的思路，解析引擎在 lib.mjs）
 // 设计要点（2026-09-14）：
 //   1. 页清单不再硬编码，统一读 data/manual/sources.json（含被禁用源及原因）
 //   2. 抓取失败不再 catch 后静默 skip —— 写入 data/auto/sourcehealth.json 累计失败，连续失败即视为失效
 //   3. 【二次确认】页面内容变了不算数，必须"下一次巡检仍旧是同一个新值"才报警。
 //      原因：cursor.com/pricing 实测两次抓取正文长度就不同（7506 vs 8114 字符，动态渲染/轮播），
-//      朴素哈希对比会天天误报，把真正的价格变动淹没。代价是真实变动晚一天告警。
+//      朴素哈希对比会天天误报，把真正的价格变动淹没。代价是真实变动晚一天告警。list 源同样适用。
 //   4. 【不稳定页面识别】页面在多个渲染变体之间来回跳时（如 cursor.com/pricing 实测在两个
 //      正文长度 7506/8114 之间交替），"二次确认"仍可能偶然通过然后又回滚。
 //      因此记录「确认后又在短期内回滚」的次数：累计 2 次即判定该页不可稳定监控，
 //      之后只保留基线、不再自动预警 —— 宁可说"这页需要人工看"，也不刷假警报。
 //   5. 页面回到基线哈希时自动解决（resolved）对应 alert，减少人工负担
-import { readJSON, writeJSON, fetchText, stripTags, hash16, today, loadHealth, recordHealth, saveHealth, FAIL_THRESHOLD, isDead } from "./lib.mjs";
+//   6. 【list 源专属保护】itemSelector 解析出 0 条 = 选择器失效或页面改版：绝不建基线、
+//      不写字段级 alert，只记源健康；变动条目过半视为结构变更，只提醒、不更新基线（防坏结构固化）
+import { readJSON, writeJSON, fetchText, stripTags, hash16, today, loadHealth, recordHealth, saveHealth, FAIL_THRESHOLD, isDead, parseListItems, diffListChanges, isStructuralBreakdown } from "./lib.mjs";
 
 const UNSTABLE_FLAPS = 2;   // 出现多少个"不同的新值"后判定页面不稳定
 const UNSTABLE_REVERTS = 2; // 确认后又回滚几次后判定页面不可稳定监控
 const SEEN_KEEP = 6;        // 每页保留的历史哈希条数
+const MAX_CHANGES_IN_ALERT = 20; // 单条 alert 最多带的字段级变更数（防 issue 刷屏）
 
 const sources = readJSON("data/manual/sources.json", { pages: [] });
 const pages = (sources.pages || []).filter((p) => p.type === "page" && p.enabled !== false);
 const disabled = (sources.pages || []).filter((p) => p.enabled === false);
+const lists = (sources.lists || []).filter((l) => l.type === "list" && l.enabled !== false);
 
 const raw = readJSON("data/auto/pagehash.json", {});
+const listRaw = readJSON("data/auto/listbase.json", {});
 const alerts = readJSON("data/auto/alerts.json", []);
 const health = loadHealth();
 const d = today();
 
 const hashes = {};
+const listBases = {};
 const changed = [];
 const pending = [];
 const failed = [];
 const unstable = [];
+const changedLists = [];
+const pendingLists = [];
+
+// 反爬壳检测：长度检查 + 已知反爬特征（page 与 list 两类源共用）
+const ANTI_BOT_MARKERS = [
+  "cf-browser-verification",
+  "Just a moment",
+  "Checking your browser",
+  "DDoS protection",
+  "cloudflare",
+  "challenge-platform",
+  "turnstile",
+  "Please wait while we check your browser",
+  "Ray ID",
+];
+const assertCrawlable = (text) => {
+  if (text.length < 200) throw new Error(`正文过短（${text.length} 字符），疑似 JS 渲染空壳或被拦截`);
+  const lower = text.toLowerCase();
+  for (const marker of ANTI_BOT_MARKERS) {
+    if (lower.includes(marker.toLowerCase())) throw new Error(`检测到反爬/验证页面特征（${marker}），内容不可信`);
+  }
+};
 
 for (const p of pages) {
   let text, status = null;
@@ -37,25 +70,7 @@ for (const p of pages) {
     const r = await fetchText(p.url);
     status = r.status;
     text = stripTags(r.text);
-    // 反爬壳检测：长度检查 + 已知反爬特征
-    if (text.length < 200) throw new Error(`正文过短（${text.length} 字符），疑似 JS 渲染空壳或被拦截`);
-    const antiBotMarkers = [
-      "cf-browser-verification",
-      "Just a moment",
-      "Checking your browser",
-      "DDoS protection",
-      "cloudflare",
-      "challenge-platform",
-      "turnstile",
-      "Please wait while we check your browser",
-      "Ray ID",
-    ];
-    const lowerText = text.toLowerCase();
-    for (const marker of antiBotMarkers) {
-      if (lowerText.includes(marker.toLowerCase())) {
-        throw new Error(`检测到反爬/验证页面特征（${marker}），内容不可信`);
-      }
-    }
+    assertCrawlable(text);
   } catch (e) {
     failed.push({ id: p.id, label: p.label, error: e.message });
     recordHealth(health, p, { ok: false, status, error: e.message });
@@ -156,22 +171,163 @@ for (const p of pages) {
   if (rec.unstable) health.sources[p.id].unstable = true;
 }
 
+/* ---------------- type=list：条目级抽取与比对（v7.3） ---------------- */
+for (const l of lists) {
+  let text, status = null;
+  try {
+    const r = await fetchText(l.url);
+    status = r.status;
+    assertCrawlable(stripTags(r.text));
+    text = r.text;
+  } catch (e) {
+    failed.push({ id: l.id, label: l.label, error: e.message });
+    recordHealth(health, l, { ok: false, status, error: e.message });
+    console.log(`✗ FAILED ${l.id} (${l.label}) — ${e.message}`);
+    // 抓取失败保留上一次基线，与 page 源同理：恢复后不做无谓比对
+    if (listRaw[l.id]) listBases[l.id] = listRaw[l.id];
+    continue;
+  }
+
+  let items;
+  try {
+    items = parseListItems(text, l);
+  } catch (e) {
+    failed.push({ id: l.id, label: l.label, error: `配置错误：${e.message}` });
+    recordHealth(health, l, { ok: false, status, error: `配置错误：${e.message}` });
+    console.log(`✗ FAILED ${l.id} (${l.label}) — 配置错误：${e.message}`);
+    if (listRaw[l.id]) listBases[l.id] = listRaw[l.id];
+    continue;
+  }
+
+  // 0 条保护：选择器失效或页面改版。绝不建基线、不写 alert（没有可信数据就没有发言权），只记源健康
+  if (!items.length) {
+    failed.push({ id: l.id, label: l.label, error: `itemSelector「${l.itemSelector}」解析出 0 条` });
+    recordHealth(health, l, { ok: false, status, error: `itemSelector「${l.itemSelector}」解析出 0 条（疑似选择器失效或页面改版）` });
+    console.log(`✗ EMPTY ${l.id} (${l.label}) — 解析出 0 条，禁止建基线`);
+    if (listRaw[l.id]) listBases[l.id] = listRaw[l.id];
+    continue;
+  }
+
+  const prev = listRaw[l.id] || null;
+  const note = `${items.length} 条`;
+
+  // 首次见到该源：建立基线，不报警
+  if (!prev || !Array.isArray(prev.items)) {
+    listBases[l.id] = { items, since: d };
+    console.log(`· baseline ${l.id}（${items.length} 条）`);
+    recordHealth(health, l, { ok: true, status, detail: `首建条目基线 ${items.length} 条` });
+    continue;
+  }
+
+  const changes = diffListChanges(prev.items, items, l.keyField);
+
+  if (!changes.length) {
+    // 与基线一致：清掉待确认状态，并自动关闭此前的人工核实提醒（与 page 源的 auto-revert 同构）
+    delete prev.pending;
+    delete prev.pendingSince;
+    listBases[l.id] = { items, since: prev.since || d };
+    const ex = alerts.find((a) => a.id === l.id && !a.resolved);
+    if (ex) {
+      ex.resolved = true;
+      ex.resolvedBy = "auto-revert";
+      ex.resolvedAt = d;
+      const transients = readJSON("data/auto/transients.json", { items: [] });
+      transients.items.push({
+        id: l.id,
+        label: l.label,
+        url: l.url,
+        detected: ex.detected,
+        resolvedAt: d,
+        resolvedBy: "auto-revert",
+        note: "条目数据回到基线，原始变动可能为临时促销/渲染变体",
+      });
+      transients.items = transients.items.slice(-100);
+      writeJSON("data/auto/transients.json", transients);
+      console.log(`✓ REVERTED ${l.id} — 条目数据回到基线，自动关闭待核实提醒`);
+    }
+    recordHealth(health, l, { ok: true, status, detail: `${note}，无变化` });
+    continue;
+  }
+
+  // 结构变更熔断：条目骤减/过半变动时，逐字段 changes 没有意义（多半是页面改版）
+  if (isStructuralBreakdown(changes, items.length, prev.items.length)) {
+    alerts.push({
+      id: l.id,
+      label: l.label,
+      url: l.url,
+      tier: l.tier,
+      kind: "structure-change",
+      note: `条目 ${prev.items.length} → ${items.length}，变动占比过高，疑似页面结构变更；基线未更新，请先用 probe-source.mjs 核对选择器`,
+      detected: d,
+      resolved: false,
+    });
+    // 熔断的关键不只是「不写新基线」，还必须把旧基线原样带回写盘——否则本轮 listBases 里
+    // 没有该源，下次巡检会把坏结构当成「首次见到的页面」重新建基线，等于熔断失效
+    listBases[l.id] = { items: prev.items, since: prev.since || d };
+    console.log(`⚠ STRUCTURE ${l.id} (${l.label}) — 条目 ${prev.items.length} → ${items.length}，疑似结构变更，只提醒不更新基线`);
+    recordHealth(health, l, { ok: true, status, detail: `疑似结构变更（${prev.items.length}→${items.length} 条），待人工核对选择器` });
+    continue;
+  }
+
+  // 二次确认：与上次「待确认快照」一致才判定为真实变动
+  const pendingSame = Array.isArray(prev.pending) && !diffListChanges(prev.pending, items, l.keyField).length;
+  if (pendingSame) {
+    prev.items = items;
+    delete prev.pending;
+    delete prev.pendingSince;
+    listBases[l.id] = prev;
+    const ex = alerts.find((a) => a.id === l.id && !a.resolved);
+    if (ex && ex.kind === "list-change") {
+      ex.detected = d;
+      ex.changes = changes.slice(0, MAX_CHANGES_IN_ALERT);
+    } else {
+      // 同源遗留了其它类型（如 page 时代的 page-change）的未解决提醒：已被新事实取代，关掉再开新卡
+      if (ex) {
+        ex.resolved = true;
+        ex.resolvedBy = "superseded";
+        ex.resolvedAt = d;
+      }
+      alerts.push({
+        id: l.id,
+        label: l.label,
+        url: l.url,
+        tier: l.tier,
+        kind: "list-change",
+        changes: changes.slice(0, MAX_CHANGES_IN_ALERT),
+        detected: d,
+        resolved: false,
+      });
+    }
+    changedLists.push(l.id);
+    console.log(`★ CHANGED ${l.id} (${l.label}) — ${changes.length} 处字段变动（两次巡检确认）`);
+    recordHealth(health, l, { ok: true, status, detail: `${note}，${changes.length} 处变动（已确认）` });
+  } else {
+    listBases[l.id] = { items: prev.items, since: prev.since || d, pending: items, pendingSince: d };
+    pendingLists.push(l.id);
+    console.log(`… PENDING ${l.id} (${l.label}) — 首见 ${changes.length} 处变动，下次巡检仍一致才报警`);
+    recordHealth(health, l, { ok: true, status, detail: `${note}，发现 ${changes.length} 处变动，待二次确认` });
+  }
+}
+
 // 清理已禁用源的基线，避免它们长期占位造成"在监控"的错觉
 for (const p of disabled) {
   if (hashes[p.id] || raw[p.id]) console.log(`- 已停用监控：${p.id}`);
 }
 
 writeJSON("data/auto/pagehash.json", hashes);
+writeJSON("data/auto/listbase.json", listBases);
 writeJSON("data/auto/alerts.json", alerts);
 saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);
 if (dead.length) console.log(`\n⚠ 已失效源（连续失败 ≥${FAIL_THRESHOLD} 天）：${dead.map((x) => x.label).join("、")}`);
+const allChanged = [...changed, ...changedLists];
 console.log(
-  `\n总结：监控 ${pages.length} 页 · 确认变动 ${changed.length}（${changed.join(",") || "无"}）` +
-  ` · 待二次确认 ${pending.length}（${pending.join(",") || "无"}）` +
+  `\n总结：哈希监控 ${pages.length} 页 · 条目监控 ${lists.length} 源` +
+  ` · 确认变动 ${allChanged.length}（${allChanged.join(",") || "无"}）` +
+  ` · 待二次确认 ${pending.length + pendingLists.length}（${[...pending, ...pendingLists].join(",") || "无"}）` +
   ` · 不稳定 ${unstable.length}（${unstable.join(",") || "无"}）` +
   ` · 抓取失败 ${failed.length}（${failed.map((f) => f.id).join(",") || "无"}）`
 );
-if (changed.length) console.log(`SUMMARY_CHANGED: ${changed.join(",")}`);
+if (allChanged.length) console.log(`SUMMARY_CHANGED: ${allChanged.join(",")}`);
 else console.log("SUMMARY_CLEAN: no official page changed");

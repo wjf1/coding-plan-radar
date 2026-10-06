@@ -14,7 +14,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const { hash16, stripTags, excerpt, compileMatcher, parseFeed, daysAgo, writeJSON, readJSON } = await import(
+const { hash16, stripTags, excerpt, compileMatcher, parseFeed, daysAgo, writeJSON, readJSON, parseSimpleSelector, matchBlocks, pickText, parseListItems, diffListChanges, isStructuralBreakdown } = await import(
   new URL("../scripts/lib.mjs", import.meta.url).href
 );
 
@@ -165,4 +165,129 @@ test("validate：拦住脚本语法错误（CI 里 node 直接起不来）", () 
   const r = validateInTmp((d) => writeFileSync(join(d, "scripts", "broken.mjs"), "export const x = ;\n"));
   assert.notEqual(r.code, 0);
   assert.match(r.out, /broken\.mjs/);
+});
+
+/* ---------------- 5. list 条目级抽取（v7.3） ---------------- */
+const LIST_HTML = `
+<!-- 注释里的假卡片 <div class="plan-card">fake</div> 不算数 -->
+<script>if (a < b) { render("<div class=\\"plan-card\\">js</div>"); }</script>
+<main>
+  <div class="wrap">
+    <div class="plan-card"><h3>Lite</h3><span class="price">¥<b>19</b>.9</span><img src="dot.png"><p>2,000 积分</p></div>
+    <div class="plan-card"><h3>Pro</h3><span class="price">49</span><p>12,000 积分</p></div>
+  </div>
+  <table><thead><tr><th>套餐</th><th>额度</th></tr></thead>
+  <tbody><tr><td>Lite</td><td>10,000</td></tr><tr><td>Max</td><td>28,000</td></tr></tbody></table>
+</main>`;
+
+test("matchBlocks：注释与 script 里的假标签不参与配对，class 顺序无关", () => {
+  const blocks = matchBlocks(LIST_HTML, ".plan-card");
+  assert.equal(blocks.length, 2, `应命中 2 张卡片（注释/脚本里的不算），实际 ${blocks.length}`);
+  assert.equal(pickText(blocks[0], "h3"), "Lite");
+  // class 有多个时同样命中（属性解析按词匹配，不要求整串相等）
+  assert.equal(matchBlocks(LIST_HTML, "div.plan-card").length, 2);
+});
+
+test("pickText：内联标签不加热空格（¥<b>19</b>.9 → ¥19.9），缺失返回空串", () => {
+  const [card] = matchBlocks(LIST_HTML, ".plan-card");
+  assert.equal(pickText(card, ".price"), "¥19.9");
+  assert.equal(pickText(card, "p"), "2,000 积分");
+  assert.equal(pickText(card, ".nope"), "");
+  assert.equal(pickText(card, "td"), "");
+});
+
+test("选择器路径：容器取行 + 行内取单元格（list 源的实际用法）", () => {
+  // 三级路径取行，fields 在行块内单级取单元格
+  const [maxRow] = matchBlocks(LIST_HTML, "table:nth(1) tbody tr:nth(2)");
+  assert.equal(pickText(maxRow, "td:nth(1)"), "Max");
+  assert.equal(pickText(maxRow, "td:nth(2)"), "28,000");
+  assert.equal(pickText(LIST_HTML, "tbody tr td:nth(1)"), "Lite");
+});
+
+test("parseSimpleSelector：非法语法抛错，绝不静默降级", () => {
+  assert.throws(() => parseSimpleSelector("a b"), /不支持的选择器语法/); // 空格不是单级
+  assert.throws(() => parseSimpleSelector("div[class]"), /不支持的选择器语法/); // 属性选择器
+  assert.throws(() => parseSimpleSelector("div:nth(0)"), /≥1/); // k 必须 ≥1
+  assert.throws(() => matchBlocks(LIST_HTML, "div .wrap .plan-card a"), /最多三级/); // 四级路径
+  assert.equal(parseSimpleSelector(".a.b").classes.length, 2);
+  assert.equal(parseSimpleSelector("tr:nth(3)").nth, 3);
+});
+
+test("parseListItems：端到端抽取与 0 条返回空数组", () => {
+  const items = parseListItems(LIST_HTML, {
+    itemSelector: ".plan-card",
+    fields: { name: "h3", price: ".price" },
+  });
+  assert.deepEqual(
+    items.map((i) => ({ name: i.name, price: i.price })),
+    [
+      { name: "Lite", price: "¥19.9" },
+      { name: "Pro", price: "49" },
+    ]
+  );
+  assert.deepEqual(parseListItems(LIST_HTML, { itemSelector: ".ghost", fields: { a: "b" } }), []);
+});
+
+test("diffListChanges：改值/新增/消失/无变化，同 key 按次序区分", () => {
+  const base = [
+    { name: "Lite", quota: "10,000" },
+    { name: "Pro", quota: "60,000" },
+    { name: "Max", quota: "140,000" },
+  ];
+  const cur = [
+    { name: "Lite", quota: "12,000" },
+    { name: "Pro", quota: "60,000" },
+    { name: "Max", quota: "140,000" },
+    { name: "Ultra", quota: "300,000" },
+  ];
+  assert.deepEqual(diffListChanges(base, cur, "name"), [
+    { item: "Lite", field: "quota", from: "10,000", to: "12,000" },
+    { item: "Ultra", field: "__entry__", from: null, to: "新增条目" },
+  ]);
+  assert.deepEqual(diffListChanges(cur, base, "name"), [
+    { item: "Lite", field: "quota", from: "12,000", to: "10,000" },
+    { item: "Ultra", field: "__entry__", from: "已移除", to: null },
+  ]);
+  assert.deepEqual(diffListChanges(base, base.slice(), "name"), []);
+  // 同名两行（如同一模型两档缓存率）：#2 不该吞掉或错配
+  const dupBase = [{ name: "M", v: "1" }, { name: "M", v: "2" }];
+  const dupCur = [{ name: "M", v: "1" }, { name: "M", v: "9" }];
+  assert.deepEqual(diffListChanges(dupBase, dupCur, "name"), [{ item: "M#2", field: "v", from: "2", to: "9" }]);
+});
+
+test("isStructuralBreakdown：0 条熔断；条目 ≥4 时过半变动熔断；少量条目逐条报", () => {
+  const five = ["a", "b", "c", "d", "e"].map((n) => ({ name: n, v: "1" }));
+  const threeChanged = five.map((x, i) => ({ ...x, v: i < 3 ? "2" : "1" }));
+  assert.equal(isStructuralBreakdown(diffListChanges(five, threeChanged, "name"), 5, 5), true); // 3/5 过半
+  assert.equal(isStructuralBreakdown(diffListChanges(five, five.slice(0, 4), "name"), 4, 5), false); // 移除 1 条(1/4)
+  const three = ["a", "b", "c"].map((n) => ({ name: n, v: "1" }));
+  const allThree = three.map((x) => ({ ...x, v: "2" }));
+  assert.equal(isStructuralBreakdown(diffListChanges(three, allThree, "name"), 3, 3), false); // 条目 <4 逐条报
+  assert.equal(isStructuralBreakdown([], 0, 5), true); // 解析出 0 条
+  assert.equal(isStructuralBreakdown([], 3, 0), false); // 双方皆空（异常防御）
+});
+
+test("validate：拦住缺少 itemSelector 的 list 源（选择器契约必须显式声明）", () => {
+  const r = validateInTmp((d) => {
+    const p = join(d, "data", "manual", "sources.json");
+    const doc = JSON.parse(readFileSync(p, "utf8"));
+    doc.lists = [{ id: "bad", label: "x", url: "https://example.com", tier: "official", type: "list", fields: { a: "b" } }];
+    writeFileSync(p, JSON.stringify(doc, null, 1));
+  });
+  assert.notEqual(r.code, 0);
+  assert.match(r.out, /itemSelector/);
+});
+
+test("validate：拦住 itemSelector 语法不支持的 list 源（四级路径/逗号）", () => {
+  const r = validateInTmp((d) => {
+    const p = join(d, "data", "manual", "sources.json");
+    const doc = JSON.parse(readFileSync(p, "utf8"));
+    doc.lists = [
+      { id: "bad1", label: "x", url: "https://example.com", tier: "official", type: "list", itemSelector: "a b c d e", fields: { a: "b" } },
+      { id: "bad2", label: "x", url: "https://example.com", tier: "official", type: "list", itemSelector: "div,span", fields: { a: "b" } },
+    ];
+    writeFileSync(p, JSON.stringify(doc, null, 1));
+  });
+  assert.notEqual(r.code, 0);
+  assert.match(r.out, /itemSelector/);
 });

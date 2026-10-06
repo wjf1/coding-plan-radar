@@ -1,5 +1,6 @@
 {
-  "_note": "信息源声明清单（唯一事实来源）。scripts/*.mjs 一律读本文件，不再硬编码 URL。type: feed=RSS/Atom 订阅源 | page=页面内容哈希监控 | api=JSON 接口差异检测。tier: official=官方直采 | realtime=实时数据源 | agg=聚合参考 | community=社区情报（仅进动态区）。enabled=false 表示暂不抓取，reason 说明原因——被禁用的源仍会显示在站点「数据说明」里，不做静默隐藏。",
+  "_note": "信息源声明清单（唯一事实来源）。scripts/*.mjs 一律读本文件，不再硬编码 URL。type: feed=RSS/Atom 订阅源 | page=页面内容哈希监控 | list=条目级抽取监控（itemSelector/fields，见 lists 数组） | api=JSON 接口差异检测。tier: official=官方直采 | realtime=实时数据源 | agg=聚合参考 | community=社区情报（仅进动态区）。enabled=false 表示暂不抓取，reason 说明原因——被禁用的源仍会显示在站点「数据说明」里，不做静默隐藏。",
+  "_listNote": "lists 条目级监控源（v7.3）：itemSelector 支持 tag/.class/#id 单级组合 + :nth(k) 后缀 + 最多三级后代路径（如 table:nth(1) tbody tr）；fields 为字段名 → 块内单级选择器（可带 :nth(k)）；keyField 指定条目主键（须在 fields 里）。改动 selector 前必须先跑 node scripts/probe-source.mjs <id> 预览，解析出 0 条禁止建基线。",
   "_keywordNote": "keywords 为整词匹配（英文短词加词边界 + 允许复数），因此请写完整单词如 pricing/deprecation，不要写 pric/deprecat 这类前缀，否则不会命中；中文按包含匹配。留空数组表示不过滤。",
   "tiers": {
     "official": {
@@ -292,14 +293,6 @@
       "note": "已停止自动哈希监控；价格变动依赖官方 RSS + 人工复核"
     },
     {
-      "id": "glm",
-      "label": "GLM Coding Plan 官方文档",
-      "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
-      "tier": "official",
-      "type": "page",
-      "enabled": true
-    },
-    {
       "id": "kimi",
       "label": "Kimi 开放平台定价文档",
       "url": "https://platform.kimi.com/docs/pricing",
@@ -413,6 +406,23 @@
       "enabled": false,
       "reason": "2026-09-23 评估：对非浏览器请求返回反爬/登录拦截页，GitHub Actions 海外出口与本机均无法获取有效内容。属反爬机制而非结构变更，改为 page-unreliable 停止哈希监控；当前价格数据来自 toolradar 聚合验证，需人工复核官方页。",
       "note": "已停止自动哈希监控；当前价格来自 toolradar 聚合参考（2026-09-01 验证），需人工复核"
+    }
+  ],
+  "lists": [
+    {
+      "id": "glm",
+      "label": "GLM Coding Plan 官方文档（条目级）",
+      "url": "https://docs.bigmodel.cn/cn/coding-plan/overview",
+      "tier": "official",
+      "type": "list",
+      "itemSelector": "table:nth(1) tbody tr",
+      "fields": {
+        "name": "td:nth(1)",
+        "quota5h": "td:nth(2)",
+        "quotaWeek": "td:nth(3)"
+      },
+      "keyField": "name",
+      "note": "v7.3 起从整页哈希（page）迁移为条目级比对（list）：该页约 800KB，整页哈希对任何无关改动（文案/导航/样式）都会报警且只说「页面变了」；现在只盯「套餐类型 / 5 小时积分 / 每周积分」表，告警直接给出档位与字段的前后值"
     }
   ],
   "apis": [
