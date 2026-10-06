@@ -1,6 +1,90 @@
 {
- "generatedAt": "2026-10-05",
+ "generatedAt": "2026-10-06",
  "items": [
+  {
+   "id": "freebie-repos:326519d25e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "feat: nightly refresh 2026-10-05",
+   "excerpt": "Guillaume Gay 提交于 2026-10-05",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/41197cb7d053680daf808d6618142045e961caaa",
+   "date": "2026-10-05T04:12:45Z",
+   "firstSeen": "2026-10-06",
+   "lastSeen": "2026-10-06"
+  },
+  {
+   "id": "github-status:808c9ced33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with some GitHub services",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 6</var>, <var data-var='time'>01:32</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/2kxnqcxcrr7f",
+   "date": "Tue, 06 Oct 2026 01:32:43 +0000",
+   "firstSeen": "2026-10-06",
+   "lastSeen": "2026-10-06"
+  },
+  {
+   "id": "github-status:18a2c64333",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Actions",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 5</var>, <var data-var='time'>22:49</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/3q1yb5m7ltvb",
+   "date": "Mon, 05 Oct 2026 22:49:42 +0000",
+   "firstSeen": "2026-10-06",
+   "lastSeen": "2026-10-06"
+  },
+  {
+   "id": "ithome:9794388124",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "英伟达黄仁勋“世界巡演”AI 视频海内外爆火，马斯克调侃“内存涨价的原因找到了”",
+   "excerpt": "<p data-vmark=\"405f\">IT之家 10 月 6 日消息，近期有关迈克尔 · 杰克逊演唱会的二创视频在国内视频平台爆火，网友们将舞台上的迈克尔 · 杰克逊和台下的观众替换为各种知名人物。</p><p data-vmark=\"9587\">B站 UP 主“王与也行”10 月 4 日发布的一段“<span class=\"no-auto-spacing\">黄仁勋 世界巡演</span>”AI 视频已收获超百万播放量，甚至火到了海外，引来埃隆 · 马斯克的调侃：<strong>这就是内存价格如此昂贵的原因</strong>。</p><p data-vmark=\"5502\" style=\"…",
+   "url": "https://www.ithome.com/1/009/953.htm",
+   "date": "Tue, 06 Oct 2026 01:51:55 GMT",
+   "firstSeen": "2026-10-06",
+   "lastSeen": "2026-10-06"
+  },
+  {
+   "id": "openai-status:55b5cab03f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated Work Mode errors",
+   "excerpt": "Status: Monitoring We have mitigated the issue, and are monitoring recovery. Affected components Codex in ChatGPT Desktop (Degraded performance) ChatGPT Work (Degraded performance)",
+   "url": "https://status.openai.com//incidents/01M45E0JFFJZ6EQ3BWYPW74R2Z",
+   "date": "Mon, 05 Oct 2026 09:50:38 GMT",
+   "firstSeen": "2026-10-06",
+   "lastSeen": "2026-10-06"
+  },
+  {
+   "id": "openrouter:79cd64a536",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-gone",
+   "title": "OpenRouter 免费模型下架：qwen/qwen3.8-27b:free",
+   "excerpt": "该免费模型已从 OpenRouter 模型中消失，站内白嫖板块如有收录需同步下架。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-10-06",
+   "firstSeen": "2026-10-06",
+   "lastSeen": "2026-10-06"
+  },
   {
    "id": "ithome:e45ae5be24",
    "source": "ithome",
@@ -69,7 +153,7 @@
    "url": "https://github.blog/changelog/2026-10-02-copilot-code-review-api-support-and-new-default-effort-level",
    "date": "Fri, 02 Oct 2026 19:13:50 +0000",
    "firstSeen": "2026-10-03",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "gh-changelog:2118478855",
@@ -83,7 +167,7 @@
    "url": "https://github.blog/changelog/2026-10-02-selected-models-in-github-copilot-deprecated",
    "date": "Fri, 02 Oct 2026 18:24:19 +0000",
    "firstSeen": "2026-10-03",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "ithome:401301b224",
@@ -195,7 +279,7 @@
    "url": "https://www.githubstatus.com/incidents/2dpbcq5j165n",
    "date": "Thu, 01 Oct 2026 17:56:54 +0000",
    "firstSeen": "2026-10-02",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "github-status:673e6f3f33",
@@ -349,7 +433,7 @@
    "url": "https://www.githubstatus.com/incidents/169pg72gg9jr",
    "date": "Mon, 28 Sep 2026 22:08:20 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "github-status:b838ed2c33",
@@ -377,7 +461,7 @@
    "url": "https://www.githubstatus.com/incidents/8zc63m64hy36",
    "date": "Thu, 24 Sep 2026 04:55:33 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "hn-algolia:454a84152d",
@@ -391,7 +475,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "ithome:99745cd324",
@@ -447,7 +531,7 @@
    "url": "https://openai.com/index/lenfest-ai-collaborative-expansion",
    "date": "Mon, 28 Sep 2026 07:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "openai-news:3e47da2b38",
@@ -461,7 +545,7 @@
    "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
    "date": "Wed, 23 Sep 2026 12:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-05"
+   "lastSeen": "2026-10-06"
   },
   {
    "id": "openai-status:6d5a67be3f",

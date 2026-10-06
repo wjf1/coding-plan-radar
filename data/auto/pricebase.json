@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-05",
+ "updatedAt": "2026-10-06",
  "modelsdev": {
   "anthropic|claude-haiku-4-5": 5,
   "anthropic|claude-opus-4-5": 25,
@@ -245,7 +245,6 @@
   "nvidia/nemotron-3.5-lightning:free",
   "poolside/laguna-s-2.1:free",
   "poolside/laguna-xs-2.1:free",
-  "qwen/qwen3.8-27b:free",
   "thinkingmachines/inkling-small:free",
   "thinkingmachines/inkling:free"
  ],
@@ -1318,6 +1317,8 @@
   "prism/deepseek-v4-flash": 0.21,
   "openrouter/anthropic/claude-sonnet-5.5:batch": 5,
   "baseten/deepseek-ai/DeepSeek-V4.1-Flash-Fast": 2.4,
-  "azure_ai/kimi-k2-thinking": 2.5
+  "azure_ai/kimi-k2-thinking": 2.5,
+  "global.zai.glm-5.3": 5.28,
+  "us.zai.glm-5.3": 5.808
  }
 }
