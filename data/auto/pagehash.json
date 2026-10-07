@@ -2,17 +2,17 @@
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "3e1ebe3d567a",
    "4cc175f55711",
    "17b1d91156f3",
    "cff41a935734",
    "a61e90bd56b2",
-   "0f37d193568a"
+   "0f37d193568a",
+   "bdfc32a95670"
   ],
   "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "0f37d193568a",
+  "pending": "bdfc32a95670",
   "pendingSince": "2026-09-22",
   "unstable": true
  },

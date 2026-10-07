@@ -1,6 +1,118 @@
 {
- "generatedAt": "2026-10-06",
+ "generatedAt": "2026-10-07",
  "items": [
+  {
+   "id": "claude-status:b33592b630",
+   "source": "claude-status",
+   "sourceLabel": "Claude Status",
+   "sourceUrl": "https://status.claude.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated errors loading usage data on platform.claude.com",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 7</var>, <var data-var='time'>02:33</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. From 17:00 PT on October 6 / 00:00 UTC on October 7 to 18:40 PT on October 6 / 01:40 UTC on October 7, many requests to load usage data on the p…",
+   "url": "https://status.claude.com/incidents/wf2v8ms031sx",
+   "date": "Wed, 07 Oct 2026 02:33:38 +0000",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
+  {
+   "id": "gh-changelog:a4a131256b",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Update your IDE to restore agent activity in Copilot usage metrics",
+   "excerpt": "If your Copilot usage metrics have shown agent activity or agent lines of code falling while Copilot usage kept growing, we’ve found the cause, and a fix is rolling out…",
+   "url": "https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics",
+   "date": "Tue, 06 Oct 2026 23:43:00 +0000",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
+  {
+   "id": "github-status:ebd2c5d833",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Several services are degraded",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 6</var>, <var data-var='time'>23:40</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/cjwszcf57bff",
+   "date": "Tue, 06 Oct 2026 23:40:44 +0000",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
+  {
+   "id": "ithome:7e7475f324",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "DRAM 迎超级增长周期，传南亚科计划涨价最高 20%",
+   "excerpt": "<p data-vmark=\"51ee\">IT之家 10 月 7 日消息，据台媒经济日报今日报道，业界传出消息，南亚科近期陆续通知客户，<strong>将再次调高 DRAM 合约价，涨幅最高可达 20%</strong>，为内存涨价行情再添柴火。</p><p data-vmark=\"efc8\">对于再次涨价的消息，南亚科表示，关于客户报价的议题，均无法回应。法人看好，随着南亚科启动新一波合约价调整，相关调涨效益将逐步反映，同步推升南亚科平均售价（ASP）与获利，带动整体运营持续向上。</p><p style=\"text-align: center;\" data-vmark=\"430b\"><im…",
+   "url": "https://www.ithome.com/1/010/175.htm",
+   "date": "Wed, 07 Oct 2026 03:10:56 GMT",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
+  {
+   "id": "ithome:03dd041524",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "三星 2026 Q3 营业利润预计同比增长近 9 倍，存储涨价放缓引担忧",
+   "excerpt": "<p data-vmark=\"3b93\">IT之家 10 月 7 日消息，受人工智能领域旺盛需求的拉动，三星电子第三季度营业利润预计将增长近九倍；不过自 8 月底以来，分析师已经把该公司盈利预测下调了接近 8%。</p><p style=\"text-align: center;\" data-vmark=\"3091\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/3/ff981935-0ecd-4222-944f-5a5a1b43b922.jpg?x-bce-process=image/format,f_auto\" w=\"763\" h…",
+   "url": "https://www.ithome.com/1/010/173.htm",
+   "date": "Wed, 07 Oct 2026 03:04:48 GMT",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
+  {
+   "id": "openai-news:8b3ff1c22e",
+   "source": "openai-news",
+   "sourceLabel": "OpenAI News",
+   "sourceUrl": "https://openai.com/news/rss.xml",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Atlassian and OpenAI expand partnership to turn enterprise knowledge into action",
+   "excerpt": "Atlassian and OpenAI are expanding their partnership to connect frontier models with enterprise knowledge and help teams plan, build, and deliver work.",
+   "url": "https://openai.com/index/atlassian-partnership",
+   "date": "Tue, 06 Oct 2026 16:00:00 GMT",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
+  {
+   "id": "openai-status:1ad102163f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Unable to create new ChatGPT Work threads in latest version of desktop app",
+   "excerpt": "Status: Identified we have identified the issue, working on rolling back to the previous version. Affected components Codex in ChatGPT Desktop (Partial outage)",
+   "url": "https://status.openai.com//incidents/01M4ADHMMBK7K92NJFJ0DXRYJM",
+   "date": "Wed, 07 Oct 2026 05:54:27 GMT",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
+  {
+   "id": "openai-status:bf7256f73f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Workspace Agents Degraded and Responses Impacted",
+   "excerpt": "Status: Resolved All impacted services have now fully recovered. Affected components Agent (Operational)",
+   "url": "https://status.openai.com//incidents/01M49YQE6WZT02WYF0KBXVMQ5G",
+   "date": "Wed, 07 Oct 2026 03:00:54 GMT",
+   "firstSeen": "2026-10-07",
+   "lastSeen": "2026-10-07"
+  },
   {
    "id": "freebie-repos:326519d25e",
    "source": "freebie-repos",
@@ -13,7 +125,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/41197cb7d053680daf808d6618142045e961caaa",
    "date": "2026-10-05T04:12:45Z",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "github-status:808c9ced33",
@@ -27,7 +139,7 @@
    "url": "https://www.githubstatus.com/incidents/2kxnqcxcrr7f",
    "date": "Tue, 06 Oct 2026 01:32:43 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "github-status:18a2c64333",
@@ -41,7 +153,7 @@
    "url": "https://www.githubstatus.com/incidents/3q1yb5m7ltvb",
    "date": "Mon, 05 Oct 2026 22:49:42 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "ithome:9794388124",
@@ -153,7 +265,7 @@
    "url": "https://github.blog/changelog/2026-10-02-copilot-code-review-api-support-and-new-default-effort-level",
    "date": "Fri, 02 Oct 2026 19:13:50 +0000",
    "firstSeen": "2026-10-03",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "gh-changelog:2118478855",
@@ -167,7 +279,7 @@
    "url": "https://github.blog/changelog/2026-10-02-selected-models-in-github-copilot-deprecated",
    "date": "Fri, 02 Oct 2026 18:24:19 +0000",
    "firstSeen": "2026-10-03",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "ithome:401301b224",
@@ -279,7 +391,7 @@
    "url": "https://www.githubstatus.com/incidents/2dpbcq5j165n",
    "date": "Thu, 01 Oct 2026 17:56:54 +0000",
    "firstSeen": "2026-10-02",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "github-status:673e6f3f33",
@@ -433,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/169pg72gg9jr",
    "date": "Mon, 28 Sep 2026 22:08:20 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "github-status:b838ed2c33",
@@ -461,7 +573,7 @@
    "url": "https://www.githubstatus.com/incidents/8zc63m64hy36",
    "date": "Thu, 24 Sep 2026 04:55:33 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "hn-algolia:454a84152d",
@@ -475,7 +587,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "ithome:99745cd324",
@@ -531,7 +643,7 @@
    "url": "https://openai.com/index/lenfest-ai-collaborative-expansion",
    "date": "Mon, 28 Sep 2026 07:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "openai-news:3e47da2b38",
@@ -545,7 +657,7 @@
    "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
    "date": "Wed, 23 Sep 2026 12:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-06"
+   "lastSeen": "2026-10-07"
   },
   {
    "id": "openai-status:6d5a67be3f",
