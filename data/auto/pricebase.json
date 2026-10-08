@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-07",
+ "updatedAt": "2026-10-08",
  "modelsdev": {
   "anthropic|claude-haiku-4-5": 5,
   "anthropic|claude-opus-4-5": 25,
@@ -14,6 +14,7 @@
   "anthropic|claude-sonnet-5": 10,
   "anthropic|claude-opus-4-6": 25,
   "anthropic|claude-haiku-4-5-20251001": 5,
+  "anthropic|claude-haiku-5-5": 0.5,
   "anthropic|claude-sonnet-4-6": 15,
   "anthropic|claude-sonnet-5-5": 10,
   "anthropic|claude-opus-4-7": 25,
@@ -228,7 +229,7 @@
   "alibaba|qwen3.6-plus": 3,
   "alibaba|qwen3-14b": 1.4,
   "alibaba|qwen3.7-plus": 1.6,
-  "alibaba|qwen-vl-ocr": 0.72
+  "alibaba|qwen-vl-ocr": 0.16
  },
  "openrouterFree": [
   "apodex/apodex-1.1-mini:free",
@@ -1062,9 +1063,9 @@
   "bedrock/us-gov-east-1/anthropic.claude-opus-4-8": 30,
   "bedrock/us-gov-east-1/anthropic.claude-opus-5": 30,
   "bedrock/us-gov-east-1/anthropic.claude-opus-5-5": 24,
-  "bedrock_mantle/us-gov-west-1/openai.gpt-5.6-terra": 15.84,
-  "bedrock_mantle/us-gov-west-1/openai.gpt-5.6-luna": 1.584,
-  "bedrock_mantle/us-gov-west-1/openai.gpt-5.4": 19.8,
+  "bedrock_mantle/us-gov-west-1/openai.gpt-5.6-terra": 16.2,
+  "bedrock_mantle/us-gov-west-1/openai.gpt-5.6-luna": 1.62,
+  "bedrock_mantle/us-gov-west-1/openai.gpt-5.4": 20.25,
   "bedrock_mantle/us-gov-west-1/anthropic.claude-opus-5-5": 24,
   "bedrock_mantle/us-gov-west-1/anthropic.claude-sonnet-5-5": 12,
   "bedrock_mantle/us-gov-east-1/openai.gpt-5.4": 19.8,

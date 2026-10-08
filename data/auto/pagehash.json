@@ -2,17 +2,17 @@
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "4cc175f55711",
    "17b1d91156f3",
    "cff41a935734",
    "a61e90bd56b2",
    "0f37d193568a",
-   "bdfc32a95670"
+   "bdfc32a95670",
+   "13aeefbb5677"
   ],
   "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "bdfc32a95670",
+  "pending": "13aeefbb5677",
   "pendingSince": "2026-09-22",
   "unstable": true
  },
@@ -22,13 +22,14 @@
    "d596a35940f",
    "c3990aea451",
    "6460286555a",
-   "e9401ee3559"
+   "e9401ee3559",
+   "aa7514265a9"
   ],
   "flaps": 0,
   "changedAt": "2026-09-21",
   "revertCount": 2,
   "unstable": true,
-  "pending": "e9401ee3559",
+  "pending": "aa7514265a9",
   "pendingSince": "2026-09-23"
  },
  "trae": {

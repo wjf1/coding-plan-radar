@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-07",
+ "generatedAt": "2026-10-08",
  "source": "https://models.dev/api.json",
  "models": [
   {
@@ -152,6 +152,17 @@
    "n": "Qwen3.8 Omni Flash",
    "i": 0.15,
    "o": 0.47,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "Anthropic",
+   "pid": "anthropic",
+   "id": "claude-haiku-5-5",
+   "n": "Claude Haiku 5.5",
+   "i": 0.1,
+   "o": 0.5,
    "c": 1000000,
    "t": true,
    "r": true
@@ -1219,7 +1230,7 @@
    "n": "Claude Sonnet 4.5",
    "i": 3,
    "o": 15,
-   "c": 1000000,
+   "c": 200000,
    "t": true,
    "r": true
   },
@@ -1230,7 +1241,7 @@
    "n": "Claude Sonnet 4.5 (latest)",
    "i": 3,
    "o": 15,
-   "c": 1000000,
+   "c": 200000,
    "t": true,
    "r": true
   },

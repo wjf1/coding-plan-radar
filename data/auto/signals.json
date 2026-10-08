@@ -1,6 +1,160 @@
 {
- "generatedAt": "2026-10-07",
+ "generatedAt": "2026-10-08",
  "items": [
+  {
+   "id": "claude-status:fa20ba2a30",
+   "source": "claude-status",
+   "sourceLabel": "Claude Status",
+   "sourceUrl": "https://status.claude.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Issue with spend limits",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 7</var>, <var data-var='time'>21:23</var> UTC</small><br> <strong>Resolved</strong> - We have identified an issue which resulted in some organizations to be incorrectly paused for having reached their spend limit, resulting in refused requests on the Claude API, …",
+   "url": "https://status.claude.com/incidents/vmys9qn874h4",
+   "date": "Wed, 07 Oct 2026 21:23:29 +0000",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "claude-status:408248d230",
+   "source": "claude-status",
+   "sourceLabel": "Claude Status",
+   "sourceUrl": "https://status.claude.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated errors on platform.claude.com",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 7</var>, <var data-var='time'>21:44</var> UTC</small><br> <strong>Monitoring</strong> - We've mitigated the errors loading usage data on platform.claude.com and in the Admin API usage report. While we work on a full fix, the most recent ~30 minutes of usage may t…",
+   "url": "https://status.claude.com/incidents/978mjkgw6mh7",
+   "date": "Wed, 07 Oct 2026 21:45:27 +0000",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "gh-changelog:b1930ffa4b",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Claude Haiku 5.5 in GitHub Copilot",
+   "excerpt": "Claude Haiku 5.5, Anthropic’s newest lightweight model, is now generally available in GitHub Copilot. It is designed for fast, high-volume work like subagents, quick edits, and terminal tasks. In early…",
+   "url": "https://github.blog/changelog/2026-10-07-claude-haiku-5-5-in-github-copilot",
+   "date": "Wed, 07 Oct 2026 20:12:18 +0000",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "gh-changelog:b77bff9964",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Local sandboxing for GitHub Copilot now generally available",
+   "excerpt": "Local sandboxing for GitHub Copilot is now generally available in GitHub Copilot CLI, the GitHub Copilot app, and VS Code sessions using Agent Host. Local sandboxes give developers a secure…",
+   "url": "https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available",
+   "date": "Wed, 07 Oct 2026 15:46:17 +0000",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "gh-changelog:aeeb038654",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Discover local models in GitHub Copilot CLI",
+   "excerpt": "GitHub Copilot CLI makes it easier to choose a local model without leaving your existing workflow. Starting in CLI version 1.0.94-0, use /model to discover supported models from a running…",
+   "url": "https://github.blog/changelog/2026-10-07-discover-local-models-in-github-copilot-cli",
+   "date": "Wed, 07 Oct 2026 15:46:13 +0000",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "github-status:b75d245f33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Git Operations, Issues, Actions and Pull Requests",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 7</var>, <var data-var='time'>18:04</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/qpfv5p86dmrl",
+   "date": "Wed, 07 Oct 2026 18:04:49 +0000",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "github-status:36d9b6b433",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Git Operations, Pull Requests and Actions",
+   "excerpt": "<p> <small>Oct <var data-var='date'> 7</var>, <var data-var='time'>16:25</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/djlmxz2zd0j7",
+   "date": "Wed, 07 Oct 2026 16:25:14 +0000",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "modelsdev:41c04a6934",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen-vl-ocr 输出价 0.72 → 0.16 $/M（alibaba）",
+   "excerpt": "models.dev 刊例输出价由 $0.72 变为 $0.16 每百万 token。请人工确认后决定是否更新站内数据。",
+   "url": "https://models.dev/alibaba/qwen-vl-ocr",
+   "date": "2026-10-08",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "openai-news:b40f3f172d",
+   "source": "openai-news",
+   "sourceLabel": "OpenAI News",
+   "sourceUrl": "https://openai.com/news/rss.xml",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Helping teens learn, plan, and shape the future of AI",
+   "excerpt": "College Planner is coming to ChatGPT for Teens to help students manage college applications, alongside new flashcards, quizzes, and a teen AI council.",
+   "url": "https://openai.com/index/teens-learn-and-plan",
+   "date": "Wed, 07 Oct 2026 12:00:00 GMT",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "openai-status:aa77f33d3f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Degraded performance in Codex and Work mode: Dot turn failures, delayed responses, and reduced proactivity",
+   "excerpt": "Status: Resolved All impacted services have now fully recovered. Affected components dots (Operational)",
+   "url": "https://status.openai.com//incidents/01M4BP5JE7DKJSP3VG2S2DCWF2",
+   "date": "Wed, 07 Oct 2026 18:23:25 GMT",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
+  {
+   "id": "sspai:a63732c01d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "派早报：微软发布 Windows 相关新品、Google AI 新闻两则等",
+   "excerpt": "Anthropic 推出 Claude for Google Workspace、Reflection 发布首个开放权重模型 Beam 等。<a href=\"https://sspai.com/post/115455\" target=\"_blank\">查看全文</a>",
+   "url": "https://sspai.com/post/115455",
+   "date": "Thu, 08 Oct 2026 08:16:57 +0800",
+   "firstSeen": "2026-10-08",
+   "lastSeen": "2026-10-08"
+  },
   {
    "id": "claude-status:b33592b630",
    "source": "claude-status",
@@ -13,7 +167,7 @@
    "url": "https://status.claude.com/incidents/wf2v8ms031sx",
    "date": "Wed, 07 Oct 2026 02:33:38 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "gh-changelog:a4a131256b",
@@ -27,7 +181,7 @@
    "url": "https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics",
    "date": "Tue, 06 Oct 2026 23:43:00 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "github-status:ebd2c5d833",
@@ -41,7 +195,7 @@
    "url": "https://www.githubstatus.com/incidents/cjwszcf57bff",
    "date": "Tue, 06 Oct 2026 23:40:44 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "ithome:7e7475f324",
@@ -83,7 +237,7 @@
    "url": "https://openai.com/index/atlassian-partnership",
    "date": "Tue, 06 Oct 2026 16:00:00 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "openai-status:1ad102163f",
@@ -111,7 +265,7 @@
    "url": "https://status.openai.com//incidents/01M49YQE6WZT02WYF0KBXVMQ5G",
    "date": "Wed, 07 Oct 2026 03:00:54 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "freebie-repos:326519d25e",
@@ -125,7 +279,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/41197cb7d053680daf808d6618142045e961caaa",
    "date": "2026-10-05T04:12:45Z",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "github-status:808c9ced33",
@@ -139,7 +293,7 @@
    "url": "https://www.githubstatus.com/incidents/2kxnqcxcrr7f",
    "date": "Tue, 06 Oct 2026 01:32:43 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "github-status:18a2c64333",
@@ -153,7 +307,7 @@
    "url": "https://www.githubstatus.com/incidents/3q1yb5m7ltvb",
    "date": "Mon, 05 Oct 2026 22:49:42 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "ithome:9794388124",
@@ -265,7 +419,7 @@
    "url": "https://github.blog/changelog/2026-10-02-copilot-code-review-api-support-and-new-default-effort-level",
    "date": "Fri, 02 Oct 2026 19:13:50 +0000",
    "firstSeen": "2026-10-03",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "gh-changelog:2118478855",
@@ -391,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/2dpbcq5j165n",
    "date": "Thu, 01 Oct 2026 17:56:54 +0000",
    "firstSeen": "2026-10-02",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "github-status:673e6f3f33",
@@ -545,7 +699,7 @@
    "url": "https://www.githubstatus.com/incidents/169pg72gg9jr",
    "date": "Mon, 28 Sep 2026 22:08:20 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "github-status:b838ed2c33",
@@ -587,7 +741,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "ithome:99745cd324",
@@ -643,7 +797,7 @@
    "url": "https://openai.com/index/lenfest-ai-collaborative-expansion",
    "date": "Mon, 28 Sep 2026 07:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-07"
+   "lastSeen": "2026-10-08"
   },
   {
    "id": "openai-news:3e47da2b38",
