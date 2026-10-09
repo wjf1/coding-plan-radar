@@ -1,6 +1,48 @@
 {
- "generatedAt": "2026-10-08",
+ "generatedAt": "2026-10-09",
  "items": [
+  {
+   "id": "ithome:2fec20a724",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "苦 Adobe 高价订阅久矣？四人团队借 AI 开发免费开源“平替”ArtCraft 套件",
+   "excerpt": "<p data-vmark=\"aff4\">IT之家 10 月 9 日消息，多年来，无论是插画师、摄影师，还是设计师和视频剪辑师，都很难摆脱 Adobe 的控制。</p><p data-vmark=\"12b6\">Adobe 旗下的 Creative Suite 软件套装长期因订阅费用高昂而饱受诟病。在后来更名为 Creative Cloud 的过程中，软件也<strong>失去了真正的离线使用能力</strong>。高昂的订阅费和对软件的依赖，让艺术家及其他创意工作者长期难以摆脱 Adobe。</p><p data-vmark=\"ca36\">尽管不少企业曾试图挑战 Adobe，但始终难以撼动 C…",
+   "url": "https://www.ithome.com/1/010/856.htm",
+   "date": "Fri, 09 Oct 2026 03:45:21 GMT",
+   "firstSeen": "2026-10-09",
+   "lastSeen": "2026-10-09"
+  },
+  {
+   "id": "openrouter:7feb1d6546",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-gone",
+   "title": "OpenRouter 免费模型下架：inclusionai/ling-3.0-flash-sante:free",
+   "excerpt": "该免费模型已从 OpenRouter 模型中消失，站内白嫖板块如有收录需同步下架。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-10-09",
+   "firstSeen": "2026-10-09",
+   "lastSeen": "2026-10-09"
+  },
+  {
+   "id": "sspai:8fc4b4001d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "派早报：英伟达 RTX Spark 新品一览、Anthropic 发布 Claude Haiku 5.5 模型等",
+   "excerpt": "XMG 发布 PRO 18 系列笔记本、OpenAI 宣布在 ChatGPT 上线 GPT-6 模型<a href=\"https://sspai.com/post/115532\" target=\"_blank\">查看全文</a>",
+   "url": "https://sspai.com/post/115532",
+   "date": "Fri, 09 Oct 2026 08:51:10 +0800",
+   "firstSeen": "2026-10-09",
+   "lastSeen": "2026-10-09"
+  },
   {
    "id": "claude-status:fa20ba2a30",
    "source": "claude-status",
@@ -13,7 +55,7 @@
    "url": "https://status.claude.com/incidents/vmys9qn874h4",
    "date": "Wed, 07 Oct 2026 21:23:29 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "claude-status:408248d230",
@@ -27,7 +69,7 @@
    "url": "https://status.claude.com/incidents/978mjkgw6mh7",
    "date": "Wed, 07 Oct 2026 21:45:27 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "gh-changelog:b1930ffa4b",
@@ -41,7 +83,7 @@
    "url": "https://github.blog/changelog/2026-10-07-claude-haiku-5-5-in-github-copilot",
    "date": "Wed, 07 Oct 2026 20:12:18 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "gh-changelog:b77bff9964",
@@ -55,7 +97,7 @@
    "url": "https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available",
    "date": "Wed, 07 Oct 2026 15:46:17 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "gh-changelog:aeeb038654",
@@ -69,7 +111,7 @@
    "url": "https://github.blog/changelog/2026-10-07-discover-local-models-in-github-copilot-cli",
    "date": "Wed, 07 Oct 2026 15:46:13 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "github-status:b75d245f33",
@@ -83,7 +125,7 @@
    "url": "https://www.githubstatus.com/incidents/qpfv5p86dmrl",
    "date": "Wed, 07 Oct 2026 18:04:49 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "github-status:36d9b6b433",
@@ -97,7 +139,7 @@
    "url": "https://www.githubstatus.com/incidents/djlmxz2zd0j7",
    "date": "Wed, 07 Oct 2026 16:25:14 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "modelsdev:41c04a6934",
@@ -125,7 +167,7 @@
    "url": "https://openai.com/index/teens-learn-and-plan",
    "date": "Wed, 07 Oct 2026 12:00:00 GMT",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "openai-status:aa77f33d3f",
@@ -139,7 +181,7 @@
    "url": "https://status.openai.com//incidents/01M4BP5JE7DKJSP3VG2S2DCWF2",
    "date": "Wed, 07 Oct 2026 18:23:25 GMT",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "sspai:a63732c01d",
@@ -153,7 +195,7 @@
    "url": "https://sspai.com/post/115455",
    "date": "Thu, 08 Oct 2026 08:16:57 +0800",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "claude-status:b33592b630",
@@ -167,7 +209,7 @@
    "url": "https://status.claude.com/incidents/wf2v8ms031sx",
    "date": "Wed, 07 Oct 2026 02:33:38 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "gh-changelog:a4a131256b",
@@ -181,7 +223,7 @@
    "url": "https://github.blog/changelog/2026-10-06-update-your-ide-to-restore-agent-activity-in-copilot-usage-metrics",
    "date": "Tue, 06 Oct 2026 23:43:00 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "github-status:ebd2c5d833",
@@ -195,7 +237,7 @@
    "url": "https://www.githubstatus.com/incidents/cjwszcf57bff",
    "date": "Tue, 06 Oct 2026 23:40:44 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "ithome:7e7475f324",
@@ -237,7 +279,7 @@
    "url": "https://openai.com/index/atlassian-partnership",
    "date": "Tue, 06 Oct 2026 16:00:00 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "openai-status:1ad102163f",
@@ -265,7 +307,7 @@
    "url": "https://status.openai.com//incidents/01M49YQE6WZT02WYF0KBXVMQ5G",
    "date": "Wed, 07 Oct 2026 03:00:54 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "freebie-repos:326519d25e",
@@ -279,7 +321,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/41197cb7d053680daf808d6618142045e961caaa",
    "date": "2026-10-05T04:12:45Z",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "github-status:808c9ced33",
@@ -293,7 +335,7 @@
    "url": "https://www.githubstatus.com/incidents/2kxnqcxcrr7f",
    "date": "Tue, 06 Oct 2026 01:32:43 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "github-status:18a2c64333",
@@ -307,7 +349,7 @@
    "url": "https://www.githubstatus.com/incidents/3q1yb5m7ltvb",
    "date": "Mon, 05 Oct 2026 22:49:42 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "ithome:9794388124",
@@ -545,7 +587,7 @@
    "url": "https://www.githubstatus.com/incidents/2dpbcq5j165n",
    "date": "Thu, 01 Oct 2026 17:56:54 +0000",
    "firstSeen": "2026-10-02",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "github-status:673e6f3f33",
@@ -699,7 +741,7 @@
    "url": "https://www.githubstatus.com/incidents/169pg72gg9jr",
    "date": "Mon, 28 Sep 2026 22:08:20 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "github-status:b838ed2c33",
@@ -741,7 +783,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "ithome:99745cd324",
@@ -797,7 +839,7 @@
    "url": "https://openai.com/index/lenfest-ai-collaborative-expansion",
    "date": "Mon, 28 Sep 2026 07:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-08"
+   "lastSeen": "2026-10-09"
   },
   {
    "id": "openai-news:3e47da2b38",
