@@ -109,8 +109,11 @@
  "aliyun-coding-plan": {
   "hash": "729cce29ec3",
   "seen": [
-   "729cce29ec3"
+   "729cce29ec3",
+   "9f814d80edd"
   ],
-  "flaps": 0
+  "flaps": 0,
+  "pending": "9f814d80edd",
+  "pendingSince": "2026-10-10"
  }
 }
