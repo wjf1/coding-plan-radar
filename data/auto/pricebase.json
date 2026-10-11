@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-10",
+ "updatedAt": "2026-10-11",
  "modelsdev": {
   "anthropic|claude-haiku-4-5": 5,
   "anthropic|claude-opus-4-5": 25,
@@ -418,8 +418,8 @@
   "bedrock/ap-northeast-1/moonshotai.kimi-k2-thinking": 3.03,
   "bedrock/ap-northeast-1/moonshotai.kimi-k2.5": 3.6,
   "bedrock/ap-northeast-1/qwen.qwen3-coder-next": 1.44,
-  "bedrock/moonshotai.kimi-k2-thinking": 3.03,
-  "bedrock/moonshotai.kimi-k2.5": 3.03,
+  "bedrock/moonshotai.kimi-k2-thinking": 2.5,
+  "bedrock/moonshotai.kimi-k2.5": 3,
   "bedrock/ap-south-1/moonshotai.kimi-k2-thinking": 2.94,
   "bedrock/ap-south-1/moonshotai.kimi-k2.5": 3.6,
   "bedrock/ap-south-1/qwen.qwen3-coder-next": 1.44,
