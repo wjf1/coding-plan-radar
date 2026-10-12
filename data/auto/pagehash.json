@@ -107,14 +107,13 @@
   "flaps": 0
  },
  "aliyun-coding-plan": {
-  "hash": "729cce29ec3",
+  "hash": "5a1059a7e9c",
   "seen": [
    "729cce29ec3",
    "9f814d80edd",
    "5a1059a7e9c"
   ],
-  "flaps": 1,
-  "pending": "5a1059a7e9c",
-  "pendingSince": "2026-10-10"
+  "flaps": 0,
+  "changedAt": "2026-10-12"
  }
 }

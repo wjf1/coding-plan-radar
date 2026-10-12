@@ -141,5 +141,14 @@
   "detected": "2026-10-06",
   "resolved": false,
   "note": "2026-10-05 为 $19.99 / 月（Subscriber）（≈¥143.9）→ 2026-10-06 为 $19.99 / 月（Subscriber）（≈¥143.9），变动 +0.0%。请人工核实后更新价格表。"
+ },
+ {
+  "id": "aliyun-coding-plan",
+  "label": "阿里云百炼 Coding Plan 文档",
+  "url": "https://help.aliyun.com/zh/model-studio/coding-plan",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-10-12",
+  "resolved": false
  }
 ]

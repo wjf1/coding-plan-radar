@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-11",
+ "generatedAt": "2026-10-12",
  "items": [
   {
    "id": "freebie-repos:a272e0cf5e",
@@ -13,7 +13,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/cf97c32fec1b2e96e9936746e2731a81bd5ea33f",
    "date": "2026-10-11T06:33:08Z",
    "firstSeen": "2026-10-11",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "freebie-repos:aa77cb705e",
@@ -27,7 +27,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/48fcbe86582e16b7b746fee52e5512a891a8db76",
    "date": "2026-10-10T14:01:46Z",
    "firstSeen": "2026-10-11",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "gh-changelog:1d66727064",
@@ -41,7 +41,7 @@
    "url": "https://github.blog/changelog/2026-10-10-new-controls-and-chat-improvements-in-copilot-for-jetbrains",
    "date": "Sat, 10 Oct 2026 18:53:39 +0000",
    "firstSeen": "2026-10-11",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "gh-changelog:5ed3c6c051",
@@ -55,7 +55,7 @@
    "url": "https://github.blog/changelog/2026-10-09-github-copilot-weekly-releases-october-5",
    "date": "Fri, 09 Oct 2026 22:58:23 +0000",
    "firstSeen": "2026-10-10",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "gh-changelog:6c862b5b6a",
@@ -69,7 +69,7 @@
    "url": "https://github.blog/changelog/2026-10-08-copilot-code-review-new-organization-billing-options-and-controls",
    "date": "Thu, 08 Oct 2026 19:43:05 +0000",
    "firstSeen": "2026-10-10",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "ithome:adcc678924",
@@ -139,7 +139,7 @@
    "url": "https://sspai.com/post/115532",
    "date": "Fri, 09 Oct 2026 08:51:10 +0800",
    "firstSeen": "2026-10-09",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "claude-status:fa20ba2a30",
@@ -153,7 +153,7 @@
    "url": "https://status.claude.com/incidents/vmys9qn874h4",
    "date": "Wed, 07 Oct 2026 21:23:29 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "claude-status:408248d230",
@@ -167,7 +167,7 @@
    "url": "https://status.claude.com/incidents/978mjkgw6mh7",
    "date": "Wed, 07 Oct 2026 21:45:27 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "gh-changelog:b1930ffa4b",
@@ -181,7 +181,7 @@
    "url": "https://github.blog/changelog/2026-10-07-claude-haiku-5-5-in-github-copilot",
    "date": "Wed, 07 Oct 2026 20:12:18 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "gh-changelog:b77bff9964",
@@ -195,7 +195,7 @@
    "url": "https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available",
    "date": "Wed, 07 Oct 2026 15:46:17 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "gh-changelog:aeeb038654",
@@ -223,7 +223,7 @@
    "url": "https://www.githubstatus.com/incidents/qpfv5p86dmrl",
    "date": "Wed, 07 Oct 2026 18:04:49 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "github-status:36d9b6b433",
@@ -237,7 +237,7 @@
    "url": "https://www.githubstatus.com/incidents/djlmxz2zd0j7",
    "date": "Wed, 07 Oct 2026 16:25:14 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "modelsdev:41c04a6934",
@@ -265,7 +265,7 @@
    "url": "https://openai.com/index/teens-learn-and-plan",
    "date": "Wed, 07 Oct 2026 12:00:00 GMT",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "openai-status:aa77f33d3f",
@@ -279,7 +279,7 @@
    "url": "https://status.openai.com//incidents/01M4BP5JE7DKJSP3VG2S2DCWF2",
    "date": "Wed, 07 Oct 2026 18:23:25 GMT",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "sspai:a63732c01d",
@@ -307,7 +307,7 @@
    "url": "https://status.claude.com/incidents/wf2v8ms031sx",
    "date": "Wed, 07 Oct 2026 02:33:38 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "gh-changelog:a4a131256b",
@@ -335,7 +335,7 @@
    "url": "https://www.githubstatus.com/incidents/cjwszcf57bff",
    "date": "Tue, 06 Oct 2026 23:40:44 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "ithome:7e7475f324",
@@ -377,7 +377,7 @@
    "url": "https://openai.com/index/atlassian-partnership",
    "date": "Tue, 06 Oct 2026 16:00:00 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "openai-status:1ad102163f",
@@ -405,7 +405,7 @@
    "url": "https://status.openai.com//incidents/01M49YQE6WZT02WYF0KBXVMQ5G",
    "date": "Wed, 07 Oct 2026 03:00:54 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "freebie-repos:326519d25e",
@@ -419,7 +419,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/41197cb7d053680daf808d6618142045e961caaa",
    "date": "2026-10-05T04:12:45Z",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "github-status:808c9ced33",
@@ -447,7 +447,7 @@
    "url": "https://www.githubstatus.com/incidents/3q1yb5m7ltvb",
    "date": "Mon, 05 Oct 2026 22:49:42 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "ithome:9794388124",
@@ -839,7 +839,7 @@
    "url": "https://www.githubstatus.com/incidents/169pg72gg9jr",
    "date": "Mon, 28 Sep 2026 22:08:20 +0000",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "github-status:b838ed2c33",
@@ -881,7 +881,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "ithome:99745cd324",
@@ -937,7 +937,7 @@
    "url": "https://openai.com/index/lenfest-ai-collaborative-expansion",
    "date": "Mon, 28 Sep 2026 07:00:00 GMT",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-11"
+   "lastSeen": "2026-10-12"
   },
   {
    "id": "openai-news:3e47da2b38",
