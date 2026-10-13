@@ -149,6 +149,8 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-10-12",
-  "resolved": false
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-10-13"
  }
 ]

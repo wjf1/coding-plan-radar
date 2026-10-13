@@ -26,6 +26,15 @@
    "resolvedAt": "2026-10-02",
    "resolvedBy": "auto-revert",
    "note": "内容回到基线，原始变动可能为临时促销/渲染变体"
+  },
+  {
+   "id": "aliyun-coding-plan",
+   "label": "阿里云百炼 Coding Plan 文档",
+   "url": "https://help.aliyun.com/zh/model-studio/coding-plan",
+   "detected": "2026-10-12",
+   "resolvedAt": "2026-10-13",
+   "resolvedBy": "auto-revert",
+   "note": "内容回到基线，原始变动可能为临时促销/渲染变体"
   }
  ]
 }
