@@ -1,6 +1,48 @@
 {
- "generatedAt": "2026-10-14",
+ "generatedAt": "2026-10-15",
  "items": [
+  {
+   "id": "gh-changelog:a3a1a8794f",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "HydraFusion updates and new Max option",
+   "excerpt": "HydraFusion has an updated model pool, improved orchestration workflows, and introduces HydraFusion Max. Both HydraFusion and HydraFusion Max are available across VS Code, the GitHub Copilot app, and GitHub Copilot…",
+   "url": "https://github.blog/changelog/2026-10-14-hydrafusion-updates-and-new-max-option",
+   "date": "Wed, 14 Oct 2026 20:01:35 +0000",
+   "firstSeen": "2026-10-15",
+   "lastSeen": "2026-10-15"
+  },
+  {
+   "id": "ithome:2e3bce5324",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "腾讯视频官方 11.11 预售：VIP 会员年卡 138 元、SVIP 会员年卡 238 元",
+   "excerpt": "<p data-vmark=\"0287\">腾讯视频会员<span class=\"font-color-red\"><strong>连续包年</strong></span>年卡日常售价为 178 元，今日 11 点官方 11.11 预售，活动价 148 元，领取 10 元优惠券，到手价为 138 元，折合每月约 11.5 元：</p><p data-vmark=\"b061\"><span class=\"font-color-red\"><strong>* 此款为连续包年卡，之后 238 元 / 年续费，小伙伴们充值 90 天后记得关闭自动续费！！！</strong></span></p><p styl…",
+   "url": "https://www.ithome.com/1/013/194.htm",
+   "date": "Thu, 15 Oct 2026 01:48:20 GMT",
+   "firstSeen": "2026-10-15",
+   "lastSeen": "2026-10-15"
+  },
+  {
+   "id": "openai-status:92cf04a13f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Degraded performance in Codex and ChatGPT Work",
+   "excerpt": "Status: Resolved All impacted services have now fully recovered. Affected components Codex in ChatGPT Desktop (Operational) ChatGPT Work (Operational)",
+   "url": "https://status.openai.com//incidents/01M4WKPE1EY48ZB4RZJ80YH7ES",
+   "date": "Wed, 14 Oct 2026 09:53:11 GMT",
+   "firstSeen": "2026-10-15",
+   "lastSeen": "2026-10-15"
+  },
   {
    "id": "gh-changelog:cb4a5ef649",
    "source": "gh-changelog",
@@ -13,7 +55,7 @@
    "url": "https://github.blog/changelog/2026-10-13-gemini-4-argon-in-github-copilot",
    "date": "Tue, 13 Oct 2026 18:39:56 +0000",
    "firstSeen": "2026-10-14",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "gh-changelog:f025d63458",
@@ -27,7 +69,7 @@
    "url": "https://github.blog/changelog/2026-10-13-enterprise-managed-settings-enforcement-updates",
    "date": "Tue, 13 Oct 2026 15:20:10 +0000",
    "firstSeen": "2026-10-14",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "gh-changelog:133f62a454",
@@ -41,7 +83,7 @@
    "url": "https://github.blog/changelog/2026-10-13-search-and-filter-for-budgets-now-available",
    "date": "Tue, 13 Oct 2026 12:06:09 +0000",
    "firstSeen": "2026-10-14",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "openai-status:5d3469763f",
@@ -55,7 +97,7 @@
    "url": "https://status.openai.com//incidents/01M4T4ZCM54D3ZPTQXRSWFG0XS",
    "date": "Tue, 13 Oct 2026 16:36:42 GMT",
    "firstSeen": "2026-10-14",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "openrouter:fe0cc39d3c",
@@ -97,7 +139,7 @@
    "url": "https://www.githubstatus.com/incidents/93njd414rpbx",
    "date": "Mon, 12 Oct 2026 20:16:07 +0000",
    "firstSeen": "2026-10-13",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "ithome:22eb190124",
@@ -139,7 +181,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/cf97c32fec1b2e96e9936746e2731a81bd5ea33f",
    "date": "2026-10-11T06:33:08Z",
    "firstSeen": "2026-10-11",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "freebie-repos:aa77cb705e",
@@ -153,7 +195,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/48fcbe86582e16b7b746fee52e5512a891a8db76",
    "date": "2026-10-10T14:01:46Z",
    "firstSeen": "2026-10-11",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "gh-changelog:1d66727064",
@@ -279,7 +321,7 @@
    "url": "https://status.claude.com/incidents/vmys9qn874h4",
    "date": "Wed, 07 Oct 2026 21:23:29 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "claude-status:408248d230",
@@ -349,7 +391,7 @@
    "url": "https://www.githubstatus.com/incidents/qpfv5p86dmrl",
    "date": "Wed, 07 Oct 2026 18:04:49 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "github-status:36d9b6b433",
@@ -363,7 +405,7 @@
    "url": "https://www.githubstatus.com/incidents/djlmxz2zd0j7",
    "date": "Wed, 07 Oct 2026 16:25:14 +0000",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "modelsdev:41c04a6934",
@@ -391,7 +433,7 @@
    "url": "https://openai.com/index/teens-learn-and-plan",
    "date": "Wed, 07 Oct 2026 12:00:00 GMT",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "openai-status:aa77f33d3f",
@@ -405,7 +447,7 @@
    "url": "https://status.openai.com//incidents/01M4BP5JE7DKJSP3VG2S2DCWF2",
    "date": "Wed, 07 Oct 2026 18:23:25 GMT",
    "firstSeen": "2026-10-08",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "sspai:a63732c01d",
@@ -433,7 +475,7 @@
    "url": "https://status.claude.com/incidents/wf2v8ms031sx",
    "date": "Wed, 07 Oct 2026 02:33:38 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "gh-changelog:a4a131256b",
@@ -461,7 +503,7 @@
    "url": "https://www.githubstatus.com/incidents/cjwszcf57bff",
    "date": "Tue, 06 Oct 2026 23:40:44 +0000",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "ithome:7e7475f324",
@@ -503,7 +545,7 @@
    "url": "https://openai.com/index/atlassian-partnership",
    "date": "Tue, 06 Oct 2026 16:00:00 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "openai-status:1ad102163f",
@@ -531,7 +573,7 @@
    "url": "https://status.openai.com//incidents/01M49YQE6WZT02WYF0KBXVMQ5G",
    "date": "Wed, 07 Oct 2026 03:00:54 GMT",
    "firstSeen": "2026-10-07",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "freebie-repos:326519d25e",
@@ -545,7 +587,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/41197cb7d053680daf808d6618142045e961caaa",
    "date": "2026-10-05T04:12:45Z",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "github-status:808c9ced33",
@@ -573,7 +615,7 @@
    "url": "https://www.githubstatus.com/incidents/3q1yb5m7ltvb",
    "date": "Mon, 05 Oct 2026 22:49:42 +0000",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "ithome:9794388124",
@@ -1007,7 +1049,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-14"
+   "lastSeen": "2026-10-15"
   },
   {
    "id": "ithome:99745cd324",
