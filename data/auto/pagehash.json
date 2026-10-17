@@ -64,13 +64,14 @@
   "seen": [
    "d08c06691ad5",
    "b862acbe1ad3",
-   "636342be1af9"
+   "636342be1af9",
+   "e34ad3a81b99"
   ],
   "flaps": 0,
   "changedAt": "2026-09-23",
   "revertCount": 2,
   "unstable": true,
-  "pending": "636342be1af9",
+  "pending": "e34ad3a81b99",
   "pendingSince": "2026-10-01"
  },
  "aliyun-university": {

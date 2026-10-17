@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-16",
+ "updatedAt": "2026-10-17",
  "modelsdev": {
   "anthropic|claude-haiku-4-5": 5,
   "anthropic|claude-opus-4-5": 25,
@@ -247,7 +247,8 @@
   "poolside/laguna-s-2.1:free",
   "poolside/laguna-xs-2.1:free",
   "thinkingmachines/inkling-small:free",
-  "thinkingmachines/inkling:free"
+  "thinkingmachines/inkling:free",
+  "xingchen-agi/xing4.0-29b-a4b:free"
  ],
  "litellm": {
   "anthropic.claude-opus-4-1-20250805-v1:0": 75,
