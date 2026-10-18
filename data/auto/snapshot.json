@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-17",
+ "generatedAt": "2026-10-18",
  "source": "https://models.dev/api.json",
  "models": [
   {
@@ -215,7 +215,7 @@
    "p": "DeepSeek",
    "pid": "deepseek",
    "id": "deepseek-flash",
-   "n": "DeepSeek V4.1 Flash",
+   "n": "DeepSeek V4.1 Flash 1017",
    "i": 0.15,
    "o": 0.6,
    "c": 1000000,
