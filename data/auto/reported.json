@@ -71,7 +71,27 @@
   "openai-news:fa1a8eac3f",
   "openrouter:fe235b9b41",
   "openrouter:3f8f793441",
-  "openai-news:ef8874c030"
+  "openai-news:ef8874c030",
+  "gh-changelog:9f091e225f",
+  "gh-changelog:348cb3055c",
+  "modelsdev:99a1348732",
+  "modelsdev:beb583e539",
+  "modelsdev:49e487cc36",
+  "modelsdev:905f8ba030",
+  "modelsdev:6ce58dcc3a",
+  "modelsdev:5f77329a32",
+  "modelsdev:da1667da32",
+  "modelsdev:a038fc5e33",
+  "modelsdev:c72208d633",
+  "modelsdev:4901da9736",
+  "modelsdev:431786e038",
+  "modelsdev:d9962b7632",
+  "modelsdev:2a4d4ab43e",
+  "modelsdev:fe8d095939",
+  "modelsdev:35ccd0c036",
+  "modelsdev:2f0cd07038",
+  "modelsdev:ff9fb8dd38",
+  "openrouter:b4b2e95d3f"
  ],
- "updatedAt": "2026-10-18"
+ "updatedAt": "2026-10-20"
 }

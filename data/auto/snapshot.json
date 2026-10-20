@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-19",
+ "generatedAt": "2026-10-20",
  "source": "https://models.dev/api.json",
  "models": [
   {
@@ -71,17 +71,6 @@
   {
    "p": "阿里云",
    "pid": "alibaba",
-   "id": "deepseek-v4-flash-0731",
-   "n": "DeepSeek V4 Flash 0731",
-   "i": 0.2,
-   "o": 0.4,
-   "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
    "id": "qwen3.5-flash",
    "n": "Qwen3.5 Flash",
    "i": 0.1,
@@ -113,17 +102,6 @@
    "r": true
   },
   {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-4.7-flashx",
-   "n": "GLM-4.7-FlashX",
-   "i": 0.07,
-   "o": 0.4,
-   "c": 200000,
-   "t": true,
-   "r": true
-  },
-  {
    "p": "火山引擎",
    "pid": "volcengine",
    "id": "glm-5-3-flash-260828",
@@ -131,6 +109,39 @@
    "i": 0.11875,
    "o": 0.41563,
    "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-5.3-flash",
+   "n": "GLM-5.3-Flash",
+   "i": 0.11952,
+   "o": 0.41831,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-4.6v",
+   "n": "GLM-4.6V",
+   "i": 0.1494,
+   "o": 0.44819,
+   "c": 128000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-4.7-flashx",
+   "n": "GLM-4.7-FlashX",
+   "i": 0.0747,
+   "o": 0.44819,
+   "c": 200000,
    "t": true,
    "r": true
   },
@@ -179,24 +190,13 @@
    "r": true
   },
   {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-5.3-flash",
-   "n": "GLM-5.3-Flash",
-   "i": 0.15,
-   "o": 0.5,
-   "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
    "p": "DeepSeek",
    "pid": "deepseek",
    "id": "deepseek-v4-flash",
    "n": "DeepSeek V4 Flash",
    "i": 0.15,
    "o": 0.6,
-   "c": 1000000,
+   "c": 1048576,
    "t": true,
    "r": true
   },
@@ -207,7 +207,7 @@
    "n": "DeepSeek V4 Flash Vision Exp",
    "i": 0.15,
    "o": 0.6,
-   "c": 1000000,
+   "c": 1048576,
    "t": true,
    "r": true
   },
@@ -216,6 +216,17 @@
    "pid": "deepseek",
    "id": "deepseek-flash",
    "n": "DeepSeek V4.1 Flash 1017",
+   "i": 0.15,
+   "o": 0.6,
+   "c": 1048576,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "MiniMax",
+   "pid": "minimax",
+   "id": "MiniMax-M3.1-Flash",
+   "n": "MiniMax-M3.1-Flash",
    "i": 0.15,
    "o": 0.6,
    "c": 1000000,
@@ -278,6 +289,28 @@
    "r": true
   },
   {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-4.5-air",
+   "n": "GLM-4.5-Air",
+   "i": 0.11952,
+   "o": 0.89637,
+   "c": 131072,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-4.5v",
+   "n": "GLM-4.5V",
+   "i": 0.29879,
+   "o": 0.89637,
+   "c": 64000,
+   "t": true,
+   "r": true
+  },
+  {
    "p": "Z.ai",
    "pid": "zai",
    "id": "glm-4.6v",
@@ -291,44 +324,22 @@
   {
    "p": "智谱",
    "pid": "zhipuai",
-   "id": "glm-4.6v",
-   "n": "GLM-4.6V",
-   "i": 0.3,
-   "o": 0.9,
-   "c": 128000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "Z.ai",
-   "pid": "zai",
-   "id": "glm-4.5-air",
-   "n": "GLM-4.5-Air",
-   "i": 0.2,
-   "o": 1.1,
-   "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-4.5-air",
-   "n": "GLM-4.5-Air",
-   "i": 0.2,
-   "o": 1.1,
-   "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3.6-flash",
-   "n": "Qwen3.6 Flash",
-   "i": 0.1875,
-   "o": 1.125,
+   "id": "glm-5.3-flashx",
+   "n": "GLM-5.3-FlashX",
+   "i": 0.29879,
+   "o": 1.04577,
    "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "Z.ai",
+   "pid": "zai",
+   "id": "glm-4.5-air",
+   "n": "GLM-4.5-Air",
+   "i": 0.2,
+   "o": 1.1,
+   "c": 131072,
    "t": true,
    "r": true
   },
@@ -421,12 +432,12 @@
    "r": true
   },
   {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-5.3-flashx",
-   "n": "GLM-5.3-FlashX",
-   "i": 0.37,
-   "o": 1.25,
+   "p": "阿里云",
+   "pid": "alibaba",
+   "id": "deepseek-v4-flash-0731",
+   "n": "DeepSeek V4 Flash 0731",
+   "i": 0.44,
+   "o": 1.32,
    "c": 1000000,
    "t": true,
    "r": true
@@ -456,17 +467,6 @@
   {
    "p": "阿里云",
    "pid": "alibaba",
-   "id": "qwen3.6-35b-a3b",
-   "n": "Qwen3.6 35B-A3B",
-   "i": 0.248,
-   "o": 1.485,
-   "c": 262144,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
    "id": "qwen3-coder-flash",
    "n": "Qwen3 Coder Flash",
    "i": 0.3,
@@ -474,6 +474,17 @@
    "c": 1000000,
    "t": true,
    "r": false
+  },
+  {
+   "p": "阿里云",
+   "pid": "alibaba",
+   "id": "qwen3.6-flash",
+   "n": "Qwen3.6 Flash",
+   "i": 0.25,
+   "o": 1.5,
+   "c": 1000000,
+   "t": true,
+   "r": true
   },
   {
    "p": "阿里云",
@@ -520,24 +531,13 @@
    "r": true
   },
   {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-4.5v",
-   "n": "GLM-4.5V",
-   "i": 0.6,
-   "o": 1.8,
-   "c": 64000,
-   "t": true,
-   "r": true
-  },
-  {
    "p": "DeepSeek",
    "pid": "deepseek",
    "id": "deepseek-v4-pro",
    "n": "DeepSeek V4 Pro",
    "i": 0.66,
    "o": 1.98,
-   "c": 1000000,
+   "c": 1048576,
    "t": true,
    "r": true
   },
@@ -586,6 +586,17 @@
    "r": true
   },
   {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-4.7",
+   "n": "GLM-4.7",
+   "i": 0.44819,
+   "o": 2.09153,
+   "c": 204800,
+   "t": true,
+   "r": true
+  },
+  {
    "p": "Z.ai",
    "pid": "zai",
    "id": "glm-4.5",
@@ -634,17 +645,6 @@
    "pid": "zhipuai",
    "id": "glm-4.6",
    "n": "GLM-4.6",
-   "i": 0.6,
-   "o": 2.2,
-   "c": 204800,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-4.7",
-   "n": "GLM-4.7",
    "i": 0.6,
    "o": 2.2,
    "c": 204800,
@@ -661,6 +661,17 @@
    "c": 262144,
    "t": true,
    "r": false
+  },
+  {
+   "p": "阿里云",
+   "pid": "alibaba",
+   "id": "qwen3.6-35b-a3b",
+   "n": "Qwen3.6 35B-A3B",
+   "i": 0.375,
+   "o": 2.25,
+   "c": 262144,
+   "t": true,
+   "r": true
   },
   {
    "p": "阿里云",
@@ -714,6 +725,17 @@
    "i": 1.305,
    "o": 2.61,
    "c": 1048576,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-5",
+   "n": "GLM-5",
+   "i": 0.59758,
+   "o": 2.68911,
+   "c": 204800,
    "t": true,
    "r": true
   },
@@ -786,11 +808,22 @@
   {
    "p": "智谱",
    "pid": "zhipuai",
-   "id": "glm-5",
-   "n": "GLM-5",
-   "i": 1,
-   "o": 3.2,
-   "c": 204800,
+   "id": "glm-5v-turbo",
+   "n": "GLM-5V-Turbo",
+   "i": 0.74698,
+   "o": 3.28669,
+   "c": 200000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-5.1",
+   "n": "GLM-5.1",
+   "i": 0.89637,
+   "o": 3.58548,
+   "c": 200000,
    "t": true,
    "r": true
   },
@@ -883,6 +916,28 @@
    "r": true
   },
   {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-5.2",
+   "n": "GLM-5.2",
+   "i": 1.19516,
+   "o": 4.18306,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-5.3",
+   "n": "GLM-5.3",
+   "i": 1.19516,
+   "o": 4.18306,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
    "p": "阿里云",
    "pid": "alibaba",
    "id": "glm-5.2",
@@ -918,39 +973,6 @@
   {
    "p": "Z.ai",
    "pid": "zai",
-   "id": "glm-5.3",
-   "n": "GLM-5.3",
-   "i": 1.4,
-   "o": 4.4,
-   "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-5.1",
-   "n": "GLM-5.1",
-   "i": 1.4,
-   "o": 4.4,
-   "c": 200000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-5.2",
-   "n": "GLM-5.2",
-   "i": 1.4,
-   "o": 4.4,
-   "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "智谱",
-   "pid": "zhipuai",
    "id": "glm-5.3",
    "n": "GLM-5.3",
    "i": 1.4,
@@ -1171,28 +1193,6 @@
   {
    "p": "OpenAI",
    "pid": "openai",
-   "id": "gpt-5.2-chat-latest",
-   "n": "GPT-5.2 Chat",
-   "i": 1.75,
-   "o": 14,
-   "c": 128000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "OpenAI",
-   "pid": "openai",
-   "id": "gpt-5.3-chat-latest",
-   "n": "GPT-5.3 Chat (latest)",
-   "i": 1.75,
-   "o": 14,
-   "c": 128000,
-   "t": true,
-   "r": false
-  },
-  {
-   "p": "OpenAI",
-   "pid": "openai",
    "id": "gpt-5.3-codex",
    "n": "GPT-5.3 Codex",
    "i": 1.75,
@@ -1308,17 +1308,6 @@
    "i": 4,
    "o": 20,
    "c": 1050000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "智谱",
-   "pid": "zhipuai",
-   "id": "glm-5v-turbo",
-   "n": "GLM-5V-Turbo",
-   "i": 5,
-   "o": 22,
-   "c": 200000,
    "t": true,
    "r": true
   },
