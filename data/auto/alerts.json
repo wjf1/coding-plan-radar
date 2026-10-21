@@ -152,5 +152,14 @@
   "resolved": true,
   "resolvedBy": "auto-revert",
   "resolvedAt": "2026-10-13"
+ },
+ {
+  "id": "aliyun-coding-plan",
+  "label": "阿里云百炼 Coding Plan 文档",
+  "url": "https://help.aliyun.com/zh/model-studio/coding-plan",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-10-21",
+  "resolved": false
  }
 ]

@@ -2,17 +2,17 @@
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "13aeefbb5677",
    "f6067a045646",
    "aa11ac665664",
    "03eb15a156dc",
    "0786d42556d0",
-   "28e904bd565e"
+   "28e904bd565e",
+   "c6d0a6475649"
   ],
   "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "28e904bd565e",
+  "pending": "c6d0a6475649",
   "pendingSince": "2026-09-22",
   "unstable": true
  },
@@ -51,13 +51,14 @@
    "7cc58f655df",
    "035267b45dd",
    "911663e821e7",
-   "d595117f2055"
+   "d595117f2055",
+   "52591e012053"
   ],
   "flaps": 0,
   "changedAt": "2026-10-01",
   "revertCount": 2,
   "unstable": true,
-  "pending": "d595117f2055",
+  "pending": "52591e012053",
   "pendingSince": "2026-10-03"
  },
  "aliyun-free-quota": {
@@ -67,13 +68,14 @@
    "b862acbe1ad3",
    "636342be1af9",
    "e34ad3a81b99",
-   "95aad1cd1b7e"
+   "95aad1cd1b7e",
+   "184397bb1b8b"
   ],
   "flaps": 0,
   "changedAt": "2026-09-23",
   "revertCount": 2,
   "unstable": true,
-  "pending": "95aad1cd1b7e",
+  "pending": "184397bb1b8b",
   "pendingSince": "2026-10-01"
  },
  "aliyun-university": {
@@ -108,12 +110,15 @@
  "tencent-tokenplan": {
   "hash": "8907d64e3a10",
   "seen": [
-   "8907d64e3a10"
+   "8907d64e3a10",
+   "ea4e41223a29"
   ],
-  "flaps": 0
+  "flaps": 0,
+  "pending": "ea4e41223a29",
+  "pendingSince": "2026-10-21"
  },
  "aliyun-coding-plan": {
-  "hash": "5a1059a7e9c",
+  "hash": "36baea6ee8d",
   "seen": [
    "729cce29ec3",
    "9f814d80edd",
@@ -121,9 +126,7 @@
    "36baea6ee8d"
   ],
   "flaps": 0,
-  "changedAt": "2026-10-12",
-  "revertCount": 1,
-  "pending": "36baea6ee8d",
-  "pendingSince": "2026-10-20"
+  "changedAt": "2026-10-21",
+  "revertCount": 1
  }
 }
