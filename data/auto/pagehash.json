@@ -2,17 +2,17 @@
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "f6067a045646",
    "aa11ac665664",
    "03eb15a156dc",
    "0786d42556d0",
    "28e904bd565e",
-   "c6d0a6475649"
+   "c6d0a6475649",
+   "f66cfbf25662"
   ],
   "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "c6d0a6475649",
+  "pending": "f66cfbf25662",
   "pendingSince": "2026-09-22",
   "unstable": true
  },
@@ -47,18 +47,18 @@
  "minimax": {
   "hash": "035267b45dd",
   "seen": [
-   "99a05bfa5df",
    "7cc58f655df",
    "035267b45dd",
    "911663e821e7",
    "d595117f2055",
-   "52591e012053"
+   "52591e012053",
+   "4c4b6ee6208f"
   ],
   "flaps": 0,
   "changedAt": "2026-10-01",
   "revertCount": 2,
   "unstable": true,
-  "pending": "52591e012053",
+  "pending": "4c4b6ee6208f",
   "pendingSince": "2026-10-03"
  },
  "aliyun-free-quota": {
@@ -108,14 +108,13 @@
   "flaps": 0
  },
  "tencent-tokenplan": {
-  "hash": "8907d64e3a10",
+  "hash": "ea4e41223a29",
   "seen": [
    "8907d64e3a10",
    "ea4e41223a29"
   ],
   "flaps": 0,
-  "pending": "ea4e41223a29",
-  "pendingSince": "2026-10-21"
+  "changedAt": "2026-10-22"
  },
  "aliyun-coding-plan": {
   "hash": "36baea6ee8d",
@@ -127,6 +126,7 @@
   ],
   "flaps": 0,
   "changedAt": "2026-10-21",
-  "revertCount": 1
+  "revertCount": 2,
+  "unstable": true
  }
 }

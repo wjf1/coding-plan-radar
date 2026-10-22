@@ -160,6 +160,17 @@
   "tier": "official",
   "kind": "page-change",
   "detected": "2026-10-21",
+  "resolved": true,
+  "resolvedBy": "auto-revert",
+  "resolvedAt": "2026-10-22"
+ },
+ {
+  "id": "tencent-tokenplan",
+  "label": "腾讯云 Token Plan 文档",
+  "url": "https://www.tencentcloud.com/document/product/1300/81315",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-10-22",
   "resolved": false
  }
 ]

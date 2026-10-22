@@ -1,6 +1,104 @@
 {
- "generatedAt": "2026-10-21",
+ "generatedAt": "2026-10-22",
  "items": [
+  {
+   "id": "claude-status:a973fa8c30",
+   "source": "claude-status",
+   "sourceLabel": "Claude Status",
+   "sourceUrl": "https://status.claude.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Degraded performance for Claude Fable 5",
+   "excerpt": "<p> <small>Oct <var data-var='date'>21</var>, <var data-var='time'>20:29</var> UTC</small><br> <strong>Resolved</strong> - The issue affecting other Claude models has been resolved. </p> <p> <small>Oct <var data-var='date'>21</var>, <var data-var='time'>19:49</var> UTC</small><br> <strong>Investigat…",
+   "url": "https://status.claude.com/incidents/njk29r81v3wg",
+   "date": "Wed, 21 Oct 2026 20:29:17 +0000",
+   "firstSeen": "2026-10-22",
+   "lastSeen": "2026-10-22"
+  },
+  {
+   "id": "github-status:e61c7f4433",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Delays for Pull Requests and Webhook deliveries",
+   "excerpt": "<p> <small>Oct <var data-var='date'>21</var>, <var data-var='time'>19:22</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
+   "date": "Wed, 21 Oct 2026 19:22:52 +0000",
+   "firstSeen": "2026-10-22",
+   "lastSeen": "2026-10-22"
+  },
+  {
+   "id": "ithome:3428782024",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "特朗普给 AI 数据中心“开药方”：想落地，先给社区分红",
+   "excerpt": "<p data-vmark=\"6030\">IT之家 10 月 22 日消息，美国总统唐纳德 · 特朗普呼吁数据中心建设方与大型 AI 云厂商向所在社区支付收益分红，以此应对能源涨价问题，甚至实现电价下调，让数据中心更容易获得当地社区接纳。他在 Truth Social 发帖警告称，数据中心不仅要像他此前提出的那样自行发电，还必须将多余电力输送给当地社区，可以无偿供给，也可以对外出售。</p><p style=\"text-align: center;\" data-vmark=\"40f7\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/…",
+   "url": "https://www.ithome.com/1/016/257.htm",
+   "date": "Thu, 22 Oct 2026 02:51:19 GMT",
+   "firstSeen": "2026-10-22",
+   "lastSeen": "2026-10-22"
+  },
+  {
+   "id": "ithome:631ec3fc24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "微软 XBOX 启动云游戏单独付费预览体验，优惠价 50 小时 11.99 美元",
+   "excerpt": "<p data-vmark=\"d621\">IT之家 10 月 22 日消息，Microsoft（微软）XBOX 当地时间昨日宣布启动云游戏单独付费的预览体验，XBOX Insider 会员有机会在 11 月正式上线前<strong>抢先体验这一无需 Game Pass 订阅即可使用云游戏服务的新机制</strong>。</p><p data-vmark=\"a410\" style=\"text-align: center;\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/10/6b0d4789-e431-4090-9d2e-14364b…",
+   "url": "https://www.ithome.com/1/016/253.htm",
+   "date": "Thu, 22 Oct 2026 02:39:27 GMT",
+   "firstSeen": "2026-10-22",
+   "lastSeen": "2026-10-22"
+  },
+  {
+   "id": "modelsdev:cf6571e835",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-asr-flash 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-10-22",
+   "firstSeen": "2026-10-22",
+   "lastSeen": "2026-10-22"
+  },
+  {
+   "id": "openai-status:931d67123f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "ChatGPT conversion failures in India, Japan and Korea. And Response API errors",
+   "excerpt": "Status: Monitoring We have applied the mitigation and are monitoring the recovery. Affected components Conversations (Degraded performance) Responses (Degraded performance)",
+   "url": "https://status.openai.com//incidents/01M5GPE9C4E19HE461P8JAMYXD",
+   "date": "Thu, 22 Oct 2026 02:42:24 GMT",
+   "firstSeen": "2026-10-22",
+   "lastSeen": "2026-10-22"
+  },
+  {
+   "id": "openrouter:dfc5d81d39",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-new",
+   "title": "OpenRouter 新增免费模型：recursive/flint-v1.0:free",
+   "excerpt": "可作为白嫖/零成本验证模型的候选，额度与限速以 OpenRouter 页面为准。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-10-22",
+   "firstSeen": "2026-10-22",
+   "lastSeen": "2026-10-22"
+  },
   {
    "id": "hn-algolia:2fff990b2d",
    "source": "hn-algolia",
@@ -13,7 +111,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "ithome:466ab50e24",
@@ -55,7 +153,7 @@
    "url": "https://status.openai.com//incidents/01M5E4G39TD1BW1QWHZG6RFA5H",
    "date": "Wed, 21 Oct 2026 03:28:00 GMT",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "sspai:2fee997c39",
@@ -69,7 +167,7 @@
    "url": "https://sspai.com/prime/story/inside-release-notes-261020",
    "date": "Tue, 20 Oct 2026 18:01:54 +0800",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "gh-changelog:9f091e225f",
@@ -83,7 +181,7 @@
    "url": "https://github.blog/changelog/2026-10-19-copilot-model-policy-api-for-enterprise-orgs-and-teams",
    "date": "Mon, 19 Oct 2026 21:32:18 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "gh-changelog:348cb3055c",
@@ -97,7 +195,7 @@
    "url": "https://github.blog/changelog/2026-10-19-github-copilot-models-deprecated-on-october-19-2026",
    "date": "Mon, 19 Oct 2026 21:27:10 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "github-status:a51821d933",
@@ -111,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/8tzbpcnl75jp",
    "date": "Mon, 19 Oct 2026 16:56:58 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "modelsdev:99a1348732",
@@ -405,7 +503,7 @@
    "url": "https://openai.com/index/benefit-street-partners",
    "date": "Fri, 16 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-18",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "ithome:f4e938a024",
@@ -517,7 +615,7 @@
    "url": "https://openai.com/index/introducing-the-rosalind-academic-plan",
    "date": "Thu, 15 Oct 2026 19:00:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "openai-status:c72ee51f3f",
@@ -545,7 +643,7 @@
    "url": "https://status.openai.com//incidents/01M506BA4XRSWH7THR53HQGN3Z",
    "date": "Thu, 15 Oct 2026 18:56:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "openrouter:fe235b9b41",
@@ -601,7 +699,7 @@
    "url": "https://status.openai.com//incidents/01M4WKPE1EY48ZB4RZJ80YH7ES",
    "date": "Wed, 14 Oct 2026 09:53:11 GMT",
    "firstSeen": "2026-10-15",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "gh-changelog:cb4a5ef649",
@@ -657,7 +755,7 @@
    "url": "https://status.openai.com//incidents/01M4T4ZCM54D3ZPTQXRSWFG0XS",
    "date": "Tue, 13 Oct 2026 16:36:42 GMT",
    "firstSeen": "2026-10-14",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "openrouter:fe0cc39d3c",
@@ -699,7 +797,7 @@
    "url": "https://www.githubstatus.com/incidents/93njd414rpbx",
    "date": "Mon, 12 Oct 2026 20:16:07 +0000",
    "firstSeen": "2026-10-13",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "ithome:22eb190124",
@@ -741,7 +839,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/cf97c32fec1b2e96e9936746e2731a81bd5ea33f",
    "date": "2026-10-11T06:33:08Z",
    "firstSeen": "2026-10-11",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "freebie-repos:aa77cb705e",
@@ -755,7 +853,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/48fcbe86582e16b7b746fee52e5512a891a8db76",
    "date": "2026-10-10T14:01:46Z",
    "firstSeen": "2026-10-11",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "gh-changelog:1d66727064",
@@ -1147,7 +1245,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/41197cb7d053680daf808d6618142045e961caaa",
    "date": "2026-10-05T04:12:45Z",
    "firstSeen": "2026-10-06",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "github-status:808c9ced33",
@@ -1609,7 +1707,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-21"
+   "lastSeen": "2026-10-22"
   },
   {
    "id": "ithome:99745cd324",

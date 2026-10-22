@@ -1,18 +1,7 @@
 {
- "generatedAt": "2026-10-21",
+ "generatedAt": "2026-10-22",
  "source": "https://models.dev/api.json",
  "models": [
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-asr-flash",
-   "n": "Qwen3-ASR Flash",
-   "i": 0.035,
-   "o": 0.035,
-   "c": 53248,
-   "t": false,
-   "r": false
-  },
   {
    "p": "阿里云",
    "pid": "alibaba",
