@@ -114,7 +114,8 @@
    "ea4e41223a29"
   ],
   "flaps": 0,
-  "changedAt": "2026-10-22"
+  "changedAt": "2026-10-22",
+  "revertCount": 1
  },
  "aliyun-coding-plan": {
   "hash": "36baea6ee8d",
@@ -127,6 +128,8 @@
   "flaps": 0,
   "changedAt": "2026-10-21",
   "revertCount": 2,
-  "unstable": true
+  "unstable": true,
+  "pending": "36baea6ee8d",
+  "pendingSince": "2026-10-23"
  }
 }

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-22",
+ "generatedAt": "2026-10-23",
  "source": "https://models.dev/api.json",
  "models": [
   {
@@ -10,28 +10,6 @@
    "i": 0.03,
    "o": 0.13,
    "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "小米",
-   "pid": "xiaomi",
-   "id": "mimo-v2-flash",
-   "n": "MiMo-V2-Flash",
-   "i": 0.14,
-   "o": 0.28,
-   "c": 262144,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "小米",
-   "pid": "xiaomi",
-   "id": "mimo-v2-omni",
-   "n": "MiMo-V2-Omni",
-   "i": 0.14,
-   "o": 0.28,
-   "c": 262144,
    "t": true,
    "r": true
   },
@@ -241,17 +219,6 @@
    "i": 0.2,
    "o": 0.8,
    "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "小米",
-   "pid": "xiaomi",
-   "id": "mimo-v2-pro",
-   "n": "MiMo-V2-Pro",
-   "i": 0.435,
-   "o": 0.87,
-   "c": 1048576,
    "t": true,
    "r": true
   },
