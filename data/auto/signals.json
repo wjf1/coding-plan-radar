@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-24",
+ "generatedAt": "2026-10-25",
  "items": [
   {
    "id": "freebie-repos:e3c315495e",
@@ -13,7 +13,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/c51415176dee302d9caeb44ffad1a263aa541833",
    "date": "2026-10-23T17:22:27Z",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "freebie-repos:663cfdba5e",
@@ -27,7 +27,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/b534afea071bd7e2423b81baed01726cf724030e",
    "date": "2026-10-23T17:22:04Z",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "gh-changelog:6c61d3b25e",
@@ -41,7 +41,7 @@
    "url": "https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode",
    "date": "Fri, 23 Oct 2026 23:42:03 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "github-status:5b45d2a533",
@@ -55,7 +55,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -69,7 +69,7 @@
    "url": "https://www.githubstatus.com/incidents/71y513kjvbzh",
    "date": "Fri, 23 Oct 2026 18:51:24 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "github-status:2d9cbecd33",
@@ -83,7 +83,7 @@
    "url": "https://www.githubstatus.com/incidents/ntrfd2jqldn6",
    "date": "Fri, 23 Oct 2026 08:05:27 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "openai-status:80ed11593f",
@@ -97,7 +97,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -111,7 +111,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -139,7 +139,7 @@
    "url": "https://github.blog/changelog/2026-10-22-custom-skills-agents-and-mcp-servers-in-usage-metrics-api",
    "date": "Thu, 22 Oct 2026 22:19:17 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "gh-changelog:9b3eaaaf60",
@@ -153,7 +153,7 @@
    "url": "https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available",
    "date": "Thu, 22 Oct 2026 20:44:28 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "gh-changelog:270053ad5d",
@@ -181,7 +181,7 @@
    "url": "https://www.githubstatus.com/incidents/wq8305lppdc2",
    "date": "Fri, 23 Oct 2026 02:30:25 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "github-status:a1a4a5d133",
@@ -195,7 +195,7 @@
    "url": "https://www.githubstatus.com/incidents/q29p76qtnkyk",
    "date": "Thu, 22 Oct 2026 15:18:46 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "ithome:94289f5324",
@@ -363,7 +363,7 @@
    "url": "https://status.openai.com//incidents/01M5JF8DR3EGQJNTXPZ24AKX2G",
    "date": "Thu, 22 Oct 2026 20:55:48 GMT",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "openrouter:c4819ba940",
@@ -391,7 +391,7 @@
    "url": "https://sspai.com/post/117104",
    "date": "Fri, 23 Oct 2026 08:20:32 +0800",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "claude-status:a973fa8c30",
@@ -405,7 +405,7 @@
    "url": "https://status.claude.com/incidents/njk29r81v3wg",
    "date": "Wed, 21 Oct 2026 20:29:17 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "github-status:e61c7f4433",
@@ -419,7 +419,7 @@
    "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
    "date": "Wed, 21 Oct 2026 19:22:52 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "ithome:3428782024",
@@ -503,7 +503,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "ithome:466ab50e24",
@@ -545,7 +545,7 @@
    "url": "https://status.openai.com//incidents/01M5E4G39TD1BW1QWHZG6RFA5H",
    "date": "Wed, 21 Oct 2026 03:28:00 GMT",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "sspai:2fee997c39",
@@ -601,7 +601,7 @@
    "url": "https://www.githubstatus.com/incidents/8tzbpcnl75jp",
    "date": "Mon, 19 Oct 2026 16:56:58 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "modelsdev:99a1348732",
@@ -895,7 +895,7 @@
    "url": "https://openai.com/index/benefit-street-partners",
    "date": "Fri, 16 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-18",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "ithome:f4e938a024",
@@ -1007,7 +1007,7 @@
    "url": "https://openai.com/index/introducing-the-rosalind-academic-plan",
    "date": "Thu, 15 Oct 2026 19:00:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "openai-status:c72ee51f3f",
@@ -1035,7 +1035,7 @@
    "url": "https://status.openai.com//incidents/01M506BA4XRSWH7THR53HQGN3Z",
    "date": "Thu, 15 Oct 2026 18:56:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "openrouter:fe235b9b41",
@@ -1091,7 +1091,7 @@
    "url": "https://status.openai.com//incidents/01M4WKPE1EY48ZB4RZJ80YH7ES",
    "date": "Wed, 14 Oct 2026 09:53:11 GMT",
    "firstSeen": "2026-10-15",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "gh-changelog:cb4a5ef649",
@@ -1147,7 +1147,7 @@
    "url": "https://status.openai.com//incidents/01M4T4ZCM54D3ZPTQXRSWFG0XS",
    "date": "Tue, 13 Oct 2026 16:36:42 GMT",
    "firstSeen": "2026-10-14",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "openrouter:fe0cc39d3c",
@@ -1189,7 +1189,7 @@
    "url": "https://www.githubstatus.com/incidents/93njd414rpbx",
    "date": "Mon, 12 Oct 2026 20:16:07 +0000",
    "firstSeen": "2026-10-13",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "ithome:22eb190124",
@@ -2099,7 +2099,7 @@
    "url": "https://news.ycombinator.com/item?id=49850328",
    "date": "2026-09-25T21:38:55Z",
    "firstSeen": "2026-09-30",
-   "lastSeen": "2026-10-24"
+   "lastSeen": "2026-10-25"
   },
   {
    "id": "ithome:99745cd324",
