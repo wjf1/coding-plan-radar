@@ -19,18 +19,18 @@
  "kimi": {
   "hash": "6460286555a",
   "seen": [
-   "c3990aea451",
    "6460286555a",
    "e9401ee3559",
    "aa7514265a9",
    "600ab1985a4",
-   "798c4ef364e"
+   "798c4ef364e",
+   "3d20146b653"
   ],
   "flaps": 0,
   "changedAt": "2026-09-21",
   "revertCount": 2,
   "unstable": true,
-  "pending": "798c4ef364e",
+  "pending": "3d20146b653",
   "pendingSince": "2026-09-23"
  },
  "trae": {
@@ -47,18 +47,18 @@
  "minimax": {
   "hash": "035267b45dd",
   "seen": [
-   "035267b45dd",
    "911663e821e7",
    "d595117f2055",
    "52591e012053",
    "4c4b6ee6208f",
-   "3bf8dec2225d"
+   "3bf8dec2225d",
+   "6e4253142262"
   ],
   "flaps": 0,
   "changedAt": "2026-10-01",
   "revertCount": 2,
   "unstable": true,
-  "pending": "3bf8dec2225d",
+  "pending": "6e4253142262",
   "pendingSince": "2026-10-03"
  },
  "aliyun-free-quota": {
