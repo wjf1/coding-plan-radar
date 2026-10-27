@@ -5,6 +5,36 @@
 
 日期均为北京时间。数据类变更（每日自动巡检提交）不在本文件逐条记录，只记录代码与内容层面的版本变更。
 
+## [v7.4] - 2026-10-27
+
+**修复计算器档位缺失：7 档预设全部可选，标签不再与数据源分叉。**
+
+`data/manual/calc-models.json` 一直配着 7 个模型档位，但 `index.html` 的
+`<select id="calcmodel">` 里只手写了 3 个 `<option>`（value 0/1/2）。**另外 4 档——
+百度千帆 ERNIE 5.1、腾讯云 GLM-5.3-Flash、讯飞星火 X2.5、Gemini 3.8 Flash——用户在任何界面
+上都选不到**，而 README 与站点文案都写着「7 档」。同时那 3 个写死 option 的文案与 json 的
+`label` 重复维护，改一处就会出现两处不一致。
+
+| # | 项目 | 说明 |
+|---|---|---|
+| 1 | `js/app.js` 新增 `populateCalcModels()` | 按 `CALC_MODELS` 渲染全部 `<option>`，`value` 即池内下标；默认选中 `GLM-5.3（中档）`（与历史 `selected` 项一致）；热重载/重复渲染保留用户已选，非法值回落默认档 |
+| 2 | `index.html` 清空写死选项 | `<select id="calcmodel">` 只留注释说明来源，杜绝双份维护。**下拉内容从此以 `calc-models.json` 为唯一事实来源** |
+| 3 | 首屏时序 | `populateCalcModels()` 插在 `renderCalc()` 之前调用——否则空 select 会让 `renderCalc` 读到 `value=""` 而静默回落到第 0 档 |
+| 4 | 安全加固 | 渲染用 `esc(m.label)` 转义，避免未来数据源引入 `<` / `>` 时形成注入面 |
+
+**验证**
+
+- 数据契约：`scripts/validate.mjs` 通过（`calc-models.json: 7 条`）；`tests/selfcheck.mjs` 24/24。
+- 逻辑用例（真实代码路径 + 真实数据）：7 档全部渲染 / 恰好一个 `selected` / 热重载保留 `value=5` /
+  非法值 `99` 回落默认 / 注入 `<img onerror>` 被转义为 `&lt;img`。
+- **真实点击走查**（headless Chrome + CDP，非脚本 `selectedIndex`）：
+  - 7 个 option 全部渲染，默认选中「GLM-5.3（中档）」；
+  - 原先缺失的 4 档全部出现在下拉中；
+  - 逐档切换，7 档产出 7 种互不相同的计价行（无静默回落到第 0 档）；
+  - 真实鼠标点击下拉 → 获得焦点可展开；真实键盘 ↓↓ + Enter 选中「百度千帆 ERNIE 5.1」，
+    计价行同步由 `$0.15 / $0.6` 更新为 `$4 / $18`；
+  - `index.html` 的 select 内已无写死 `<option>`。
+
 ## [v7.3] - 2026-10-06
 
 **信息源采集层升级：条目级监控（list 源）** —— 官方页告警从「这个 800KB 页面变了」升级为

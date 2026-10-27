@@ -191,9 +191,8 @@
         <div class="cfield">
           <label data-i18n="modelTier">② 按 API 价计费的模型档位</label>
           <select id="calcmodel">
-            <option value="0">DeepSeek V4 Flash（经济档）</option>
-            <option value="1" selected>GLM-5.3（中档）</option>
-            <option value="2">Claude Sonnet 5（高档）</option>
+            <!-- 选项由 js/app.js 的 populateCalcModels() 按 data/manual/calc-models.json 渲染。
+                 此处刻意留空：写死 option 会与数据源分叉，且只能覆盖前 3 档。 -->
           </select>
           <small class="hint" id="calcprice"></small>
         </div>

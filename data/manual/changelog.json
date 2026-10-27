@@ -1,5 +1,10 @@
 [
  {
+  "date": "2026-10-27",
+  "v": "v7.4",
+  "text": "修复计算器档位缺失——calc-models.json 一直配着 7 个模型档位，但 index.html 的下拉只手写了 3 个 option，另外 4 档（百度千帆 ERNIE 5.1 / 腾讯云 GLM-5.3-Flash / 讯飞星火 X2.5 / Gemini 3.8 Flash）在任何界面上都选不到，而 README 与站点文案都写着「7 档」；那 3 个写死 option 的文案还与数据源 label 重复维护。改法：① js/app.js 新增 populateCalcModels()，按 CALC_MODELS 渲染全部 option（value 即池内下标），默认选中 GLM-5.3（中档），热重载保留用户已选、非法值回落默认；② index.html 清空写死选项，下拉内容从此以 calc-models.json 为唯一事实来源；③ populateCalcModels() 必须插在 renderCalc() 之前——否则空 select 会让 renderCalc 读到空值而静默回落到第 0 档；④ 渲染加 esc() 转义，避免数据源引入尖括号时形成注入面。验证：validate 通过（calc-models.json 7 条）、selfcheck 24/24、真实代码路径四类用例全过（含注入转义）；真实走查用 headless Chrome + CDP 非脚本操作——7 档全部渲染、默认档正确、原先缺失的 4 档全部可选、逐档切换产出 7 种不同计价行无静默回落、真实鼠标点击展开 + 键盘选择「百度千帆 ERNIE 5.1」后计价行由 $0.15/$0.6 同步更新为 $4/$18。"
+ },
+ {
   "date": "2026-10-06",
   "v": "v7.3",
   "text": "信息源采集层升级——官方页告警从「页面变了」升级为「哪个档位的哪个字段从什么变成了什么」：① sources.json 新增 lists 数组（条目级监控源声明），GLM Coding Plan 文档页率先从整页哈希迁移为条目级比对，此后该页任何无关改动不再报警，只有套餐表的 5 小时/每周积分字段变化才告警，且直接给出档位与前后值；② lib.mjs 新增零依赖极简 HTML 条目抽取引擎（tag/.class/#id + :nth(k) 后缀 + 最多三级后代路径，语法超出子集直接抛错）；③ check-pages.mjs 双通道并行：page 源沿用整页哈希，list 源走条目 diff，共用反爬检测/二次确认/auto-revert/源健康机制，另设两道保护——解析出 0 条绝不建基线（选择器失效不发言）、条目骤变按结构变更熔断（只提醒核对选择器、不更新基线，防止改版页面被固化成新基线）；④ 新增 probe-source.mjs 试抓预览（借鉴 AIHOT「先预览再创建」），改动选择器前必跑，解析 0 条即报错退出；⑤ 巡检 issue 对 list 告警逐行列出字段级变更明细；⑥ validate.mjs 新增 sources.json 契约（id 跨数组查重 / tier 白名单 / selector 语法），selfcheck 15 → 24 例。开发中由端到端验证抓住并修复两个缺陷：结构变更分支曾漏写旧基线回盘（熔断反而会固化坏结构）、跨类型 alert 复用曾致 kind/changes 错乱。验证：validate 通过、selfcheck 24/24、probe 实测智谱 3 档精确抽取、四场景 17 项断言全过。"

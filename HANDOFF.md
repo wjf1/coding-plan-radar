@@ -8,7 +8,7 @@
 - **定位**：AI 编程订阅计划（Coding Plan）对比站。纯静态站，无构建、零 npm 依赖，GitHub Pages 托管。
 - **线上地址**：https://wjf1.github.io/coding-plan-radar/ ｜ 仓库：https://github.com/wjf1/coding-plan-radar
 - **覆盖**：20 个条目（19 个在售平台 + 1 个已停售留档）、69 个付费档位；Token 实时价格榜接 models.dev。
-- **当前版本**：**v7.3（2026-10-06）**。上一版本 v7.2（2026-10-05，数据目录语义化）、v7.1（2026-10-05，a11y P0 修复）。
+- **当前版本**：**v7.4（2026-10-27）**。上一版本 v7.3（2026-10-06，条目级监控）、v7.2（2026-10-05，数据目录语义化）、v7.1（2026-10-05，a11y P0 修复）。
 - **自动化**：GitHub Actions 每天北京时间 09:00 巡检 → 更新数据 → 提交推送（触发 Pages 重新发布）→ 有事项时开 issue。
 - **受众现状**：1 star / 0 fork，仓库 issue 全部是机器人每日巡检开出的（无真人反馈）。功能开发的边际收益很低，
   维护重点应放在**自动化管道不静默失效**上。
@@ -58,7 +58,30 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 单文件失败只让对应板块为空（`loadJSONOr`）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
-## 最近一轮变更与交付成果（v7.3，2026-10-06）
+## 最近一轮变更与交付成果（v7.4，2026-10-27）
+
+### v7.4 —— 修复计算器档位缺失（7 档预设全部可选）
+
+**问题**：`data/manual/calc-models.json` 一直配着 7 个模型档位，但 `index.html` 的
+`<select id="calcmodel">` 里只手写了 3 个 `<option>`（value 0/1/2）。**另外 4 档——百度千帆
+ERNIE 5.1、腾讯云 GLM-5.3-Flash、讯飞星火 X2.5、Gemini 3.8 Flash——用户在任何界面上都选不到**，
+而 README 与站点文案都写着「7 档」。同时 3 个写死 option 的文案与 json 的 `label` 重复维护。
+
+**改动**（`index.html` 5 行、`js/app.js` 19 行）：
+
+- `js/app.js` 新增 `populateCalcModels()`：按 `CALC_MODELS` 渲染全部 `<option>`，`value` 即池内
+  下标；默认选中 `GLM-5.3（中档）`（与历史 `selected` 一致）；热重载保留用户已选、非法值回落默认。
+- `index.html` 的 `<select>` 清空写死项，只留注释。**下拉内容以 `calc-models.json` 为唯一事实来源。**
+- **时序约束（重要）**：`populateCalcModels()` 必须插在首屏 `renderCalc()` **之前**调用。
+  若顺序反了，空 select 会让 `renderCalc` 读到 `value=""`，`+""===0` 从而**静默回落到第 0 档**——
+  这类"看起来正常但显示的是错档位"的问题比报错更难发现。
+- 渲染时用 `esc(m.label)` 转义，避免未来数据源引入 `<` / `>` 形成注入面。
+
+**验证**：`scripts/validate.mjs` 通过（calc-models.json 7 条）；`tests/selfcheck.mjs` 24/24；
+真实代码路径四类用例（7 档渲染 / 唯一 selected / 热重载保留 / 非法值回落 / 注入转义）全过；
+**真实点击走查**（headless Chrome + `--remote-debugging-port` + CDP，不用脚本 `selectedIndex`）：
+7 档全部渲染 → 真实鼠标点击展开获得焦点 → 真实键盘 ↓↓+Enter 选中「百度千帆 ERNIE 5.1」→
+计价行由 `$0.15/$0.6` 同步更新为 `$4/$18`。
 
 ### v7.3 —— 信息源采集层升级：条目级监控（list 源）
 
@@ -375,8 +398,8 @@ AIHOT 的做法是 `prefilter.md`（宽进，只拦明显无关）→ `selection
 | 已完成（v7.3） | ~~**信息源采集层升级：page 整页哈希 → 条目级选择器**~~（改造方案步骤 1） | **已完成**：`lib.mjs` 选择器引擎 + `lists` 数组 + `probe-source.mjs` + 熔断/0 条保护，GLM 文档页为首个试点。**后续迁移其余 11 个 page 源时逐个做**：每个都要先用 `node scripts/probe-source.mjs <id>` 验证 selector 能稳定抽出条目，SPA 空壳页与 Cloudflare 拦截页（现有 `page-unreliable` / disabled）不要尝试迁移 |
 | P2 | **线索分诊：预筛 + 双评分 + tier 门槛**（改造方案步骤 2） | 需接 LLM 与建评测集；红线是只影响线索排序、不碰任何价格字段。前置条件：`.data/gold.jsonl` 标注完成 |
 | P3 | **事件聚类 + 热度**（改造方案步骤 3） | 依赖前两步；需前端配合把动态区改为按事件折叠 |
-| P2 | **计算器只暴露 7 个预设中的 3 个（真缺陷）** | `data/manual/calc-models.json` 配了 7 个档位，但 `index.html` 的 `<select id="calcmodel">` 只写死 3 个 `<option>`（value 0/1/2），另外 4 个（百度千帆 ERNIE 5.1 / 腾讯云 GLM-5.3-Flash / 讯飞星火 X2.5 / Gemini 3.8 Flash）用户选不到；且这 3 个 option 的标签与 `calc-models.json` 的 label 重复维护，改一处不同步就漂移。修法：初始化时用 `CALC_MODELS` 渲染 `<option>`（保留「GLM-5.3（中档）」为默认选中），删掉 index.html 里写死的三项 |
-| P3 | **LICENSE 缺失** | 公开仓库建议补 MIT LICENSE 与 `CONTRIBUTING.md`（计划 E1-1） |
+| ✅ | ~~**计算器只暴露 7 个预设中的 3 个（真缺陷）**~~ **已于 v7.4 修复（2026-10-27）** | 原状：`calc-models.json` 配了 7 档，但 `index.html` 的 `<select id="calcmodel">` 只写死 3 个 `<option>`（value 0/1/2），另 4 档用户选不到，标签还与数据源重复维护。修法已落地：`js/app.js` 新增 `populateCalcModels()` 按 `CALC_MODELS` 渲染全部选项（默认 `GLM-5.3（中档）`、热重载保留已选、非法值回落、`esc()` 转义），`index.html` 清空写死项，**下拉以 `calc-models.json` 为唯一事实来源**。⚠️ 时序约束：`populateCalcModels()` 必须在 `renderCalc()` 之前调用，否则空 select 会静默回落到第 0 档。已验证：validate + selfcheck 24/24 + 真实 Chrome CDP 点击走查（7 档全渲染、真实点击展开、键盘选中原先缺失的「百度千帆 ERNIE 5.1」后计价行同步更新） |
+| P3 | **LICENSE 缺失** | 已补 MIT LICENSE（v7.3 后随门面整改提交）；`CONTRIBUTING.md` 仍未写 |
 | P3 | **功能类需求**（计划 P1-2-1 散点图 / P1-3-1 最近 7 天变更面板 / P1-5-1 场景标签过滤） | 在零受众前提下边际收益≈0；若把项目当作品集则优先做这些（而不是 store 与 lint），并同步补 README 配图 |
 | P3 | **localStorage 缓存版本化**（计划 S3-2） | 当前 `CACHE_KEY = "cp_modelsdev_cache_v1"` 无 schema 版本与过期清理。缓存结构一变就会读到旧结构，建议加 `schema` 字段 |
 

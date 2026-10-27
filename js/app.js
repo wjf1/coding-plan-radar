@@ -521,6 +521,22 @@ function bindCalc(){
   document.getElementById("calcmodel").addEventListener("change",renderCalc);
 }
 
+/* 下拉选项的唯一事实来源 = data/manual/calc-models.json。
+   此前 index.html 硬编码 3 个 option（池内下标 0/1/2），其余 4 档用户选不到，
+   且标签与 json 的 label 重复维护、改一处即漂移。改由数据渲染，两者不再分叉。
+   默认选中「GLM-5.3（中档）」，与历史 selected 项保持一致。 */
+const CALC_DEFAULT_MATCH="GLM-5.3";
+function populateCalcModels(){
+  const sel=document.getElementById("calcmodel");
+  if(!sel||!CALC_MODELS.length) return;
+  const prev=sel.value;   // 保留用户已选（热重载 / 重复渲染场景）
+  const defIdx=Math.max(0,CALC_MODELS.findIndex(m=>m.match===CALC_DEFAULT_MATCH));
+  const n=+prev;
+  const want=(prev!==""&&n>=0&&n<CALC_MODELS.length)?n:defIdx;
+  sel.innerHTML=CALC_MODELS.map((m,i)=>
+    `<option value="${i}"${i===want?" selected":""}>${esc(m.label)}</option>`).join("");
+}
+
 /* ================= Token 实时价格榜 ================= */
 function setStatus(state,msg){
   const dot=document.getElementById("token-dot");
@@ -965,6 +981,9 @@ bind();
   document.getElementById("tsort").value=tSort;
   // 语言按钮：首屏只同步高亮态，等首屏渲染完再整体应用 URL 带来的语言
   document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===currentLang));
+  // 计算器下拉必须在 renderCalc() 之前按 calc-models.json 重建，
+  // 否则空 select 会让 renderCalc 读到 value="" → 回落到池内第 0 档
+  populateCalcModels();
   renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderCompare(); loadModels();
   if(currentLang!=="zh") setLang(currentLang);
   renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();
