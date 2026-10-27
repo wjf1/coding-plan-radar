@@ -1,6 +1,104 @@
 {
- "generatedAt": "2026-10-26",
+ "generatedAt": "2026-10-27",
  "items": [
+  {
+   "id": "freebie-repos:36a1338a5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Update README.md",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-26",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/65ca334001b084dfcaf40b56b223a344466668dc",
+   "date": "2026-10-26T13:57:28Z",
+   "firstSeen": "2026-10-27",
+   "lastSeen": "2026-10-27"
+  },
+  {
+   "id": "freebie-repos:e66af8525e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Fix what the source review found",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-25",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/0ad26c4f3b00185a6c13af4efbca6848ca51c2ba",
+   "date": "2026-10-25T21:18:41Z",
+   "firstSeen": "2026-10-27",
+   "lastSeen": "2026-10-27"
+  },
+  {
+   "id": "freebie-repos:e48f962e5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Source 246 facts on provider pages and fix what the pages contradict",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-25",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/5e4863aed7b7934fcddca5baefc3e4a1b558deb8",
+   "date": "2026-10-25T21:02:16Z",
+   "firstSeen": "2026-10-27",
+   "lastSeen": "2026-10-27"
+  },
+  {
+   "id": "freebie-repos:61a5b58c5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Teach provider sync to act on the doc report, broken links and billing refusals",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-25",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/0fd71fa7dfd7069252c682a977898e3ddc6cc25d",
+   "date": "2026-10-25T20:51:24Z",
+   "firstSeen": "2026-10-27",
+   "lastSeen": "2026-10-27"
+  },
+  {
+   "id": "gh-changelog:de51f5ed60",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot assisted permissions generally available",
+   "excerpt": "Assisted permissions are now generally available in GitHub Copilot CLI, GitHub Copilot app, and Visual Studio Code. When Copilot requests permission to run a command, access a file system path,…",
+   "url": "https://github.blog/changelog/2026-10-26-github-copilot-assisted-permissions-generally-available",
+   "date": "Mon, 26 Oct 2026 22:31:30 +0000",
+   "firstSeen": "2026-10-27",
+   "lastSeen": "2026-10-27"
+  },
+  {
+   "id": "gh-changelog:0073ee9548",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GPT-6.1 Terra in GitHub Copilot",
+   "excerpt": "GPT-6.1 Terra, OpenAI’s newest model, is now generally available in GitHub Copilot. It is designed for everyday agentic coding and terminal work at a lower cost than GPT-6.1 Sol. In…",
+   "url": "https://github.blog/changelog/2026-10-26-gpt-6-1-terra-in-github-copilot",
+   "date": "Mon, 26 Oct 2026 19:15:53 +0000",
+   "firstSeen": "2026-10-27",
+   "lastSeen": "2026-10-27"
+  },
+  {
+   "id": "github-status:9a60853933",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Actions, Issues, API Requests and Pull Requests",
+   "excerpt": "<p> <small>Oct <var data-var='date'>26</var>, <var data-var='time'>18:57</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/f1vvv30224wd",
+   "date": "Mon, 26 Oct 2026 18:57:22 +0000",
+   "firstSeen": "2026-10-27",
+   "lastSeen": "2026-10-27"
+  },
   {
    "id": "freebie-repos:5c71de2a5e",
    "source": "freebie-repos",
@@ -69,7 +167,7 @@
    "url": "https://github.blog/changelog/2026-10-23-usage-metrics-api-adds-usage-from-tools-like-opencode",
    "date": "Fri, 23 Oct 2026 23:42:03 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "github-status:5b45d2a533",
@@ -83,7 +181,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -111,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/ntrfd2jqldn6",
    "date": "Fri, 23 Oct 2026 08:05:27 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "openai-status:80ed11593f",
@@ -125,7 +223,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -139,7 +237,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -167,7 +265,7 @@
    "url": "https://github.blog/changelog/2026-10-22-custom-skills-agents-and-mcp-servers-in-usage-metrics-api",
    "date": "Thu, 22 Oct 2026 22:19:17 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "gh-changelog:9b3eaaaf60",
@@ -181,7 +279,7 @@
    "url": "https://github.blog/changelog/2026-10-22-global-default-for-copilot-features-generally-available",
    "date": "Thu, 22 Oct 2026 20:44:28 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "gh-changelog:270053ad5d",
@@ -209,7 +307,7 @@
    "url": "https://www.githubstatus.com/incidents/wq8305lppdc2",
    "date": "Fri, 23 Oct 2026 02:30:25 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "github-status:a1a4a5d133",
@@ -223,7 +321,7 @@
    "url": "https://www.githubstatus.com/incidents/q29p76qtnkyk",
    "date": "Thu, 22 Oct 2026 15:18:46 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "ithome:94289f5324",
@@ -391,7 +489,7 @@
    "url": "https://status.openai.com//incidents/01M5JF8DR3EGQJNTXPZ24AKX2G",
    "date": "Thu, 22 Oct 2026 20:55:48 GMT",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "openrouter:c4819ba940",
@@ -433,7 +531,7 @@
    "url": "https://status.claude.com/incidents/njk29r81v3wg",
    "date": "Wed, 21 Oct 2026 20:29:17 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "github-status:e61c7f4433",
@@ -447,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
    "date": "Wed, 21 Oct 2026 19:22:52 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "ithome:3428782024",
@@ -531,7 +629,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "ithome:466ab50e24",
@@ -573,7 +671,7 @@
    "url": "https://status.openai.com//incidents/01M5E4G39TD1BW1QWHZG6RFA5H",
    "date": "Wed, 21 Oct 2026 03:28:00 GMT",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "sspai:2fee997c39",
@@ -629,7 +727,7 @@
    "url": "https://www.githubstatus.com/incidents/8tzbpcnl75jp",
    "date": "Mon, 19 Oct 2026 16:56:58 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "modelsdev:99a1348732",
@@ -923,7 +1021,7 @@
    "url": "https://openai.com/index/benefit-street-partners",
    "date": "Fri, 16 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-18",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "ithome:f4e938a024",
@@ -1035,7 +1133,7 @@
    "url": "https://openai.com/index/introducing-the-rosalind-academic-plan",
    "date": "Thu, 15 Oct 2026 19:00:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "openai-status:c72ee51f3f",
@@ -1063,7 +1161,7 @@
    "url": "https://status.openai.com//incidents/01M506BA4XRSWH7THR53HQGN3Z",
    "date": "Thu, 15 Oct 2026 18:56:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "openrouter:fe235b9b41",
@@ -1119,7 +1217,7 @@
    "url": "https://status.openai.com//incidents/01M4WKPE1EY48ZB4RZJ80YH7ES",
    "date": "Wed, 14 Oct 2026 09:53:11 GMT",
    "firstSeen": "2026-10-15",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "gh-changelog:cb4a5ef649",
@@ -1175,7 +1273,7 @@
    "url": "https://status.openai.com//incidents/01M4T4ZCM54D3ZPTQXRSWFG0XS",
    "date": "Tue, 13 Oct 2026 16:36:42 GMT",
    "firstSeen": "2026-10-14",
-   "lastSeen": "2026-10-26"
+   "lastSeen": "2026-10-27"
   },
   {
    "id": "openrouter:fe0cc39d3c",
