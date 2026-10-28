@@ -2,17 +2,17 @@
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "aa11ac665664",
    "03eb15a156dc",
    "0786d42556d0",
    "28e904bd565e",
    "c6d0a6475649",
-   "f66cfbf25662"
+   "f66cfbf25662",
+   "8a3a56b0569b"
   ],
   "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "f66cfbf25662",
+  "pending": "8a3a56b0569b",
   "pendingSince": "2026-09-22",
   "unstable": true
  },
@@ -47,18 +47,18 @@
  "minimax": {
   "hash": "035267b45dd",
   "seen": [
-   "911663e821e7",
    "d595117f2055",
    "52591e012053",
    "4c4b6ee6208f",
    "3bf8dec2225d",
-   "6e4253142262"
+   "6e4253142262",
+   "6da5de9921c0"
   ],
   "flaps": 0,
   "changedAt": "2026-10-01",
   "revertCount": 2,
   "unstable": true,
-  "pending": "6e4253142262",
+  "pending": "6da5de9921c0",
   "pendingSince": "2026-10-03"
  },
  "aliyun-free-quota": {
@@ -84,13 +84,14 @@
    "f9f610c22572",
    "922fc4e42588",
    "310f7285258c",
-   "4cb20da5255e"
+   "4cb20da5255e",
+   "16d004722603"
   ],
   "flaps": 0,
   "changedAt": "2026-09-22",
   "revertCount": 2,
   "unstable": true,
-  "pending": "4cb20da5255e",
+  "pending": "16d004722603",
   "pendingSince": "2026-09-30"
  },
  "baidu-qianfan": {
