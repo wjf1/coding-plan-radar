@@ -2,17 +2,17 @@
  "copilot": {
   "hash": "c3057b5c57a4",
   "seen": [
-   "03eb15a156dc",
    "0786d42556d0",
    "28e904bd565e",
    "c6d0a6475649",
    "f66cfbf25662",
-   "8a3a56b0569b"
+   "8a3a56b0569b",
+   "b74c2e726023"
   ],
   "flaps": 2,
   "changedAt": "2026-09-19",
   "revertCount": 1,
-  "pending": "8a3a56b0569b",
+  "pending": "b74c2e726023",
   "pendingSince": "2026-09-22",
   "unstable": true
  },
@@ -47,18 +47,18 @@
  "minimax": {
   "hash": "035267b45dd",
   "seen": [
-   "d595117f2055",
    "52591e012053",
    "4c4b6ee6208f",
    "3bf8dec2225d",
    "6e4253142262",
-   "6da5de9921c0"
+   "6da5de9921c0",
+   "a81ff79f1ac3f"
   ],
   "flaps": 0,
   "changedAt": "2026-10-01",
   "revertCount": 2,
   "unstable": true,
-  "pending": "6da5de9921c0",
+  "pending": "a81ff79f1ac3f",
   "pendingSince": "2026-10-03"
  },
  "aliyun-free-quota": {
@@ -97,9 +97,12 @@
  "baidu-qianfan": {
   "hash": "4b552805b10",
   "seen": [
-   "4b552805b10"
+   "4b552805b10",
+   "609c6daab14"
   ],
-  "flaps": 0
+  "flaps": 0,
+  "pending": "609c6daab14",
+  "pendingSince": "2026-10-29"
  },
  "iflytek-tokenplan": {
   "hash": "7ee4a76a37ae",
@@ -112,11 +115,14 @@
   "hash": "ea4e41223a29",
   "seen": [
    "8907d64e3a10",
-   "ea4e41223a29"
+   "ea4e41223a29",
+   "1a3e88043a56"
   ],
   "flaps": 0,
   "changedAt": "2026-10-22",
-  "revertCount": 1
+  "revertCount": 1,
+  "pending": "1a3e88043a56",
+  "pendingSince": "2026-10-29"
  },
  "aliyun-coding-plan": {
   "hash": "36baea6ee8d",

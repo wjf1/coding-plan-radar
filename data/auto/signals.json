@@ -1,6 +1,202 @@
 {
- "generatedAt": "2026-10-28",
+ "generatedAt": "2026-10-29",
  "items": [
+  {
+   "id": "freebie-repos:e3496bca5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Keep the Okapi tracking link in the README generator",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-28",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/c28ddc8b84804368a1b081385112feec590abd0a",
+   "date": "2026-10-28T13:42:03Z",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "freebie-repos:3d7bf57f5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Add a tagline under the Okapi sponsor logo",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-28",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/bb481c0a11995e7480a97cdaf83644dbac71670a",
+   "date": "2026-10-28T13:34:21Z",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:9f6ac02160",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Route and orchestrate models with GitHub Copilot Fusion",
+   "excerpt": "GitHub Copilot Fusion is generally available. Instead of picking a model for each task, choose Copilot Fusion and let Copilot intelligently route and orchestrate which models it uses for you.…",
+   "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
+   "date": "Wed, 28 Oct 2026 16:00:00 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:7accd40e4d",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot app, Universe releases",
+   "excerpt": "Work doesn’t always fit in a single repository or session. A feature can span several repositories. A launch plan can pull in specs, designs, and assets without touching a repository…",
+   "url": "https://github.blog/changelog/2026-10-28-github-copilot-app-universe-releases",
+   "date": "Wed, 28 Oct 2026 15:55:00 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:01a6ba3160",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Enterprise now includes access to GitHub Copilot",
+   "excerpt": "Enterprises working with a GitHub or Microsoft account team can now get Copilot included with GitHub Enterprise for every licensed user. Previously, you had to manage two things: how many…",
+   "url": "https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot",
+   "date": "Wed, 28 Oct 2026 15:50:00 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:dafeacbc56",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Security extension for the GitHub Copilot app",
+   "excerpt": "You can now work through your repository’s GitHub code scanning alerts without leaving the GitHub Copilot app. The new GitHub security extension, now in public preview, lets you find the…",
+   "url": "https://github.blog/changelog/2026-10-28-security-extension-for-the-github-copilot-app",
+   "date": "Wed, 28 Oct 2026 15:45:00 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:4ab5b38566",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Build shared workflows for your team with Copilot Automations",
+   "excerpt": "Shared Copilot Automations are rolling out, enabling teams to build and maintain AI-powered workflows together. With Copilot Automations, you can combine prompts, triggers, and tools to design workflows around the…",
+   "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
+   "date": "Wed, 28 Oct 2026 15:35:00 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:7e210b8054",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot in VS Code, Universe releases",
+   "excerpt": "This year, we focused on giving you more choice in how you work with GitHub Copilot in Visual Studio Code: which models you use, where your agents run, and how…",
+   "url": "https://github.blog/changelog/2026-10-28-github-copilot-in-vs-code-universe-releases",
+   "date": "Wed, 28 Oct 2026 15:33:00 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:b273215a55",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Generate and edit images directly in Copilot",
+   "excerpt": "You can now generate and edit images using natural language in GitHub Copilot. When you ask for an image, your selected reasoning model calls a dedicated image-generation tool powered by…",
+   "url": "https://github.blog/changelog/2026-10-28-generate-and-edit-images-directly-in-copilot",
+   "date": "Wed, 28 Oct 2026 15:30:55 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "gh-changelog:e0c3b3b665",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot Fusion now supports selection of local models",
+   "excerpt": "Today we are shipping intelligent routing for local models into experimental preview. GitHub Copilot Fusion can now choose between supported on-device models and cloud models, enabling intelligent local model routing…",
+   "url": "https://github.blog/changelog/2026-10-28-github-copilot-fusion-now-supports-selection-of-local-models",
+   "date": "Wed, 28 Oct 2026 15:30:42 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "github-status:f594903033",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with some Copilot services",
+   "excerpt": "<p> <small>Oct <var data-var='date'>28</var>, <var data-var='time'>15:28</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/l7ycmglmykgg",
+   "date": "Wed, 28 Oct 2026 15:28:19 +0000",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "modelsdev:90bcebcd3f",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gemini-3-pro-image-preview 已从 models.dev 下架（google）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-10-29",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "modelsdev:339cdfe943",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gemini-3.1-flash-image-preview 已从 models.dev 下架（google）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-10-29",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
+  {
+   "id": "sspai:077e541c43",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "让 Agent 读懂你的身体：数据处理篇",
+   "excerpt": "在上一篇文章《让Agent读懂你的身体：数据获取篇》中，我花了很大的篇幅讲清楚了第一个问题：Agent怎样拿到数据。如果照着实践完，你大概率已经收获了一份存储了运动健康数据的SQLite、Markdo ...<a href=\"https://sspai.com/prime/story/how-to-analyze-health-data-with-agent\" target=\"_blank\">查看全文</a><p>本文为会员文章，出自<a href=\"https://sspai.com/prime/precog/single\" target=\"_blank\">《单篇文章》</a >，订阅后可阅…",
+   "url": "https://sspai.com/prime/story/how-to-analyze-health-data-with-agent",
+   "date": "Thu, 29 Oct 2026 11:29:46 +0800",
+   "firstSeen": "2026-10-29",
+   "lastSeen": "2026-10-29"
+  },
   {
    "id": "freebie-repos:36a1338a5e",
    "source": "freebie-repos",
@@ -13,7 +209,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/65ca334001b084dfcaf40b56b223a344466668dc",
    "date": "2026-10-26T13:57:28Z",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "freebie-repos:e66af8525e",
@@ -111,7 +307,7 @@
    "url": "https://www.githubstatus.com/incidents/f1vvv30224wd",
    "date": "Mon, 26 Oct 2026 18:57:22 +0000",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "openai-status:7deb29513f",
@@ -125,7 +321,7 @@
    "url": "https://status.openai.com//incidents/01M5YY4A3TQETEQ53DVSK8SW10",
    "date": "Tue, 27 Oct 2026 16:20:06 GMT",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "openrouter:5a7edfda47",
@@ -223,7 +419,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -265,7 +461,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -279,7 +475,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -349,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/wq8305lppdc2",
    "date": "Fri, 23 Oct 2026 02:30:25 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "github-status:a1a4a5d133",
@@ -363,7 +559,7 @@
    "url": "https://www.githubstatus.com/incidents/q29p76qtnkyk",
    "date": "Thu, 22 Oct 2026 15:18:46 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "ithome:94289f5324",
@@ -531,7 +727,7 @@
    "url": "https://status.openai.com//incidents/01M5JF8DR3EGQJNTXPZ24AKX2G",
    "date": "Thu, 22 Oct 2026 20:55:48 GMT",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "openrouter:c4819ba940",
@@ -573,7 +769,7 @@
    "url": "https://status.claude.com/incidents/njk29r81v3wg",
    "date": "Wed, 21 Oct 2026 20:29:17 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "github-status:e61c7f4433",
@@ -587,7 +783,7 @@
    "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
    "date": "Wed, 21 Oct 2026 19:22:52 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "ithome:3428782024",
@@ -671,7 +867,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "ithome:466ab50e24",
@@ -713,7 +909,7 @@
    "url": "https://status.openai.com//incidents/01M5E4G39TD1BW1QWHZG6RFA5H",
    "date": "Wed, 21 Oct 2026 03:28:00 GMT",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "sspai:2fee997c39",
@@ -769,7 +965,7 @@
    "url": "https://www.githubstatus.com/incidents/8tzbpcnl75jp",
    "date": "Mon, 19 Oct 2026 16:56:58 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "modelsdev:99a1348732",
@@ -1063,7 +1259,7 @@
    "url": "https://openai.com/index/benefit-street-partners",
    "date": "Fri, 16 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-18",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "ithome:f4e938a024",
@@ -1175,7 +1371,7 @@
    "url": "https://openai.com/index/introducing-the-rosalind-academic-plan",
    "date": "Thu, 15 Oct 2026 19:00:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "openai-status:c72ee51f3f",
@@ -1203,7 +1399,7 @@
    "url": "https://status.openai.com//incidents/01M506BA4XRSWH7THR53HQGN3Z",
    "date": "Thu, 15 Oct 2026 18:56:00 GMT",
    "firstSeen": "2026-10-16",
-   "lastSeen": "2026-10-28"
+   "lastSeen": "2026-10-29"
   },
   {
    "id": "openrouter:fe235b9b41",
