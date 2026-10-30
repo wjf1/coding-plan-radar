@@ -174,5 +174,23 @@
   "resolved": true,
   "resolvedBy": "auto-revert",
   "resolvedAt": "2026-10-23"
+ },
+ {
+  "id": "baidu-qianfan",
+  "label": "百度千帆 Token Plan 文档",
+  "url": "https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Blfmc9dlf",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-10-30",
+  "resolved": false
+ },
+ {
+  "id": "tencent-tokenplan",
+  "label": "腾讯云 Token Plan 文档",
+  "url": "https://www.tencentcloud.com/document/product/1300/81315",
+  "tier": "official",
+  "kind": "page-change",
+  "detected": "2026-10-30",
+  "resolved": false
  }
 ]

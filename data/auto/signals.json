@@ -1,6 +1,118 @@
 {
- "generatedAt": "2026-10-29",
+ "generatedAt": "2026-10-30",
  "items": [
+  {
+   "id": "freebie-repos:d39ebc6d5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Remove Ollama Cloud: its pricing page no longer has a free plan",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-29",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/f49e523a77dbbb98032ca589ca796700fc565689",
+   "date": "2026-10-29T16:38:36Z",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
+  {
+   "id": "freebie-repos:2cb76c1a5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Data sync 2026-10-29: remove 2 dead models",
+   "excerpt": "Sébastien Conejo 提交于 2026-10-29",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/be2ef92b557d9a18c651c00d33e8eedca79c5368",
+   "date": "2026-10-29T14:33:58Z",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
+  {
+   "id": "gh-changelog:a64d57d776",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Repository plugin defaults and enterprise plugin controls generally available",
+   "excerpt": "Repository plugin defaults and enterprise-managed plugin controls are now generally available in VS Code, Copilot CLI, and the GitHub Copilot app. Trusted repositories can install and enable default plugins for…",
+   "url": "https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available",
+   "date": "Wed, 28 Oct 2026 15:33:00 +0000",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
+  {
+   "id": "github-status:45ed9f2733",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with Copilot Cloud services",
+   "excerpt": "<p> <small>Oct <var data-var='date'>29</var>, <var data-var='time'>12:49</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/rn76zdy367m2",
+   "date": "Thu, 29 Oct 2026 12:49:52 +0000",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
+  {
+   "id": "ithome:f3ebc19124",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "在尸体上铺路：Steam 动作解谜新游《Re:Re:Re:Respawn》发售，首发 9 折 ¥26.10",
+   "excerpt": "<p data-vmark=\"0000\">IT之家 10 月 30 日消息，由 Studio 开发、Re³ 发行的 3D 动作解谜游戏《Re:Re:Re:Respawn》现已正式登陆 Steam 平台，国区首发限时 9 折，折后售价 26.10 元（原价 29.00 元），优惠将持续至 11 月 5 日。IT之家附游戏商品页（<a href=\"https://store.steampowered.com/app/4620440/ReReReRespawn/\"><span class=\"link-text-start-with-http\">https://store.steampowered.c…",
+   "url": "https://www.ithome.com/1/020/095.htm",
+   "date": "Fri, 30 Oct 2026 06:38:30 GMT",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
+  {
+   "id": "ithome:36c73fc824",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "上汽通用五菱进军无人配送赛道，发布全新车规级无人物流车",
+   "excerpt": "<p data-vmark=\"2d3d\">IT之家 10 月 30 日消息，10 月 29 日，上汽通用五菱官宣智慧装备战略，正式发布“百万智慧装备产业”首款落地产品 —— 全新车规级无人物流车，<strong>宣告进军无人配送赛道</strong>。</p><p data-vmark=\"e0a7\">官方表示，上汽通用五菱无人物流车已与多家企业开展战略合作并投入落地运营，涵盖运营方、技术方、终端客户及生态伙伴；提供整车销售、软件订阅、融资租赁、生产代工等多种合作模式，并配套全链路运维服务，真正做到“交付即运营”。</p><p style=\"text-align: center;\" data-v…",
+   "url": "https://www.ithome.com/1/020/074.htm",
+   "date": "Fri, 30 Oct 2026 06:27:33 GMT",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
+  {
+   "id": "ithome:3706d13224",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "美国多个军营冰柜突发故障，五角大楼怀疑系黑客攻击所致",
+   "excerpt": "<p data-vmark=\"6637\">IT之家 10 月 30 日消息，据彭博社 29 日报道，美国陆军一名官员披露，美军刑事调查人员着手调查多个军事基地的食品冷冻设备故障事件。此前，欧洲发生过类似故障，原因是网络攻击。</p><p data-vmark=\"be45\">六处军事基地发布声明证实，今年 8 月，基地内专门向军人及其家属优惠销售食品的军营超市，冷冻设备同时出现故障。美国陆军刑事调查局发言人托马斯 · 汉密尔顿称，该局正与其他调查人员合作，查明事件全貌。</p><p data-vmark=\"ec82\">汉密尔顿还提到，美军调查人员也在<strong>与法国警方合作，调查欧洲的制冷…",
+   "url": "https://www.ithome.com/1/019/968.htm",
+   "date": "Fri, 30 Oct 2026 03:21:20 GMT",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
+  {
+   "id": "sspai:a58323b730",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
+   "excerpt": "编者按：@阿帅的健康笔记长期专注于运动健康领域的创作，发表了不少兼具实用性与科普性的文章，并著有付费栏目《久坐健康指南》，受到许多读者喜爱。本期《装了啥》邀请他分享运动、创作与工作中的心得，以及常用的 ...<a href=\"https://sspai.com/prime/story/zhuanglesha-261030\" target=\"_blank\">查看全文</a><p>本文为会员文章，出自<a href=\"https://sspai.com/prime/precog/single\" target=\"_blank\">《单篇文章》</a >，订阅后可阅读全文。</p >",
+   "url": "https://sspai.com/prime/story/zhuanglesha-261030",
+   "date": "Fri, 30 Oct 2026 11:30:43 +0800",
+   "firstSeen": "2026-10-30",
+   "lastSeen": "2026-10-30"
+  },
   {
    "id": "freebie-repos:e3496bca5e",
    "source": "freebie-repos",
@@ -41,7 +153,7 @@
    "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
    "date": "Wed, 28 Oct 2026 16:00:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "gh-changelog:7accd40e4d",
@@ -55,7 +167,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-copilot-app-universe-releases",
    "date": "Wed, 28 Oct 2026 15:55:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "gh-changelog:01a6ba3160",
@@ -69,7 +181,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot",
    "date": "Wed, 28 Oct 2026 15:50:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "gh-changelog:dafeacbc56",
@@ -83,7 +195,7 @@
    "url": "https://github.blog/changelog/2026-10-28-security-extension-for-the-github-copilot-app",
    "date": "Wed, 28 Oct 2026 15:45:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "gh-changelog:4ab5b38566",
@@ -97,7 +209,7 @@
    "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
    "date": "Wed, 28 Oct 2026 15:35:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "gh-changelog:7e210b8054",
@@ -111,7 +223,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-copilot-in-vs-code-universe-releases",
    "date": "Wed, 28 Oct 2026 15:33:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "gh-changelog:b273215a55",
@@ -125,7 +237,7 @@
    "url": "https://github.blog/changelog/2026-10-28-generate-and-edit-images-directly-in-copilot",
    "date": "Wed, 28 Oct 2026 15:30:55 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "gh-changelog:e0c3b3b665",
@@ -153,7 +265,7 @@
    "url": "https://www.githubstatus.com/incidents/l7ycmglmykgg",
    "date": "Wed, 28 Oct 2026 15:28:19 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "modelsdev:90bcebcd3f",
@@ -195,7 +307,7 @@
    "url": "https://sspai.com/prime/story/how-to-analyze-health-data-with-agent",
    "date": "Thu, 29 Oct 2026 11:29:46 +0800",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "freebie-repos:36a1338a5e",
@@ -307,7 +419,7 @@
    "url": "https://www.githubstatus.com/incidents/f1vvv30224wd",
    "date": "Mon, 26 Oct 2026 18:57:22 +0000",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "openai-status:7deb29513f",
@@ -321,7 +433,7 @@
    "url": "https://status.openai.com//incidents/01M5YY4A3TQETEQ53DVSK8SW10",
    "date": "Tue, 27 Oct 2026 16:20:06 GMT",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "openrouter:5a7edfda47",
@@ -419,7 +531,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -461,7 +573,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -475,7 +587,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -545,7 +657,7 @@
    "url": "https://www.githubstatus.com/incidents/wq8305lppdc2",
    "date": "Fri, 23 Oct 2026 02:30:25 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "github-status:a1a4a5d133",
@@ -559,7 +671,7 @@
    "url": "https://www.githubstatus.com/incidents/q29p76qtnkyk",
    "date": "Thu, 22 Oct 2026 15:18:46 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "ithome:94289f5324",
@@ -727,7 +839,7 @@
    "url": "https://status.openai.com//incidents/01M5JF8DR3EGQJNTXPZ24AKX2G",
    "date": "Thu, 22 Oct 2026 20:55:48 GMT",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "openrouter:c4819ba940",
@@ -769,7 +881,7 @@
    "url": "https://status.claude.com/incidents/njk29r81v3wg",
    "date": "Wed, 21 Oct 2026 20:29:17 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "github-status:e61c7f4433",
@@ -783,7 +895,7 @@
    "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
    "date": "Wed, 21 Oct 2026 19:22:52 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "ithome:3428782024",
@@ -867,7 +979,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "ithome:466ab50e24",
@@ -909,7 +1021,7 @@
    "url": "https://status.openai.com//incidents/01M5E4G39TD1BW1QWHZG6RFA5H",
    "date": "Wed, 21 Oct 2026 03:28:00 GMT",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "sspai:2fee997c39",
@@ -965,7 +1077,7 @@
    "url": "https://www.githubstatus.com/incidents/8tzbpcnl75jp",
    "date": "Mon, 19 Oct 2026 16:56:58 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-29"
+   "lastSeen": "2026-10-30"
   },
   {
    "id": "modelsdev:99a1348732",
