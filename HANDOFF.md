@@ -8,7 +8,7 @@
 - **定位**：AI 编程订阅计划（Coding Plan）对比站。纯静态站，无构建、零 npm 依赖，GitHub Pages 托管。
 - **线上地址**：https://wjf1.github.io/coding-plan-radar/ ｜ 仓库：https://github.com/wjf1/coding-plan-radar
 - **覆盖**：20 个条目（19 个在售平台 + 1 个已停售留档）、69 个付费档位；Token 实时价格榜接 models.dev。
-- **当前版本**：**v7.4（2026-10-27）**。上一版本 v7.3（2026-10-06，条目级监控）、v7.2（2026-10-05，数据目录语义化）、v7.1（2026-10-05，a11y P0 修复）。
+- **当前版本**：**v7.5（2026-10-31，随本提交推送，未打 tag——工作目录版本，发布时点以 CHANGELOG [Unreleased] 转正为准）**。上一版本 v7.4（2026-10-27，计算器 7 档修复）、v7.3（2026-10-06，条目级监控）、v7.2（2026-10-05，数据目录语义化）。
 - **自动化**：GitHub Actions 每天北京时间 09:00 巡检 → 更新数据 → 提交推送（触发 Pages 重新发布）→ 有事项时开 issue。
 - **受众现状**：1 star / 0 fork，仓库 issue 全部是机器人每日巡检开出的（无真人反馈）。功能开发的边际收益很低，
   维护重点应放在**自动化管道不静默失效**上。
@@ -58,7 +58,44 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 单文件失败只让对应板块为空（`loadJSONOr`）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
-## 最近一轮变更与交付成果（v7.4，2026-10-27）
+## 最近一轮变更与交付成果（v7.5，2026-10-31）
+
+### v7.5 —— 条目级监控铺开（11 个 page 源逐个评估迁移）+ 缓存 schema 版本化 + CONTRIBUTING
+
+**背景**：v7.3 只迁移了 GLM 文档页一个试点，Backlog 留有「其余 11 个 page 源逐个迁移，
+每个先 probe 验证稳定才迁，SPA 空壳 / Cloudflare 拦截页不要尝试」的待办。本轮逐源抓取分析 SSR 结构后完成。
+
+**逐源结论（11 个，全部经真实抓取验证，无凭记忆判断）**：
+
+| 源 | 结果 | 说明 |
+|---|---|---|
+| copilot | ✅ 已迁 list | `table:nth(1) tbody tr` + name/price/credits，实测 8 条（Free/Student/Pro/Pro+/Max/Business/Enterprise/access），价格字段精确 |
+| trae | ✅ 已迁 list | `.cardWrapper-mkVYTL` + name/price，实测 4 条（$0/$20/$60/$200），两次 probe 一致。class 含构建指纹（mkVYTL/ohflUE），站点重构建会走 0 条保护，需重新 probe |
+| minimax | ✅ 已迁 list | `table:nth(1) tbody tr`，盯语言模型首表（M3.1-Flash 1.00/4.00/0.10 元/百万 tokens）；页面 24 个表，M3 系列标准/优先双列表未纳入 |
+| iflytek-tokenplan | ✅ 已迁 list | `table:nth(4) tbody tr`，套餐表 3 行（标准/高级/尊享：月价、月积分、TPM、限时促销） |
+| tencent-tokenplan | ✅ 已迁 list | `table:nth(1) tbody tr`，转置表（行 Plan/Price/Usage Limit × 列 Lite/Standard/Pro/Max），fields 按列取（row/lite/standard/pro/max），keyField=row |
+| aliyun-coding-plan | ✅ 已迁 list | `table:nth(1) tbody tr`，套餐详情布局表 3 行（模型/价格/用量），name=td:nth(1)、value=td:nth(2)；Lite 已停售仅剩 Pro |
+| kimi | ⏭ 跳过 | SSR 正文仅 1701 字符，价格全部客户端渲染，HTML 无条目结构可配置 |
+| aliyun-free-quota | ⏭ 跳过 | 规则说明 + FAQ 散文页（0 表格），无条目可抽取 |
+| aliyun-university | ⏭ 跳过 | 营销轮播页（26 个 swiper 卡片），权益数字在散文规则里，与 gh-education 同类教训 |
+| baidu-qianfan | ⏭ 跳过 | 该 URL 现为文档门户页（strip 2838 字符、0 表格），已无价格内容 |
+| xiaomi-mimo | ⏭ 跳过 | 实测已变 SPA 空壳（strip 18 字符），与 2026-09-23「可抓取含价格文本」记录不符；其 page 哈希监控预计会被 assertCrawlable（≥200 字符）拦截，待 CI 源健康确认后再决定是否标 page-unreliable |
+
+**红线遵守**：本轮只动采集层（sources.json 的 pages/lists 数组），未触碰任何价格字段与 plans.json 数据。
+
+**其它改动**：
+
+1. `js/app.js` 缓存 schema 版本化：`CACHE_SCHEMA = 2`，写入带 `schema` 字段；读取时 schema 不匹配 /
+   过期 / JSON 损坏一律 `removeItem` 弃用重取（结构不匹配不做迁移）。此前缓存结构变更会读到旧结构。
+2. 新增 `CONTRIBUTING.md`（中文）：零依赖开发环境、validate + selfcheck、数据修改规范
+   （价格红线写入）、probe 前置要求、PR 流程与验证清单。
+3. `CHANGELOG.md` 新增 `[Unreleased]` 段（Keep a Changelog 分类）记录本轮全部变更。
+
+**验证**：`validate.mjs` 通过（lists 7 源契约全过 + 11 个 JS 语法）；`selfcheck.mjs` 24/24；
+6 个 list 源（含 glm 回归）probe 全部非 0 退出码通过；trae 二次 probe 结果一致（稳定性验证）。
+未跑 check-pages.mjs（会写 data/auto 基线，留给下次 CI 巡检建基线——首轮巡检对 6 个新 list 源只建基线不报警，属预期）。
+
+### v7.4 —— 修复计算器档位缺失（7 档预设全部可选）
 
 ### v7.4 —— 修复计算器档位缺失（7 档预设全部可选）
 
@@ -395,13 +432,13 @@ AIHOT 的做法是 `prefilter.md`（宽进，只拦明显无关）→ `selection
 
 | 优先级 | 待办 | 说明 |
 |---|---|---|
-| 已完成（v7.3） | ~~**信息源采集层升级：page 整页哈希 → 条目级选择器**~~（改造方案步骤 1） | **已完成**：`lib.mjs` 选择器引擎 + `lists` 数组 + `probe-source.mjs` + 熔断/0 条保护，GLM 文档页为首个试点。**后续迁移其余 11 个 page 源时逐个做**：每个都要先用 `node scripts/probe-source.mjs <id>` 验证 selector 能稳定抽出条目，SPA 空壳页与 Cloudflare 拦截页（现有 `page-unreliable` / disabled）不要尝试迁移 |
+| 已完成（v7.3 + v7.5） | ~~**信息源采集层升级：page 整页哈希 → 条目级选择器**~~（改造方案步骤 1） | **已全部完成**：v7.3 建成引擎并试点 GLM 文档页；v7.5（2026-10-31）逐源评估其余 11 个 page 源——6 个迁移为 list（copilot / trae / minimax / iflytek-tokenplan / tencent-tokenplan / aliyun-coding-plan，全部 probe 验证），5 个跳过并逐源记录原因（kimi 与 xiaomi-mimo 价格为客户端渲染无可抽取条目、aliyun-free-quota 散文页、aliyun-university 营销轮播、baidu-qianfan 已无价格内容）。逐源明细见第 4 模块 v7.5 段的表格 |
 | P2 | **线索分诊：预筛 + 双评分 + tier 门槛**（改造方案步骤 2） | 需接 LLM 与建评测集；红线是只影响线索排序、不碰任何价格字段。前置条件：`.data/gold.jsonl` 标注完成 |
 | P3 | **事件聚类 + 热度**（改造方案步骤 3） | 依赖前两步；需前端配合把动态区改为按事件折叠 |
 | ✅ | ~~**计算器只暴露 7 个预设中的 3 个（真缺陷）**~~ **已于 v7.4 修复（2026-10-27）** | 原状：`calc-models.json` 配了 7 档，但 `index.html` 的 `<select id="calcmodel">` 只写死 3 个 `<option>`（value 0/1/2），另 4 档用户选不到，标签还与数据源重复维护。修法已落地：`js/app.js` 新增 `populateCalcModels()` 按 `CALC_MODELS` 渲染全部选项（默认 `GLM-5.3（中档）`、热重载保留已选、非法值回落、`esc()` 转义），`index.html` 清空写死项，**下拉以 `calc-models.json` 为唯一事实来源**。⚠️ 时序约束：`populateCalcModels()` 必须在 `renderCalc()` 之前调用，否则空 select 会静默回落到第 0 档。已验证：validate + selfcheck 24/24 + 真实 Chrome CDP 点击走查（7 档全渲染、真实点击展开、键盘选中原先缺失的「百度千帆 ERNIE 5.1」后计价行同步更新） |
-| P3 | **LICENSE 缺失** | 已补 MIT LICENSE（v7.3 后随门面整改提交）；`CONTRIBUTING.md` 仍未写 |
+| P3 | **LICENSE / CONTRIBUTING** | MIT LICENSE 已补（v7.3 后）；`CONTRIBUTING.md` 已于 v7.5（2026-10-31）补齐（中文：零依赖环境、校验与自检、数据修改规范含价格红线、PR 流程） |
 | P3 | **功能类需求**（计划 P1-2-1 散点图 / P1-3-1 最近 7 天变更面板 / P1-5-1 场景标签过滤） | 在零受众前提下边际收益≈0；若把项目当作品集则优先做这些（而不是 store 与 lint），并同步补 README 配图 |
-| P3 | **localStorage 缓存版本化**（计划 S3-2） | 当前 `CACHE_KEY = "cp_modelsdev_cache_v1"` 无 schema 版本与过期清理。缓存结构一变就会读到旧结构，建议加 `schema` 字段 |
+| ✅ | ~~**localStorage 缓存版本化**~~（计划 S3-2） | **已于 v7.5（2026-10-31）完成**：`CACHE_SCHEMA = 2`，写入带 `schema` 字段；读取时 schema 不匹配 / 过期 / 解析损坏一律 `removeItem` 弃用重取，不做复杂迁移。若未来 `flattenModels()` 产出的 rows 结构变化，`CACHE_SCHEMA` +1 即可让全量旧缓存自然失效 |
 
 ### 接手第一步建议
 

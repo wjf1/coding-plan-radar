@@ -274,15 +274,6 @@
       "note": "已停止自动哈希监控；价格变动依赖官方 RSS + 人工复核"
     },
     {
-      "id": "copilot",
-      "label": "GitHub Copilot 计划文档",
-      "url": "https://docs.github.com/en/copilot/get-started/plans",
-      "tier": "official",
-      "type": "page",
-      "enabled": true,
-      "note": "原监控页 github.com/features/copilot/plans 在 Actions/本机均连接失败，2026-09-14 换用服务端渲染的官方文档页（实测 200 且含价格文本）"
-    },
-    {
       "id": "cursor",
       "label": "Cursor 官方定价页",
       "url": "https://cursor.com/pricing",
@@ -296,22 +287,6 @@
       "id": "kimi",
       "label": "Kimi 开放平台定价文档",
       "url": "https://platform.kimi.com/docs/pricing",
-      "tier": "official",
-      "type": "page",
-      "enabled": true
-    },
-    {
-      "id": "trae",
-      "label": "Trae 定价页",
-      "url": "https://www.trae.ai/pricing",
-      "tier": "official",
-      "type": "page",
-      "enabled": true
-    },
-    {
-      "id": "minimax",
-      "label": "MiniMax 平台定价文档",
-      "url": "https://platform.minimaxi.com/document/price",
       "tier": "official",
       "type": "page",
       "enabled": true
@@ -352,24 +327,6 @@
       "note": "计费概述页，含 Token Plan 个人版定价"
     },
     {
-      "id": "iflytek-tokenplan",
-      "label": "讯飞星辰 Token Plan 文档",
-      "url": "https://www.xfyun.cn/doc/spark/TokenPlan.html",
-      "tier": "official",
-      "type": "page",
-      "enabled": true,
-      "note": "Token Plan 套餐与计费官方文档"
-    },
-    {
-      "id": "tencent-tokenplan",
-      "label": "腾讯云 Token Plan 文档",
-      "url": "https://www.tencentcloud.com/document/product/1300/81315",
-      "tier": "official",
-      "type": "page",
-      "enabled": true,
-      "note": "Token Plan Personal Edition 官方文档"
-    },
-    {
       "id": "xiaomi-mimo",
       "label": "小米 MiMo Token Plan 定价页",
       "url": "https://platform.xiaomimimo.com/token-plan",
@@ -377,15 +334,6 @@
       "type": "page",
       "enabled": true,
       "note": "MiMo Token Plan 官方定价页 · 2026-09-23 双环境验证可抓取（含价格文本）"
-    },
-    {
-      "id": "aliyun-coding-plan",
-      "label": "阿里云百炼 Coding Plan 文档",
-      "url": "https://help.aliyun.com/zh/model-studio/coding-plan",
-      "tier": "official",
-      "type": "page",
-      "enabled": true,
-      "note": "阿里云百炼 Coding Plan 官方帮助文档页 · 2026-09-23 验证为服务端渲染，含价格文本"
     },
     {
       "id": "devin-pricing",
@@ -409,6 +357,99 @@
     }
   ],
   "lists": [
+    {
+      "id": "copilot",
+      "label": "GitHub Copilot 计划文档（条目级）",
+      "url": "https://docs.github.com/en/copilot/get-started/plans",
+      "tier": "official",
+      "type": "list",
+      "itemSelector": "table:nth(1) tbody tr",
+      "fields": {
+        "name": "th",
+        "price": "td:nth(1)",
+        "credits": "td:nth(2)"
+      },
+      "keyField": "name",
+      "note": "v7.5 起从整页哈希（page）迁移为条目级比对：盯第一个「Plan / Pricing / GitHub AI Credits」总览表（Copilot Free/Student/Pro/Pro+/Max/Business/Enterprise/access 8 行），价格或额度变动直接给出档位与字段前后值"
+    },
+    {
+      "id": "trae",
+      "label": "Trae 定价页（条目级）",
+      "url": "https://www.trae.ai/pricing",
+      "tier": "official",
+      "type": "list",
+      "itemSelector": ".cardWrapper-mkVYTL",
+      "fields": {
+        "name": "h2",
+        "price": ".price-ohflUE"
+      },
+      "keyField": "name",
+      "note": "v7.5 迁移：盯 4 张套餐卡（Free $0 / Pro $20 / Pro+ $60 / Ultra $200）。注意 class 含构建指纹（mkVYTL / ohflUE），站点重新构建后选择器会失效并走 0 条保护（不建基线、不报警、只记源健康），需人工重新 probe 核对"
+    },
+    {
+      "id": "minimax",
+      "label": "MiniMax 平台定价文档（条目级）",
+      "url": "https://platform.minimaxi.com/document/price",
+      "tier": "official",
+      "type": "list",
+      "itemSelector": "table:nth(1) tbody tr",
+      "fields": {
+        "name": "td:nth(1)",
+        "input": "td:nth(2)",
+        "output": "td:nth(3)",
+        "cacheRead": "td:nth(4)"
+      },
+      "keyField": "name",
+      "note": "v7.5 迁移：盯「语言模型」首个价格表（MiniMax-M3.1-Flash 的输入/输出/缓存读取，元/百万 tokens）。页面共 24 个表，nth(1) 依赖表格顺序，页面骨架调整会触发 0 条保护；M3 系列表（标准/优先双列）结构复杂未纳入条目抽取"
+    },
+    {
+      "id": "iflytek-tokenplan",
+      "label": "讯飞星辰 Token Plan 文档（条目级）",
+      "url": "https://www.xfyun.cn/doc/spark/TokenPlan.html",
+      "tier": "official",
+      "type": "list",
+      "itemSelector": "table:nth(4) tbody tr",
+      "fields": {
+        "name": "td:nth(1)",
+        "price": "td:nth(2)",
+        "quota": "td:nth(3)",
+        "tpm": "td:nth(4)",
+        "promo": "td:nth(5)"
+      },
+      "keyField": "name",
+      "note": "v7.5 迁移：盯套餐表（标准/高级/尊享成员的月价格、月积分额度、TPM、限时活动）。页面共 7 个表，nth(4) 依赖表格顺序，文档结构调整会触发 0 条保护"
+    },
+    {
+      "id": "tencent-tokenplan",
+      "label": "腾讯云 Token Plan 文档（条目级）",
+      "url": "https://www.tencentcloud.com/document/product/1300/81315",
+      "tier": "official",
+      "type": "list",
+      "itemSelector": "table:nth(1) tbody tr",
+      "fields": {
+        "row": "td:nth(1)",
+        "lite": "td:nth(2)",
+        "standard": "td:nth(3)",
+        "pro": "td:nth(4)",
+        "max": "td:nth(5)"
+      },
+      "keyField": "row",
+      "note": "v7.5 迁移：盯套餐总览表（转置表：行为 Plan/Price/Usage Limit，列为 Lite/Standard/Pro/Max），告警形如「Price 行的 pro 列 USD 51/month → …」"
+    },
+    {
+      "id": "aliyun-coding-plan",
+      "label": "阿里云百炼 Coding Plan 文档（条目级）",
+      "url": "https://help.aliyun.com/zh/model-studio/coding-plan",
+      "tier": "official",
+      "type": "list",
+      "itemSelector": "table:nth(1) tbody tr",
+      "fields": {
+        "name": "td:nth(1)",
+        "value": "td:nth(2)"
+      },
+      "keyField": "name",
+      "note": "v7.5 迁移：盯「套餐详情」布局表（Pro 高级套餐的模型清单/价格/用量限制；Lite 已于 2026-03 停售，页面仅剩 Pro 一档），价格变动告警形如「价格 行 value: ¥200/月 → …」。页面另有内容相同的移动端副本表（nth 锚定第一个），文档结构调整会触发 0 条保护"
+    },
     {
       "id": "glm",
       "label": "GLM Coding Plan 官方文档（条目级）",

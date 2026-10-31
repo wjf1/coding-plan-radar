@@ -21,6 +21,7 @@
 const MODELS_DEV_API = "https://models.dev/api.json";
 const MODELS_TIMEOUT_MS = 5000; // 第三方 API 超过 5s 即视为不可用，直接降级到内置快照
 const CACHE_KEY = "cp_modelsdev_cache_v1";
+const CACHE_SCHEMA = 2; // 缓存结构版本：rows 内字段含义/结构变更时 +1；读到不匹配的旧结构直接弃用重取（不做迁移）
 const CACHE_TTL = 24 * 3600 * 1000; // 24h
 // 第一方 API 价供应商（排除 *-coding-plan 等 $0 订阅条目）
 const OFFICIAL_PROVIDERS = {
@@ -562,15 +563,16 @@ function flattenModels(api){
 }
 
 async function loadModels(){
-  // 1) 本地缓存（24h）
+  // 1) 本地缓存（24h，schema 版本化：结构不匹配/过期/损坏一律弃用重取，不做迁移）
   try{
     const cached=JSON.parse(localStorage.getItem(CACHE_KEY)||"null");
-    if(cached && Date.now()-cached.ts<CACHE_TTL && cached.rows?.length){
+    if(cached && cached.schema===CACHE_SCHEMA && Date.now()-cached.ts<CACHE_TTL && cached.rows?.length){
       modelRows=cached.rows;
       setStatus("live",`实时数据源：models.dev（GitHub: sst/models.dev）· 本地缓存 ${new Date(cached.ts).toLocaleString("zh-CN")} · ${modelRows.length} 款模型`);
       renderTokens(); renderCalc(); return;
     }
-  }catch(e){}
+    localStorage.removeItem(CACHE_KEY);
+  }catch(e){ try{localStorage.removeItem(CACHE_KEY);}catch(_){} }
   // 2) 在线拉取
   try{
     const res=await fetch(MODELS_DEV_API,{cache:"no-cache",signal:AbortSignal.timeout(MODELS_TIMEOUT_MS)});
@@ -578,7 +580,7 @@ async function loadModels(){
     const api=await res.json();
     modelRows=flattenModels(api);
     if(!modelRows.length) throw new Error("empty");
-    localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),rows:modelRows}));
+    localStorage.setItem(CACHE_KEY,JSON.stringify({schema:CACHE_SCHEMA,ts:Date.now(),rows:modelRows}));
     setStatus("live",`实时数据源：models.dev（GitHub: sst/models.dev）· 拉取成功 ${new Date().toLocaleString("zh-CN")} · ${modelRows.length} 款模型`);
   }catch(err){
     // 3) 降级到内置快照（data/auto/snapshot.json，由 Actions 每日重新生成）

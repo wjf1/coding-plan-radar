@@ -5,6 +5,46 @@
 
 日期均为北京时间。数据类变更（每日自动巡检提交）不在本文件逐条记录，只记录代码与内容层面的版本变更。
 
+## [Unreleased]
+
+### 新增
+
+- 新增 `CONTRIBUTING.md`（中文）：开发环境（Node 直接跑、零依赖）、validate + selfcheck 校验与自检流程、
+  数据修改规范（**价格字段只能来自结构化源 models.dev / OpenRouter / LiteLLM 或人工确认，禁止让 LLM 产出价格数字**——仓库红线）、
+  信息源调整与 probe 前置要求、分支 / 提交 / PR 流程与验证清单、issue 报告指引。
+
+### 变更
+
+- **page 源条目级选择器迁移（v7.3 条目级监控的第二批，GLM 文档页试点后推进）**：6 个 page 源完成
+  page → list 迁移，全部经 `node scripts/probe-source.mjs <id>` 预览验证后落配置：
+  - `copilot`：盯第一个「Plan / Pricing / GitHub AI Credits」总览表，实测抽出 8 条
+    （Copilot Free/Student/Pro/Pro+/Max/Business/Enterprise/access，价格精确到 `$10 USD per month` 级别）；
+  - `trae`：盯 4 张套餐卡（Free $0 / Pro $20 / Pro+ $60 / Ultra $200），连续两次 probe 结果一致；
+    注意卡片 class 含构建指纹，站点重新构建会触发 0 条保护（不建基线不报警，需人工重新 probe）；
+  - `minimax`：盯「语言模型」首个价格表（MiniMax-M3.1-Flash 输入/输出/缓存读取，元/百万 tokens），
+    该页共 24 个表、M3 系列表为标准/优先双列结构复杂，未纳入条目抽取；
+  - `iflytek-tokenplan`：盯套餐表 3 行（标准/高级/尊享成员的月价格、月积分额度、TPM、限时活动）；
+  - `tencent-tokenplan`：盯转置套餐总览表（行为 Plan/Price/Usage Limit，列为 Lite/Standard/Pro/Max），
+    告警形如「Price 行的 pro 列 USD 51/month → …」；
+  - `aliyun-coding-plan`：盯「套餐详情」布局表（Pro 高级套餐的模型清单/价格/用量限制；Lite 已停售仅剩 Pro 一档）。
+- `js/app.js` 的 models.dev 本地缓存引入 schema 版本化：新增 `CACHE_SCHEMA = 2` 常量，写入缓存带
+  `schema` 字段，读取时 schema 不匹配 / 已过期 / 解析损坏一律 `removeItem` 弃用重取（不做复杂迁移）。
+  此前 `CACHE_KEY = "cp_modelsdev_cache_v1"` 无版本字段也无清理路径，结构变更后会读到旧结构。
+
+### 评估后未迁移（保持 page 哈希或停用，逐源记录）
+
+- `kimi`（platform.kimi.com/docs/pricing）：SSR 正文仅 1701 字符，价格内容由客户端渲染，
+  HTML 中无任何价格条目结构，无从配置 itemSelector；
+- `aliyun-free-quota`：规则说明 + FAQ 散文页（0 个表格），无条目可抽取；
+- `aliyun-university`：营销轮播页（26 个 swiper 卡片为课程/活动广告，核心权益「300 元优惠券」在散文规则里），
+  与 gh-education「营销页轮播不适合自动监控」同类，维持人工核对；
+- `baidu-qianfan`：该 URL 现为文档门户页（SSR strip 后 2838 字符、0 个表格），已无价格内容，无法建立条目；
+- `xiaomi-mimo`：本轮实测已变为 SPA 空壳（SSR strip 后仅 18 字符），与 HANDOFF 记录的
+  「2026-09-23 可抓取含价格文本」不符，站点应已改版为客户端渲染；条目迁移不可行，
+  该 page 源的哈希监控预计也会因正文过短被 `assertCrawlable` 拦截，待 CI 侧源健康确认；
+- `claude` / `cursor` / `devin-pricing` / `poe-pricing`（page-unreliable）、`gh-education`（disabled）：
+  按 v7.3 既定边界不尝试迁移。
+
 ## [v7.4] - 2026-10-27
 
 **修复计算器档位缺失：7 档预设全部可选，标签不再与数据源分叉。**
