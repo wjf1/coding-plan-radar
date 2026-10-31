@@ -1,81 +1,36 @@
 {
- "copilot": {
-  "hash": "c3057b5c57a4",
-  "seen": [
-   "0786d42556d0",
-   "28e904bd565e",
-   "c6d0a6475649",
-   "f66cfbf25662",
-   "8a3a56b0569b",
-   "b74c2e726023"
-  ],
-  "flaps": 2,
-  "changedAt": "2026-09-19",
-  "revertCount": 1,
-  "pending": "b74c2e726023",
-  "pendingSince": "2026-09-22",
-  "unstable": true
- },
  "kimi": {
   "hash": "6460286555a",
   "seen": [
-   "6460286555a",
    "e9401ee3559",
    "aa7514265a9",
    "600ab1985a4",
    "798c4ef364e",
-   "3d20146b653"
+   "3d20146b653",
+   "66d37ceb6a4"
   ],
   "flaps": 0,
   "changedAt": "2026-09-21",
   "revertCount": 2,
   "unstable": true,
-  "pending": "3d20146b653",
+  "pending": "66d37ceb6a4",
   "pendingSince": "2026-09-23"
- },
- "trae": {
-  "hash": "61b47adb196",
-  "seen": [
-   "878faef474a",
-   "98bcbe1f1f4",
-   "61b47adb196"
-  ],
-  "flaps": 0,
-  "changedAt": "2026-09-18",
-  "revertCount": 1
- },
- "minimax": {
-  "hash": "035267b45dd",
-  "seen": [
-   "4c4b6ee6208f",
-   "3bf8dec2225d",
-   "6e4253142262",
-   "6da5de9921c0",
-   "a81ff79f1ac3f",
-   "93342c461aa98"
-  ],
-  "flaps": 0,
-  "changedAt": "2026-10-01",
-  "revertCount": 2,
-  "unstable": true,
-  "pending": "93342c461aa98",
-  "pendingSince": "2026-10-03"
  },
  "aliyun-free-quota": {
   "hash": "636342be1af9",
   "seen": [
-   "b862acbe1ad3",
    "636342be1af9",
    "e34ad3a81b99",
    "95aad1cd1b7e",
    "184397bb1b8b",
-   "80e98d613aa4"
+   "80e98d613aa4",
+   "5b679cbe3a14"
   ],
   "flaps": 0,
   "changedAt": "2026-09-23",
   "revertCount": 2,
   "unstable": true,
-  "pending": "80e98d613aa4",
+  "pending": "5b679cbe3a14",
   "pendingSince": "2026-10-01"
  },
  "aliyun-university": {
@@ -101,42 +56,7 @@
    "609c6daab14"
   ],
   "flaps": 0,
-  "changedAt": "2026-10-30"
- },
- "iflytek-tokenplan": {
-  "hash": "7ee4a76a37ae",
-  "seen": [
-   "7ee4a76a37ae",
-   "acf6f42c37be"
-  ],
-  "flaps": 0,
-  "pending": "acf6f42c37be",
-  "pendingSince": "2026-10-30"
- },
- "tencent-tokenplan": {
-  "hash": "1a3e88043a56",
-  "seen": [
-   "8907d64e3a10",
-   "ea4e41223a29",
-   "1a3e88043a56"
-  ],
-  "flaps": 0,
   "changedAt": "2026-10-30",
   "revertCount": 1
- },
- "aliyun-coding-plan": {
-  "hash": "36baea6ee8d",
-  "seen": [
-   "729cce29ec3",
-   "9f814d80edd",
-   "5a1059a7e9c",
-   "36baea6ee8d"
-  ],
-  "flaps": 0,
-  "changedAt": "2026-10-21",
-  "revertCount": 2,
-  "unstable": true,
-  "pending": "36baea6ee8d",
-  "pendingSince": "2026-10-23"
  }
 }

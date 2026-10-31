@@ -1,4 +1,155 @@
 {
+ "copilot": {
+  "items": [
+   {
+    "__index": 0,
+    "name": "Copilot Free",
+    "price": "Free",
+    "credits": "An allowance of GitHub AI Credits"
+   },
+   {
+    "__index": 1,
+    "name": "Copilot Student",
+    "price": "Free",
+    "credits": "An allowance of GitHub AI Credits"
+   },
+   {
+    "__index": 2,
+    "name": "Copilot Pro",
+    "price": "$10 USD per month (free for some users)",
+    "credits": "Base: 1,000"
+   },
+   {
+    "__index": 3,
+    "name": "Copilot Pro+",
+    "price": "$39 USD per month.",
+    "credits": "Base: 3,900"
+   },
+   {
+    "__index": 4,
+    "name": "Copilot Max",
+    "price": "$100 USD per month",
+    "credits": "Base: 10,000"
+   },
+   {
+    "__index": 5,
+    "name": "Copilot Business",
+    "price": "$19 USD per granted seat per month",
+    "credits": "Total per user per month: 1,900"
+   },
+   {
+    "__index": 6,
+    "name": "Copilot Enterprise",
+    "price": "$39 USD per granted seat per month",
+    "credits": "Total per user per month: 3,900"
+   },
+   {
+    "__index": 7,
+    "name": "Copilot access",
+    "price": "$0 for licensed users of GitHub Enterprise Cloud $10 USD per user per month for Copilot Standalone (users with no GitHub Enterprise Cloud license)",
+    "credits": "No included allowance"
+   }
+  ],
+  "since": "2026-10-31"
+ },
+ "minimax": {
+  "items": [
+   {
+    "__index": 0,
+    "name": "MiniMax-M3.1-Flash",
+    "input": "1.00",
+    "output": "4.00",
+    "cacheRead": "0.10"
+   }
+  ],
+  "since": "2026-10-31"
+ },
+ "iflytek-tokenplan": {
+  "items": [
+   {
+    "__index": 0,
+    "name": "标准成员",
+    "price": "200",
+    "quota": "20000",
+    "tpm": "200w",
+    "promo": "8折，160元"
+   },
+   {
+    "__index": 1,
+    "name": "高级成员",
+    "price": "600",
+    "quota": "60000",
+    "tpm": "300w",
+    "promo": "7折，420元"
+   },
+   {
+    "__index": 2,
+    "name": "尊享成员",
+    "price": "2000",
+    "quota": "200000",
+    "tpm": "500w",
+    "promo": "6折，1200元"
+   }
+  ],
+  "since": "2026-10-31"
+ },
+ "tencent-tokenplan": {
+  "items": [
+   {
+    "__index": 0,
+    "row": "Plan",
+    "lite": "Lite Plan",
+    "standard": "Standard Plan",
+    "pro": "Pro Plan",
+    "max": "Max Plan"
+   },
+   {
+    "__index": 1,
+    "row": "Price",
+    "lite": "USD 7/month",
+    "standard": "USD 17/month",
+    "pro": "USD 51/month",
+    "max": "USD 103/month"
+   },
+   {
+    "__index": 2,
+    "row": "Usage Limit",
+    "lite": "Per subscription month 1000 credits",
+    "standard": "Per subscription month 2600 credits",
+    "pro": "Per subscription month 7900 credits",
+    "max": "Per subscription month 15900 credits"
+   },
+   {
+    "__index": 3,
+    "row": "Recommended",
+    "lite": "Best for beginners and first-time exploration. Ideal for first-time users exploring OpenClaw capabilities, including web operations, file processing, data analysis, scheduled tasks, and more.",
+    "standard": "Great value for daily use. Suitable for daily office work and lightweight development with OpenClaw, including batch file processing, demo creation, automated workflows, and more.",
+    "pro": "High-f Designed for frequent AI development,with a token quota three times higher than the Standard plan. Ideal for developers and productivity-focused users who rely on AI heavily every day, supporting parallel work across multiple repositories, complex logic generation, code refactoring, agent orchestration, and more.",
+    "max": "The preferred choice for intensive AI develoopment,with expanded quota support. Built for power users who use AI as a core productivity tool, supporting full-stack AI generation, multi-agent collaboration, CI automation, and more."
+   }
+  ],
+  "since": "2026-10-31"
+ },
+ "aliyun-coding-plan": {
+  "items": [
+   {
+    "__index": 0,
+    "name": "支持的模型",
+    "value": "仅支持以下精确版本： 推荐模型：qwen3.7-plus（支持图片理解）、qwen3.6-plus（支持图片理解）、kimi-k2.5（支持图片理解）、glm-5、MiniMax-M2.5 更多模型：qwen3.5-plus（支持图片理解）"
+   },
+   {
+    "__index": 1,
+    "name": "价格",
+    "value": "¥ 200/月"
+   },
+   {
+    "__index": 2,
+    "name": "用量限制",
+    "value": "每 5 小时6,000 次请求 每周45,000 次请求 每月90,000 次请求"
+   }
+  ],
+  "since": "2026-10-31"
+ },
  "glm": {
   "items": [
    {

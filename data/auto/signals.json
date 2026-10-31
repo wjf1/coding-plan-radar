@@ -1,6 +1,62 @@
 {
- "generatedAt": "2026-10-30",
+ "generatedAt": "2026-10-31",
  "items": [
+  {
+   "id": "github-status:871e42dc33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Dependabot",
+   "excerpt": "<p> <small>Oct <var data-var='date'>30</var>, <var data-var='time'>23:29</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/lyyfm7j4pkgl",
+   "date": "Fri, 30 Oct 2026 23:29:06 +0000",
+   "firstSeen": "2026-10-31",
+   "lastSeen": "2026-10-31"
+  },
+  {
+   "id": "github-status:18442d9c33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Actions, Pages, and Webhooks",
+   "excerpt": "<p> <small>Oct <var data-var='date'>30</var>, <var data-var='time'>19:23</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/pwxsjgnvrk6b",
+   "date": "Fri, 30 Oct 2026 19:23:40 +0000",
+   "firstSeen": "2026-10-31",
+   "lastSeen": "2026-10-31"
+  },
+  {
+   "id": "github-status:b6ab242933",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with GitHub services",
+   "excerpt": "<p> <small>Oct <var data-var='date'>30</var>, <var data-var='time'>15:02</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/nxy2l0ssxm10",
+   "date": "Fri, 30 Oct 2026 15:02:51 +0000",
+   "firstSeen": "2026-10-31",
+   "lastSeen": "2026-10-31"
+  },
+  {
+   "id": "openai-news:59c7201e26",
+   "source": "openai-news",
+   "sourceLabel": "OpenAI News",
+   "sourceUrl": "https://openai.com/news/rss.xml",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Credit Saison achieves 954% ROI in a ChatGPT Enterprise pilot",
+   "excerpt": "Credit Saison’s ChatGPT Enterprise pilot delivered 954% ROI. See how leaders and employees helped turn the results into companywide adoption.",
+   "url": "https://openai.com/index/credit-saison",
+   "date": "Thu, 29 Oct 2026 00:00:00 GMT",
+   "firstSeen": "2026-10-31",
+   "lastSeen": "2026-10-31"
+  },
   {
    "id": "freebie-repos:d39ebc6d5e",
    "source": "freebie-repos",
@@ -13,7 +69,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/f49e523a77dbbb98032ca589ca796700fc565689",
    "date": "2026-10-29T16:38:36Z",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "freebie-repos:2cb76c1a5e",
@@ -27,7 +83,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/be2ef92b557d9a18c651c00d33e8eedca79c5368",
    "date": "2026-10-29T14:33:58Z",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:a64d57d776",
@@ -41,7 +97,7 @@
    "url": "https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available",
    "date": "Wed, 28 Oct 2026 15:33:00 +0000",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "github-status:45ed9f2733",
@@ -55,7 +111,7 @@
    "url": "https://www.githubstatus.com/incidents/rn76zdy367m2",
    "date": "Thu, 29 Oct 2026 12:49:52 +0000",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "ithome:f3ebc19124",
@@ -111,7 +167,7 @@
    "url": "https://sspai.com/prime/story/zhuanglesha-261030",
    "date": "Fri, 30 Oct 2026 11:30:43 +0800",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "freebie-repos:e3496bca5e",
@@ -153,7 +209,7 @@
    "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
    "date": "Wed, 28 Oct 2026 16:00:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:7accd40e4d",
@@ -167,7 +223,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-copilot-app-universe-releases",
    "date": "Wed, 28 Oct 2026 15:55:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:01a6ba3160",
@@ -181,7 +237,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot",
    "date": "Wed, 28 Oct 2026 15:50:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:dafeacbc56",
@@ -195,7 +251,7 @@
    "url": "https://github.blog/changelog/2026-10-28-security-extension-for-the-github-copilot-app",
    "date": "Wed, 28 Oct 2026 15:45:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:4ab5b38566",
@@ -209,7 +265,7 @@
    "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
    "date": "Wed, 28 Oct 2026 15:35:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:7e210b8054",
@@ -223,7 +279,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-copilot-in-vs-code-universe-releases",
    "date": "Wed, 28 Oct 2026 15:33:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:b273215a55",
@@ -237,7 +293,7 @@
    "url": "https://github.blog/changelog/2026-10-28-generate-and-edit-images-directly-in-copilot",
    "date": "Wed, 28 Oct 2026 15:30:55 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "gh-changelog:e0c3b3b665",
@@ -265,7 +321,7 @@
    "url": "https://www.githubstatus.com/incidents/l7ycmglmykgg",
    "date": "Wed, 28 Oct 2026 15:28:19 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "modelsdev:90bcebcd3f",
@@ -307,7 +363,7 @@
    "url": "https://sspai.com/prime/story/how-to-analyze-health-data-with-agent",
    "date": "Thu, 29 Oct 2026 11:29:46 +0800",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "freebie-repos:36a1338a5e",
@@ -419,7 +475,7 @@
    "url": "https://www.githubstatus.com/incidents/f1vvv30224wd",
    "date": "Mon, 26 Oct 2026 18:57:22 +0000",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "openai-status:7deb29513f",
@@ -433,7 +489,7 @@
    "url": "https://status.openai.com//incidents/01M5YY4A3TQETEQ53DVSK8SW10",
    "date": "Tue, 27 Oct 2026 16:20:06 GMT",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "openrouter:5a7edfda47",
@@ -531,7 +587,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -573,7 +629,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -587,7 +643,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -657,7 +713,7 @@
    "url": "https://www.githubstatus.com/incidents/wq8305lppdc2",
    "date": "Fri, 23 Oct 2026 02:30:25 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "github-status:a1a4a5d133",
@@ -671,7 +727,7 @@
    "url": "https://www.githubstatus.com/incidents/q29p76qtnkyk",
    "date": "Thu, 22 Oct 2026 15:18:46 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "ithome:94289f5324",
@@ -839,7 +895,7 @@
    "url": "https://status.openai.com//incidents/01M5JF8DR3EGQJNTXPZ24AKX2G",
    "date": "Thu, 22 Oct 2026 20:55:48 GMT",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "openrouter:c4819ba940",
@@ -881,7 +937,7 @@
    "url": "https://status.claude.com/incidents/njk29r81v3wg",
    "date": "Wed, 21 Oct 2026 20:29:17 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "github-status:e61c7f4433",
@@ -895,7 +951,7 @@
    "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
    "date": "Wed, 21 Oct 2026 19:22:52 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "ithome:3428782024",
@@ -979,7 +1035,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "ithome:466ab50e24",
@@ -1021,7 +1077,7 @@
    "url": "https://status.openai.com//incidents/01M5E4G39TD1BW1QWHZG6RFA5H",
    "date": "Wed, 21 Oct 2026 03:28:00 GMT",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "sspai:2fee997c39",
@@ -1077,7 +1133,7 @@
    "url": "https://www.githubstatus.com/incidents/8tzbpcnl75jp",
    "date": "Mon, 19 Oct 2026 16:56:58 +0000",
    "firstSeen": "2026-10-20",
-   "lastSeen": "2026-10-30"
+   "lastSeen": "2026-10-31"
   },
   {
    "id": "modelsdev:99a1348732",
