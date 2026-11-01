@@ -123,7 +123,9 @@
   "modelsdev:90bcebcd3f",
   "modelsdev:339cdfe943",
   "gh-changelog:a64d57d776",
-  "openai-news:59c7201e26"
+  "openai-news:59c7201e26",
+  "openrouter:0e6ffc553b",
+  "openrouter:ee7c7f6d3c"
  ],
- "updatedAt": "2026-10-31"
+ "updatedAt": "2026-11-01"
 }

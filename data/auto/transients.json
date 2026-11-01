@@ -62,6 +62,15 @@
    "resolvedAt": "2026-10-31",
    "resolvedBy": "auto-revert",
    "note": "内容回到基线，原始变动可能为临时促销/渲染变体"
+  },
+  {
+   "id": "tencent-tokenplan",
+   "label": "腾讯云 Token Plan 文档（条目级）",
+   "url": "https://www.tencentcloud.com/document/product/1300/81315",
+   "detected": "2026-10-30",
+   "resolvedAt": "2026-11-01",
+   "resolvedBy": "auto-revert",
+   "note": "条目数据回到基线，原始变动可能为临时促销/渲染变体"
   }
  ]
 }
