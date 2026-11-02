@@ -53,10 +53,13 @@
   "hash": "609c6daab14",
   "seen": [
    "4b552805b10",
-   "609c6daab14"
+   "609c6daab14",
+   "8f0ee329b19"
   ],
   "flaps": 0,
   "changedAt": "2026-10-30",
-  "revertCount": 1
+  "revertCount": 1,
+  "pending": "8f0ee329b19",
+  "pendingSince": "2026-11-02"
  }
 }
