@@ -1,6 +1,34 @@
 {
- "generatedAt": "2026-11-02",
+ "generatedAt": "2026-11-03",
  "items": [
+  {
+   "id": "github-status:c4300afb33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated errors on GPT-5.4 Nano",
+   "excerpt": "<p> <small>Nov <var data-var='date'> 2</var>, <var data-var='time'>18:24</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/db4x8hh362t8",
+   "date": "Mon, 02 Nov 2026 18:24:23 +0000",
+   "firstSeen": "2026-11-03",
+   "lastSeen": "2026-11-03"
+  },
+  {
+   "id": "ithome:82aafbe524",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "整合家庭功能至一处：谷歌开始向安卓系统分批推送全新 Family Hub 管理中心",
+   "excerpt": "<p data-vmark=\"5196\">IT之家 11 月 3 日消息，据外媒 AndroidAuthority 报道，谷歌正在为安卓系统分阶段推送 Family Hub 家庭管理中心，将原本分散在 Family Link、Google Play 商店及谷歌账号设置页面中的相关功能整合到系统设置中，方便用户统一管理家庭群组。</p><p data-vmark=\"4616\">具体来看，相应功能位于系统设置页面顶部 Family（家庭）选项中。点击后，页面会显示家庭群组成员，以及 Google One 云存储、Google AI 和 YouTube Premium 等共享订阅服务的相关信息。</…",
+   "url": "https://www.ithome.com/1/021/595.htm",
+   "date": "Tue, 03 Nov 2026 07:09:23 GMT",
+   "firstSeen": "2026-11-03",
+   "lastSeen": "2026-11-03"
+  },
   {
    "id": "freebie-repos:506c6ad35e",
    "source": "freebie-repos",
@@ -13,7 +41,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/40348b918d47a14794ba00b447a46b3d9e3314a4",
    "date": "2026-10-31T20:20:10Z",
    "firstSeen": "2026-11-02",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "freebie-repos:31bcb62b5e",
@@ -27,7 +55,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/bb28b9044968968e91f6d7d1cbdc1e4f450da088",
    "date": "2026-10-31T20:17:05Z",
    "firstSeen": "2026-11-02",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "ithome:07d7f9df24",
@@ -55,7 +83,7 @@
    "url": "https://sspai.com/post/118191",
    "date": "Mon, 02 Nov 2026 07:22:45 +0800",
    "firstSeen": "2026-11-02",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "freebie-repos:f7ff089d5e",
@@ -139,7 +167,7 @@
    "url": "https://www.githubstatus.com/incidents/lyyfm7j4pkgl",
    "date": "Fri, 30 Oct 2026 23:29:06 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "github-status:18442d9c33",
@@ -153,7 +181,7 @@
    "url": "https://www.githubstatus.com/incidents/pwxsjgnvrk6b",
    "date": "Fri, 30 Oct 2026 19:23:40 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "github-status:b6ab242933",
@@ -167,7 +195,7 @@
    "url": "https://www.githubstatus.com/incidents/nxy2l0ssxm10",
    "date": "Fri, 30 Oct 2026 15:02:51 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "openai-news:59c7201e26",
@@ -181,7 +209,7 @@
    "url": "https://openai.com/index/credit-saison",
    "date": "Thu, 29 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "freebie-repos:d39ebc6d5e",
@@ -237,7 +265,7 @@
    "url": "https://www.githubstatus.com/incidents/rn76zdy367m2",
    "date": "Thu, 29 Oct 2026 12:49:52 +0000",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "ithome:f3ebc19124",
@@ -335,7 +363,7 @@
    "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
    "date": "Wed, 28 Oct 2026 16:00:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "gh-changelog:7accd40e4d",
@@ -349,7 +377,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-copilot-app-universe-releases",
    "date": "Wed, 28 Oct 2026 15:55:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "gh-changelog:01a6ba3160",
@@ -363,7 +391,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-enterprise-now-includes-access-to-github-copilot",
    "date": "Wed, 28 Oct 2026 15:50:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "gh-changelog:dafeacbc56",
@@ -377,7 +405,7 @@
    "url": "https://github.blog/changelog/2026-10-28-security-extension-for-the-github-copilot-app",
    "date": "Wed, 28 Oct 2026 15:45:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "gh-changelog:4ab5b38566",
@@ -391,7 +419,7 @@
    "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
    "date": "Wed, 28 Oct 2026 15:35:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "gh-changelog:7e210b8054",
@@ -405,7 +433,7 @@
    "url": "https://github.blog/changelog/2026-10-28-github-copilot-in-vs-code-universe-releases",
    "date": "Wed, 28 Oct 2026 15:33:00 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "gh-changelog:b273215a55",
@@ -447,7 +475,7 @@
    "url": "https://www.githubstatus.com/incidents/l7ycmglmykgg",
    "date": "Wed, 28 Oct 2026 15:28:19 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "modelsdev:90bcebcd3f",
@@ -601,7 +629,7 @@
    "url": "https://www.githubstatus.com/incidents/f1vvv30224wd",
    "date": "Mon, 26 Oct 2026 18:57:22 +0000",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "openai-status:7deb29513f",
@@ -615,7 +643,7 @@
    "url": "https://status.openai.com//incidents/01M5YY4A3TQETEQ53DVSK8SW10",
    "date": "Tue, 27 Oct 2026 16:20:06 GMT",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "openrouter:5a7edfda47",
@@ -713,7 +741,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -755,7 +783,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -769,7 +797,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -839,7 +867,7 @@
    "url": "https://www.githubstatus.com/incidents/wq8305lppdc2",
    "date": "Fri, 23 Oct 2026 02:30:25 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "github-status:a1a4a5d133",
@@ -853,7 +881,7 @@
    "url": "https://www.githubstatus.com/incidents/q29p76qtnkyk",
    "date": "Thu, 22 Oct 2026 15:18:46 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "ithome:94289f5324",
@@ -1021,7 +1049,7 @@
    "url": "https://status.openai.com//incidents/01M5JF8DR3EGQJNTXPZ24AKX2G",
    "date": "Thu, 22 Oct 2026 20:55:48 GMT",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "openrouter:c4819ba940",
@@ -1063,7 +1091,7 @@
    "url": "https://status.claude.com/incidents/njk29r81v3wg",
    "date": "Wed, 21 Oct 2026 20:29:17 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "github-status:e61c7f4433",
@@ -1077,7 +1105,7 @@
    "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
    "date": "Wed, 21 Oct 2026 19:22:52 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "ithome:3428782024",
@@ -1161,7 +1189,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "ithome:466ab50e24",
@@ -1203,7 +1231,7 @@
    "url": "https://status.openai.com//incidents/01M5E4G39TD1BW1QWHZG6RFA5H",
    "date": "Wed, 21 Oct 2026 03:28:00 GMT",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-11-02"
+   "lastSeen": "2026-11-03"
   },
   {
    "id": "sspai:2fee997c39",
