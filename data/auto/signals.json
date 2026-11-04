@@ -1,6 +1,118 @@
 {
- "generatedAt": "2026-11-03",
+ "generatedAt": "2026-11-04",
  "items": [
+  {
+   "id": "freebie-repos:5d840fdb5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Data sync 2026-11-02: 5 changes",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-02",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/fe2b9d12e4652acab5b4f45d5682d287b4924a86",
+   "date": "2026-11-02T15:04:07Z",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
+  {
+   "id": "gh-changelog:1a41a12163",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "BYOK and enterprise custom models in the Copilot usage API",
+   "excerpt": "The Copilot usage metrics API now shows bring your own key (BYOK) usage across GitHub Copilot, so you can separate it from Copilot-hosted model usage. Reports cover two kinds of…",
+   "url": "https://github.blog/changelog/2026-11-03-byok-and-enterprise-custom-models-in-the-copilot-usage-api",
+   "date": "Wed, 04 Nov 2026 00:32:19 +0000",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
+  {
+   "id": "gh-changelog:6b76aaad59",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot is now available in JetBrains Air",
+   "excerpt": "You can now delegate coding tasks, guide execution, and review results with GitHub Copilot in JetBrains Air. The integration uses the Agent Client Protocol (ACP) and supports tasks in your…",
+   "url": "https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air",
+   "date": "Tue, 03 Nov 2026 15:11:46 +0000",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
+  {
+   "id": "github-status:7e5ed2ca33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Git Operations",
+   "excerpt": "<p> <small>Nov <var data-var='date'> 3</var>, <var data-var='time'>22:41</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/13b6lyl8d7bz",
+   "date": "Tue, 03 Nov 2026 22:41:03 +0000",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
+  {
+   "id": "github-status:6932a35e33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with API, Git, and Copilot requests",
+   "excerpt": "<p> <small>Nov <var data-var='date'> 3</var>, <var data-var='time'>13:56</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/rxlj89wpk7px",
+   "date": "Tue, 03 Nov 2026 13:56:18 +0000",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
+  {
+   "id": "ithome:625a441824",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "天猫双 11 运动疯狂日：骆驼 / 熊猫 / 企鹅等户外装备狂促，单品至高补贴 200 元",
+   "excerpt": "<p data-vmark=\"5621\">天猫双 11 狂欢进行中，11 月 2 日 ~5 日天猫运动疯狂日，单品至高补贴 200 元（淘礼金红包），叠加优惠券 / 红包狂促 + 消费券 / 加补券凑单到手价更低，<a href=\"https://s.click.taobao.com/URNYT0i\" target=\"_blank\">点此前往运动疯狂日</a>。</p><p data-vmark=\"9e68\" style=\"text-align: center;\"><img src=\"https://gw.alicdn.com/imgextra/i4/O1CN01WSzYmjTbLPE1cho…",
+   "url": "https://www.ithome.com/1/022/076.htm",
+   "date": "Wed, 04 Nov 2026 06:12:14 GMT",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
+  {
+   "id": "openai-news:70c9442d29",
+   "source": "openai-news",
+   "sourceLabel": "OpenAI News",
+   "sourceUrl": "https://openai.com/news/rss.xml",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Evernote turns AI-driven discovery into paid subscriptions",
+   "excerpt": "Evernote used ChatGPT Ads to introduce its note-taking app to people working with AI. The team tracked how often free trials led to paid subscriptions.",
+   "url": "https://openai.com/ads/customers/evernote",
+   "date": "Wed, 28 Oct 2026 19:40:49 GMT",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
+  {
+   "id": "sspai:3db48a761d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "社区速递 164 | 1500 元圆梦昔日卡皇与派友们做的 AI 平替",
+   "excerpt": "手工压花器、二手 TITAN V，以及派友们用开源项目与 AI Coding 替代付费订阅的讨论。<a href=\"https://sspai.com/post/118317\" target=\"_blank\">查看全文</a>",
+   "url": "https://sspai.com/post/118317",
+   "date": "Tue, 03 Nov 2026 15:12:54 +0800",
+   "firstSeen": "2026-11-04",
+   "lastSeen": "2026-11-04"
+  },
   {
    "id": "github-status:c4300afb33",
    "source": "github-status",
@@ -13,7 +125,7 @@
    "url": "https://www.githubstatus.com/incidents/db4x8hh362t8",
    "date": "Mon, 02 Nov 2026 18:24:23 +0000",
    "firstSeen": "2026-11-03",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "ithome:82aafbe524",
@@ -41,7 +153,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/40348b918d47a14794ba00b447a46b3d9e3314a4",
    "date": "2026-10-31T20:20:10Z",
    "firstSeen": "2026-11-02",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "freebie-repos:31bcb62b5e",
@@ -167,7 +279,7 @@
    "url": "https://www.githubstatus.com/incidents/lyyfm7j4pkgl",
    "date": "Fri, 30 Oct 2026 23:29:06 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "github-status:18442d9c33",
@@ -181,7 +293,7 @@
    "url": "https://www.githubstatus.com/incidents/pwxsjgnvrk6b",
    "date": "Fri, 30 Oct 2026 19:23:40 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "github-status:b6ab242933",
@@ -195,7 +307,7 @@
    "url": "https://www.githubstatus.com/incidents/nxy2l0ssxm10",
    "date": "Fri, 30 Oct 2026 15:02:51 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "openai-news:59c7201e26",
@@ -209,7 +321,7 @@
    "url": "https://openai.com/index/credit-saison",
    "date": "Thu, 29 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "freebie-repos:d39ebc6d5e",
@@ -265,7 +377,7 @@
    "url": "https://www.githubstatus.com/incidents/rn76zdy367m2",
    "date": "Thu, 29 Oct 2026 12:49:52 +0000",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "ithome:f3ebc19124",
@@ -475,7 +587,7 @@
    "url": "https://www.githubstatus.com/incidents/l7ycmglmykgg",
    "date": "Wed, 28 Oct 2026 15:28:19 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "modelsdev:90bcebcd3f",
@@ -629,7 +741,7 @@
    "url": "https://www.githubstatus.com/incidents/f1vvv30224wd",
    "date": "Mon, 26 Oct 2026 18:57:22 +0000",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "openai-status:7deb29513f",
@@ -643,7 +755,7 @@
    "url": "https://status.openai.com//incidents/01M5YY4A3TQETEQ53DVSK8SW10",
    "date": "Tue, 27 Oct 2026 16:20:06 GMT",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "openrouter:5a7edfda47",
@@ -741,7 +853,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -783,7 +895,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -797,7 +909,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -867,7 +979,7 @@
    "url": "https://www.githubstatus.com/incidents/wq8305lppdc2",
    "date": "Fri, 23 Oct 2026 02:30:25 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "github-status:a1a4a5d133",
@@ -881,7 +993,7 @@
    "url": "https://www.githubstatus.com/incidents/q29p76qtnkyk",
    "date": "Thu, 22 Oct 2026 15:18:46 +0000",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "ithome:94289f5324",
@@ -1049,7 +1161,7 @@
    "url": "https://status.openai.com//incidents/01M5JF8DR3EGQJNTXPZ24AKX2G",
    "date": "Thu, 22 Oct 2026 20:55:48 GMT",
    "firstSeen": "2026-10-23",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "openrouter:c4819ba940",
@@ -1091,7 +1203,7 @@
    "url": "https://status.claude.com/incidents/njk29r81v3wg",
    "date": "Wed, 21 Oct 2026 20:29:17 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "github-status:e61c7f4433",
@@ -1105,7 +1217,7 @@
    "url": "https://www.githubstatus.com/incidents/nms1dpzmh9d9",
    "date": "Wed, 21 Oct 2026 19:22:52 +0000",
    "firstSeen": "2026-10-22",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "ithome:3428782024",
@@ -1189,7 +1301,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-11-03"
+   "lastSeen": "2026-11-04"
   },
   {
    "id": "ithome:466ab50e24",
