@@ -1,7 +1,7 @@
 ### 自动发现的新线索（官方源，需人工确认后才进价格表）
-- [BYOK and enterprise custom models in the Copilot usage API](https://github.blog/changelog/2026-11-03-byok-and-enterprise-custom-models-in-the-copilot-usage-api)　— GitHub Changelog
-- [GitHub Copilot is now available in JetBrains Air](https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air)　— GitHub Changelog
-- [Evernote turns AI-driven discovery into paid subscriptions](https://openai.com/ads/customers/evernote)　— OpenAI News
+- [GitHub Copilot is now available in Xcode’s coding assistant](https://github.blog/changelog/2026-11-04-github-copilot-is-now-available-in-xcodes-coding-assistant)　— GitHub Changelog
+- [OpenRouter 免费模型下架：thinkingmachines/inkling-small:free](https://openrouter.ai/models?max_price=0)　— OpenRouter 模型表（含 :free 免费模型）
+- [OpenRouter 免费模型下架：thinkingmachines/inkling:free](https://openrouter.ai/models?max_price=0)　— OpenRouter 模型表（含 :free 免费模型）
 
 ### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/manual/sources.json 中修复或停用
 - Trae 定价页（条目级）（https://www.trae.ai/pricing）— 最后错误：itemSelector「.cardWrapper-mkVYTL」解析出 0 条（疑似选择器失效或页面改版）
