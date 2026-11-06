@@ -2,35 +2,35 @@
  "kimi": {
   "hash": "6460286555a",
   "seen": [
-   "e9401ee3559",
    "aa7514265a9",
    "600ab1985a4",
    "798c4ef364e",
    "3d20146b653",
-   "66d37ceb6a4"
+   "66d37ceb6a4",
+   "68942d8eb1c3"
   ],
   "flaps": 0,
   "changedAt": "2026-09-21",
   "revertCount": 2,
   "unstable": true,
-  "pending": "66d37ceb6a4",
+  "pending": "68942d8eb1c3",
   "pendingSince": "2026-09-23"
  },
  "aliyun-free-quota": {
   "hash": "636342be1af9",
   "seen": [
-   "184397bb1b8b",
    "80e98d613aa4",
    "5b679cbe3a14",
    "46c49fdb3a01",
    "a4e2bf293a0c",
-   "cc07b1213a0c"
+   "cc07b1213a0c",
+   "787d78073a0c"
   ],
   "flaps": 0,
   "changedAt": "2026-09-23",
   "revertCount": 2,
   "unstable": true,
-  "pending": "cc07b1213a0c",
+  "pending": "787d78073a0c",
   "pendingSince": "2026-10-01"
  },
  "aliyun-university": {

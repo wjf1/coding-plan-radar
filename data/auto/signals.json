@@ -1,6 +1,104 @@
 {
- "generatedAt": "2026-11-05",
+ "generatedAt": "2026-11-06",
  "items": [
+  {
+   "id": "gh-changelog:e398552966",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Usage metrics API adds code review details and addressed rate",
+   "excerpt": "The enterprise and organization repository-level Copilot usage metrics reports now show what happens to Copilot code review feedback. A new copilot_code_review object on each repos-1-day row reports how many Copilot-reviewed…",
+   "url": "https://github.blog/changelog/2026-11-05-usage-metrics-api-adds-code-review-details-and-addressed-rate",
+   "date": "Fri, 06 Nov 2026 00:19:07 +0000",
+   "firstSeen": "2026-11-06",
+   "lastSeen": "2026-11-06"
+  },
+  {
+   "id": "gh-changelog:7c9dfa405b",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Usage metrics API flags telemetry and version gaps",
+   "excerpt": "The Copilot usage metrics API now shows which users are missing client telemetry or are running IDE or extension versions below the usage metrics minimums. New per-user fields appear in…",
+   "url": "https://github.blog/changelog/2026-11-05-usage-metrics-api-flags-telemetry-and-version-gaps",
+   "date": "Fri, 06 Nov 2026 00:08:31 +0000",
+   "firstSeen": "2026-11-06",
+   "lastSeen": "2026-11-06"
+  },
+  {
+   "id": "github-status:6d8ab17b33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Degraded performance for multiple GitHub services",
+   "excerpt": "<p> <small>Nov <var data-var='date'> 6</var>, <var data-var='time'>00:20</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/pfbmpxxfq1cy",
+   "date": "Fri, 06 Nov 2026 00:20:49 +0000",
+   "firstSeen": "2026-11-06",
+   "lastSeen": "2026-11-06"
+  },
+  {
+   "id": "github-status:72e9218c33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Actions",
+   "excerpt": "<p> <small>Nov <var data-var='date'> 5</var>, <var data-var='time'>17:42</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/t89g2q1800fr",
+   "date": "Thu, 05 Nov 2026 17:42:35 +0000",
+   "firstSeen": "2026-11-06",
+   "lastSeen": "2026-11-06"
+  },
+  {
+   "id": "ithome:c71c46ec24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "2026 款广汽埃安 AION S Plus 出行版上市，13.08 万元",
+   "excerpt": "<p data-vmark=\"95d0\">IT之家 11 月 6 日消息，2026 款广汽埃安 AION S Plus 出行版今日上市，官方指导价 13.08 万元。购车权益包括综合优惠 4 万元、0 首付最长 60 期分期，以及营运电池 5 年或 50 万公里质保。</p><p style=\"text-align: center;\" data-vmark=\"3308\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/11/7df1b89b-e37f-49b0-bc3a-aab8c9001539.jpg?x-bce-process=i…",
+   "url": "https://www.ithome.com/1/023/253.htm",
+   "date": "Fri, 06 Nov 2026 06:04:20 GMT",
+   "firstSeen": "2026-11-06",
+   "lastSeen": "2026-11-06"
+  },
+  {
+   "id": "openai-news:360a2b0f31",
+   "source": "openai-news",
+   "sourceLabel": "OpenAI News",
+   "sourceUrl": "https://openai.com/news/rss.xml",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Merge builds product and business tools with OpenAI technology",
+   "excerpt": "Merge uses GPT-6 Astra, ChatGPT, and Codex to review product code and support marketing. Its teams also use AI to plan executive dinners and prepare sales updates.",
+   "url": "https://openai.com/index/merge-builds-with-openai",
+   "date": "Thu, 05 Nov 2026 08:00:00 GMT",
+   "firstSeen": "2026-11-06",
+   "lastSeen": "2026-11-06"
+  },
+  {
+   "id": "sspai:24f46eeb34",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "不用困在厨房也能做出好饭：三十道省事家常蒸菜",
+   "excerpt": "蒸锅真是懒人做饭好帮手。<a href=\"https://sspai.com/prime/story/30-easy-steamed-dishes\" target=\"_blank\">查看全文</a><p>本文为会员文章，出自<a href=\"https://sspai.com/prime/precog/single\" target=\"_blank\">《单篇文章》</a >，订阅后可阅读全文。</p >",
+   "url": "https://sspai.com/prime/story/30-easy-steamed-dishes",
+   "date": "Thu, 05 Nov 2026 15:16:51 +0800",
+   "firstSeen": "2026-11-06",
+   "lastSeen": "2026-11-06"
+  },
   {
    "id": "freebie-repos:a9fb86f95e",
    "source": "freebie-repos",
@@ -13,7 +111,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/efc5ecd27d0552b5d542aa3eec65724509303b4d",
    "date": "2026-11-04T15:17:38Z",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "freebie-repos:c4acd4e25e",
@@ -27,7 +125,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/8c9a845549c774ac4ae07f74c03686a1f0c854b6",
    "date": "2026-11-04T15:12:36Z",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "freebie-repos:42fa23055e",
@@ -41,7 +139,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/af7c16826921d107d43998f6ff735a88aba620a6",
    "date": "2026-11-04T14:11:30Z",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "gh-changelog:51d9ddf363",
@@ -55,7 +153,7 @@
    "url": "https://github.blog/changelog/2026-11-04-github-copilot-is-now-available-in-xcodes-coding-assistant",
    "date": "Wed, 04 Nov 2026 19:10:40 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:1ad9169033",
@@ -69,7 +167,7 @@
    "url": "https://www.githubstatus.com/incidents/h02n9572mx9y",
    "date": "Wed, 04 Nov 2026 18:16:08 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:ab562db833",
@@ -83,7 +181,7 @@
    "url": "https://www.githubstatus.com/incidents/xr3myzj7ms51",
    "date": "Wed, 04 Nov 2026 17:01:11 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:75768ed433",
@@ -97,7 +195,7 @@
    "url": "https://www.githubstatus.com/incidents/smtdswd1h2w4",
    "date": "Wed, 04 Nov 2026 11:50:06 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:233c6c1f33",
@@ -111,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/tc28c0wzrnpz",
    "date": "Wed, 04 Nov 2026 10:01:44 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "openrouter:631f873844",
@@ -167,7 +265,7 @@
    "url": "https://github.blog/changelog/2026-11-03-byok-and-enterprise-custom-models-in-the-copilot-usage-api",
    "date": "Wed, 04 Nov 2026 00:32:19 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "gh-changelog:6b76aaad59",
@@ -181,7 +279,7 @@
    "url": "https://github.blog/changelog/2026-11-03-github-copilot-is-now-available-in-jetbrains-air",
    "date": "Tue, 03 Nov 2026 15:11:46 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:7e5ed2ca33",
@@ -195,7 +293,7 @@
    "url": "https://www.githubstatus.com/incidents/13b6lyl8d7bz",
    "date": "Tue, 03 Nov 2026 22:41:03 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:6932a35e33",
@@ -209,7 +307,7 @@
    "url": "https://www.githubstatus.com/incidents/rxlj89wpk7px",
    "date": "Tue, 03 Nov 2026 13:56:18 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "ithome:625a441824",
@@ -237,7 +335,7 @@
    "url": "https://openai.com/ads/customers/evernote",
    "date": "Wed, 28 Oct 2026 19:40:49 GMT",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "sspai:3db48a761d",
@@ -265,7 +363,7 @@
    "url": "https://www.githubstatus.com/incidents/db4x8hh362t8",
    "date": "Mon, 02 Nov 2026 18:24:23 +0000",
    "firstSeen": "2026-11-03",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "ithome:82aafbe524",
@@ -419,7 +517,7 @@
    "url": "https://www.githubstatus.com/incidents/lyyfm7j4pkgl",
    "date": "Fri, 30 Oct 2026 23:29:06 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:18442d9c33",
@@ -433,7 +531,7 @@
    "url": "https://www.githubstatus.com/incidents/pwxsjgnvrk6b",
    "date": "Fri, 30 Oct 2026 19:23:40 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:b6ab242933",
@@ -447,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/nxy2l0ssxm10",
    "date": "Fri, 30 Oct 2026 15:02:51 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "openai-news:59c7201e26",
@@ -461,7 +559,7 @@
    "url": "https://openai.com/index/credit-saison",
    "date": "Thu, 29 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "freebie-repos:d39ebc6d5e",
@@ -517,7 +615,7 @@
    "url": "https://www.githubstatus.com/incidents/rn76zdy367m2",
    "date": "Thu, 29 Oct 2026 12:49:52 +0000",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "ithome:f3ebc19124",
@@ -727,7 +825,7 @@
    "url": "https://www.githubstatus.com/incidents/l7ycmglmykgg",
    "date": "Wed, 28 Oct 2026 15:28:19 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "modelsdev:90bcebcd3f",
@@ -881,7 +979,7 @@
    "url": "https://www.githubstatus.com/incidents/f1vvv30224wd",
    "date": "Mon, 26 Oct 2026 18:57:22 +0000",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "openai-status:7deb29513f",
@@ -895,7 +993,7 @@
    "url": "https://status.openai.com//incidents/01M5YY4A3TQETEQ53DVSK8SW10",
    "date": "Tue, 27 Oct 2026 16:20:06 GMT",
    "firstSeen": "2026-10-28",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "openrouter:5a7edfda47",
@@ -993,7 +1091,7 @@
    "url": "https://www.githubstatus.com/incidents/khv5nj9qy2kk",
    "date": "Sat, 24 Oct 2026 00:23:32 +0000",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "github-status:bc5bef7533",
@@ -1035,7 +1133,7 @@
    "url": "https://status.openai.com//incidents/01M5NFF94XCJ6CGTD4S78A9BEB",
    "date": "Fri, 23 Oct 2026 23:43:22 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "openai-status:6cd3684d3f",
@@ -1049,7 +1147,7 @@
    "url": "https://status.openai.com//incidents/01M5NAR5GZC5M7D0S7AQ6CGEEN",
    "date": "Fri, 23 Oct 2026 22:02:57 GMT",
    "firstSeen": "2026-10-24",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "freebie-repos:33fed5aa5e",
@@ -1441,7 +1539,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-11-05"
+   "lastSeen": "2026-11-06"
   },
   {
    "id": "ithome:466ab50e24",

@@ -131,7 +131,10 @@
   "openai-news:70c9442d29",
   "gh-changelog:51d9ddf363",
   "openrouter:631f873844",
-  "openrouter:092c28de3e"
+  "openrouter:092c28de3e",
+  "gh-changelog:e398552966",
+  "gh-changelog:7c9dfa405b",
+  "openai-news:360a2b0f31"
  ],
- "updatedAt": "2026-11-05"
+ "updatedAt": "2026-11-06"
 }
