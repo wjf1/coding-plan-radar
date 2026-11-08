@@ -10,6 +10,8 @@ AI 编程订阅计划（Coding Plan）对比站 **CodingPlan Radar**：纯静态
 - 当前版本 **v7.5**（2026-10-31，条目级监控铺开 + 缓存 schema 版本化；工作目录版本，未打 tag，CHANGELOG `[Unreleased]` 待转正）；上一发布版 v7.4（2026-10-27）。无 package.json、无构建步骤、无第三方依赖。
 - 自动化：GitHub Actions 每天北京时间 09:00（cron UTC 01:00）六步巡检 → 更新 `data/auto/` → 提交推送触发 Pages 重新发布 → 有待处理事项时自动开 issue。
 - 维护重心（HANDOFF 明示）：功能开发边际收益低，重点是**自动化管道不静默失效**。
+- 数据流：`data/manual/sources.json` 声明源 → 六个巡检脚本抓取/比对 → 写回 `data/auto/*.json` → validate 校验 → 提交推送触发 Pages 重新发布 → 浏览器端 `app.js` 经 `fetch` 读 JSON 渲染。站点板块：对比表（搜索/筛选/倍率列）、平台详情卡、IDE 榜 / 变更记录、Token 价格榜（三级保障：本地缓存 24h → models.dev 在线 → 内置快照降级）、成本计算器、巡检状态 / 信息源 / 白嫖板块；单文件加载失败只让对应板块为空（`loadJSONOr`），不拖垮整页。
+- 浏览器缓存带 schema 版本（`CACHE_SCHEMA = 2`，写入含 `schema` 字段，不匹配即弃）；改缓存结构必须同步递增，否则旧缓存静默残留。
 
 ## 构建与测试命令
 
