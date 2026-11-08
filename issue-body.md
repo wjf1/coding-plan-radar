@@ -1,9 +1,5 @@
-### 自动发现的新线索（官方源，需人工确认后才进价格表）
-- [Copilot code review: API management and review overview updates](https://github.blog/changelog/2026-11-06-copilot-code-review-api-management-and-review-overview-updates)　— GitHub Changelog
-- [Copilot impact dashboard adds chat and VS Code agent usage](https://github.blog/changelog/2026-11-06-copilot-impact-dashboard-adds-chat-and-vs-code-agent-usage)　— GitHub Changelog
-- [GitHub Copilot weekly releases — November 2](https://github.blog/changelog/2026-11-06-github-copilot-weekly-releases-november-2)　— GitHub Changelog
-- [OpenRouter 新增免费模型：liquid/lfm-3-1.7b:free](https://openrouter.ai/models?max_price=0)　— OpenRouter 模型表（含 :free 免费模型）
-- [OpenRouter 免费模型下架：nvidia/nemotron-3.5-content-safety:free](https://openrouter.ai/models?max_price=0)　— OpenRouter 模型表（含 :free 免费模型）
+### 官方页内容变动，价格待人工核实
+- [百度千帆 Token Plan 文档](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Blfmc9dlf) 检测于 2026-11-08
 
 ### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/manual/sources.json 中修复或停用
 - Trae 定价页（条目级）（https://www.trae.ai/pricing）— 最后错误：itemSelector「.cardWrapper-mkVYTL」解析出 0 条（疑似选择器失效或页面改版）
