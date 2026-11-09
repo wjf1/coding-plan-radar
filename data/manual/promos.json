@@ -82,7 +82,9 @@
     "url": "https://codingplan.org/",
     "tier": "agg"
    },
-   "note": "官网计费文档实测为 JS 渲染空壳，无法纳入哈希巡检，需人工核对。"
+   "note": "官网计费文档实测为 JS 渲染空壳，无法纳入哈希巡检，需人工核对。",
+   "expired": true,
+   "expiredOn": "2026-11-09"
   }
  ]
 }

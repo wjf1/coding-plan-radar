@@ -2,18 +2,18 @@
  "kimi": {
   "hash": "6460286555a",
   "seen": [
-   "798c4ef364e",
    "3d20146b653",
    "66d37ceb6a4",
    "68942d8eb1c3",
    "3c5df613b141",
-   "270dac2cb100"
+   "270dac2cb100",
+   "7877e83ab100"
   ],
   "flaps": 0,
   "changedAt": "2026-09-21",
   "revertCount": 2,
   "unstable": true,
-  "pending": "270dac2cb100",
+  "pending": "7877e83ab100",
   "pendingSince": "2026-09-23"
  },
  "aliyun-free-quota": {
@@ -60,6 +60,7 @@
   ],
   "flaps": 0,
   "changedAt": "2026-11-08",
-  "revertCount": 1
+  "revertCount": 2,
+  "unstable": true
  }
 }
