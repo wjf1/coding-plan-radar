@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-09",
+ "generatedAt": "2026-11-10",
  "source": "https://models.dev/api.json",
  "models": [
   {
@@ -1363,6 +1363,17 @@
    "i": 5,
    "o": 30,
    "c": 1050000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "Anthropic",
+   "pid": "anthropic",
+   "id": "claude-fable-5-2",
+   "n": "Claude Fable 5.2",
+   "i": 8,
+   "o": 40,
+   "c": 1000000,
    "t": true,
    "r": true
   },
