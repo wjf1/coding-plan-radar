@@ -1,6 +1,104 @@
 {
- "generatedAt": "2026-11-10",
+ "generatedAt": "2026-11-11",
  "items": [
+  {
+   "id": "claude-status:ca4f9fa230",
+   "source": "claude-status",
+   "sourceLabel": "Claude Status",
+   "sourceUrl": "https://status.claude.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated errors on Fable 52 and Mythos 52",
+   "excerpt": "<p> <small>Nov <var data-var='date'>10</var>, <var data-var='time'>21:47</var> UTC</small><br> <strong>Resolved</strong> - Overloaded errors on Fable 5.2 and Mythos 5.2 for four minutes. Incident has been mitigated. </p>",
+   "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
+   "date": "Tue, 10 Nov 2026 21:47:48 +0000",
+   "firstSeen": "2026-11-11",
+   "lastSeen": "2026-11-11"
+  },
+  {
+   "id": "gh-changelog:78f6f56362",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub App support for Enterprise Copilot seat management",
+   "excerpt": "Enterprise GitHub Apps can now call the enterprise-level Copilot seat management APIs to control which users and enterprise teams are assigned Copilot seats. The Copilot seat management APIs are accessible…",
+   "url": "https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management",
+   "date": "Wed, 11 Nov 2026 00:10:31 +0000",
+   "firstSeen": "2026-11-11",
+   "lastSeen": "2026-11-11"
+  },
+  {
+   "id": "gh-changelog:11bf8ade4a",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Gemini 4 Carbon in GitHub Copilot",
+   "excerpt": "Gemini 4 Carbon, Google’s latest model, is now generally available in GitHub Copilot. It is designed for complex coding, agentic, and reasoning tasks, with a focus on secure code generation…",
+   "url": "https://github.blog/changelog/2026-11-10-gemini-4-carbon-in-github-copilot",
+   "date": "Tue, 10 Nov 2026 19:26:51 +0000",
+   "firstSeen": "2026-11-11",
+   "lastSeen": "2026-11-11"
+  },
+  {
+   "id": "gh-changelog:acfd452b5d",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "C++ language server now auto-configures MSBuild builds",
+   "excerpt": "The Microsoft C++ Language Server for GitHub Copilot CLI now bundles its MSBuild compile commands extractor and invokes it automatically. An agent no longer needs to discover and run a…",
+   "url": "https://github.blog/changelog/2026-11-10-c-language-server-now-auto-configures-msbuild-builds",
+   "date": "Tue, 10 Nov 2026 17:04:10 +0000",
+   "firstSeen": "2026-11-11",
+   "lastSeen": "2026-11-11"
+  },
+  {
+   "id": "github-status:78dcf69633",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Incident with Git Operations and Pull Requests",
+   "excerpt": "<p> <small>Nov <var data-var='date'>10</var>, <var data-var='time'>17:55</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
+   "date": "Tue, 10 Nov 2026 17:55:03 +0000",
+   "firstSeen": "2026-11-11",
+   "lastSeen": "2026-11-11"
+  },
+  {
+   "id": "openrouter:00eb82f842",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-gone",
+   "title": "OpenRouter 免费模型下架：xingchen-agi/xing4.0-29b-a4b:free",
+   "excerpt": "该免费模型已从 OpenRouter 模型中消失，站内白嫖板块如有收录需同步下架。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-11-11",
+   "firstSeen": "2026-11-11",
+   "lastSeen": "2026-11-11"
+  },
+  {
+   "id": "sspai:59699d871d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "派早报：700 号段保护服务试点获批、Claude Code 设置文件泄露凭据等",
+   "excerpt": "卫星导航基准站网安全国标发布，影目召回 4701 副 AIR3 眼镜等。<a href=\"https://sspai.com/post/118905\" target=\"_blank\">查看全文</a>",
+   "url": "https://sspai.com/post/118905",
+   "date": "Wed, 11 Nov 2026 08:26:34 +0800",
+   "firstSeen": "2026-11-11",
+   "lastSeen": "2026-11-11"
+  },
   {
    "id": "gh-changelog:797372624b",
    "source": "gh-changelog",
@@ -13,7 +111,7 @@
    "url": "https://github.blog/changelog/2026-11-09-claude-fable-5-2-in-github-copilot",
    "date": "Mon, 09 Nov 2026 16:46:43 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:7aebc49433",
@@ -27,7 +125,7 @@
    "url": "https://www.githubstatus.com/incidents/6jm5k16vyhfg",
    "date": "Tue, 10 Nov 2026 00:05:52 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:6d987e7733",
@@ -41,7 +139,7 @@
    "url": "https://www.githubstatus.com/incidents/tp8cghg7tlc4",
    "date": "Mon, 09 Nov 2026 18:59:32 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:4ced8ef333",
@@ -55,7 +153,7 @@
    "url": "https://www.githubstatus.com/incidents/xxb3l2bm76dr",
    "date": "Mon, 09 Nov 2026 11:50:35 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:1b741bff33",
@@ -69,7 +167,7 @@
    "url": "https://www.githubstatus.com/incidents/c9px7cw2ghrs",
    "date": "Mon, 09 Nov 2026 09:09:56 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "ithome:ce6625aa24",
@@ -111,7 +209,7 @@
    "url": "https://sspai.com/post/118799",
    "date": "Mon, 09 Nov 2026 16:24:03 +0800",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "claude-status:4c7f358a30",
@@ -125,7 +223,7 @@
    "url": "https://status.claude.com/incidents/kw2lxj1th04c",
    "date": "Sun, 08 Nov 2026 08:54:43 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:a933ca3733",
@@ -139,7 +237,7 @@
    "url": "https://www.githubstatus.com/incidents/pyynvrm1vskw",
    "date": "Sun, 08 Nov 2026 12:32:35 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "ithome:7c16643f24",
@@ -223,7 +321,7 @@
    "url": "https://github.blog/changelog/2026-11-06-copilot-code-review-api-management-and-review-overview-updates",
    "date": "Sat, 07 Nov 2026 00:27:19 +0000",
    "firstSeen": "2026-11-07",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "gh-changelog:29096f7463",
@@ -237,7 +335,7 @@
    "url": "https://github.blog/changelog/2026-11-06-copilot-impact-dashboard-adds-chat-and-vs-code-agent-usage",
    "date": "Fri, 06 Nov 2026 22:17:28 +0000",
    "firstSeen": "2026-11-07",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "gh-changelog:9ab05e9b52",
@@ -251,7 +349,7 @@
    "url": "https://github.blog/changelog/2026-11-06-github-copilot-weekly-releases-november-2",
    "date": "Fri, 06 Nov 2026 21:00:26 +0000",
    "firstSeen": "2026-11-07",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "openrouter:ef147c1e36",
@@ -321,7 +419,7 @@
    "url": "https://www.githubstatus.com/incidents/pfbmpxxfq1cy",
    "date": "Fri, 06 Nov 2026 00:20:49 +0000",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:72e9218c33",
@@ -335,7 +433,7 @@
    "url": "https://www.githubstatus.com/incidents/t89g2q1800fr",
    "date": "Thu, 05 Nov 2026 17:42:35 +0000",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "ithome:c71c46ec24",
@@ -363,7 +461,7 @@
    "url": "https://openai.com/index/merge-builds-with-openai",
    "date": "Thu, 05 Nov 2026 08:00:00 GMT",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "sspai:24f46eeb34",
@@ -391,7 +489,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/efc5ecd27d0552b5d542aa3eec65724509303b4d",
    "date": "2026-11-04T15:17:38Z",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "freebie-repos:c4acd4e25e",
@@ -405,7 +503,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/8c9a845549c774ac4ae07f74c03686a1f0c854b6",
    "date": "2026-11-04T15:12:36Z",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "freebie-repos:42fa23055e",
@@ -419,7 +517,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/af7c16826921d107d43998f6ff735a88aba620a6",
    "date": "2026-11-04T14:11:30Z",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "gh-changelog:51d9ddf363",
@@ -447,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/h02n9572mx9y",
    "date": "Wed, 04 Nov 2026 18:16:08 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:ab562db833",
@@ -461,7 +559,7 @@
    "url": "https://www.githubstatus.com/incidents/xr3myzj7ms51",
    "date": "Wed, 04 Nov 2026 17:01:11 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:75768ed433",
@@ -475,7 +573,7 @@
    "url": "https://www.githubstatus.com/incidents/smtdswd1h2w4",
    "date": "Wed, 04 Nov 2026 11:50:06 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:233c6c1f33",
@@ -489,7 +587,7 @@
    "url": "https://www.githubstatus.com/incidents/tc28c0wzrnpz",
    "date": "Wed, 04 Nov 2026 10:01:44 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "openrouter:631f873844",
@@ -573,7 +671,7 @@
    "url": "https://www.githubstatus.com/incidents/13b6lyl8d7bz",
    "date": "Tue, 03 Nov 2026 22:41:03 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:6932a35e33",
@@ -587,7 +685,7 @@
    "url": "https://www.githubstatus.com/incidents/rxlj89wpk7px",
    "date": "Tue, 03 Nov 2026 13:56:18 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "ithome:625a441824",
@@ -615,7 +713,7 @@
    "url": "https://openai.com/ads/customers/evernote",
    "date": "Wed, 28 Oct 2026 19:40:49 GMT",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "sspai:3db48a761d",
@@ -643,7 +741,7 @@
    "url": "https://www.githubstatus.com/incidents/db4x8hh362t8",
    "date": "Mon, 02 Nov 2026 18:24:23 +0000",
    "firstSeen": "2026-11-03",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "ithome:82aafbe524",
@@ -797,7 +895,7 @@
    "url": "https://www.githubstatus.com/incidents/lyyfm7j4pkgl",
    "date": "Fri, 30 Oct 2026 23:29:06 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:18442d9c33",
@@ -811,7 +909,7 @@
    "url": "https://www.githubstatus.com/incidents/pwxsjgnvrk6b",
    "date": "Fri, 30 Oct 2026 19:23:40 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "github-status:b6ab242933",
@@ -825,7 +923,7 @@
    "url": "https://www.githubstatus.com/incidents/nxy2l0ssxm10",
    "date": "Fri, 30 Oct 2026 15:02:51 +0000",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "openai-news:59c7201e26",
@@ -839,7 +937,7 @@
    "url": "https://openai.com/index/credit-saison",
    "date": "Thu, 29 Oct 2026 00:00:00 GMT",
    "firstSeen": "2026-10-31",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "freebie-repos:d39ebc6d5e",
@@ -895,7 +993,7 @@
    "url": "https://www.githubstatus.com/incidents/rn76zdy367m2",
    "date": "Thu, 29 Oct 2026 12:49:52 +0000",
    "firstSeen": "2026-10-30",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "ithome:f3ebc19124",
@@ -1105,7 +1203,7 @@
    "url": "https://www.githubstatus.com/incidents/l7ycmglmykgg",
    "date": "Wed, 28 Oct 2026 15:28:19 +0000",
    "firstSeen": "2026-10-29",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "modelsdev:90bcebcd3f",
@@ -1819,7 +1917,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-11-10"
+   "lastSeen": "2026-11-11"
   },
   {
    "id": "ithome:466ab50e24",
