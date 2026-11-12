@@ -1,5 +1,10 @@
 [
  {
+  "date": "2026-10-31",
+  "v": "v7.5",
+  "text": "条目级监控铺开 + 缓存 schema 版本化 + 贡献指南。①6 个 page 源完成 page → list 迁移（copilot / trae / minimax / iflytek-tokenplan / tencent-tokenplan / aliyun-coding-plan），全部先跑 probe-source.mjs 预览验证再落配置，此后这些页只报「哪个档位哪个字段从什么变成什么」；另有 5 个源（kimi / aliyun-free-quota / aliyun-university / baidu-qianfan / xiaomi-mimo）逐源评估后不迁移，原因写进 CHANGELOG（客户端渲染、散文页、营销轮播、已无价格内容、SPA 空壳），不做「看起来在监控」的假象。②models.dev 本地缓存引入 CACHE_SCHEMA = 2：写入带 schema 字段，读取时 schema 不匹配 / 过期 / 解析损坏一律弃用重取，不再有结构变更后读到旧结构的问题。③新增 CONTRIBUTING.md（零依赖环境、校验与自检、数据修改规范含价格红线、PR 流程）。验证：validate 通过、selfcheck 24/24。"
+ },
+ {
   "date": "2026-10-27",
   "v": "v7.4",
   "text": "修复计算器档位缺失——calc-models.json 一直配着 7 个模型档位，但 index.html 的下拉只手写了 3 个 option，另外 4 档（百度千帆 ERNIE 5.1 / 腾讯云 GLM-5.3-Flash / 讯飞星火 X2.5 / Gemini 3.8 Flash）在任何界面上都选不到，而 README 与站点文案都写着「7 档」；那 3 个写死 option 的文案还与数据源 label 重复维护。改法：① js/app.js 新增 populateCalcModels()，按 CALC_MODELS 渲染全部 option（value 即池内下标），默认选中 GLM-5.3（中档），热重载保留用户已选、非法值回落默认；② index.html 清空写死选项，下拉内容从此以 calc-models.json 为唯一事实来源；③ populateCalcModels() 必须插在 renderCalc() 之前——否则空 select 会让 renderCalc 读到空值而静默回落到第 0 档；④ 渲染加 esc() 转义，避免数据源引入尖括号时形成注入面。验证：validate 通过（calc-models.json 7 条）、selfcheck 24/24、真实代码路径四类用例全过（含注入转义）；真实走查用 headless Chrome + CDP 非脚本操作——7 档全部渲染、默认档正确、原先缺失的 4 档全部可选、逐档切换产出 7 种不同计价行无静默回落、真实鼠标点击展开 + 键盘选择「百度千帆 ERNIE 5.1」后计价行由 $0.15/$0.6 同步更新为 $4/$18。"

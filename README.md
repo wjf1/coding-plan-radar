@@ -2,7 +2,7 @@
 
 **AI 编程订阅计划（Coding Plan）对比站** —— 看得见数据来源的订阅指南。
 
-[中文](#-中文) · [English](#-english) · [在线站点](https://wjf1.github.io/coding-plan-radar/) · [变更记录](CHANGELOG.md)
+[中文](#-中文) · [English](#-english) · [在线站点](https://wjf1.github.io/coding-plan-radar/) · [变更记录](CHANGELOG.md) · [贡献指南](CONTRIBUTING.md)
 
 ![CodingPlan Radar 首屏](docs/screenshots/01-hero.jpg)
 
@@ -60,6 +60,9 @@
    - 页面回到基线时**自动 resolved**；抓取失败不再静默跳过，而是计入源健康
    - 条目级监控自带两道保护：**解析出 0 条即禁建基线**（选择器失效时不发言）；
      **条目骤变/过半变动按结构变更熔断**——只提醒人工核对选择器，不更新基线，防止把改版页面固化成新基线
+   - 当前 **7 个条目级监控源**（v7.5 起）：`glm` / `copilot` / `trae` / `minimax` / `iflytek-tokenplan` /
+     `tencent-tokenplan` / `aliyun-coding-plan`。其余 page 源经逐源评估后维持整页哈希或不监控，
+     原因逐条记录在 CHANGELOG 与 `sources.json` 的 `note` 里（客户端渲染、散文页、营销轮播、SPA 空壳等）
 3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/auto/signals.json` 线索
 4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
 5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/manual/freebies.json`）+ 促销条目到期自动标「已结束」
@@ -274,6 +277,7 @@ Each step records its own success/failure; at the end everything is summarized, 
    - On change → write to `data/auto/alerts.json` and list it in the daily inspection issue (list sources include a field-level change breakdown) for manual price verification
    - Auto-resolves when a page returns to its baseline; fetch failures are no longer silently skipped — they count against source health
    - Item-level monitoring ships with two guardrails: **a selector that parses to zero items can never establish a baseline** (a broken selector has nothing to say), and **a sudden entry-count jump / majority change is treated as a structural change** — it only asks a human to re-check the selector and never updates the baseline, so a redesigned page cannot be baked in as the new normal
+   - **7 item-level sources** as of v7.5: `glm` / `copilot` / `trae` / `minimax` / `iflytek-tokenplan` / `tencent-tokenplan` / `aliyun-coding-plan`. The remaining `page` sources were reviewed one by one and kept on whole-page hashing or left unmonitored, with the reason recorded per source in CHANGELOG and the `note` field of `sources.json` (client-side rendering, prose-only pages, marketing carousels, SPA shells, …)
 3. **`scripts/fetch-feeds.mjs`** — fetch official changelogs / status pages / community feeds and normalize them into leads in `data/auto/signals.json`
 4. **`scripts/diff-prices.mjs`** — compare models.dev / OpenRouter / LiteLLM: price moves, free-model additions and removals, disagreements between price sources
 5. **`scripts/verify-listings.mjs`** — verify every freebie against its source page (five states written back to `data/manual/freebies.json`: `ok` / `warn` / `stale` / `changed` / `manual`) and auto-mark expired promos as "ended"
@@ -437,4 +441,4 @@ No build step, zero npm dependencies (RSS parser and tests included — no YAML/
 
 ---
 
-📝 **变更记录 / Changelog**：[CHANGELOG.md](CHANGELOG.md)
+📝 **变更记录 / Changelog**：[CHANGELOG.md](CHANGELOG.md) ｜ 🤝 **贡献指南 / Contributing**：[CONTRIBUTING.md](CONTRIBUTING.md)

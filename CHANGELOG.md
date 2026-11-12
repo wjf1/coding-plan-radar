@@ -7,6 +7,8 @@
 
 ## [Unreleased]
 
+## [v7.5] - 2026-10-31
+
 ### 新增
 
 - 新增 `CONTRIBUTING.md`（中文）：开发环境（Node 直接跑、零依赖）、validate + selfcheck 校验与自检流程、
