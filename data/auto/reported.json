@@ -149,7 +149,11 @@
   "openrouter:07fc809b42",
   "modelsdev:487b64a83e",
   "openai-news:484a54f234",
-  "openrouter:6bfe45693b"
+  "openrouter:6bfe45693b",
+  "gh-changelog:20c81dbd6b",
+  "gh-changelog:be02f5ea4c",
+  "openrouter:f9e4140f3f",
+  "openrouter:81d779ae39"
  ],
- "updatedAt": "2026-11-13"
+ "updatedAt": "2026-11-14"
 }
