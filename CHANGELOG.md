@@ -9,6 +9,7 @@
 
 ### 新增
 
+- **平台深链**：`?p=<平台名>`（如 `?p=Claude`，兼容 `#plan-<名>`）——数据渲染完成后滚动定位到该平台卡片并高亮 2.4s，每平台一个可分享 / 可收录的独立 URL。卡片 DOM 按 `encodeURIComponent(name)` 生成锚点 id，深链解析失败静默跳过不影响正常渲染。README 中英双语补深链用法与 methodology.html 链接。
 - **「额度倍率估算方法论」独立页面**：新增根目录 `methodology.html`（纯静态、零 JS），公开对比表
   倍率口径的完整估算方法，对标 artificialanalysis.ai 等同类站的公开方法论做法。内容全部来自仓库
   已有信息：倍率公式与当前样例（MiniMax Plus 88.65× / Claude Pro 63.6× / ChatGPT Plus 21.82× 等）、

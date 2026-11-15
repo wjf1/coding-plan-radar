@@ -241,3 +241,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .tl-item.is-signal{border:1px dashed var(--border);border-radius:var(--radius);padding:12px 16px}
 .tl-item.is-signal::before{background:transparent;border:2px dashed var(--accent2)}
 .tl-item.is-signal h4 a{color:var(--text)}
+
+/* 平台深链：?p=<平台名> 滚动定位后的高亮（v7.6） */
+.card.deep-link-flash{outline:2px solid var(--accent);outline-offset:3px;animation:dlf 2.4s ease-out}
+@keyframes dlf{0%,60%{background:var(--card)}75%{background:#5b8cff22}100%{background:var(--card)}}

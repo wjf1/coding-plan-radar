@@ -424,7 +424,7 @@ function renderCards(){
     const speedLine=d.speed?`<div class="kv"><b>实测速度：</b>≈ ${esc(d.speed)} TPS（awesome-coding-plan 实测口径）</div>`:"";
     const trendLine=priceTrendHTML(d.name);
     const pitfall=d.pitfalls?`<div class="pitfall">⚠ <b>坑点与社区反馈：</b>${esc(d.pitfalls)}</div>`:"";
-    return `<div class="card">
+    return `<div class="card" id="plan-${encodeURIComponent(d.name)}">
       <div class="head"><h3>${esc(d.name)}</h3><span class="badge b-chip">${esc(d.vendor)}</span><span class="badge ${cls}">${label}</span></div>
       <div class="tagline">${esc(d.start)} 起 · ${d.region==="intl"?"国际平台":"国内平台"}</div>
       <div class="tiers">${d.tiers.map(t=>`<div class="t-row"><span class="t-name">${esc(t[0])}</span><span class="t-price">${esc(t[1])}</span>${t[2]?`<span class="t-note">${esc(t[2])}</span>`:""}</div>`).join("")}</div>
@@ -990,4 +990,17 @@ bind();
   if(currentLang!=="zh") setLang(currentLang);
   renderPromos(); renderFreebies(); renderSignals(); renderSourceHealth();
   hideDecorativeGlyphs();
+  // 平台深链：?p=<平台名>（或 #plan-<名>）→ 滚动到对应卡片并高亮，供分享/收录的独立入口
+  try{
+    const params=new URLSearchParams(location.search);
+    const target=(params.get("p")||location.hash.replace(/^#plan-/,"")||"").trim();
+    if(target){
+      const el=document.getElementById("plan-"+encodeURIComponent(decodeURIComponent(target)));
+      if(el){
+        el.scrollIntoView({behavior:"smooth",block:"center"});
+        el.classList.add("deep-link-flash");
+        setTimeout(()=>el.classList.remove("deep-link-flash"),2400);
+      }
+    }
+  }catch(e){/* 深链解析失败不影响正常渲染 */}
 })();

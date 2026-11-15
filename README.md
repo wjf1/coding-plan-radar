@@ -22,6 +22,7 @@
 | ⚡ 快速对比表 | 价格、额度口径、状态（正常/促销/停售），支持搜索、国内/国际筛选、多键排序 |
 | ☑️ 多选对比 | 勾选 2–4 个平台生成并排对比视图，选择状态写进 URL（超出上限自动截断） |
 | 📈 额度倍率 | 月度额度折算价值 ÷ 月价（[awesome-coding-plan](https://github.com/mahonzhan/awesome-coding-plan) 口径），MiniMax 88.65× / Claude 63.6× / ChatGPT 21.82× … |
+| 🔗 平台深链 | `?p=<平台名>`（如 `?p=Claude`）滚动定位到该平台卡片并高亮——每平台一个可分享 URL；完整折算口径见 [methodology.html](https://wjf1.github.io/coding-plan-radar/methodology.html) |
 | 🕒 三周期额度 | 每平台 5h / 周 / 月三档额度与倍率，识别「月倍率高但 5h 倍率低」的节奏陷阱 |
 | 📉 价格历史趋势 | 每日记录起步价快照（保留 90 天），页面内以纯 SVG 迷你图呈现走势，涨价/降价自动告警 |
 | 💰 Token 实时价格榜 | 浏览器直连 [models.dev](https://github.com/sst/models.dev) 拉取第一方模型 API 价（$/百万 Token），当前渲染 80 款编码模型，输出价升序 + ⚡性价比标记 |
@@ -265,6 +266,7 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 | ⚡ Quick comparison table | Price, quota definition, status (active / promo / discontinued); search, China vs. international filter, multi-key sorting |
 | ☑️ Multi-select comparison | Tick 2–4 platforms to build a side-by-side comparison view; the selection is stored in the URL (extra entries are truncated) |
 | 📈 Quota ratio | Monthly quota value ÷ monthly price, using the [awesome-coding-plan](https://github.com/mahonzhan/awesome-coding-plan) methodology — MiniMax 88.65× / Claude 63.6× / ChatGPT 21.82× … |
+| 🔗 Platform deep-link | `?p=<platform name>` (e.g. `?p=Claude`) scrolls to that platform's card and highlights it — one shareable URL per platform; the full ratio methodology lives at [methodology.html](https://wjf1.github.io/coding-plan-radar/methodology.html) |
 | 🕒 Three-period quotas | Per-platform 5h / weekly / monthly quota and ratios, to expose the "high monthly ratio but low 5h ratio" pacing trap |
 | 📉 Price history trend | Daily starting-price snapshots (90-day retention) rendered as inline SVG sparklines, with automatic up/down price-change alerts |
 | 💰 Live Token price board | Fetched directly in the browser from [models.dev](https://github.com/sst/models.dev) ($/million tokens); currently renders 80 coding models, sorted by output price with a ⚡ value flag |
