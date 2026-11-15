@@ -30,7 +30,7 @@
  {
   "name": "Cursor Pro",
   "price": "$20 / 月",
-  "ratio": "≈1×",
+  "ratio": "≥1×",
   "note": "$20 API 用量；Auto/Composer 更省",
   "hl": false
  },
@@ -45,7 +45,7 @@
   "name": "Kiro Pro",
   "price": "$20 / 月",
   "ratio": "2×",
-  "note": "1000 credits，超量 $0.04/credit；⚠ 首月免费资格退出付款页即失效",
+  "note": "1000 credits，超量 $0.04/credit；注册赠 500 credits（30 天内有效）；⚠ 首月免费资格退出付款页即失效",
   "hl": false
  },
  {
@@ -66,7 +66,7 @@
   "name": "Qoder Pro",
   "price": "$20 / 月",
   "ratio": "—",
-  "note": "2000 Credits/月",
+  "note": "2000 Credits/月；2 周试用 + 300 Credits",
   "hl": false
  },
  {

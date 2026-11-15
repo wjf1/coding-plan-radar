@@ -7,6 +7,14 @@
 
 ## [Unreleased]
 
+### 变更
+
+- **IDE/编辑器订阅榜数据复检**：对照 awesome-coding-plan「AI IDE/Plugin Plan」表逐条复检
+  `data/manual/ide-plans.json` 全部 12 个条目（2026-11-15 检索）：价格与额度均无变化，无新增/下架条目；
+  3 处小幅修订——Cursor Pro 倍率 ≈1× → ≥1×（上游口径更新），Kiro Pro note 补充「注册赠 500 credits
+  （30 天内有效）」，Qoder Pro note 补充「2 周试用 + 300 Credits」；`index.html` 来源注解检索日期同步
+  更新为 2026-11-15。（`data/manual/ide-plans.json`、`index.html`）
+
 ### 修复
 
 - **FAQ 降级说明文案修正**：Token 实时价格榜 FAQ 中「内置快照（黄色圆点，快照日期
