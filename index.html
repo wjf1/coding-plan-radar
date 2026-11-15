@@ -276,7 +276,7 @@
       <div class="ans">额度口径 = 平台怎么计费：Claude 按「5 小时滚动会话 + 每周上限」、Cursor 按模型用量金额、Copilot 按 Premium Requests / AI Credits、国内多为积分 / Token 配额。额度倍率 = 把额度折算成钱再除以月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank" rel="noopener noreferrer">awesome-coding-plan</a> 的方法论），倍率越高名义性价比越高；但 MiniMax 月倍率 88.65× 最高、其 5h 周期倍率却一般——请按自己的使用节奏对号入座。</div>
     </details>
     <details><summary>Token 实时价格榜的数据从哪来？会不会是假的？</summary>
-      <div class="ans">浏览器直接从 <a href="https://models.dev/api.json" target="_blank" rel="noopener noreferrer">models.dev/api.json</a> 拉取（GitHub 开源项目 sst/models.dev，社区持续提交、CDN 分发，返回体带 CORS 全开放头）。拉取成功时页面显示绿色圆点和拉取时间；网络失败时自动降级到内置快照（黄色圆点，快照日期 2026-09-13），绝不伪造"实时"假象。</div>
+      <div class="ans">浏览器直接从 <a href="https://models.dev/api.json" target="_blank" rel="noopener noreferrer">models.dev/api.json</a> 拉取（GitHub 开源项目 sst/models.dev，社区持续提交、CDN 分发，返回体带 CORS 全开放头）。拉取成功时页面显示绿色圆点和拉取时间；网络失败时自动降级到内置快照（黄色圆点，日期为快照的生成时间，由每日巡检自动更新），绝不伪造"实时"假象。</div>
     </details>
     <details><summary>价格会变吗？以哪个页面为准？</summary>
       <div class="ans">会。AI 订阅价格与额度调整非常频繁（如 GLM 2026 年内就经历了次数制 → 积分制整体改版）。本站价格仅供决策参考，<b>付款前请务必以平台官网为准</b>；每个卡片底部附有来源链接与采集日期。</div>
