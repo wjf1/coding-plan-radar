@@ -9,6 +9,21 @@
 
 ### 新增
 
+- **「额度倍率估算方法论」独立页面**：新增根目录 `methodology.html`（纯静态、零 JS），公开对比表
+  倍率口径的完整估算方法，对标 artificialanalysis.ai 等同类站的公开方法论做法。内容全部来自仓库
+  已有信息：倍率公式与当前样例（MiniMax Plus 88.65× / Claude Pro 63.6× / ChatGPT Plus 21.82× 等）、
+  三级口径（① 官方定价与额度数——`plans.json` 的 srcNote 逐条溯源与采集日期、$1 ≈ ¥7.2 量纲折算；
+  ② 社区折算假设——超量单价 / credits 面值等，全部标注为估算，样例取自 `ide-plans.json`；
+  ③ 平台差异——Claude 5h 滚动会话 / Cursor 按用量 / 国内积分制的口径不可直接互比）、数据字段对照
+  （ratio / periods / srcNote / rate / pitfalls）与局限声明（倍率≠实际价值、促销与白嫖未计入、以官方页为准），
+  底部标注「最后复检 2026-11-15」。视觉复用 `css/styles.css` 与主站头部导航；双语采用轻量独立排版
+  （每区块中文在上、英文弱化并列在下），刻意不引入 `js/app.js` 的 I18N——其 data-i18n + setLang
+  与主站数据渲染逻辑深度耦合，复用会牵连整站脚本。主站 `index.html` 的 FAQ「额度口径 / 额度倍率」
+  条目尾部（「完整方法论见 …」）与页脚各加一处内链。`tests/selfcheck.mjs` 与 `scripts/validate.mjs`
+  不枚举站点 HTML 清单，无需同步；新增 node 结构断言（title / 导航链接 / 双语标记 / id 唯一性 /
+  无裸 & 未转义 / 内链计数 / 引用事实与仓库一致）全绿。
+  （`methodology.html`、`index.html`）
+
 - **RSS 订阅源与 JSON 数据直链**：新增 `scripts/gen-rss.mjs`（零依赖）——从 `data/manual/changelog.json`
   取最近 20 条按日期降序生成站点根目录 `rss.xml`（RSS 2.0：title=vX.Y / link=站点首页 /
   pubDate=RFC 822 / description=变更全文）；文件缺失或字段异常直接非零退出，字段校验与 XML 拼接

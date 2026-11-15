@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+<!--
+  CodingPlan Radar — 额度倍率估算方法论（独立静态页，零 JS）
+  对标 artificialanalysis.ai 等同类站的公开方法论做法：把社区折算口径完整摊开。
+  双语方案：轻量独立排版（每区块中文在上、英文以 .en 弱化并列在下），
+  不引入 js/app.js 的 I18N——其 data-i18n + setLang 与主站数据渲染逻辑深度耦合，
+  复用会牵连整站脚本；本页零 JS，视觉 token（css/styles.css）与主站完全一致。
+  内容全部来自仓库已有信息：index.html（对比表脚注 / FAQ / 数据说明）与
+  data/manual/plans.json（_readme / rate / srcNote）、data/manual/ide-plans.json（credits 样例）。
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>额度倍率估算方法论 — CodingPlan Radar</title>
+<meta name="description" content="CodingPlan Radar 的额度倍率估算方法论：倍率公式与样例、三级口径（官方定价与额度数 / 社区折算假设 / 平台差异）、数据字段对照与局限声明，社区折算口径完全公开。Quota ratio methodology: formula, three levels of the estimate, and limitations.">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.skip-link{position:absolute;top:-40px;left:0;background:var(--accent);color:#fff;padding:8px 16px;z-index:100;font-size:14px;border-radius:0 0 8px 0;transition:top .2s}
+.skip-link:focus{top:0}
+/* ===== 本页专属：双语并列排版 ===== */
+.en{color:var(--dim);font-size:13.5px;line-height:1.65}
+.en b{color:var(--muted);font-weight:600}
+.hero p.en{margin-top:6px;font-size:13.5px}
+.methodo-block{border:1px solid var(--border);border-radius:var(--radius);background:var(--card);padding:22px;margin-bottom:16px}
+.methodo-block h3{font-size:17px;margin-bottom:10px}
+.methodo-block h3 .en-h{display:block;font-weight:400;font-size:12.5px;color:var(--dim);margin-top:3px}
+.methodo-block p{color:var(--muted);font-size:14px}
+.methodo-block p.en{margin-top:8px}
+.formula{font-size:clamp(16px,2.6vw,21px);font-weight:800;text-align:center;padding:18px 16px;border:1px solid #5b8cff44;background:#5b8cff0d;border-radius:12px;margin:16px 0;color:var(--text)}
+.formula .op{color:var(--accent2)}
+.formula-note{font-size:12px;color:var(--dim);text-align:center;margin:-6px 0 16px}
+.lvl-num{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background:var(--grad);color:#04121f;font-weight:800;font-size:14px;margin-right:8px;vertical-align:middle}
+.methodo-list{margin:10px 0 0 18px;color:var(--muted);font-size:14px}
+.methodo-list li+li{margin-top:9px}
+.methodo-list .en{margin-top:2px}
+.sample-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.sample-row .stat b{font-size:18px}
+</style>
+</head>
+<body>
+<a href="#methodo-top" class="skip-link">Skip to content</a>
+
+<header>
+  <div class="wrap nav-top">
+    <div class="logo">CodingPlan <span>Radar</span></div>
+    <div class="nav-right">
+      <div class="updated-pill">方法论 · <a href="index.html" style="color:inherit">返回主站</a></div>
+    </div>
+  </div>
+  <nav class="nav-links wrap">
+    <a href="index.html">← 返回主站</a>
+    <a href="#formula">公式与样例</a>
+    <a href="#tiers">三级口径</a>
+    <a href="#fields">数据字段对照</a>
+    <a href="#limits">局限声明</a>
+    <a href="index.html#faq">主站 FAQ</a>
+    <a href="index.html#compare">对比表</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1 id="methodo-title">额度倍率<em>估算方法论</em></h1>
+    <p>本页公开主站对比表中「额度倍率」的完整估算方法：数据从哪来、折算假设有哪些、哪些口径不能直接互比，以及这套数字<b>不能</b>告诉你什么。对标同类对比站的公开方法论做法——折算口径完全透明，欢迎对照开源项目复核。</p>
+    <p class="en">This page documents how the quota ratios on the main comparison table are estimated: where the data comes from, which conversion assumptions are applied, which billing semantics cannot be compared directly, and what these numbers <b>cannot</b> tell you. The methodology is fully transparent, mirroring the public-methodology practice of peer sites.</p>
+  </div>
+</div>
+
+<main id="methodo-top">
+
+<section id="formula">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>📐 公式与样例 <i>—</i> 倍率是怎么算出来的</h2>
+      <p>Formula and examples</p>
+    </div>
+    <div class="methodo-block">
+      <h3>倍率公式<span class="en-h">Ratio formula</span></h3>
+      <p>把一个订阅档位的额度——消息条数、credits、Token 量或用量金额上限——按某种单价假设折算成钱，再除以月费，得到「每 1 元月费名义上能买到几元额度」。方法与数值参考开源项目 <a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank" rel="noopener noreferrer">awesome-coding-plan</a>，本站在对比表中逐条标注来源与采集日期。</p>
+      <p class="en">A plan's quota (message counts, credits, token allowances or usage-amount caps) is converted into money under a stated unit-price assumption, then divided by the monthly fee — giving the nominal "money-worth of quota per unit of monthly price". The method and figures follow the open-source project <a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank" rel="noopener noreferrer">awesome-coding-plan</a>; every row on the main table carries its source and retrieval date.</p>
+      <div class="formula">月度额度折算价值 <span class="op">÷</span> 月价 <span class="op">=</span> 额度倍率</div>
+      <p class="formula-note">monthly quota value converted to money ÷ monthly price = quota ratio</p>
+      <h3 style="margin-top:18px">当前样例（月度口径）<span class="en-h">Current examples (monthly)</span></h3>
+      <div class="sample-row">
+        <div class="stat"><b>88.65×</b><small>MiniMax Coding Plus</small></div>
+        <div class="stat"><b>63.6×</b><small>Claude Pro</small></div>
+        <div class="stat"><b>21.82×</b><small>ChatGPT Plus</small></div>
+        <div class="stat"><b>9.89×</b><small>Kimi Allegretto</small></div>
+        <div class="stat"><b>8.35×</b><small>GLM Pro</small></div>
+      </div>
+      <p style="margin-top:12px">倍率仅覆盖已有社区折算数据的档位，无数据的在对比表中标「—」。</p>
+      <p class="en">Ratios are shown only for tiers that already have community conversion data; tiers without data are marked "—" on the main table.</p>
+      <h3 style="margin-top:18px">汇率换算说明<span class="en-h">Currency conversion</span></h3>
+      <p>官方页价格分属美元与人民币两种计价时，按 $1 ≈ ¥7.2 统一量纲后再对比。该汇率仅用于折算量纲，不是汇率承诺，也不改变官方定价本身。</p>
+      <p class="en">When prices are quoted in both USD and CNY, they are normalized at $1 ≈ ¥7.2 for comparison only. This rate is a dimension-normalization convention, not an exchange-rate promise, and does not alter official pricing.</p>
+    </div>
+  </div>
+</section>
+
+<section id="tiers" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>🧱 三级口径 <i>—</i> 一次估算由三层信息叠加</h2>
+      <p>Three levels of the estimate — each with a different level of confidence</p>
+    </div>
+    <div class="methodo-block">
+      <h3><span class="lvl-num">1</span>官方定价与额度数（事实层）<span class="en-h">Level 1 — Official pricing and quota figures (facts)</span></h3>
+      <p>价格与额度数取自各平台<b>官方定价页或官方文档</b>，逐条记录来源链接与采集日期（数据文件中的 srcNote 字段，如「claude.com/pricing · 2026-09-13」「bigmodel.cn/glm-coding + docs.bigmodel.cn · 2026-09-13」）。来源分级：官方直采（绿）＞ 实时数据源（青）＞ 聚合参考（蓝）＞ 社区情报（黄，仅作线索，不进入价格表）。官方页有变动时由每日自动巡检挂「待核实」，人工复核后才改表。</p>
+      <p class="en">Prices and quota figures are taken from each platform's <b>official pricing page or documentation</b>, with the source URL and retrieval date recorded per row (the srcNote field, e.g. "claude.com/pricing · 2026-09-13"). Source tiers: official capture (green) ＞ live data source (cyan) ＞ aggregated reference (blue) ＞ community intelligence (yellow, leads only, never enters the price table). Changes detected by the daily automated patrol are flagged for human verification before the table is updated.</p>
+    </div>
+    <div class="methodo-block">
+      <h3><span class="lvl-num">2</span>社区折算假设（估算层）<span class="en-h">Level 2 — Community conversion assumptions (estimates)</span></h3>
+      <p>把「非货币额度」折成钱需要单价假设：超量单价（如 Kiro Pro：1000 credits、超量 $0.04/credit）、credits 面值（如 Augment Code INDIE：4 万 credits 价值 $25）、消息条数按官方超购价折算等。这些假设来自 awesome-coding-plan 社区折算表，<b>全部是估算值</b>——官方从不承诺「额度等于多少钱」，且不同平台的假设口径也可能不同。</p>
+      <p class="en">Converting non-monetary quota into money requires unit-price assumptions: overage unit prices (e.g. Kiro Pro: 1,000 credits, overage $0.04/credit), credit face values (e.g. Augment Code INDIE: 40,000 credits valued at $25), message counts priced at official overage rates, and so on. These assumptions come from the awesome-coding-plan community table and are <b>estimates only</b> — no vendor promises that quota equals a monetary value, and the assumptions can differ across platforms.</p>
+    </div>
+    <div class="methodo-block">
+      <h3><span class="lvl-num">3</span>平台差异（口径层）<span class="en-h">Level 3 — Platform semantics (billing semantics differ)</span></h3>
+      <p>各家计费口径不同，倍率<b>不能直接互比</b>：Claude 按「5 小时滚动会话 + 每周上限」、Cursor 按模型用量金额、Copilot 按 Premium Requests / AI Credits、国内平台多为积分 / Token 配额。月度倍率最高的 MiniMax（88.65×），其 5h 周期倍率并不突出——倍率高低 ≠ 实际体验好坏，请按自己的使用节奏（5h / 周 / 月）对号入座。</p>
+      <p class="en">Billing semantics differ across platforms, so ratios are <b>not directly comparable</b>: Claude bills on "5-hour rolling sessions plus weekly caps", Cursor on model-usage dollar amounts, Copilot on Premium Requests / AI Credits, and domestic platforms mostly on points / token quotas. MiniMax has the highest monthly ratio (88.65×) yet an unremarkable 5-hour-window ratio — a higher ratio does not mean a better experience; pick the window (5h / week / month) that matches your own usage rhythm.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fields">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>🗂️ 数据字段对照 <i>—</i> 口径落在哪个字段</h2>
+      <p>Where these numbers live in the data files</p>
+    </div>
+    <div class="methodo-block">
+      <p>本站全部对比数据由 <code>data/manual/</code>（人工维护）与 <code>data/auto/</code>（每日巡检生成）下的 JSON 驱动（纯静态、零依赖），与本页说明一一对应。核心字段：</p>
+      <p class="en">All comparison data is driven by JSON files under <code>data/manual/</code> (human-maintained) and <code>data/auto/</code> (generated by the daily patrol) — a fully static, zero-dependency setup. Key fields:</p>
+      <ul class="methodo-list">
+        <li><b>ratio</b> — 月额度倍率（额度折算价值 ÷ 月价）<span class="en" style="display:block">monthly quota ratio (quota value converted to money ÷ monthly price)</span></li>
+        <li><b>periods</b> — 三周期（5h / 周 / 月）额度倍率，对应不同使用节奏<span class="en" style="display:block">three-window (5h / weekly / monthly) quota ratios</span></li>
+        <li><b>srcType / srcUrl / srcNote</b> — 来源分级、来源链接与采集日期，逐条可溯源<span class="en" style="display:block">source tier, source URL and retrieval date — every row is traceable</span></li>
+        <li><b>rate / rateNote</b> — $1 ≈ ¥7.2 的折算量纲说明<span class="en" style="display:block">the $1 ≈ ¥7.2 dimension-normalization convention</span></li>
+        <li><b>pitfalls</b> — 社区反馈汇总（限速、降智、额度争议等），仅供参考<span class="en" style="display:block">community-reported pitfalls (throttling, degraded models, quota disputes), reference only</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="limits" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>⚠️ 局限声明 <i>—</i> 这套数字不能告诉你什么</h2>
+      <p>Limitations — what these numbers cannot tell you</p>
+    </div>
+    <div class="methodo-block">
+      <ul class="methodo-list">
+        <li><b>倍率 ≠ 实际价值</b>：它是名义折算，不含限速、模型质量、排队与降级等体验差异<span class="en" style="display:block">Ratio ≠ real-world value: it is a nominal conversion and ignores throttling, model quality, queuing and degradation</span></li>
+        <li><b>促销与白嫖未计入</b>：倍率只按标准付费档估算；限时促销在主站「市场动态」、免费额度在「白嫖 / 免费额度」板块单独追踪<span class="en" style="display:block">Promotions and free credits are not included: ratios use standard paid tiers only; time-limited promos and freebies are tracked in their own sections on the main site</span></li>
+        <li><b>覆盖不全</b>：倍率仅覆盖已有社区折算数据的档位；无固定月费的按量计费平台（如 DeepSeek）不适用倍率口径<span class="en" style="display:block">Coverage is incomplete: only tiers with community conversion data are shown; usage-billing platforms without a fixed monthly fee (e.g. DeepSeek) are out of scope for ratios</span></li>
+        <li><b>以官方页为准</b>：AI 订阅价格与额度调整非常频繁，付款前务必以平台官网为准；聚合来源与官方冲突时以官方为准<span class="en" style="display:block">Official pages always win: AI subscription prices and quotas change frequently — always check the vendor's official page before paying; when aggregated sources conflict with official data, official data prevails</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>方法与数值参考开源项目 <a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank" rel="noopener noreferrer">mahonzhan/awesome-coding-plan</a> · CodingPlan Radar · <a href="index.html">← 返回主站</a></div>
+    <div>官方来源：claude.com · docs.github.com · cursor.com · docs.bigmodel.cn · platform.kimi.com · platform.minimaxi.com　实时源：models.dev / OpenRouter</div>
+  </div>
+  <div class="wrap disclaimer">最后复检 2026-11-15 · 本页为静态说明文档，与所列平台无商业关系；所有商标归各自所有者。</div>
+</footer>
+
+</body>
+</html>
