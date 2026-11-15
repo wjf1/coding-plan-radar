@@ -75,6 +75,13 @@ jobs:
         run: |
           if node scripts/validate.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
 
+      - name: 生成 RSS 订阅源（rss.xml）
+        id: rss
+        continue-on-error: true
+        run: |
+          # 从站内变更记录生成 rss.xml（对外订阅产物）；与各巡检步骤一致：失败记入汇总并开 issue，不静默
+          if node scripts/gen-rss.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
+
       - name: outcome 汇总
         id: outcomes
         run: |
@@ -86,6 +93,7 @@ jobs:
           [ "${{ steps.listings.outputs.ok }}" = "true" ] || fails="$fails listings"
           [ "${{ steps.history.outputs.ok }}" = "true" ] || fails="$fails history"
           [ "${{ steps.validate.outputs.ok }}" = "true" ] || fails="$fails validate"
+          [ "${{ steps.rss.outputs.ok }}" = "true" ] || fails="$fails rss"
           if [ -n "$fails" ]; then
             echo "has_failure=true" >> "$GITHUB_OUTPUT"
             echo "failed_steps=$fails" >> "$GITHUB_OUTPUT"

@@ -66,7 +66,7 @@
 3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/auto/signals.json` 线索
 4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
 5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/manual/freebies.json`）+ 促销条目到期自动标「已结束」
-6. **收尾**：`record-history.mjs` 记录价格历史快照（失败会进失败汇总并在 issue 中列出，不再静默跳过）→ 写入巡检日期 → **`validate.mjs` 校验数据契约与脚本语法** → 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/auto/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
+6. **收尾**：`record-history.mjs` 记录价格历史快照（失败会进失败汇总并在 issue 中列出，不再静默跳过）→ 写入巡检日期 → **`validate.mjs` 校验数据契约与脚本语法** → `gen-rss.mjs` 生成 `rss.xml` 订阅源（失败同样进失败汇总）→ 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/auto/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
 
 任一步骤失败都会写进 `failed_steps` 并在 issue 中列出；**校验不通过则不提交** —— 坏数据宁可不上线，也不能推上生产页面。
 
@@ -99,6 +99,7 @@
 
 ```
 ├── index.html              # 页面骨架（对比表 / Token 榜 / 计算器 / IDE 榜 / 白嫖 / 动态 / FAQ）
+├── rss.xml                 # RSS 2.0 订阅源（每日巡检从 changelog.json 自动生成）
 ├── css/styles.css          # 全部样式（深色主题，无框架）
 ├── js/
 │   └── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/对比/CSV/多语言/价格趋势/巡检）
@@ -134,6 +135,7 @@
 │   ├── diff-prices.mjs     # 价格库与免费模型差异检测
 │   ├── verify-listings.mjs # 白嫖额度来源页每日核对 + 促销到期自动归档
 │   ├── record-history.mjs  # 记录每日起步价快照（90 天滚动）+ 调价告警
+│   ├── gen-rss.mjs         # 从站内变更记录生成 rss.xml 订阅源（每日巡检 validate 之后运行）
 │   ├── validate.mjs        # 数据契约 + 脚本语法校验（CI 与本地共用，坏数据不进仓库）
 │   └── publish-via-api.mjs # 走 GitHub API 发布（github.com 被阻断时替代 git push）
 ├── tests/selfcheck.mjs     # 零依赖自检（Node 内建 node:test）：纯函数 / 原子写入 / 幂等性 / 条目抽取与熔断 / 校验负向用例
@@ -171,6 +173,28 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 无构建步骤、零 npm 依赖（含 RSS 解析与测试，未引入 YAML / XML 库或测试框架）、纯静态 —— fork 后开启 Pages 即可获得自己的实例。
 
 > ⚠️ 页面数据全部通过 `fetch` 读取 `data/*.json`，**必须经 HTTP 打开**（`file://` 下会被 CORS 拦截，页面只剩空壳）。本地预览请用上面的 `python -m http.server` / `npx serve`。
+
+### 📡 RSS 订阅与 JSON 数据直链
+
+**RSS 订阅**：站内变更记录提供 RSS 2.0 订阅源
+[https://wjf1.github.io/coding-plan-radar/rss.xml](https://wjf1.github.io/coding-plan-radar/rss.xml)——
+每日巡检提交前由 `scripts/gen-rss.mjs` 从 `data/manual/changelog.json` 重新生成（取最近 20 条，
+每条对应一个版本 vX.Y，description 为该版变更全文）。用任意 RSS 阅读器订阅，站点有更新即可收到通知。
+
+**JSON 数据直链**：页面加载的全部数据都是仓库里的普通 JSON 文件，除站点页面外也可直接引用
+`main` 分支的 raw 直链：
+
+| 文件 | 内容 |
+|---|---|
+| [`data/manual/plans.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/manual/plans.json) | 订阅计划对比主数据：价格 / 档位 / 额度 / 坑点 |
+| [`data/manual/calc-models.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/manual/calc-models.json) | 成本计算器预设模型档位（实时价匹配不到时的内置价） |
+| [`data/manual/ide-plans.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/manual/ide-plans.json) | IDE / 编辑器订阅扩展榜 |
+| [`data/auto/snapshot.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/auto/snapshot.json) | models.dev 每日兜底快照（Token 实时榜的降级来源） |
+| [`data/auto/price-history.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/auto/price-history.json) | 起步价每日快照（90 天滚动，驱动价格趋势图） |
+
+> raw 直链指向 `main` 分支的原始文件（`Content-Type: text/plain`），可直接 `fetch` / 下载。
+> 人工维护（`manual/`）与机器生成（`auto/`）两类文件更新频率不同，二次引用时以文件内自带的
+> 采集日期字段为准。
 
 ### 🔒 安全与数据可靠性
 
@@ -281,7 +305,7 @@ Each step records its own success/failure; at the end everything is summarized, 
 3. **`scripts/fetch-feeds.mjs`** — fetch official changelogs / status pages / community feeds and normalize them into leads in `data/auto/signals.json`
 4. **`scripts/diff-prices.mjs`** — compare models.dev / OpenRouter / LiteLLM: price moves, free-model additions and removals, disagreements between price sources
 5. **`scripts/verify-listings.mjs`** — verify every freebie against its source page (five states written back to `data/manual/freebies.json`: `ok` / `warn` / `stale` / `changed` / `manual`) and auto-mark expired promos as "ended"
-6. **Wrap-up**: `record-history.mjs` records price-history snapshots (a failure is now counted in the failure summary and listed in the issue instead of being silently skipped) → write the inspection date → **`validate.mjs` checks data contracts and script syntax** → build the human review list (official page changes / new leads / freebie anomalies / promos that expired today, deduplicated into `data/auto/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
+6. **Wrap-up**: `record-history.mjs` records price-history snapshots (a failure is now counted in the failure summary and listed in the issue instead of being silently skipped) → write the inspection date → **`validate.mjs` checks data contracts and script syntax** → `gen-rss.mjs` regenerates the `rss.xml` feed (failures count in the summary too) → build the human review list (official page changes / new leads / freebie anomalies / promos that expired today, deduplicated into `data/auto/reported.json`) → commit and push (triggers a Pages redeploy) → open an issue when there is something to review
 
 Any failing step is recorded in `failed_steps` and listed in the issue; **if validation fails nothing is committed** — bad data must not reach the live page.
 
@@ -310,6 +334,7 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 
 ```
 ├── index.html              # Page skeleton (comparison table / token board / calculator / IDE board / freebies / dynamics / FAQ)
+├── rss.xml                 # RSS 2.0 feed (auto-generated from changelog.json by the daily inspection)
 ├── css/styles.css          # All styling (dark theme, no framework)
 ├── js/
 │   └── app.js              # Rendering and interaction (tables/cards/calculator/live board/compare/CSV/i18n/price trend/inspection)
@@ -345,6 +370,7 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 │   ├── diff-prices.mjs     # Price-base and free-model diffing
 │   ├── verify-listings.mjs # Daily freebie source-page verification + auto-expiry of promos
 │   ├── record-history.mjs  # Record daily starting-price snapshots (90-day rolling) + price-change alerts
+│   ├── gen-rss.mjs         # Generate the rss.xml feed from the in-site changelog (run after validate in the daily inspection)
 │   ├── validate.mjs        # Data-contract + script syntax validation (used by CI and locally; keeps bad data out)
 │   └── publish-via-api.mjs # Publish through the GitHub API (fallback when github.com is blocked)
 ├── tests/selfcheck.mjs     # Zero-dependency self-check (built-in node:test): pure helpers / atomic writes / idempotency / item extraction & circuit breaker / negative cases
@@ -382,6 +408,29 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 No build step, zero npm dependencies (RSS parser and tests included — no YAML/XML library, no test framework), purely static — fork it, enable Pages, and you have your own instance.
 
 > ⚠️ All page data is loaded from `data/*.json` via `fetch`, so the site **must be opened over HTTP** (`file://` is blocked by CORS and you get an empty shell). Use `python -m http.server` / `npx serve` as shown above.
+
+### 📡 RSS feed and JSON data links
+
+**RSS subscription**: the in-site changelog is available as an RSS 2.0 feed at
+[https://wjf1.github.io/coding-plan-radar/rss.xml](https://wjf1.github.io/coding-plan-radar/rss.xml) —
+regenerated from `data/manual/changelog.json` by `scripts/gen-rss.mjs` before each daily-inspection commit
+(latest 20 entries, one `<item>` per version vX.Y, with the full changelog text as the description).
+Subscribe with any RSS reader to get notified when the site updates.
+
+**Raw JSON links**: every dataset the page loads is a plain JSON file in the repo — besides the site itself,
+you can reference them directly via raw links on the `main` branch:
+
+| File | Contents |
+|---|---|
+| [`data/manual/plans.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/manual/plans.json) | Main subscription-comparison data: prices / tiers / quotas / pitfalls |
+| [`data/manual/calc-models.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/manual/calc-models.json) | Calculator model presets (built-in prices when live matching fails) |
+| [`data/manual/ide-plans.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/manual/ide-plans.json) | IDE / editor subscription board |
+| [`data/auto/snapshot.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/auto/snapshot.json) | Daily models.dev fallback snapshot (degradation source of the token board) |
+| [`data/auto/price-history.json`](https://raw.githubusercontent.com/wjf1/coding-plan-radar/main/data/auto/price-history.json) | Daily starting-price snapshots (90-day retention, drives the trend chart) |
+
+> Raw links point at the original files on `main` (`Content-Type: text/plain`) and can be fetched directly.
+> Human-maintained (`manual/`) and CI-generated (`auto/`) files update at different cadences — when reusing
+> the data, trust the collection-date fields inside each file.
 
 ### 🔒 Security and data reliability
 

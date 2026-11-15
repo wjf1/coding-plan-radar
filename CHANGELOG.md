@@ -7,6 +7,18 @@
 
 ## [Unreleased]
 
+### 新增
+
+- **RSS 订阅源与 JSON 数据直链**：新增 `scripts/gen-rss.mjs`（零依赖）——从 `data/manual/changelog.json`
+  取最近 20 条按日期降序生成站点根目录 `rss.xml`（RSS 2.0：title=vX.Y / link=站点首页 /
+  pubDate=RFC 822 / description=变更全文）；文件缺失或字段异常直接非零退出，字段校验与 XML 拼接
+  全部在写盘前完成，落盘走 `.tmp` + `rename` 原子替换并自查 `<item>` 数量（沿仓库原子写惯例）。
+  每日巡检在 `validate.mjs` 之后新增生成步骤，失败进 `failed_steps` 汇总并开 issue；提交步骤
+  `git add -A` 已覆盖新产物。README 中英双语新增「📡 RSS 订阅与 JSON 数据直链」小节
+  （rss.xml 地址与用途 + plans / calc-models / ide-plans / snapshot / price-history 五个 raw 直链），
+  目录树与巡检流程描述同步。
+  （`scripts/gen-rss.mjs`、`.github/workflows/daily-update.yml`、`README.md`）
+
 ### 变更
 
 - **IDE/编辑器订阅榜数据复检**：对照 awesome-coding-plan「AI IDE/Plugin Plan」表逐条复检
