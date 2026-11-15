@@ -1,6 +1,34 @@
 {
- "generatedAt": "2026-11-14",
+ "generatedAt": "2026-11-15",
  "items": [
+  {
+   "id": "ithome:742041d724",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "实况平台 Twitch 联动《GTA 6》推出限定活动，将赠送超 1 万组游戏激活码",
+   "excerpt": "<p data-vmark=\"5e16\">IT之家 11 月 15 日消息，Twitch 宣布将配合 Rockstar Games 旗下新作《GTA 6》发售推出一系列限定活动，从游戏正式发售的 11 月 19 日起至月底，平台将每天向观众赠送游戏激活码，总量将“超过 1 万组”。</p><p data-vmark=\"04f2\">此外，Twitch 还将于 11 月 18 日开启《GTA 6》主题 Twitch Drops 活动，玩家可以通过观看直播、订阅频道等方式收集限定徽章和表情。</p><p data-vmark=\"62c1\">除了游戏激活码，Twitch 还将于 11 月 18 日至 …",
+   "url": "https://www.ithome.com/1/027/313.htm",
+   "date": "Sun, 15 Nov 2026 05:59:38 GMT",
+   "firstSeen": "2026-11-15",
+   "lastSeen": "2026-11-15"
+  },
+  {
+   "id": "ithome:bfdaacb624",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "《王权陨落：岩冠之境》DLC 上架 Steam：首发特惠 ¥31.5，基础游戏同步加入 XGP",
+   "excerpt": "<p data-vmark=\"0000\">IT之家 11 月 15 日消息，由 Mythwright 开发并发行的极简策略塔防游戏《Thronefall - Craaghelm〈王权陨落：岩冠之境〉》现已正式在 Steam 平台发售，该作是《王权陨落》的首个大型 DLC 扩展包，国区首发特惠价 31.5 元（原价 35 元，-10%），优惠截止至 11 月 25 日。需要注意的是，本 DLC 必须拥有基础游戏《Thronefall〈王权陨落〉》才能运行。IT之家附游戏商品页（<a href=\"https://store.steampowered.com/app/4822240/Thronefa…",
+   "url": "https://www.ithome.com/1/027/286.htm",
+   "date": "Sun, 15 Nov 2026 02:54:28 GMT",
+   "firstSeen": "2026-11-15",
+   "lastSeen": "2026-11-15"
+  },
   {
    "id": "freebie-repos:23f15c365e",
    "source": "freebie-repos",
@@ -13,7 +41,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/8e24de4f149855a75c2cb24e2e5d0155bada240f",
    "date": "2026-11-13T13:29:06Z",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "freebie-repos:e8a542335e",
@@ -27,7 +55,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/536f40dabd902419aa14582ee7c8ad39ad0fc4ba",
    "date": "2026-11-13T13:26:19Z",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "freebie-repos:93a823cb5e",
@@ -41,7 +69,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/0d86cbd097a83975760fe8dcf7d1c405475fddaf",
    "date": "2026-11-13T13:11:07Z",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "freebie-repos:a17f4b015e",
@@ -55,7 +83,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/757c69d06064479f2820a6942b6fcea0d3f9494e",
    "date": "2026-11-13T12:33:10Z",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "gh-changelog:20c81dbd6b",
@@ -69,7 +97,7 @@
    "url": "https://github.blog/changelog/2026-11-13-upcoming-deprecation-of-selected-github-copilot-models-in-december",
    "date": "Fri, 13 Nov 2026 20:40:05 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "gh-changelog:be02f5ea4c",
@@ -83,7 +111,7 @@
    "url": "https://github.blog/changelog/2026-11-13-gemini-4-hydrogen-in-github-copilot",
    "date": "Fri, 13 Nov 2026 18:23:48 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:f1e17eb133",
@@ -97,7 +125,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -111,7 +139,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -125,7 +153,7 @@
    "url": "https://status.openai.com//incidents/01M7ATRS6BMZ61E4JDHJGM79Y0",
    "date": "Sat, 14 Nov 2026 05:31:20 GMT",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "openrouter:f9e4140f3f",
@@ -167,7 +195,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -181,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -195,7 +223,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -223,7 +251,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -293,7 +321,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:34fbe14433",
@@ -307,7 +335,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "ithome:8dc99af724",
@@ -391,7 +419,7 @@
    "url": "https://sspai.com/post/85735",
    "date": "Thu, 12 Nov 2026 14:42:04 +0800",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "claude-status:ca4f9fa230",
@@ -405,7 +433,7 @@
    "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
    "date": "Tue, 10 Nov 2026 21:47:48 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "gh-changelog:78f6f56362",
@@ -419,7 +447,7 @@
    "url": "https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management",
    "date": "Wed, 11 Nov 2026 00:10:31 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "gh-changelog:11bf8ade4a",
@@ -433,7 +461,7 @@
    "url": "https://github.blog/changelog/2026-11-10-gemini-4-carbon-in-github-copilot",
    "date": "Tue, 10 Nov 2026 19:26:51 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "gh-changelog:acfd452b5d",
@@ -461,7 +489,7 @@
    "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
    "date": "Tue, 10 Nov 2026 17:55:03 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "openrouter:00eb82f842",
@@ -517,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/6jm5k16vyhfg",
    "date": "Tue, 10 Nov 2026 00:05:52 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:6d987e7733",
@@ -531,7 +559,7 @@
    "url": "https://www.githubstatus.com/incidents/tp8cghg7tlc4",
    "date": "Mon, 09 Nov 2026 18:59:32 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:4ced8ef333",
@@ -545,7 +573,7 @@
    "url": "https://www.githubstatus.com/incidents/xxb3l2bm76dr",
    "date": "Mon, 09 Nov 2026 11:50:35 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:1b741bff33",
@@ -559,7 +587,7 @@
    "url": "https://www.githubstatus.com/incidents/c9px7cw2ghrs",
    "date": "Mon, 09 Nov 2026 09:09:56 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "ithome:ce6625aa24",
@@ -615,7 +643,7 @@
    "url": "https://status.claude.com/incidents/kw2lxj1th04c",
    "date": "Sun, 08 Nov 2026 08:54:43 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:a933ca3733",
@@ -629,7 +657,7 @@
    "url": "https://www.githubstatus.com/incidents/pyynvrm1vskw",
    "date": "Sun, 08 Nov 2026 12:32:35 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "ithome:7c16643f24",
@@ -811,7 +839,7 @@
    "url": "https://www.githubstatus.com/incidents/pfbmpxxfq1cy",
    "date": "Fri, 06 Nov 2026 00:20:49 +0000",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:72e9218c33",
@@ -825,7 +853,7 @@
    "url": "https://www.githubstatus.com/incidents/t89g2q1800fr",
    "date": "Thu, 05 Nov 2026 17:42:35 +0000",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "ithome:c71c46ec24",
@@ -853,7 +881,7 @@
    "url": "https://openai.com/index/merge-builds-with-openai",
    "date": "Thu, 05 Nov 2026 08:00:00 GMT",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "sspai:24f46eeb34",
@@ -937,7 +965,7 @@
    "url": "https://www.githubstatus.com/incidents/h02n9572mx9y",
    "date": "Wed, 04 Nov 2026 18:16:08 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:ab562db833",
@@ -951,7 +979,7 @@
    "url": "https://www.githubstatus.com/incidents/xr3myzj7ms51",
    "date": "Wed, 04 Nov 2026 17:01:11 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:75768ed433",
@@ -965,7 +993,7 @@
    "url": "https://www.githubstatus.com/incidents/smtdswd1h2w4",
    "date": "Wed, 04 Nov 2026 11:50:06 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:233c6c1f33",
@@ -979,7 +1007,7 @@
    "url": "https://www.githubstatus.com/incidents/tc28c0wzrnpz",
    "date": "Wed, 04 Nov 2026 10:01:44 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "openrouter:631f873844",
@@ -1063,7 +1091,7 @@
    "url": "https://www.githubstatus.com/incidents/13b6lyl8d7bz",
    "date": "Tue, 03 Nov 2026 22:41:03 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "github-status:6932a35e33",
@@ -1077,7 +1105,7 @@
    "url": "https://www.githubstatus.com/incidents/rxlj89wpk7px",
    "date": "Tue, 03 Nov 2026 13:56:18 +0000",
    "firstSeen": "2026-11-04",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "ithome:625a441824",
@@ -1133,7 +1161,7 @@
    "url": "https://www.githubstatus.com/incidents/db4x8hh362t8",
    "date": "Mon, 02 Nov 2026 18:24:23 +0000",
    "firstSeen": "2026-11-03",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "ithome:82aafbe524",
@@ -2309,7 +2337,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-11-14"
+   "lastSeen": "2026-11-15"
   },
   {
    "id": "ithome:466ab50e24",
