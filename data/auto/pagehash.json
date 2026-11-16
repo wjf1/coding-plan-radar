@@ -19,18 +19,18 @@
  "aliyun-free-quota": {
   "hash": "636342be1af9",
   "seen": [
-   "46c49fdb3a01",
    "a4e2bf293a0c",
    "cc07b1213a0c",
    "787d78073a0c",
    "a4850f1a3a24",
-   "78b521993a45"
+   "78b521993a45",
+   "1af1426f3a92"
   ],
   "flaps": 0,
   "changedAt": "2026-09-23",
   "revertCount": 2,
   "unstable": true,
-  "pending": "78b521993a45",
+  "pending": "1af1426f3a92",
   "pendingSince": "2026-10-01"
  },
  "aliyun-university": {
