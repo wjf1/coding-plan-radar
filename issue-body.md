@@ -1,9 +1,8 @@
 ### 自动发现的新线索（官方源，需人工确认后才进价格表）
-- [gemini-3.1-flash-lite-image 输出价 30 → 1.5 $/M（google）](https://models.dev/google/gemini-3.1-flash-lite-image)　— models.dev 模型价格库
-- [gemini-3.1-flash-image 输出价 60 → 3 $/M（google）](https://models.dev/google/gemini-3.1-flash-image)　— models.dev 模型价格库
-- [gemini-2.5-flash-image 输出价 30 → 2.5 $/M（google）](https://models.dev/google/gemini-2.5-flash-image)　— models.dev 模型价格库
-- [gemini-3-pro-image 输出价 120 → 12 $/M（google）](https://models.dev/google/gemini-3-pro-image)　— models.dev 模型价格库
-- [gpt-image-2 已从 models.dev 下架（openai）](https://models.dev/api.json)　— models.dev 模型价格库
+- [GitHub Copilot weekly releases — November 9](https://github.blog/changelog/2026-11-16-github-copilot-weekly-releases-november-9)　— GitHub Changelog
+- [GitHub Copilot models deprecated on November 16, 2026](https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026)　— GitHub Changelog
+- [Control where GitHub Copilot customizations come from](https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from)　— GitHub Changelog
+- [VS Code retires the Local harness in February 2027](https://github.blog/changelog/2026-11-16-vs-code-retires-the-local-harness-in-february-2027)　— GitHub Changelog
 
 ### ⚠ 以下信息源已连续 3 天抓取失败，需要在 data/manual/sources.json 中修复或停用
 - Trae 定价页（条目级）（https://www.trae.ai/pricing）— 最后错误：itemSelector「.cardWrapper-mkVYTL」解析出 0 条（疑似选择器失效或页面改版）

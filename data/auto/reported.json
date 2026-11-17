@@ -158,7 +158,11 @@
   "modelsdev:1bada43939",
   "modelsdev:2ff55e5b3b",
   "modelsdev:d64d6aae37",
-  "modelsdev:afb4d55a30"
+  "modelsdev:afb4d55a30",
+  "gh-changelog:36a185c352",
+  "gh-changelog:907ac5d25d",
+  "gh-changelog:298ed6d25e",
+  "gh-changelog:5b6af8af5b"
  ],
- "updatedAt": "2026-11-16"
+ "updatedAt": "2026-11-17"
 }
