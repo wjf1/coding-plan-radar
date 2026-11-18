@@ -1,6 +1,160 @@
 {
- "generatedAt": "2026-11-17",
+ "generatedAt": "2026-11-18",
  "items": [
+  {
+   "id": "freebie-repos:bbcbe4e55e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Mark AxForge mimo-v2.6-flash as reading images",
+   "excerpt": "AxForge 提交于 2026-11-17",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/cdc76175b0a40a9274356ce690b44bd058b8afde",
+   "date": "2026-11-17T15:47:48Z",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:e024c1555c",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "OpenAI’s GPT-6.2 Astra and GPT-6.2 Sol now available",
+   "excerpt": "OpenAI’s GPT-6.2 Astra and GPT-6.2 Sol are now generally available in GitHub Copilot. Both models are designed for agentic coding and code review, with stronger coding judgment than earlier GPT-6…",
+   "url": "https://github.blog/changelog/2026-11-17-openais-gpt-6-2-astra-and-gpt-6-2-sol-now-available",
+   "date": "Tue, 17 Nov 2026 20:20:29 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:d33c270e6e",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot Fusion updates: more availability, benchmarks, and models",
+   "excerpt": "Today, we’re expanding GitHub Copilot Fusion with new models, available on more Copilot surfaces, and results on two public Terminal-Bench leaderboards, giving you more ways to use Fusion and compare…",
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-fusion-updates-more-availability-benchmarks-and-models",
+   "date": "Tue, 17 Nov 2026 18:04:48 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:2433764d55",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot app, Microsoft Ignite releases",
+   "excerpt": "Copilot is most useful when it can work where you do. The GitHub Copilot app now supports your Azure DevOps repositories, your GitHub Enterprise Server instance, and the browser you’re…",
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-app-microsoft-ignite-releases",
+   "date": "Tue, 17 Nov 2026 18:03:42 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:a37d089b5a",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "MAI Code 2 and MAI Code 2 Flash in GitHub Copilot",
+   "excerpt": "The next generation of Microsoft AI (MAI) coding models has arrived in GitHub Copilot. Introducing MAI Code 2 and MAI Code 2 Flash, two new models that represent a major…",
+   "url": "https://github.blog/changelog/2026-11-17-mai-code-2-and-mai-code-2-flash-in-github-copilot",
+   "date": "Tue, 17 Nov 2026 18:01:45 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:9e7ee5cd54",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot in JetBrains, Ignite releases",
+   "excerpt": "This update brings remote access, on-device voice dictation, and browser use controls to GitHub Copilot for JetBrains. Copilot users in JetBrains IDEs also get context usage shortcuts, historical diffs, simpler…",
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-in-jetbrains-ignite-releases",
+   "date": "Tue, 17 Nov 2026 18:00:59 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:1ab825b964",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Monitor GitHub Copilot activity through Microsoft Agent 365",
+   "excerpt": "Enterprises can now stream GitHub Copilot agent activity directly into Microsoft Agent 365. This lets you bring audit data from across GitHub Copilot clients into Microsoft’s agent control plane, where…",
+   "url": "https://github.blog/changelog/2026-11-17-monitor-github-copilot-activity-through-microsoft-agent-365",
+   "date": "Tue, 17 Nov 2026 18:00:59 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:2e1a1b0865",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot CLI adds Microsoft Entra sign-in as a preview",
+   "excerpt": "GitHub Copilot CLI now supports Microsoft Entra authentication in public preview. You can sign in with your Microsoft Entra account to silently authenticate to a linked GitHub Enterprise Managed User…",
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-cli-adds-microsoft-entra-sign-in-as-a-preview",
+   "date": "Tue, 17 Nov 2026 18:00:35 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:6a01448c62",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Track Copilot code review outcomes in Repository insights",
+   "excerpt": "You can now see how Copilot code review feedback lands in each repository. A new “Repository insights” page, the first item in a repository’s Insights tab, brings Copilot code review…",
+   "url": "https://github.blog/changelog/2026-11-17-track-copilot-code-review-outcomes-in-repository-insights",
+   "date": "Tue, 17 Nov 2026 18:00:35 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "gh-changelog:97161b5b56",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "GitHub Copilot Evals is now in public preview",
+   "excerpt": "You can now use GitHub Copilot Evals to optimize GitHub Copilot for yourself. As your prompts, models, skills, and tools change, are you still getting the most out of Copilot?…",
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-evals-is-now-in-public-preview",
+   "date": "Tue, 17 Nov 2026 18:00:33 +0000",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
+  {
+   "id": "openai-status:c694cf733f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Costs API data is delayed",
+   "excerpt": "Status: Monitoring We've pushed a fix and are monitoring the recovery. Affected components Compliance API (Degraded performance)",
+   "url": "https://status.openai.com//incidents/01M7N9VNR6X5SEC90M1YCDB36D",
+   "date": "Tue, 17 Nov 2026 19:53:49 GMT",
+   "firstSeen": "2026-11-18",
+   "lastSeen": "2026-11-18"
+  },
   {
    "id": "freebie-repos:68335e385e",
    "source": "freebie-repos",
@@ -83,7 +237,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -307,7 +461,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -321,7 +475,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -377,7 +531,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -391,7 +545,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -405,7 +559,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -433,7 +587,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -503,7 +657,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:34fbe14433",
@@ -517,7 +671,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "ithome:8dc99af724",
@@ -615,7 +769,7 @@
    "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
    "date": "Tue, 10 Nov 2026 21:47:48 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "gh-changelog:78f6f56362",
@@ -671,7 +825,7 @@
    "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
    "date": "Tue, 10 Nov 2026 17:55:03 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "openrouter:00eb82f842",
@@ -727,7 +881,7 @@
    "url": "https://www.githubstatus.com/incidents/6jm5k16vyhfg",
    "date": "Tue, 10 Nov 2026 00:05:52 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:6d987e7733",
@@ -741,7 +895,7 @@
    "url": "https://www.githubstatus.com/incidents/tp8cghg7tlc4",
    "date": "Mon, 09 Nov 2026 18:59:32 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:4ced8ef333",
@@ -755,7 +909,7 @@
    "url": "https://www.githubstatus.com/incidents/xxb3l2bm76dr",
    "date": "Mon, 09 Nov 2026 11:50:35 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:1b741bff33",
@@ -825,7 +979,7 @@
    "url": "https://status.claude.com/incidents/kw2lxj1th04c",
    "date": "Sun, 08 Nov 2026 08:54:43 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:a933ca3733",
@@ -1021,7 +1175,7 @@
    "url": "https://www.githubstatus.com/incidents/pfbmpxxfq1cy",
    "date": "Fri, 06 Nov 2026 00:20:49 +0000",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:72e9218c33",
@@ -1035,7 +1189,7 @@
    "url": "https://www.githubstatus.com/incidents/t89g2q1800fr",
    "date": "Thu, 05 Nov 2026 17:42:35 +0000",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "ithome:c71c46ec24",
@@ -1063,7 +1217,7 @@
    "url": "https://openai.com/index/merge-builds-with-openai",
    "date": "Thu, 05 Nov 2026 08:00:00 GMT",
    "firstSeen": "2026-11-06",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "sspai:24f46eeb34",
@@ -1147,7 +1301,7 @@
    "url": "https://www.githubstatus.com/incidents/h02n9572mx9y",
    "date": "Wed, 04 Nov 2026 18:16:08 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:ab562db833",
@@ -1161,7 +1315,7 @@
    "url": "https://www.githubstatus.com/incidents/xr3myzj7ms51",
    "date": "Wed, 04 Nov 2026 17:01:11 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:75768ed433",
@@ -1175,7 +1329,7 @@
    "url": "https://www.githubstatus.com/incidents/smtdswd1h2w4",
    "date": "Wed, 04 Nov 2026 11:50:06 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "github-status:233c6c1f33",
@@ -1189,7 +1343,7 @@
    "url": "https://www.githubstatus.com/incidents/tc28c0wzrnpz",
    "date": "Wed, 04 Nov 2026 10:01:44 +0000",
    "firstSeen": "2026-11-05",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "openrouter:631f873844",
@@ -2519,7 +2673,7 @@
    "url": "https://news.ycombinator.com/item?id=50167220",
    "date": "2026-10-20T14:44:40Z",
    "firstSeen": "2026-10-21",
-   "lastSeen": "2026-11-17"
+   "lastSeen": "2026-11-18"
   },
   {
    "id": "ithome:466ab50e24",
