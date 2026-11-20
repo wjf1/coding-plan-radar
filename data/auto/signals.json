@@ -1,6 +1,118 @@
 {
- "generatedAt": "2026-11-19",
+ "generatedAt": "2026-11-20",
  "items": [
+  {
+   "id": "freebie-repos:1ed2105c5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Remove manifest.build sentence from README (#252)",
+   "excerpt": "Bruno Pérez 提交于 2026-11-19",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/9432d51389b6f16b484e0167719d6b30e009e949",
+   "date": "2026-11-19T10:12:30Z",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
+  {
+   "id": "github-status:1b5cc62d33",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with some GitHub services",
+   "excerpt": "<p> <small>Nov <var data-var='date'>19</var>, <var data-var='time'>18:17</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/m310qbkfm3ww",
+   "date": "Thu, 19 Nov 2026 18:17:42 +0000",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
+  {
+   "id": "github-status:f20e4ff133",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Degraded availability for GPT-6 Luna in Copilot",
+   "excerpt": "<p> <small>Nov <var data-var='date'>19</var>, <var data-var='time'>16:37</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
+   "date": "Thu, 19 Nov 2026 16:37:00 +0000",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
+  {
+   "id": "ithome:16130e6424",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "微软 Edge 158 浏览器增强防诈骗，可疑通知自动取消订阅",
+   "excerpt": "<p data-vmark=\"c53c\">IT之家 11 月 20 日消息，科技媒体 NeoWin 昨日（11 月 19 日）发布博文，<strong>报道称微软发布 Microsoft Edge 158 稳定版，重点强化浏览器对诈骗网站通知的防护能力。</strong></p><p data-vmark=\"734d\">根据微软更新日志，Edge 158 浏览器会持续监测网站推送的通知，一旦通知中的链接被 Microsoft Defender SmartScreen 识别为诈骗、钓鱼或恶意软件网站，浏览器便会自动停止该网站继续向用户发送通知，并向用户说明处理结果。</p><p style=\"t…",
+   "url": "https://www.ithome.com/1/029/888.htm",
+   "date": "Fri, 20 Nov 2026 06:22:17 GMT",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
+  {
+   "id": "modelsdev:4d1d3dfe30",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "grok-build-0.1 已从 models.dev 下架（xai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-20",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
+  {
+   "id": "openrouter:250e07233c",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-gone",
+   "title": "OpenRouter 免费模型下架：cohere/north-mini-code:free",
+   "excerpt": "该免费模型已从 OpenRouter 模型中消失，站内白嫖板块如有收录需同步下架。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-11-20",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
+  {
+   "id": "openrouter:78e9a1dd46",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-gone",
+   "title": "OpenRouter 免费模型下架：thinkingmachines/inkling-2-small:free",
+   "excerpt": "该免费模型已从 OpenRouter 模型中消失，站内白嫖板块如有收录需同步下架。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-11-20",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
+  {
+   "id": "sspai:379ca07047",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "有必要但欠平衡：浅评 macOS 27.3 新版权限控制机制",
+   "excerpt": "<p>[......]</p><a href=\"https://sspai.com/prime/story/system-app-protection-override-macos-27-3\" target=\"_blank\">查看全文</a><p>本文为会员文章，出自<a href=\"https://sspai.com/prime/precog/single\" target=\"_blank\">《单篇文章》</a >，订阅后可阅读全文。</p >",
+   "url": "https://sspai.com/prime/story/system-app-protection-override-macos-27-3",
+   "date": "Thu, 19 Nov 2026 15:34:11 +0800",
+   "firstSeen": "2026-11-20",
+   "lastSeen": "2026-11-20"
+  },
   {
    "id": "gh-changelog:6fe702665a",
    "source": "gh-changelog",
@@ -13,7 +125,7 @@
    "url": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
    "date": "Wed, 18 Nov 2026 22:04:50 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "gh-changelog:76c38abb48",
@@ -27,7 +139,7 @@
    "url": "https://github.blog/changelog/2026-11-18-gemini-4-neon-in-github-copilot",
    "date": "Wed, 18 Nov 2026 21:49:21 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "gh-changelog:e14910754f",
@@ -41,7 +153,7 @@
    "url": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
    "date": "Wed, 18 Nov 2026 16:00:13 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:1786f6b333",
@@ -55,7 +167,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -83,7 +195,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/cdc76175b0a40a9274356ce690b44bd058b8afde",
    "date": "2026-11-17T15:47:48Z",
    "firstSeen": "2026-11-18",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "gh-changelog:e024c1555c",
@@ -97,7 +209,7 @@
    "url": "https://github.blog/changelog/2026-11-17-openais-gpt-6-2-astra-and-gpt-6-2-sol-now-available",
    "date": "Tue, 17 Nov 2026 20:20:29 +0000",
    "firstSeen": "2026-11-18",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "gh-changelog:d33c270e6e",
@@ -307,7 +419,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -531,7 +643,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -545,7 +657,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -601,7 +713,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -615,7 +727,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -629,7 +741,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -657,7 +769,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -727,7 +839,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:34fbe14433",
@@ -741,7 +853,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "ithome:8dc99af724",
@@ -839,7 +951,7 @@
    "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
    "date": "Tue, 10 Nov 2026 21:47:48 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "gh-changelog:78f6f56362",
@@ -895,7 +1007,7 @@
    "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
    "date": "Tue, 10 Nov 2026 17:55:03 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "openrouter:00eb82f842",
@@ -951,7 +1063,7 @@
    "url": "https://www.githubstatus.com/incidents/6jm5k16vyhfg",
    "date": "Tue, 10 Nov 2026 00:05:52 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:6d987e7733",
@@ -965,7 +1077,7 @@
    "url": "https://www.githubstatus.com/incidents/tp8cghg7tlc4",
    "date": "Mon, 09 Nov 2026 18:59:32 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:4ced8ef333",
@@ -979,7 +1091,7 @@
    "url": "https://www.githubstatus.com/incidents/xxb3l2bm76dr",
    "date": "Mon, 09 Nov 2026 11:50:35 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:1b741bff33",
@@ -1049,7 +1161,7 @@
    "url": "https://status.claude.com/incidents/kw2lxj1th04c",
    "date": "Sun, 08 Nov 2026 08:54:43 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-19"
+   "lastSeen": "2026-11-20"
   },
   {
    "id": "github-status:a933ca3733",
