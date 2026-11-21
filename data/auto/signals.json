@@ -1,6 +1,34 @@
 {
- "generatedAt": "2026-11-20",
+ "generatedAt": "2026-11-21",
  "items": [
+  {
+   "id": "ithome:34a03f4724",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "Steam 黑五多款游戏新史低：《战地 6》65.34 元、《对马岛之魂：导剪版》199 元、《最终幻想 7：重制版》35.64 元",
+   "excerpt": "<p data-vmark=\"f066\">IT之家 11 月 21 日消息，Steam 黑五促销期间，多款游戏价格创下新低。例如，Electronic Arts 与 Battlefield Studios 已为《战地风云 6》开启限时优惠，标准版由 198 元降至 65.34 元，优惠 67%，创该作发售以来最低价。</p><p data-vmark=\"a9a7\">《战地风云 6：年度游戏版》优惠 45%，购买者除剧情战役和传统多人模式外，还可游玩第五赛季内容，其中包括以“赌场劫案”为主题的阶段。所有玩家均可免费体验《战地风云 REDSEC》模式。《战地风云 REDSEC》整合了大逃杀、“挑战…",
+   "url": "https://www.ithome.com/1/030/344.htm",
+   "date": "Sat, 21 Nov 2026 04:35:25 GMT",
+   "firstSeen": "2026-11-21",
+   "lastSeen": "2026-11-21"
+  },
+  {
+   "id": "openrouter:b016064b45",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-gone",
+   "title": "OpenRouter 免费模型下架：dots-studio/dots-3-note-preview:free",
+   "excerpt": "该免费模型已从 OpenRouter 模型中消失，站内白嫖板块如有收录需同步下架。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-11-21",
+   "firstSeen": "2026-11-21",
+   "lastSeen": "2026-11-21"
+  },
   {
    "id": "freebie-repos:1ed2105c5e",
    "source": "freebie-repos",
@@ -13,7 +41,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/9432d51389b6f16b484e0167719d6b30e009e949",
    "date": "2026-11-19T10:12:30Z",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:1b5cc62d33",
@@ -41,7 +69,7 @@
    "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
    "date": "Thu, 19 Nov 2026 16:37:00 +0000",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "ithome:16130e6424",
@@ -111,7 +139,7 @@
    "url": "https://sspai.com/prime/story/system-app-protection-override-macos-27-3",
    "date": "Thu, 19 Nov 2026 15:34:11 +0800",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "gh-changelog:6fe702665a",
@@ -125,7 +153,7 @@
    "url": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
    "date": "Wed, 18 Nov 2026 22:04:50 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "gh-changelog:76c38abb48",
@@ -167,7 +195,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -195,7 +223,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/cdc76175b0a40a9274356ce690b44bd058b8afde",
    "date": "2026-11-17T15:47:48Z",
    "firstSeen": "2026-11-18",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "gh-changelog:e024c1555c",
@@ -419,7 +447,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -643,7 +671,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -657,7 +685,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -713,7 +741,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -727,7 +755,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -741,7 +769,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -769,7 +797,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -839,7 +867,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:34fbe14433",
@@ -853,7 +881,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "ithome:8dc99af724",
@@ -951,7 +979,7 @@
    "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
    "date": "Tue, 10 Nov 2026 21:47:48 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "gh-changelog:78f6f56362",
@@ -1007,7 +1035,7 @@
    "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
    "date": "Tue, 10 Nov 2026 17:55:03 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "openrouter:00eb82f842",
@@ -1063,7 +1091,7 @@
    "url": "https://www.githubstatus.com/incidents/6jm5k16vyhfg",
    "date": "Tue, 10 Nov 2026 00:05:52 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:6d987e7733",
@@ -1077,7 +1105,7 @@
    "url": "https://www.githubstatus.com/incidents/tp8cghg7tlc4",
    "date": "Mon, 09 Nov 2026 18:59:32 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:4ced8ef333",
@@ -1091,7 +1119,7 @@
    "url": "https://www.githubstatus.com/incidents/xxb3l2bm76dr",
    "date": "Mon, 09 Nov 2026 11:50:35 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:1b741bff33",
@@ -1161,7 +1189,7 @@
    "url": "https://status.claude.com/incidents/kw2lxj1th04c",
    "date": "Sun, 08 Nov 2026 08:54:43 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   {
    "id": "github-status:a933ca3733",
