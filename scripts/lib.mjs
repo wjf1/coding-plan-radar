@@ -126,6 +126,10 @@ export function recordHealth(health, src, { ok, status = null, error = null, det
 
 export function saveHealth(health, sources = null) {
   health.updatedAt = today();
+  // 注意隐式契约：verify-listings.mjs 调用本函数时不传 sources——freebie-* 健康条目
+  // 不在全局 sources 清单里，传了会被 pruneHealth 清掉。它们的存活依赖调用顺序
+  // （verify-listings 是每日任务⑤，写盘在 check-pages 之后）；调整 workflow 步骤
+  // 顺序时必须核对这条链路。
   // 停用的源应从健康表中移除：否则站点会给一个"已主动停用"的源永久挂红点，
   // 看起来像故障，实际上是我们自己关掉的。
   if (sources) pruneHealth(health, sources);
@@ -189,6 +193,29 @@ export const decodeEntities = (s) =>
       ({ amp: "&", quot: '"', apos: "'", nbsp: " ", hellip: "…", rsquo: "’", lsquo: "‘", rdquo: "”", ldquo: "“", mdash: "—", ndash: "–", middot: "·" })[n.toLowerCase()] ?? " "
     );
 
+/** 反爬壳检测基表（全小写，抓取路径共用）。verify-listings 刻意不追加 "cloudflare"/
+ * "Ray ID"——developers.cloudflare.com 等正常官方文档页正文本身就含这些词，离线核对
+ * 会被误判；check-pages 在抓取现场需要更严的特征面，经 extraMarkers 显式追加。
+ * 此前两脚本各维护一份并已分叉（新增 marker 极易只改一处），现收敛到单一事实来源。 */
+export const ANTI_BOT_MARKERS_BASE = [
+  "cf-browser-verification",
+  "just a moment",
+  "checking your browser",
+  "ddos protection",
+  "challenge-platform",
+  "turnstile",
+  "please wait while we check your browser",
+];
+
+/** 长度检查 + 反爬特征检测；任一命中即抛（错误消息含命中的 marker，保持原口径）。 */
+export const assertCrawlable = (text, { extraMarkers = [] } = {}) => {
+  if (text.length < 200) throw new Error(`正文过短（${text.length} 字符），疑似 JS 渲染空壳或被拦截`);
+  const lower = text.toLowerCase();
+  for (const marker of [...ANTI_BOT_MARKERS_BASE, ...extraMarkers]) {
+    if (lower.includes(marker.toLowerCase())) throw new Error(`检测到反爬/验证页面特征（${marker}），内容不可信`);
+  }
+};
+
 export const excerpt = (s, n = 180) => {
   let t = stripTags(s);
   t = decodeEntities(stripFeedTail(t)).replace(/\s+/g, " ").trim();
@@ -196,7 +223,12 @@ export const excerpt = (s, n = 180) => {
 };
 
 export const hash16 = (s) => {
-  // 轻量非加密哈希（Node 内建 crypto 亦可，此处避免引入依赖复杂度）
+  // 轻量非加密哈希（Node 内建 crypto 亦可，此处避免引入依赖复杂度）。
+  // 已知局限：32 位 FNV-1a 在 800KB 级页面上有理论碰撞漏报；换 sha256 的阻碍不在
+  // 实现而在迁移——hash16 的返回值同时作为 pagehash 基线与 feed/diff-prices 条目
+  // id（持久化），且 store.items 无 TTL 清理，硬迁会让条目库永久膨胀。迁移前置条件：
+  // 先给 feed store 加 lastSeen TTL 清理，再一次性 bump（check-pages 的二次确认
+  // 机制可兜住基线误报）。
   let h1 = 0x811c9dc5;
   for (let i = 0; i < s.length; i++) {
     h1 ^= s.charCodeAt(i);
@@ -204,6 +236,96 @@ export const hash16 = (s) => {
   }
   return h1.toString(16).padStart(8, "0") + s.length.toString(16);
 };
+
+/** alerts.json 滚动清理：已解决且超过保留期的条目删除（否则只增不减，年增数百条）。
+ * @param alerts - data/auto/alerts.json 的数组
+ * @param opts.keepResolvedDays - resolved 条目保留天数（默认 90）
+ * @param opts.todayStr - 当前日期（ISO），缺省用 today()
+ */
+export function pruneAlerts(alerts, { keepResolvedDays = 90, todayStr } = {}) {
+  if (!Array.isArray(alerts)) return alerts;
+  const cutoff = new Date(`${todayStr || today()}T00:00:00Z`).getTime() - keepResolvedDays * 864e5;
+  return alerts.filter((a) => {
+    if (!a.resolved) return true;
+    const resolvedMs = a.resolvedAt ? new Date(`${a.resolvedAt}T00:00:00Z`).getTime() : 0;
+    return resolvedMs === 0 ? true : resolvedMs >= cutoff; // 无 resolvedAt 的老条目保守保留
+  });
+}
+
+/**
+ * page 源基线状态机核心（纯判定，无副作用）。
+ *
+ * 状态流转：无基线 → baseline；与基线一致 → stable（清 pending、复置 flaps）；
+ * 已有未解决 alert 且内容回基线 → reverted（auto-revert）；pending 稳定两轮 → changed；
+ * 首见新值 → pending（不报警）；pending 多次跳变 / 反复 revert → unstable 熔断
+ * （**熔断必须带回旧基线**：rec.hash 不被 pending 值污染，这是 v7.3 踩过坑的不变量）。
+ *
+ * 返回 { rec, outcome, alertOp, revertInfo }：
+ *   outcome ∈ baseline | stable | reverted | changed | pending | unstable
+ *   alertOp: {type:"resolve"} | {type:"touch"} | {type:"open"} | null（调用方对 alerts 副作用）
+ *   revertInfo: reverted 时 { detectedAt }（调用方写 transients.json）
+ * 副作用（日志 / health / transients 写盘）留在 check-pages.mjs 按 outcome 分发。
+ */
+export function evaluatePageChange(prev, h, { id, day, alerts = [], revertWindowDays = 14, unstableFlaps = 3, unstableReverts = 2, seenKeep = 5 } = {}) {
+  const rec = prev ? { ...prev } : { hash: h };
+  const seen = Array.isArray(rec.seen) ? rec.seen.slice() : [];
+  if (!seen.includes(h)) seen.push(h);
+  rec.seen = seen.slice(-seenKeep);
+  const unresolved = () => alerts.find((a) => a.id === id && !a.resolved);
+
+  // 已判定为不可稳定监控的页面：只记录，不预警（保留旧基线不动）
+  if (prev && rec.unstable) {
+    rec.pending = h;
+    rec.pendingSince = rec.pendingSince || day;
+    return { rec, outcome: "unstable", alertOp: null, revertInfo: null };
+  }
+
+  if (!prev) {
+    return { rec, outcome: "baseline", alertOp: null, revertInfo: null };
+  }
+
+  if (prev.hash === h) {
+    // 与基线一致：清掉待确认状态
+    delete rec.pending;
+    delete rec.pendingSince;
+    rec.flaps = 0;
+    const ex = unresolved();
+    if (!ex) return { rec, outcome: "stable", alertOp: null, revertInfo: null };
+    ex.resolved = true;
+    ex.resolvedBy = "auto-revert";
+    ex.resolvedAt = day;
+    // 确认后又在短期内回滚 → 计一次"跳变"，累计到阈值即停止自动预警
+    let newlyUnstable = false;
+    if (ex.detected && (Date.now() - Date.parse(ex.detected)) / 86400000 <= revertWindowDays) {
+      rec.revertCount = (rec.revertCount || 0) + 1;
+      if (rec.revertCount >= unstableReverts) {
+        rec.unstable = true;
+        newlyUnstable = true;
+      }
+    }
+    return { rec, outcome: "reverted", alertOp: { type: "resolve" }, revertInfo: { detectedAt: ex.detected }, unstableNow: newlyUnstable };
+  }
+
+  if (prev.pending === h) {
+    // 二次确认成立：新内容连续两次一致 → 判定为真实变动
+    rec.hash = h;
+    delete rec.pending;
+    delete rec.pendingSince;
+    rec.flaps = 0;
+    rec.changedAt = day;
+    return { rec, outcome: "changed", alertOp: unresolved() ? { type: "touch" } : { type: "open" }, revertInfo: null };
+  }
+
+  // 首次看到的新值：只挂起不报警
+  rec.flaps = prev.pending && prev.pending !== h ? (prev.flaps || 0) + 1 : 0;
+  rec.pending = h;
+  rec.pendingSince = prev.pending && prev.pendingSince ? prev.pendingSince : day;
+  if (rec.flaps >= unstableFlaps) {
+    rec.unstable = true;
+    return { rec, outcome: "unstable", alertOp: null, revertInfo: null };
+  }
+  return { rec, outcome: "pending", alertOp: null, revertInfo: null };
+}
 
 /* ---------------- 极简 RSS / Atom 解析（零依赖） ---------------- */
 const tag = (xml, name) => {

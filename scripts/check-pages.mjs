@@ -17,7 +17,7 @@
 //   5. 页面回到基线哈希时自动解决（resolved）对应 alert，减少人工负担
 //   6. 【list 源专属保护】itemSelector 解析出 0 条 = 选择器失效或页面改版：绝不建基线、
 //      不写字段级 alert，只记源健康；变动条目过半视为结构变更，只提醒、不更新基线（防坏结构固化）
-import { readJSON, writeJSON, fetchText, stripTags, hash16, today, loadHealth, recordHealth, saveHealth, FAIL_THRESHOLD, isDead, parseListItems, diffListChanges, isStructuralBreakdown } from "./lib.mjs";
+import { readJSON, writeJSON, fetchText, stripTags, hash16, today, loadHealth, recordHealth, saveHealth, FAIL_THRESHOLD, isDead, parseListItems, diffListChanges, isStructuralBreakdown, assertCrawlable, evaluatePageChange, pruneAlerts } from "./lib.mjs";
 
 const UNSTABLE_FLAPS = 2;   // 出现多少个"不同的新值"后判定页面不稳定
 const UNSTABLE_REVERTS = 2; // 确认后又回滚几次后判定页面不可稳定监控
@@ -29,8 +29,13 @@ const pages = (sources.pages || []).filter((p) => p.type === "page" && p.enabled
 const disabled = (sources.pages || []).filter((p) => p.enabled === false);
 const lists = (sources.lists || []).filter((l) => l.type === "list" && l.enabled !== false);
 
-const raw = readJSON("data/auto/pagehash.json", {});
-const listRaw = readJSON("data/auto/listbase.json", {});
+// auto 数据 schema 版本化：写入时带 schemaVersion，读取时旧格式（无版本字段 = v1）
+// 原样兼容——未来结构演进时按字段分发迁移，避免"换格式 → 全量误报"的静默突变。
+const PAGEHASH_SCHEMA = 2;
+const rawAll = readJSON("data/auto/pagehash.json", {});
+const raw = rawAll.schemaVersion ? rawAll.entries : rawAll;
+const listRawAll = readJSON("data/auto/listbase.json", {});
+const listRaw = listRawAll.schemaVersion ? listRawAll.entries : listRawAll;
 const alerts = readJSON("data/auto/alerts.json", []);
 const health = loadHealth();
 const d = today();
@@ -44,25 +49,9 @@ const unstable = [];
 const changedLists = [];
 const pendingLists = [];
 
-// 反爬壳检测：长度检查 + 已知反爬特征（page 与 list 两类源共用）
-const ANTI_BOT_MARKERS = [
-  "cf-browser-verification",
-  "Just a moment",
-  "Checking your browser",
-  "DDoS protection",
-  "cloudflare",
-  "challenge-platform",
-  "turnstile",
-  "Please wait while we check your browser",
-  "Ray ID",
-];
-const assertCrawlable = (text) => {
-  if (text.length < 200) throw new Error(`正文过短（${text.length} 字符），疑似 JS 渲染空壳或被拦截`);
-  const lower = text.toLowerCase();
-  for (const marker of ANTI_BOT_MARKERS) {
-    if (lower.includes(marker.toLowerCase())) throw new Error(`检测到反爬/验证页面特征（${marker}），内容不可信`);
-  }
-};
+// 反爬壳检测基表收敛到 lib.mjs（verify-listings 共用）；抓取现场比离线核对更严，
+// 经 extraMarkers 追加 "cloudflare"/"Ray ID" 两个宽泛特征（差异显式化，防只改一处分叉）
+const CHECK_EXTRA_MARKERS = ["cloudflare", "Ray ID"];
 
 for (const p of pages) {
   let text, status = null;
@@ -70,7 +59,7 @@ for (const p of pages) {
     const r = await fetchText(p.url);
     status = r.status;
     text = stripTags(r.text);
-    assertCrawlable(text);
+    assertCrawlable(text, { extraMarkers: CHECK_EXTRA_MARKERS });
   } catch (e) {
     failed.push({ id: p.id, label: p.label, error: e.message });
     recordHealth(health, p, { ok: false, status, error: e.message });
@@ -82,44 +71,30 @@ for (const p of pages) {
 
   const h = hash16(text);
   const prev = typeof raw[p.id] === "string" ? { hash: raw[p.id] } : raw[p.id] || null;
-  const rec = prev ? { ...prev } : { hash: h };
   let note = `${text.length} chars`;
 
-  const seen = Array.isArray(rec.seen) ? rec.seen.slice() : [];
-  if (!seen.includes(h)) seen.push(h);
-  rec.seen = seen.slice(-SEEN_KEEP);
+  // 状态机核心判定已提取到 lib.mjs（纯函数，tests/state-machine.test.mjs 钉住不变量）：
+  // 本处只做副作用分发（日志 / transients 写盘 / alerts / health），行为与原内联版逐分支等价
+  const { rec, outcome, alertOp, revertInfo, unstableNow } = evaluatePageChange(prev, h, {
+    id: p.id, day: d, alerts,
+    unstableFlaps: UNSTABLE_FLAPS, unstableReverts: UNSTABLE_REVERTS, seenKeep: SEEN_KEEP,
+  });
+  hashes[p.id] = rec;
 
-  // 已判定为不可稳定监控的页面：只记录，不预警
-  if (prev && rec.unstable) {
-    rec.pending = h;
-    rec.pendingSince = rec.pendingSince || d;
-    note += " · 内容在多个渲染变体间跳变，已暂停自动预警（需人工核对）";
-    unstable.push(p.id);
-    hashes[p.id] = rec;
-    recordHealth(health, p, { ok: true, status, detail: note });
-    health.sources[p.id].unstable = true;
-    continue;
-  }
-
-  if (!prev) {
-    console.log(`· baseline ${p.id}`);
-  } else if (prev.hash === h) {
-    // 与基线一致：清掉待确认状态，并自动关闭此前的人工核实提醒
-    delete rec.pending;
-    delete rec.pendingSince;
-    rec.flaps = 0;
-    const ex = alerts.find((a) => a.id === p.id && !a.resolved);
-    if (ex) {
-      ex.resolved = true;
-      ex.resolvedBy = "auto-revert";
-      ex.resolvedAt = d;
+  switch (outcome) {
+    case "baseline":
+      console.log(`· baseline ${p.id}`);
+      break;
+    case "stable":
+      break;
+    case "reverted": {
       // 记录原始变更到 transients.json，供人工回溯
       const transients = readJSON("data/auto/transients.json", { items: [] });
       transients.items.push({
         id: p.id,
         label: p.label,
         url: p.url,
-        detected: ex.detected,
+        detected: revertInfo.detectedAt,
         resolvedAt: d,
         resolvedBy: "auto-revert",
         note: "内容回到基线，原始变动可能为临时促销/渲染变体"
@@ -127,46 +102,36 @@ for (const p of pages) {
       // 保留最近 100 条
       transients.items = transients.items.slice(-100);
       writeJSON("data/auto/transients.json", transients);
-      // 确认后又在短期内回滚 → 计一次"跳变"，累计到阈值即停止自动预警
-      if (ex.detected && (Date.now() - Date.parse(ex.detected)) / 86400000 <= 14) {
-        rec.revertCount = (rec.revertCount || 0) + 1;
-        if (rec.revertCount >= UNSTABLE_REVERTS) {
-          rec.unstable = true;
-          note += " · 多次确认后又回滚，判定为不可稳定监控，已停止自动预警";
-          unstable.push(p.id);
-          console.log(`⚠ UNSTABLE ${p.id} — 确认后多次回滚，判定该页不可稳定监控`);
-        }
-      }
       console.log(`✓ REVERTED ${p.id} — 内容回到基线，自动关闭待核实提醒`);
+      if (unstableNow) {
+        note += " · 多次确认后又回滚，判定为不可稳定监控，已停止自动预警";
+        unstable.push(p.id);
+        console.log(`⚠ UNSTABLE ${p.id} — 确认后多次回滚，判定该页不可稳定监控`);
+      }
+      break;
     }
-  } else if (prev.pending === h) {
-    // 二次确认成立：新内容连续两次一致 → 判定为真实变动
-    rec.hash = h;
-    delete rec.pending;
-    delete rec.pendingSince;
-    rec.flaps = 0;
-    rec.changedAt = d;
-    changed.push(p.id);
-    const ex = alerts.find((a) => a.id === p.id && !a.resolved);
-    if (ex) ex.detected = d;
-    else alerts.push({ id: p.id, label: p.label, url: p.url, tier: p.tier, kind: "page-change", detected: d, resolved: false });
-    console.log(`★ CHANGED ${p.id} (${p.label}) — 新内容经两次巡检确认`);
-  } else {
-    // 首次看到的新值：只挂起不报警
-    rec.flaps = prev.pending && prev.pending !== h ? (prev.flaps || 0) + 1 : 0;
-    rec.pending = h;
-    rec.pendingSince = prev.pending && prev.pendingSince ? prev.pendingSince : d;
-    if (rec.flaps >= UNSTABLE_FLAPS) {
-      rec.unstable = true;
-      note += " · 内容不稳定（疑似轮播/动态渲染），已暂停自动预警";
-      unstable.push(p.id);
-      console.log(`⚠ UNSTABLE ${p.id} (${p.label}) — 多次出现不同内容，判定为不可稳定监控`);
-    } else {
+    case "changed": {
+      changed.push(p.id);
+      if (alertOp.type === "touch") alerts.find((a) => a.id === p.id && !a.resolved).detected = d;
+      else alerts.push({ id: p.id, label: p.label, url: p.url, tier: p.tier, kind: "page-change", detected: d, resolved: false });
+      console.log(`★ CHANGED ${p.id} (${p.label}) — 新内容经两次巡检确认`);
+      break;
+    }
+    case "pending":
       pending.push(p.id);
       console.log(`… PENDING ${p.id} (${p.label}) — 发现新内容，下次巡检仍一致才报警`);
-    }
+      break;
+    case "unstable":
+      unstable.push(p.id);
+      if (prev && prev.unstable) {
+        // 已熔断页面的重复访问：仅记录，不再重复报警
+        note += " · 内容在多个渲染变体间跳变，已暂停自动预警（需人工核对）";
+      } else {
+        note += " · 内容不稳定（疑似轮播/动态渲染），已暂停自动预警";
+        console.log(`⚠ UNSTABLE ${p.id} (${p.label}) — 多次出现不同内容，判定为不可稳定监控`);
+      }
+      break;
   }
-  hashes[p.id] = rec;
   recordHealth(health, p, { ok: true, status, detail: note });
   if (rec.unstable) health.sources[p.id].unstable = true;
 }
@@ -177,7 +142,7 @@ for (const l of lists) {
   try {
     const r = await fetchText(l.url);
     status = r.status;
-    assertCrawlable(stripTags(r.text));
+    assertCrawlable(stripTags(r.text), { extraMarkers: CHECK_EXTRA_MARKERS });
     text = r.text;
   } catch (e) {
     failed.push({ id: l.id, label: l.label, error: e.message });
@@ -314,9 +279,9 @@ for (const p of disabled) {
   if (hashes[p.id] || raw[p.id]) console.log(`- 已停用监控：${p.id}`);
 }
 
-writeJSON("data/auto/pagehash.json", hashes);
-writeJSON("data/auto/listbase.json", listBases);
-writeJSON("data/auto/alerts.json", alerts);
+writeJSON("data/auto/pagehash.json", { schemaVersion: PAGEHASH_SCHEMA, updatedAt: d, entries: hashes });
+writeJSON("data/auto/listbase.json", { schemaVersion: PAGEHASH_SCHEMA, updatedAt: d, entries: listBases });
+writeJSON("data/auto/alerts.json", pruneAlerts(alerts));
 saveHealth(health, sources);
 
 const dead = Object.values(health.sources).filter(isDead);

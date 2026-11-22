@@ -4,19 +4,9 @@
 //   ① freebies：逐条抓取来源页 → 正常 / 特征变化 / 连续失败三种状态写回条目；
 //      JS 渲染空壳等不可自动核对的条目标 autoCheck:false，如实显示「需人工核对」，不做假巡检。
 //   ② promos：promo 类条目 expires 已过 → 标 expired:true（前端显示「已结束」，不删历史记录）。
-// 反爬特征检测沿用 check-pages 的思路，但去掉 "cloudflare"/"Ray ID" 这类宽泛特征——
-// developers.cloudflare.com 等正常官方文档页本身就含这些词，避免误判。
-import { readJSON, writeJSON, fetchText, stripTags, today, loadHealth, recordHealth, saveHealth, FAIL_THRESHOLD } from "./lib.mjs";
-
-const ANTI_BOT_MARKERS = [
-  "cf-browser-verification",
-  "just a moment",
-  "checking your browser",
-  "ddos protection",
-  "challenge-platform",
-  "turnstile",
-  "please wait while we check your browser",
-];
+// 反爬特征检测基表收敛到 lib.mjs（check-pages 共用）；本脚本不追加 "cloudflare"/"Ray ID"
+// 宽泛特征——developers.cloudflare.com 等正常官方文档页本身就含这些词，避免误判。
+import { readJSON, writeJSON, fetchText, stripTags, today, loadHealth, recordHealth, saveHealth, FAIL_THRESHOLD, assertCrawlable } from "./lib.mjs";
 
 const d = today();
 const health = loadHealth();
@@ -39,11 +29,8 @@ for (const it of fb.items) {
   try {
     const r = await fetchText(it.source);
     const text = stripTags(r.text);
-    if (text.length < 200) throw new Error(`正文过短（${text.length} 字符），疑似 JS 渲染空壳或被拦截`);
+    assertCrawlable(text);
     const lower = text.toLowerCase();
-    for (const marker of ANTI_BOT_MARKERS) {
-      if (lower.includes(marker)) throw new Error(`检测到反爬/验证页面特征（${marker}），内容不可信`);
-    }
     // 特征关键词校验：条目可声明 verifyKeywords，页面正文至少命中一个才算「未变」
     if (Array.isArray(it.verifyKeywords) && it.verifyKeywords.length) {
       const hit = it.verifyKeywords.some((k) => lower.includes(String(k).toLowerCase()));

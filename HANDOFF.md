@@ -62,7 +62,16 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
 ## 最近一轮变更与交付成果（抓取层加固 + 前端 P1 修复，2026-11-22）
 
-### 本轮 —— 抓取超时 / 重试 / 硬超时补齐（后端设计专项分析发现的 P1，未打版本号）
+### 本轮 —— P1/P2 逐项加固（同日第二轮，未打版本号）
+
+- **状态机提取 + 测试**：page 基线状态机 → `lib.mjs` 纯函数 `evaluatePageChange`（判定/副作用分离，行为逐分支等价）；`tests/state-machine.test.mjs` **7 用例**钉住不变量（含「熔断必须带回旧基线」）。阈值显式传参（UNSTABLE_FLAPS=2 与默认不同）。
+- **反爬特征表收敛**：`ANTI_BOT_MARKERS_BASE` + `assertCrawlable(extraMarkers)`，check-pages/verify-listings 共用单一事实来源。
+- **schema 版本化**：pagehash/listbase 写入带 `schemaVersion: 2`（旧格式兼容读取）；**alerts 滚动清理**（pruneAlerts，90 天）；**issue 生成提取**为 `scripts/pending-digest.mjs`（外部文本 mdSafe 转义，消除注入面）。
+- **显式化为决策待办**：hash16→sha256 迁移（前置：feed store 加 lastSeen TTL）；api 源配置化（需扩展 sources.json schema）。
+- **验证**：validate.mjs 13 文件语法 + 数据契约通过；状态机测试 7/7；pending-digest 本地实跑正常（顺带暴露 trae/xiaomi 两源当前真实失效）。
+- **教训**：check-pages 是顶层 await 脚本，`node -e "import(...)"` 会直接执行真实抓取（本轮曾误触发并已 `git checkout` 恢复数据文件）——调试此类脚本只用 `node --check`。
+
+### 上一轮 —— 抓取超时 / 重试 / 硬超时补齐（后端设计专项分析发现的 P1，未打版本号）
 
 - **update-snapshot.mjs**：models.dev 的裸 `fetch` 改走 `fetchText`（此前全链路唯一无超时抓取点，源挂起会阻塞整条巡检直至 job 被墙钟杀、失败汇总与告警全失效）。
 - **lib.mjs `fetchText`**：补指数退避重试（默认 2 次，0.5s/2s）——网络错误/超时/429/5xx/空响应体可重试，其余 4xx 立即抛；消除「单次抖动污染 `consecutiveFailures`、连续 3 天误标已失效」。

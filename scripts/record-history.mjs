@@ -52,7 +52,7 @@ for (const [name, rec] of Object.entries(snapshot)) {
     changes++;
   }
 }
-if (changes) writeJSON(ALERTS_PATH, alerts);
+if (changes) writeJSON(ALERTS_PATH, pruneAlerts(alerts));
 
 // 追加今日快照
 for (const [name, rec] of Object.entries(snapshot)) {
