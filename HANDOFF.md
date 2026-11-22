@@ -60,9 +60,20 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 可排序表头 = th 内 `<button class="th-sort">`（键盘可达，click 只绑按钮不绑 th）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
-## 最近一轮变更与交付成果（抓取层加固 + 前端 P1 修复，2026-11-22）
+## 最近一轮变更与交付成果（P0 数据新鲜度与巡检诚实化，2026-11-23）
 
-### 本轮 —— P1/P2 逐项加固（同日第二轮，未打版本号）
+### 本轮 —— v7.7：P0 数据新鲜度面板与巡检状态如实化（2026-11-23）
+
+**背景**：PR #16（2026-09 开的 P0 分支）与 main 的 v7.5 scripts 重构、v7.6 数据层 JSON 化存在架构级冲突无法 rebase；按原 plan/spec（`docs/superpowers/plans/2026-09-20-p0-data-freshness.md`，§2/§3/§8 P0 部分）将功能重新落地到当前架构，新分支 `feat/p0-freshness-v2` → [PR #74](https://github.com/wjf1/coding-plan-radar/pull/74) → squash 合入并发版 v7.7。
+
+- **溯源字段**：`data/manual/plans.json` 20 条补 `pricedAt`/`pricedBy`（12 条自旧分支 `js/data.js` 实值迁入；8 条 main 新增条目按 spec §2.1 从 srcNote 采集记录得出，pricedBy=human；**未触碰任何价格数字**）。
+- **`js/freshness.js`**：零 DOM 纯函数层（`globalThis.FRESH`，FRESH_DAYS=30/STALE_DAYS=60），浏览器与 node:test 双通道可用；`tests/helpers.mjs` 用 vm 求值浏览器脚本。
+- **前端**：头部双 pill（自动巡检 / 价格核价）+ 新鲜度卡（0/30/60+ 统计、19 段分布条、按核价日排序表格）+ 对比表核价徽标；init 不阻塞首屏（`loadAutoMeta().then(renderFreshness)`）。
+- **管道诚实化**：`scripts/mark-pipeline.mjs` 按崩溃步骤集合写 meta（源抓到≠脚本活着）；`pending-digest.mjs` 改造为 triage 常驻 issue（修复 `detected===today` 历史未决项次日消失 bug，改 `!resolved` + 挂起天数）；`daily-update.yml` 步骤 id 化、崩溃集合=各步 ok=false 并集（语义与 plan 等价），保留 main 已有 alert job。
+- **验证**：`node --test` 34 用例、selfcheck 24/24、validate 通过、全库 LF（顺带 17 个历史 CRLF 文件规范化）；chrome-devtools 真实点击走查全过（双 pill / 卡片 / 降级态端到端 / 控制台零报错）；合并后 `workflow_dispatch` 真机 run success、站点已上线。
+- **遗留**：① 核价 pill 上线即全红（0/19，核价记录 60+ 天未复核）——是数据真实状态，**需人工复核价格并把 `pricedAt` 更新为复核日**；② claude/cursor 两源 page-unreliable（已不监控）未加 hashMonitors 标注；③ 旧 PR #16 分支 `feat/p0-data-freshness` 保留未删。
+
+### 上一轮 —— P1/P2 逐项加固（v7.6 同日第二轮，未打版本号）
 
 - **状态机提取 + 测试**：page 基线状态机 → `lib.mjs` 纯函数 `evaluatePageChange`（判定/副作用分离，行为逐分支等价）；`tests/state-machine.test.mjs` **7 用例**钉住不变量（含「熔断必须带回旧基线」）。阈值显式传参（UNSTABLE_FLAPS=2 与默认不同）。
 - **反爬特征表收敛**：`ANTI_BOT_MARKERS_BASE` + `assertCrawlable(extraMarkers)`，check-pages/verify-listings 共用单一事实来源。
@@ -71,7 +82,7 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 - **验证**：validate.mjs 13 文件语法 + 数据契约通过；状态机测试 7/7；pending-digest 本地实跑正常（顺带暴露 trae/xiaomi 两源当前真实失效）。
 - **教训**：check-pages 是顶层 await 脚本，`node -e "import(...)"` 会直接执行真实抓取（本轮曾误触发并已 `git checkout` 恢复数据文件）——调试此类脚本只用 `node --check`。
 
-### 上一轮 —— 抓取超时 / 重试 / 硬超时补齐（后端设计专项分析发现的 P1，未打版本号）
+### 更早一轮 —— 抓取超时 / 重试 / 硬超时补齐（后端设计专项分析发现的 P1，未打版本号）
 
 - **update-snapshot.mjs**：models.dev 的裸 `fetch` 改走 `fetchText`（此前全链路唯一无超时抓取点，源挂起会阻塞整条巡检直至 job 被墙钟杀、失败汇总与告警全失效）。
 - **lib.mjs `fetchText`**：补指数退避重试（默认 2 次，0.5s/2s）——网络错误/超时/429/5xx/空响应体可重试，其余 4xx 立即抛；消除「单次抖动污染 `consecutiveFailures`、连续 3 天误标已失效」。
