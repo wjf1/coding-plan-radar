@@ -5,7 +5,19 @@
   <link>https://wjf1.github.io/coding-plan-radar/</link>
   <description>AI 编程订阅计划（Coding Plan）对比站 —— 看得见数据来源的订阅指南</description>
   <language>zh-CN</language>
-  <lastBuildDate>Sun, 22 Nov 2026 07:40:13 GMT</lastBuildDate>
+  <lastBuildDate>Sun, 22 Nov 2026 16:25:19 GMT</lastBuildDate>
+  <item>
+    <title>v7.7</title>
+    <link>https://wjf1.github.io/coding-plan-radar/</link>
+    <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+    <description>P0 数据新鲜度与巡检诚实化：plans.json 20 条补 pricedAt/pricedBy 溯源（未触碰价格数字）、js/freshness.js 纯函数层（30/60 天阈值，node:test 可测）、前端双 pill 与新鲜度卡（统计 / 19 段分布条 / 按核价日排序表格 / 对比表核价徽标）、巡检区分「源抓不到」与「脚本崩溃」（mark-pipeline.mjs）、待办 digest 收敛为常驻 triage issue 并修复 detected===today 收敛 bug。验证：node --test 34 用例全绿、validate 通过、selfcheck 24/24、真实点击走查全过（含降级态端到端）。核价 pill 合并后将如实显示全红（核价记录已 60+ 天未复核），需人工复核后更新 pricedAt。</description>
+  </item>
+  <item>
+    <title>v7.6</title>
+    <link>https://wjf1.github.io/coding-plan-radar/</link>
+    <pubDate>Sun, 22 Nov 2026 00:00:00 GMT</pubDate>
+    <description>平台深链（?p=&lt;平台名&gt;，兼容 #plan-&lt;名&gt; 锚点）与额度倍率估算方法论独立页（methodology.html，三级口径 / 字段对照 / 局限声明全公开）、RSS 订阅源（gen-rss.mjs 生成 rss.xml，README 补五个 JSON 数据直链）、IDE 榜对照 awesome-coding-plan 全量复检；修复：核心数据加载失败新增错误横幅与重试（不再把加载失败伪装成空结果）、可排序表头键盘可达（th 内 button.th-sort，tokens 表头与排序下拉同步）、FAQ 降级文案改动态表述。验证：validate 通过、selfcheck 全绿、methodology 结构断言全绿。</description>
+  </item>
   <item>
     <title>v7.5</title>
     <link>https://wjf1.github.io/coding-plan-radar/</link>
