@@ -78,8 +78,8 @@ select{background:var(--card);border:1px solid var(--border);color:var(--text);b
 .table-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg2);-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:14px;min-width:960px}
 thead th{position:sticky;top:0;background:#101828;font-size:12.5px;color:var(--muted);text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);white-space:nowrap;user-select:none}
-/* 只有真正可排序的表头给手型与 hover —— 此前整行表头（含「核心模型」这类不可排序列）都是手型，误导点击 */
-#compare thead th[data-k],#tokens thead th[data-tk]{cursor:pointer}
+/* 可排序表头的交互载体是 th 内的 button.th-sort（手型在按钮上，见下方 .th-sort 规则）；
+   th 自身恢复默认光标，hover 变色保留在 th 上、经 button 的 color:inherit 传导 */
 #compare thead th[data-k]:hover,#tokens thead th[data-tk]:hover{color:var(--text)}
 /* 排序方向指示用 ::after 生成内容，不写进 DOM —— 否则会被 applyI18N 连同原始标记一起记进 data-i18n-orig */
 thead th[data-sort]::after{content:" ▲";color:var(--accent2);font-size:10px}
@@ -110,6 +110,22 @@ tbody tr:hover{background:#16203a66}
 .empty-cell{padding:26px 14px;color:var(--dim);font-size:13.5px;text-align:center}
 .linklike{border:0;background:none;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline;padding:0 2px}
 .cnote{margin:0 0 10px;padding:8px 12px;border:1px solid #f5b44544;background:#f5b44512;border-radius:10px;color:var(--warn);font-size:13px}
+
+/* ===== 核心数据加载失败横幅（2026-11-22） ===== */
+/* 配色对齐 .alert.bad（--bad/#f26d6d 系令牌），本站仅深色主题，横幅文字用 --text/--bad 均达标 */
+#data-error-banner{margin-bottom:16px}
+#data-error-banner[hidden]{display:none}
+#data-error-banner .data-error{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid #f26d6d3d;background:#f26d6d0d;color:var(--text);border-radius:var(--radius);padding:12px 16px;font-size:13.5px}
+#data-error-banner .data-error b{color:var(--bad)}
+#data-error-banner .chip{flex:0 0 auto}
+#data-error-banner .chip:disabled{opacity:.6;cursor:wait}
+
+/* ===== 可排序表头按钮（2026-11-22） ===== */
+/* th 内包 <button class="th-sort"> 提供键盘可达载体（Tab 聚焦 / Enter、Space 触发原生 click）。
+ * 无边框透明，font/color 继承表头外观；hover 变色由 th:hover 的 color 经 inherit 传导；
+ * 焦点环直接走全站既有 :focus-visible 规则（outline 2px var(--accent)），不另造令牌 */
+button.th-sort{border:0;background:none;color:inherit;font:inherit;padding:0;margin:0;text-align:left;white-space:nowrap;cursor:pointer}
+button.th-sort:hover{color:var(--text)}
 
 /* ===== picks / cards / repos ===== */
 .picks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}

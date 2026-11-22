@@ -52,22 +52,66 @@ let compareNoticeTimer=0;
 let PLAN_DATA=[], CALC_MODELS=[], CALC_PLANS=[], IDE_PLANS=[], CHANGELOG=[], GH_REPOS=[];
 let MODEL_SNAPSHOT=[], SNAPSHOT_DATE="";
 
-// 单个数据文件读失败只让对应板块为空，不拖垮整页渲染
-async function loadJSONOr(pathname, fallback){
+// 单个数据文件读失败只让对应板块为空，不拖垮整页渲染；
+// 第三参数传收集数组时记录失败路径，loadData 据此在页顶挂错误横幅——
+// 此前失败仅 console.warn，空表会被空态文案误读成「筛选无结果」
+async function loadJSONOr(pathname, fallback, failures){
   try{ return await fetchJSON(pathname); }
-  catch(e){ console.warn(`[data] ${pathname} 加载失败：${e.message}`); return fallback; }
+  catch(e){
+    console.warn(`[data] ${pathname} 加载失败：${e.message}`);
+    if(failures) failures.push(pathname);
+    return fallback;
+  }
 }
+let dataLoadFailed=false; // 核心数据（data/manual/*）存在加载失败
 async function loadData(){
+  const failed=[];
   const [plans, calcModels, calcPlans, ide, clog, repos] = await Promise.all([
-    loadJSONOr("data/manual/plans.json", {plans:[]}),
-    loadJSONOr("data/manual/calc-models.json", []),
-    loadJSONOr("data/manual/calc-plans.json", []),
-    loadJSONOr("data/manual/ide-plans.json", []),
-    loadJSONOr("data/manual/changelog.json", []),
-    loadJSONOr("data/manual/repos.json", []),
+    loadJSONOr("data/manual/plans.json", {plans:[]}, failed),
+    loadJSONOr("data/manual/calc-models.json", [], failed),
+    loadJSONOr("data/manual/calc-plans.json", [], failed),
+    loadJSONOr("data/manual/ide-plans.json", [], failed),
+    loadJSONOr("data/manual/changelog.json", [], failed),
+    loadJSONOr("data/manual/repos.json", [], failed),
   ]);
   PLAN_DATA=plans.plans||[];
   CALC_MODELS=calcModels; CALC_PLANS=calcPlans; IDE_PLANS=ide; CHANGELOG=clog; GH_REPOS=repos;
+  dataLoadFailed=failed.length>0;
+  if(dataLoadFailed) showDataError(failed);
+}
+
+/* 核心数据加载失败横幅：挂在 #compare 区块顶部（role=alert），附「重试」按钮。
+ * promos / freebies / signals 三个板块各有自己的失败提示（见文件末尾），不经过这条通道。 */
+function showDataError(failedList){
+  const box=document.getElementById("data-error-banner");
+  if(!box) return;
+  box.hidden=false;
+  box.innerHTML=`<div class="data-error"><span><b>核心数据加载失败：</b>${esc(failedList.join("、"))} 未能读取，对比表 / 平台详情 / IDE 榜 / 变更记录暂无内容。常见原因：网络异常或浏览器缓存了旧页面。</span><button type="button" id="data-retry" class="chip">重试</button></div>`;
+  document.getElementById("data-retry").addEventListener("click",retryLoadData);
+}
+function hideDataError(){
+  const box=document.getElementById("data-error-banner");
+  if(box){ box.hidden=true; box.innerHTML=""; }
+}
+async function retryLoadData(){
+  const btn=document.getElementById("data-retry");
+  if(btn){ btn.disabled=true; btn.textContent="重试中…"; }
+  await Promise.all([loadData(), loadPriceHistory()]);
+  if(dataLoadFailed){
+    // 仍失败：loadData 已刷新横幅内容，恢复按钮等待再次点击
+    const btn2=document.getElementById("data-retry");
+    if(btn2){ btn2.disabled=false; btn2.textContent="重试"; }
+    return;
+  }
+  hideDataError();
+  // 数据到位：刷新统计与全部核心板块（与首屏 init 同一套渲染路径；tokens 榜由 loadModels 自己保障，不在此重复）
+  const platCount=PLAN_DATA.filter(d=>d.status!=="bad").length;
+  document.getElementById("st-plat").textContent=platCount;
+  const platDesc=document.getElementById("st-plat-desc");
+  if(platDesc) platDesc.textContent=platCount;
+  document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
+  populateCalcModels();
+  renderAll();
 }
 // 兜底快照只在 models.dev 失败时才用得上，因此延迟到降级那一刻再取，正常访问不多发请求
 let snapshotPromise=null;
@@ -157,6 +201,7 @@ const I18N={
     reposTitle:"🔗 同类 GitHub 项目 — 方法论与数据源",
     priceTrend:"价格趋势", priceChange30:"近 30 天变动", priceUp:"↑ 涨价", priceDown:"↓ 降价", priceStable:"— 持平",
     planEmpty:"没有匹配的平台。", planEmptyReset:"清空搜索与筛选", compareLimit:"最多同时对比 4 个平台，请先取消一个。",
+    planEmptyNeutral:"暂无数据。", sortTap:"点击切换排序", sortCurAsc:"当前升序", sortCurDesc:"当前降序",
   },
   en:{
     langLabel:"中文",
@@ -201,6 +246,7 @@ const I18N={
     reposTitle:"🔗 Related GitHub Projects",
     priceTrend:"Price Trend", priceChange30:"30-day change", priceUp:"↑ Up", priceDown:"↓ Down", priceStable:"— Stable",
     planEmpty:"No matching platforms.", planEmptyReset:"Clear search & filters", compareLimit:"Compare up to 4 platforms at a time; deselect one first.",
+    planEmptyNeutral:"No data available.", sortTap:"click to sort", sortCurAsc:"currently ascending", sortCurDesc:"currently descending",
   }
 };
 function t(key, vars){
@@ -268,7 +314,13 @@ function renderPlans(){
     return (b.ratio||0)-(a.ratio||0);
   });
   if(!rows.length){
-    tbody.innerHTML=`<tr><td colspan="8" class="empty-cell">${t("planEmpty")} <button type="button" class="linklike" data-plan-reset>${t("planEmptyReset")}</button></td></tr>`;
+    // 空态分两种：确实执行了筛选/搜索（保留「清空搜索与筛选」入口）；
+    // 无筛选时的空数据（通常是核心数据加载失败，页顶已有错误横幅说明原因）给中性提示，
+    // 不再把「加载失败」伪装成「筛选无结果」误导用户去点清空
+    const filtered=planFilter!=="all"||planQuery!=="";
+    tbody.innerHTML=filtered
+      ?`<tr><td colspan="8" class="empty-cell">${t("planEmpty")} <button type="button" class="linklike" data-plan-reset>${t("planEmptyReset")}</button></td></tr>`
+      :`<tr><td colspan="8" class="empty-cell">${t("planEmptyNeutral")}</td></tr>`;
     updateSortIndicator();
     return;
   }
@@ -325,7 +377,17 @@ function showCompareNotice(msg){
 }
 
 /* 排序方向指示：只写 data-sort / aria-sort，箭头交给 CSS ::after 生成。
- * 一旦把箭头写进 DOM，applyI18N 会连它一起记进 data-i18n-orig，切到中文就再也去不掉。 */
+ * 一旦把箭头写进 DOM，applyI18N 会连它一起记进 data-i18n-orig，切到中文就再也去不掉。
+ * 表头内是 <button class="th-sort">（键盘可达载体），aria-sort 仍留在 th 上；
+ * 按钮的 aria-label 随方向同步刷新，读屏用户聚焦按钮即可得知当前方向。 */
+function syncSortBtnAria(th){
+  const btn=th.querySelector("button.th-sort");
+  if(!btn) return;
+  const dir=th.dataset.sort;
+  const hint=dir==="asc"?t("sortCurAsc"):dir==="desc"?t("sortCurDesc"):t("sortTap");
+  const sep=currentLang==="en"?", ":"，";
+  btn.setAttribute("aria-label", btn.textContent+sep+hint);
+}
 function updateSortIndicator(){
   document.querySelectorAll("#compare thead th[data-k]").forEach(th=>{
     const k=th.dataset.k;
@@ -335,12 +397,14 @@ function updateSortIndicator(){
       : k==="name"&&planSort==="name" ? "asc" : "";
     if(dir) th.dataset.sort=dir; else delete th.dataset.sort;
     th.setAttribute("aria-sort", dir==="asc"?"ascending":dir==="desc"?"descending":"none");
+    syncSortBtnAria(th);
   });
   document.querySelectorAll("#tokens thead th[data-tk]").forEach(th=>{
     const on = th.dataset.tk==="in" ? tSort==="in" : (tSort==="out"||tSort==="out-desc");
     const dir = on ? (th.dataset.tk==="in"?"asc":tSort==="out-desc"?"desc":"asc") : "";
     if(dir) th.dataset.sort=dir; else delete th.dataset.sort;
     th.setAttribute("aria-sort", dir==="asc"?"ascending":dir==="desc"?"descending":"none");
+    syncSortBtnAria(th);
   });
 }
 
@@ -602,7 +666,7 @@ function renderTokens(){
     return true;
   });
   rows.sort((a,b)=> tSort==="in"?a.i-b.i : tSort==="out-desc"?b.o-a.o : a.o-b.o);
-  if(!rows.length){ tbody.innerHTML='<tr><td colspan="6" style="color:var(--dim)">无匹配模型</td></tr>'; return; }
+  if(!rows.length){ tbody.innerHTML='<tr><td colspan="6" style="color:var(--dim)">无匹配模型</td></tr>'; updateSortIndicator(); return; }
   // 输出价最低的前 8 名标记高性价比
   const cheapSet=new Set(rows.slice(0,8).map(r=>JSON.stringify({v:r.pid,m:r.n})));
   const fmtC=c=>c>=1e6?(c/1e6)+"M":c>=1000?Math.round(c/1000)+"K":c;
@@ -658,7 +722,9 @@ function bind(){
   }));
   document.getElementById("search").addEventListener("input",e=>{planQuery=e.target.value.trim();syncURLState();renderPlans();});
   document.getElementById("sort").addEventListener("change",e=>{planSort=e.target.value;syncURLState();renderPlans();});
-  document.querySelectorAll("#compare thead th[data-k]").forEach(th=>th.addEventListener("click",()=>{
+  // 排序交互载体是 th 内的 button.th-sort（键盘 Tab 可聚焦，Enter/Space 原生触发 click），不再直绑 th
+  document.querySelectorAll("#compare thead th[data-k] .th-sort").forEach(btn=>btn.addEventListener("click",()=>{
+    const th=btn.closest("th");
     const k=th.dataset.k;
     if(k==="price") planSort=planSort==="price"?"price-desc":"price";
     else if(k==="ratio") planSort="ratio";
@@ -676,9 +742,12 @@ function bind(){
   });
   document.getElementById("tsearch").addEventListener("input",e=>{tQuery=e.target.value.trim();syncURLState();renderTokens();});
   document.getElementById("tsort").addEventListener("change",e=>{tSort=e.target.value;syncURLState();renderTokens();});
-  document.querySelectorAll("#tokens thead th[data-tk]").forEach(th=>th.addEventListener("click",()=>{
+  document.querySelectorAll("#tokens thead th[data-tk] .th-sort").forEach(btn=>btn.addEventListener("click",()=>{
+    const th=btn.closest("th");
     const k=th.dataset.tk;
     tSort = (k==="in") ? "in" : (tSort==="out"?"out-desc":"out");
+    // 与 compare 侧对齐：表头点击后回写下拉（#tsort），否则控件显示与实际排序自相矛盾
+    document.getElementById("tsort").value=tSort;
     renderTokens();
   }));
   document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));

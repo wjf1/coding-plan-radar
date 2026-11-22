@@ -8,7 +8,7 @@
 - **定位**：AI 编程订阅计划（Coding Plan）对比站。纯静态站，无构建、零 npm 依赖，GitHub Pages 托管。
 - **线上地址**：https://wjf1.github.io/coding-plan-radar/ ｜ 仓库：https://github.com/wjf1/coding-plan-radar
 - **覆盖**：20 个条目（19 个在售平台 + 1 个已停售留档）、69 个付费档位；Token 实时价格榜接 models.dev。
-- **当前版本**：**v7.5（2026-10-31，已打 annotated tag 并发布 Release）**。上一版本 v7.4（2026-10-27，计算器 7 档修复）、v7.3（2026-10-06，条目级监控）、v7.2（2026-10-05，数据目录语义化）。
+- **当前版本**：**v7.5（2026-10-31，已打 annotated tag 并发布 Release）**；工作区存在 **[Unreleased] 未提交修复（2026-11-22：数据失败错误横幅 + 表头键盘可达，见第 4 模块）**。上一版本 v7.4（2026-10-27，计算器 7 档修复）、v7.3（2026-10-06，条目级监控）、v7.2（2026-10-05，数据目录语义化）。
 - **自动化**：GitHub Actions 每天北京时间 09:00 巡检 → 更新数据 → 提交推送（触发 Pages 重新发布）→ 有事项时开 issue。
 - **受众现状**：1 star / 0 fork，仓库 issue 全部是机器人每日巡检开出的（无真人反馈）。功能开发的边际收益很低，
   维护重点应放在**自动化管道不静默失效**上。
@@ -53,12 +53,14 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 **数据流**：`data/manual/sources.json` 声明源 → 六个巡检脚本抓取/比对 → 写回 `data/auto/*.json` → `validate.mjs` 校验 →
 `git commit && git push` → Pages 重新发布 → 浏览器端 `app.js` 通过 `fetch` 读取 `data/*.json` 渲染。
 
-**前端**：`js/app.js` 单文件（约 840 行）。`init` 里先 `bind()`（表单/筛选，不依赖数据），
+**前端**：`js/app.js` 单文件（约 1080 行）。`init` 里先 `bind()`（表单/筛选，不依赖数据），
 再 `await Promise.all([loadData(), loadPriceHistory()])`，最后统一首屏渲染——数据未到之前不做半渲染。
-单文件失败只让对应板块为空（`loadJSONOr`）。
+单文件失败只让对应板块为空（`loadJSONOr`）；核心数据（`data/manual/*`）任一失败时 `loadData` 会收集失败清单
+并在 `#compare` 顶部渲染 `#data-error-banner` 错误横幅（role=alert + 重试按钮），空态文案区分「筛选无结果」与「暂无数据」。
+可排序表头 = th 内 `<button class="th-sort">`（键盘可达，click 只绑按钮不绑 th）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
-## 最近一轮变更与交付成果（抓取层加固，2026-11-22）
+## 最近一轮变更与交付成果（抓取层加固 + 前端 P1 修复，2026-11-22）
 
 ### 本轮 —— 抓取超时 / 重试 / 硬超时补齐（后端设计专项分析发现的 P1，未打版本号）
 
@@ -66,6 +68,31 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 - **lib.mjs `fetchText`**：补指数退避重试（默认 2 次，0.5s/2s）——网络错误/超时/429/5xx/空响应体可重试，其余 4xx 立即抛；消除「单次抖动污染 `consecutiveFailures`、连续 3 天误标已失效」。
 - **daily-update.yml**：update job 加 `timeout-minutes: 30`。
 - **验证**：行为桩测试 3 项（404 不重试 / 5xx 重试成功 / 正常路径不变）；`node scripts/validate.mjs` 通过。
+
+### 前一轮 —— 前端 P1 修复：数据失败错误态 + 表头键盘可达（2026-11-22，未提交）
+
+**背景**：P1 级两项前端缺陷：① `loadData()` 失败静默降级为空数组（仅 `console.warn`），对比表 / 平台详情 / IDE 榜 /
+变更记录全部空渲染，空 tbody 还显示「没有匹配的平台。清空搜索与筛选」，把「加载失败」伪装成「筛选无结果」；
+② 可排序表头把排序交互直绑 `<th>` 的 click（无 tabindex / role / keydown），键盘用户无法排序，`aria-sort` 形同虚设，
+且 tokens 表头点击只改 `tSort` 不回写 `#tsort` 下拉，控件状态自相矛盾。
+
+**改动**：
+
+| # | 文件 | 内容 |
+|---|---|---|
+| 1 | `js/app.js` | `loadJSONOr` 增加第三参数收集失败路径；`loadData` 失败时置 `dataLoadFailed` 并调 `showDataError(failed)`；新增 `showDataError / hideDataError / retryLoadData`——横幅挂在 `#compare` 顶部（`#data-error-banner`，role=alert），「重试」按钮重新执行 `loadData + loadPriceHistory`，成功后 `hideDataError()` 并按首屏同一路径（统计 + `populateCalcModels()` + `renderAll()`）重渲染，失败则恢复按钮可再点 |
+| 2 | `js/app.js` | `renderPlans` 空态分两种：确实执行了筛选/搜索（`planFilter!=="all" || planQuery`）→ 保留「清空搜索与筛选」；无筛选且数据为空 → 中性提示「暂无数据」（I18N 新增 `planEmptyNeutral`，双语） |
+| 3 | `index.html` | `#compare` wrap 顶部加 `<div id="data-error-banner" role="alert" hidden>`；两张表 5 个可排序 th 内包 `<button type="button" class="th-sort" data-i18n=… aria-label=…>`（data-i18n 从 th 移到 button，避免 applyI18N 整体替换 th.innerHTML 时冲掉按钮） |
+| 4 | `js/app.js` | 排序 click 从 th 直绑改为绑 `th[data-k/-tk] .th-sort` 按钮（键盘 Enter/Space 原生触发）；tokens 表头点击后回写 `document.getElementById("tsort").value = tSort`；`updateSortIndicator` 内新增 `syncSortBtnAria`——按钮 aria-label 随排序方向刷新（「当前升序/降序/点击切换排序」，双语 I18N `sortCurAsc/sortCurDesc/sortTap`）；顺带修 `renderTokens` 空结果分支提前 return 不刷表头指示的既有遗漏 |
+| 5 | `css/styles.css` | 新增 `#data-error-banner` 横幅样式（配色对齐 `.alert.bad`，`--bad`/既有令牌）与 `button.th-sort`（无边框透明、`font/color:inherit` 继承表头外观，焦点环走全站既有 `:focus-visible` 规则）；th 手型规则移交按钮 |
+
+**验证（全部实际执行）**：`node --check js/app.js` 通过；`node tests/selfcheck.mjs` 24/24；浏览器真实走查（chrome-devtools
++ 本地临时 HTTP 服务，主 world initScript 注入「首次 plans.json fetch 失败、重试放行」）——失败态横幅出现（alert 角色，
+文案含失败文件与原因）、空态「暂无数据。」、真实点击重试仍失败时横幅保持且按钮恢复、网络恢复后真实点击重试成功
+→ 横幅移除 + 19 平台 / 69 档位 / 20 行 / 19 卡片全部恢复；键盘走查：`#sort`/`#tsort` 下拉 Tab 一格即聚焦表头按钮，
+Enter / Space 触发排序（升/降切换、`#sort`/`#tsort` 值回写、aria-sort 与按钮 aria-label 同步刷新、焦点保持）；
+真实鼠标点击表头按钮排序亦正常；筛选空态仍为「没有匹配的平台。清空搜索与筛选」。grep 复核：click 监听仅存在于
+`.th-sort` 按钮上，无 th click 直绑残留。验证服务（8199/8200）与临时脚本已清理，仓库无脏改动。
 - **遗留（本轮未做）**：check-pages 五态状态机零测试、反爬特征表双份维护分叉、alerts.json 无界增长、api 源未配置化——见后端设计分析报告 P1/P2 清单。
 
 ### 上一轮：v7.5 —— 条目级监控铺开（11 个 page 源逐个评估迁移）+ 缓存 schema 版本化 + CONTRIBUTING（2026-10-31）

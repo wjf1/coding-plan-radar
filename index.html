@@ -62,6 +62,7 @@
 
 <section id="compare">
   <div class="wrap">
+    <div id="data-error-banner" role="alert" hidden></div>
     <div class="sec-head">
       <h2 data-i18n="compareTitle">⚡ 快速对比表 <i>—</i> 价格 · 额度倍率 · 来源</h2>
       <p>点击表头排序 · 起步价为最低付费档 · 倍率 = 额度折算价值 ÷ 月价（<a href="https://github.com/mahonzhan/awesome-coding-plan" target="_blank" rel="noopener noreferrer">awesome-coding-plan</a> 口径，社区估算仅供参考）</p>
@@ -87,9 +88,9 @@
       <table>
         <thead><tr>
           <th scope="col" style="width:30px"><span class="sr-only">对比</span></th>
-          <th scope="col" data-k="name" data-i18n="platform">平台</th>
-          <th scope="col" data-k="price" data-i18n="startPrice">起步价（付费档）</th>
-          <th scope="col" data-k="ratio" data-i18n="ratio">额度倍率 ↑ 性价比</th>
+          <th scope="col" data-k="name"><button type="button" class="th-sort" data-i18n="platform" aria-label="平台，点击切换排序">平台</button></th>
+          <th scope="col" data-k="price"><button type="button" class="th-sort" data-i18n="startPrice" aria-label="起步价（付费档），点击切换排序">起步价（付费档）</button></th>
+          <th scope="col" data-k="ratio"><button type="button" class="th-sort" data-i18n="ratio" aria-label="额度倍率 ↑ 性价比，点击切换排序">额度倍率 ↑ 性价比</button></th>
           <th scope="col" data-i18n="coreModels">核心模型</th>
           <th scope="col" data-i18n="quota">额度口径</th>
           <th scope="col" data-i18n="status">状态</th>
@@ -126,8 +127,8 @@
       <table style="min-width:820px">
         <thead><tr>
           <th scope="col" data-i18n="model">模型</th><th scope="col" data-i18n="vendor">供应商</th>
-          <th scope="col" data-tk="in" data-i18n="inPrice">输入 $/M ↑</th>
-          <th scope="col" data-tk="out" data-i18n="outPrice">输出 $/M ↑</th>
+          <th scope="col" data-tk="in"><button type="button" class="th-sort" data-i18n="inPrice" aria-label="输入 $/M，点击切换排序">输入 $/M ↑</button></th>
+          <th scope="col" data-tk="out"><button type="button" class="th-sort" data-i18n="outPrice" aria-label="输出 $/M，点击切换排序">输出 $/M ↑</button></th>
           <th scope="col" data-i18n="context">上下文</th><th scope="col" data-i18n="ability">能力</th>
         </tr></thead>
         <tbody id="ttbody"><tr><td colspan="6" style="color:var(--dim)">加载中…</td></tr></tbody>
