@@ -30,6 +30,13 @@ jobs:
         with:
           node-version: 20
 
+      # 数据契约与逻辑层先过闸：坏数据或坏代码就别再往下跑，否则新鲜度面板会拿脏值渲染。
+      # 本步骤不带 continue-on-error：失败即红即停（与后面的巡检步骤失败语义不同——那是数据问题）
+      - name: ⓪ 数据契约校验 + 单元测试
+        run: |
+          node scripts/validate.mjs
+          node --test
+
       - name: ① 重新生成 models.dev 兜底快照
         id: snapshot
         run: |
@@ -60,17 +67,15 @@ jobs:
         run: |
           if node scripts/verify-listings.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
 
-      - name: ⑥ 记录订阅计划价格历史快照 + 写入巡检日期
+      - name: ⑥ 记录订阅计划价格历史快照
         id: history
         continue-on-error: true
         run: |
           # 旧写法把成败写成 `ok=false: record-history` 挂在一个没有 id 的步骤上，
           # 既拿不到 outcome，也不会进下面的失败汇总——record-history 崩掉时
           # 巡检会安静地少掉当天价格历史，而且流程仍然是绿的。
+          # 巡检日期不再在此处写入：本步骤失败时绝不能把 autoCheck 推进成当天（见下方 meta 步骤）
           if node scripts/record-history.mjs; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
-          # 与各脚本保持一致：先写 .tmp 再 mv，避免中途被杀留下半截 JSON（读取容错会当成「文件不存在」）
-          echo "{\"autoCheck\":\"$(date -u +%Y-%m-%d)\"}" > data/auto/meta.json.tmp
-          mv data/auto/meta.json.tmp data/auto/meta.json
 
       - name: 校验数据与脚本（坏数据不进仓库）
         id: validate
@@ -105,6 +110,17 @@ jobs:
             echo "has_failure=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # 有任何巡检脚本崩溃（ok=false）时如实降级：autoCheck 保持旧值、写 pipelineDegraded
+      # 与失败步骤清单——绝不把失败的运行算成「今天巡检成功」。源抓不到不算崩溃：
+      # 那类失败由脚本内部写入 sourcehealth.json，exit 0，不会出现在 $fails 里。
+      - name: 写入巡检日期（有脚本崩溃则如实降级，不假装巡检成功）
+        id: meta
+        run: |
+          CRASHED="${{ steps.outcomes.outputs.failed_steps }}"
+          CRASHED="${CRASHED# }"
+          node scripts/mark-pipeline.mjs --crashed="$CRASHED"
+          echo "crashed=$CRASHED" >> "$GITHUB_OUTPUT"
+
       - name: 生成待处理清单
         # 独立脚本（此前内嵌 ~70 行 node -e，无法单测且外部网页文本未转义即拼 markdown）
         run: node scripts/pending-digest.mjs
@@ -132,19 +148,42 @@ jobs:
             echo "无数据变化，跳过提交"
           fi
 
-      - name: 有待处理事项时开 issue
-        if: steps.commit.outputs.changed == 'true' || steps.outcomes.outputs.has_failure == 'true'
+      # 待办收敛为一条常驻 issue（label: daily-triage），而不是每天开一条新的：
+      # 有未决事项就覆盖正文（未决告警不再隔天消失），清空了就把这条关掉。
+      # 不再受「今天有没有 git 变化」影响——队列反映的是现实，不是提交记录。
+      - name: 维护常驻待办 issue
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -s issue-body.md ]; then
-            gh issue create --repo "$GITHUB_REPOSITORY" \
-              --title "每日巡检待处理 $(date -u +%F)" \
-              --body-file issue-body.md
-          elif [ "${{ steps.outcomes.outputs.has_failure }}" = "true" ]; then
-            gh issue create --repo "$GITHUB_REPOSITORY" \
-              --title "每日巡检部分任务失败 $(date -u +%F)" \
-              --body "部分巡检任务失败，请查看 Actions 日志排查。失败步骤：${{ steps.outcomes.outputs.failed_steps }}"
-          else
-            echo "无待人工处理事项（仅有常规数据提交）"
+          gh label create daily-triage --repo "$GITHUB_REPOSITORY" \
+            --color f5b445 --description 自动巡检产生的待人工处理队列 --force >/dev/null 2>&1 || true
+          OPEN=$(gh issue list --repo "$GITHUB_REPOSITORY" --label daily-triage --state open \
+            --json number --jq '.[0].number // empty')
+          if [ "${{ steps.outcomes.outputs.has_failure }}" = "true" ]; then
+            printf '\n### ⚠ 本日巡检有脚本崩溃\n\n失败步骤：%s\n\n巡检日期未推进（pipelineDegraded 已写入 meta.json），Actions 运行已标红，请查日志修复后重跑。\n' \
+              "${{ steps.outcomes.outputs.failed_steps }}" >> issue-body.md
           fi
+          if [ -s issue-body.md ]; then
+            printf '%s\n\n<sub>本 issue 由每日自动巡检维护，正文请勿手工编辑；清单为空时会自动关闭。</sub>\n' \
+              "$(cat issue-body.md)" > issue-body.md
+            if [ -n "$OPEN" ]; then
+              gh issue edit "$OPEN" --repo "$GITHUB_REPOSITORY" --body-file issue-body.md
+              echo "已更新常驻 issue #$OPEN"
+            else
+              gh issue create --repo "$GITHUB_REPOSITORY" \
+                --title "巡检待处理队列" --label daily-triage --body-file issue-body.md
+            fi
+          elif [ -n "$OPEN" ]; then
+            gh issue close "$OPEN" --repo "$GITHUB_REPOSITORY" --comment "自动巡检：当前无未决事项。"
+            echo "队列已清空，关闭 #$OPEN"
+          else
+            echo "无未决事项，无需维护 issue"
+          fi
+
+      # 必须放在最后一步：提交与 issue 都要先完成，降级状态得先被持久化下来，
+      # 否则 job 红是红了，仓库里却看不出哪一天没跑成，第二天又「看起来正常」。
+      - name: 有脚本崩溃时以失败收尾
+        if: steps.meta.outputs.crashed != ''
+        run: |
+          echo "::error::以下巡检脚本崩溃，data/auto/meta.json 已标记 pipelineDegraded：${{ steps.meta.outputs.crashed }}"
+          exit 1

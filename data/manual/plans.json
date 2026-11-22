@@ -52,7 +52,9 @@
    "srcLabel": "官方直采 + 聚合补全",
    "srcUrl": "https://openai.com/chatgpt/pricing/",
    "srcNote": "官方页 2026-09-13 采集；Go 档价格参考 codingplan.org",
-   "note": "Go 档价格在官方页为动态展示，以结账页为准"
+   "note": "Go 档价格在官方页为动态展示，以结账页为准",
+   "pricedAt": "2026-09-13",
+   "pricedBy": "human"
   },
   {
    "name": "Claude",
@@ -109,7 +111,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://claude.com/pricing",
    "srcNote": "claude.com/pricing · 2026-09-13",
-   "note": "所有付费计划均含 Claude Code，与聊天共享用量池"
+   "note": "所有付费计划均含 Claude Code，与聊天共享用量池",
+   "pricedAt": "2026-09-13",
+   "pricedBy": "human"
   },
   {
    "name": "GitHub Copilot",
@@ -162,7 +166,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://github.com/features/copilot/plans",
    "srcNote": "github.com/features/copilot/plans · 2026-09-13",
-   "note": "Business/Enterprise 档价格未在抓取页直列，标注为常见价，以官网为准"
+   "note": "Business/Enterprise 档价格未在抓取页直列，标注为常见价，以官网为准",
+   "pricedAt": "2026-09-13",
+   "pricedBy": "human"
   },
   {
    "name": "Cursor",
@@ -215,7 +221,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://cursor.com/pricing",
    "srcNote": "cursor.com/pricing · 2026-09-13",
-   "note": "学生认证可免费用一年 Pro"
+   "note": "学生认证可免费用一年 Pro",
+   "pricedAt": "2026-09-13",
+   "pricedBy": "human"
   },
   {
    "name": "OpenCode Go",
@@ -256,7 +264,9 @@
    "srcLabel": "聚合参考",
    "srcUrl": "https://codingplan.org/",
    "srcNote": "codingplan.org（2026-08-31）；4× 活动原始出处为社区视频、已从本站移除，正由官方渠道重新确认",
-   "note": "当前促销期内性价比突出；活动 9/20 结束"
+   "note": "当前促销期内性价比突出；活动 9/20 结束",
+   "pricedAt": "2026-08-31",
+   "pricedBy": "human"
   },
   {
    "name": "GLM Coding Plan",
@@ -302,7 +312,9 @@
    "srcLabel": "官方直采（转述）",
    "srcUrl": "https://bigmodel.cn/glm-coding",
    "srcNote": "bigmodel.cn/glm-coding + docs.bigmodel.cn · 2026-09-13",
-   "note": "2026-08 起改为 Token 积分制；老用户 Max 权益保留。三周期数据为旧版次数制口径"
+   "note": "2026-08 起改为 Token 积分制；老用户 Max 权益保留。三周期数据为旧版次数制口径",
+   "pricedAt": "2026-09-13",
+   "pricedBy": "human"
   },
   {
    "name": "Kimi For Coding",
@@ -358,7 +370,9 @@
    "srcLabel": "聚合参考",
    "srcUrl": "https://codingplan.org/",
    "srcNote": "codingplan.org（2026-08-31），以 platform.moonshot 官网为准",
-   "note": "档位多、梯度细，可按用量精确定档"
+   "note": "档位多、梯度细，可按用量精确定档",
+   "pricedAt": "2026-08-31",
+   "pricedBy": "human"
   },
   {
    "name": "MiniMax Coding",
@@ -405,7 +419,9 @@
    "srcLabel": "聚合参考",
    "srcUrl": "https://codingplan.org/",
    "srcNote": "codingplan.org（2026-08-31），以官网为准",
-   "note": "按月 Token 计量，口径直观，适合批量脚本型任务"
+   "note": "按月 Token 计量，口径直观，适合批量脚本型任务",
+   "pricedAt": "2026-08-31",
+   "pricedBy": "human"
   },
   {
    "name": "阿里云百炼 Coding",
@@ -448,7 +464,9 @@
    "srcLabel": "聚合参考",
    "srcUrl": "https://codingplan.org/",
    "srcNote": "codingplan.org（2026-08-31），以阿里云官网为准",
-   "note": "页面标价为限时活动价，原价见括号"
+   "note": "页面标价为限时活动价，原价见括号",
+   "pricedAt": "2026-08-31",
+   "pricedBy": "human"
   },
   {
    "name": "火山方舟 Coding",
@@ -490,7 +508,9 @@
    "srcLabel": "聚合参考",
    "srcUrl": "https://codingplan.org/",
    "srcNote": "codingplan.org（2026-08-31），以火山引擎官网为准",
-   "note": "首购价适合低成本尝鲜，续费恢复刊例价"
+   "note": "首购价适合低成本尝鲜，续费恢复刊例价",
+   "pricedAt": "2026-08-31",
+   "pricedBy": "human"
   },
   {
    "name": "小米 MiMo Coding",
@@ -539,7 +559,9 @@
    "srcLabel": "聚合参考",
    "srcUrl": "https://codingplan.org/",
    "srcNote": "codingplan.org（2026-08-31），以小米官网为准",
-   "note": "按年度 Credit 总量计，适合用量可预期的用户"
+   "note": "按年度 Credit 总量计，适合用量可预期的用户",
+   "pricedAt": "2026-08-31",
+   "pricedBy": "human"
   },
   {
    "name": "R4Coder",
@@ -571,7 +593,9 @@
    "srcLabel": "社区情报（待重新核实）",
    "srcUrl": "https://codingplan.org/",
    "srcNote": "停售信息原始出处为社区视频、已从本站移除；未找到可核验的官方公告，标注待重新核实",
-   "note": "已订阅用户若觉得模型速度慢可申请退款"
+   "note": "已订阅用户若觉得模型速度慢可申请退款",
+   "pricedAt": "2026-08-31",
+   "pricedBy": "human"
   },
   {
    "name": "DeepSeek API",
@@ -604,7 +628,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://api-docs.deepseek.com/quick_start/pricing",
    "srcNote": "api-docs.deepseek.com · 2026-09-23 采集；无固定月费订阅，仅 API 按量",
-   "note": "DeepSeek 官方暂未推出固定月费订阅制，表中价格为 API 按量参考价"
+   "note": "DeepSeek 官方暂未推出固定月费订阅制，表中价格为 API 按量参考价",
+   "pricedAt": "2026-09-23",
+   "pricedBy": "human"
   },
   {
    "name": "百度千帆 Token Plan",
@@ -652,7 +678,9 @@
    "srcLabel": "官方直采（转述）",
    "srcUrl": "https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Blfmc9dlf",
    "srcNote": "IT之家官方报道 + CSDN 引用千帆官方文档 · 2026-09-23 采集；折扣与 GLM-5.3 覆盖范围需人工复核",
-   "note": "双轨制并存：Token 制 1:1 抵扣适合旗舰模型，积分制适合 Flash 模型；梯度折扣时段以控制台实际展示为准"
+   "note": "双轨制并存：Token 制 1:1 抵扣适合旗舰模型，积分制适合 Flash 模型；梯度折扣时段以控制台实际展示为准",
+   "pricedAt": "2026-09-23",
+   "pricedBy": "human"
   },
   {
    "name": "讯飞星辰 Token Plan",
@@ -695,7 +723,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://www.xfyun.cn/doc/spark/TokenPlan.html",
    "srcNote": "xfyun.cn 官方 Token Plan 文档 · 2026-09-23 采集；限时折扣状态需人工复核",
-   "note": "企业/团队订阅制，按成员计费；支持 Cursor、Claude Code、OpenCode 等工具配置"
+   "note": "企业/团队订阅制，按成员计费；支持 Cursor、Claude Code、OpenCode 等工具配置",
+   "pricedAt": "2026-09-23",
+   "pricedBy": "human"
   },
   {
    "name": "腾讯云 Token Plan",
@@ -743,7 +773,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://www.tencentcloud.com/document/product/1300/81315",
    "srcNote": "tencentcloud.com 官方 Token Plan 文档 · 2026-09-23 采集",
-   "note": "支持 OpenClaw、Claude Code、Cursor、Cline 等主流工具；Credits 不结转、不可退款"
+   "note": "支持 OpenClaw、Claude Code、Cursor、Cline 等主流工具；Credits 不结转、不可退款",
+   "pricedAt": "2026-09-23",
+   "pricedBy": "human"
   },
   {
    "name": "Gemini API",
@@ -781,7 +813,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://ai.google.dev/gemini-api/docs/pricing",
    "srcNote": "ai.google.dev 官方定价页 · 2026-09-23 采集；2026-12-31 前为促销价",
-   "note": "Gemini 无固定月费 Token Plan，API 按量为主；Google AI Pro 为 credits 体系，非 Token 订阅"
+   "note": "Gemini 无固定月费 Token Plan，API 按量为主；Google AI Pro 为 credits 体系，非 Token 订阅",
+   "pricedAt": "2026-09-23",
+   "pricedBy": "human"
   },
   {
    "name": "TRAE",
@@ -834,7 +868,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://docs.trae.ai/ide/new-plans-and-billing",
    "srcNote": "docs.trae.ai 官方定价文档 · 2026-09-23 采集；国内版 pricing 见 trae.com.cn",
-   "note": "国际版与国内版定价不同；Pro 档含 $20 usage，月费 $10，对标 Cursor Pro"
+   "note": "国际版与国内版定价不同；Pro 档含 $20 usage，月费 $10，对标 Cursor Pro",
+   "pricedAt": "2026-09-23",
+   "pricedBy": "human"
   },
   {
    "name": "Devin",
@@ -887,7 +923,9 @@
    "srcLabel": "官方直采",
    "srcUrl": "https://devin.ai/pricing",
    "srcNote": "devin.ai/pricing · 2026-09-23 采集",
-   "note": "SWE-2 Free 在 Desktop/CLI 限时免费至 2026-10-10"
+   "note": "SWE-2 Free 在 Desktop/CLI 限时免费至 2026-10-10",
+   "pricedAt": "2026-09-23",
+   "pricedBy": "human"
   },
   {
    "name": "Poe",
@@ -930,7 +968,9 @@
    "srcLabel": "聚合参考（官方页待复核）",
    "srcUrl": "https://poe.com/pricing",
    "srcNote": "toolradar.com 聚合自 poe.com 官方页（2026-09-01 验证），需人工复核官方定价页",
-   "note": "编程场景可通过自定义 Bot 接入 Claude/GPT，但非专门 Coding Plan"
+   "note": "编程场景可通过自定义 Bot 接入 Claude/GPT，但非专门 Coding Plan",
+   "pricedAt": "2026-09-01",
+   "pricedBy": "human"
   }
  ]
 }

@@ -29,7 +29,10 @@
   <div class="wrap nav-top">
     <div class="logo">CodingPlan <span>Radar</span></div>
     <div class="nav-right">
-      <div class="updated-pill">数据更新：<span id="data-date">—</span> · <span id="auto-pill">自动巡检：…</span></div>
+      <div class="pillwrap">
+        <div class="updated-pill" id="auto-wrap"><span id="auto-pill">自动巡检：…</span></div>
+        <span id="fresh-pill"></span>
+      </div>
       <div class="lang-switch"><button class="lang-btn on" data-lang="zh" aria-label="切换中文">中</button><button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button></div>
     </div>
   </div>
@@ -55,7 +58,7 @@
       <div class="stat"><b id="st-tier">69</b><small>付费档位</small></div>
       <div class="stat"><b id="st-models">60+</b><small>实时模型价格</small></div>
       <div class="stat"><b id="st-free">14</b><small>免费/白嫖额度</small></div>
-      <div class="stat"><b>每天 09:00</b><small>自动巡检</small></div>
+      <div class="stat"><b>每日一次</b><small>自动巡检</small></div>
     </div>
   </div>
 </div>
@@ -252,6 +255,9 @@
     <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px" data-i18n="signalTitle">🔎 自动发现的线索（机器产出，未经人工确认）</h2></div>
     <div class="policy" id="signal-queue"></div>
 
+    <div class="sec-head" style="margin-top:36px" id="freshness"><h2 style="font-size:19px">🗓 数据新鲜度</h2></div>
+    <div id="freshness-box"></div>
+
     <div class="sec-head" style="margin-top:36px"><h2 style="font-size:19px" data-i18n="healthTitle">🩺 信息源健康</h2></div>
     <div id="source-health"></div>
 
@@ -283,7 +289,7 @@
       <div class="ans">会。AI 订阅价格与额度调整非常频繁（如 GLM 2026 年内就经历了次数制 → 积分制整体改版）。本站价格仅供决策参考，<b>付款前请务必以平台官网为准</b>；每个卡片底部附有来源链接与采集日期。</div>
     </details>
     <details><summary>数据多久更新一次？怎么保证真实性？</summary>
-      <div class="ans">① <b>每天 09:00</b>（北京时间）GitHub Actions 自动巡检：重生成 models.dev 兜底快照、对官方定价页做内容哈希变动检测、抓取官方 changelog / 状态页与公开社区订阅源、对比价格库与 OpenRouter 免费模型清单；② 官方页或价格库有变动，<b>自动挂「待核实」并开 issue</b>，人工核价后才改表；③ <b>模型 API 价格</b>每次打开页面实时拉取 models.dev（缓存 24 小时）；④ 来源分级：官方直采（绿标）&gt; 实时数据源（青标）&gt; 聚合参考（蓝标）&gt; 社区情报（黄标，仅作线索）。<b>每个源的抓取成败都公开在「市场动态 → 信息源健康」</b>，连续失败会标注为已失效——不做假巡检。</div>
+      <div class="ans">① <b>每日自动巡检一次</b>（GitHub Actions，cron 设为北京时间 09:00 但调度时点不保证）：重生成 models.dev 兜底快照、对官方定价页做内容哈希变动检测、抓取官方 changelog / 状态页与公开社区订阅源、对比价格库与 OpenRouter 免费模型清单；② 官方页或价格库有变动，<b>自动挂「待核实」并开 issue</b>，人工核价后才改表；③ <b>模型 API 价格</b>每次打开页面实时拉取 models.dev（缓存 24 小时）；④ 来源分级：官方直采（绿标）&gt; 实时数据源（青标）&gt; 聚合参考（蓝标）&gt; 社区情报（黄标，仅作线索）。<b>每个源的抓取成败都公开在「市场动态 → 信息源健康」</b>，连续失败会标注为已失效——不做假巡检。每个订阅价格的最近人工核价日期见「市场动态 → 数据新鲜度」。</div>
     </details>
     <details><summary>按量计费和订阅到底怎么选？</summary>
       <div class="ans">用上面的 Token 实时价格榜估算：轻度用户（每月折算 API 费 &lt; $10）选按量计费更便宜，如 DeepSeek V4 Flash（输出 $0.6/M）；中重度用户（每天数小时 Agent）订阅几乎必赢——Claude Pro 倍率 63.6× 意味着同等 API 用量要花 $1,272。处于中间地带就选 $10–20 档订阅 + 超出按量的混合模式（Cursor / Copilot 均支持）。</div>
@@ -308,7 +314,8 @@
       </div>
       <div class="pol"><div class="ico">🗓️</div><h4>更新频率</h4>
         <ul>
-          <li><b>每天 09:00</b>：GitHub Actions 自动巡检——重生成 models.dev 兜底快照、对官方定价页做哈希变动检测、抓取官方 changelog / 状态页 / 社区订阅源、对比价格库与免费模型清单</li>
+          <li>本站数据分两类：<b>人工核价</b>（订阅价格、额度、倍率）与<b>每日自动巡检</b>（Token 实时价、线索队列、信息源健康）。两类的更新节奏不同，故首页顶部拆成两枚胶囊分别标注；每个平台的核价时间与出处强度见「市场动态 → 数据新鲜度」。</li>
+          <li><b>每日一次</b>：GitHub Actions 自动巡检——重生成 models.dev 兜底快照、对官方定价页做哈希变动检测、抓取官方 changelog / 状态页 / 社区订阅源、对比价格库与免费模型清单（cron 设为北京时间 09:00，但 GitHub 调度不保证启动时点）</li>
           <li><b>官方页有变动</b>：自动开 issue 提醒人工核价（列入每日巡检清单），核实后才改表</li>
           <li><b>每次打开</b>：Token 价格榜实时拉取 models.dev（本地缓存 24h）</li>
           <li><b>随时</b>：促销、涨价、停售等重大变动，人工确认后录入「市场动态」</li>
@@ -325,6 +332,8 @@
       <div class="pol"><div class="ico">🩺</div><h4>巡检诚实性</h4>
         <ul>
           <li>每个信息源的抓取成败都记录在 <b>「市场动态 → 信息源健康」</b>，连续 3 天失败会标注为<b>已失效</b></li>
+          <li><b>区分「源抓不到」与「脚本崩了」</b>：前者是数据问题，写入源健康并如实标注；后者是代码 bug，巡检日期不推进、站点顶部显示「自动巡检未完成」，Actions 运行变红</li>
+          <li><b>哈希监控分两类</b>：部分页面（Kimi 等）的价格不在 HTML 里（客户端再取），哈希对比只能发现版式改动，发现不了价格改动——这类源在信息源面板标注「仅版式监控」，价格仍需人工核对</li>
           <li>失败不做静默跳过：早期版本曾因页面改版导致 2 个监控点长期失效而无人知晓，现已修复</li>
           <li><b>抓不到的源就承认抓不到</b>：LINUX DO 与 V2EX 经双环境实测（大陆线路 + GitHub Actions 海外出口）均无法获取——前者 403 Cloudflare、后者空响应，属数据中心 IP 被拦截，自建服务器同样无效，已停用并改为人工巡览</li>
           <li>JS 渲染的空壳页面（Qoder / CodeBuddy / 火山方舟计费页）明确标注为不可自动监控，不做假巡检</li>
@@ -347,12 +356,13 @@
 
 <footer>
   <div class="wrap">
-    <div>CodingPlan Radar · AI 编程订阅计划对比 · <a href="methodology.html">额度倍率估算方法论</a> · 数据更新 <span id="foot-date">—</span></div>
+    <div>CodingPlan Radar · AI 编程订阅计划对比 · <a href="methodology.html">额度倍率估算方法论</a> · 数据分「人工核价」与「每日自动巡检」两类，详见 <a href="#freshness">数据新鲜度</a></div>
     <div>官方来源：claude.com · docs.github.com · cursor.com · docs.bigmodel.cn · platform.kimi.com · trae.ai · platform.minimaxi.com · help.aliyun.com · cloud.baidu.com　实时源：models.dev / OpenRouter</div>
   </div>
   <div class="wrap disclaimer">本站为静态信息聚合页面，与所列平台无商业关系；所有商标归各自所有者。</div>
 </footer>
 
+<script src="js/freshness.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
