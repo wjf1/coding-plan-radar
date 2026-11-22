@@ -48,7 +48,9 @@
 
 ### 🔄 每日自动更新（GitHub Actions）
 
-仓库每天 **北京时间 09:00**（cron `0 1 * * *` UTC）自动运行 [daily-update.yml](.github/workflows/daily-update.yml)。
+仓库每天自动运行 [daily-update.yml](.github/workflows/daily-update.yml) 巡检一次。cron 设为 `0 1 * * *`
+（= 北京时间 09:00），但**GitHub 的定时调度不保证启动时点**（多次实测常在北京时间午后起跑），
+因此本站只承诺「每天一次」，不承诺「09:00 完成」。
 所有巡检步骤在**同一个 job 内顺序执行**（v6.2 修复：此前拆成并行 job 时各自 checkout 且无 artifact 传递，
 导致 `signals.json` 等产物连续 7 天未进仓库），每步独立记录成败，最后统一汇总、提交、开 issue：
 
@@ -67,7 +69,7 @@
 3. **`scripts/fetch-feeds.mjs`** —— 抓取官方 changelog / 状态页 / 社区订阅源，归一化为 `data/auto/signals.json` 线索
 4. **`scripts/diff-prices.mjs`** —— 对比 models.dev / OpenRouter / LiteLLM：价格变动、免费模型增删、价格源分歧
 5. **`scripts/verify-listings.mjs`** —— 白嫖额度逐条核对来源页（`ok` / `warn` / `stale` / `changed` / `manual` 五态写回 `data/manual/freebies.json`）+ 促销条目到期自动标「已结束」
-6. **收尾**：`record-history.mjs` 记录价格历史快照（失败会进失败汇总并在 issue 中列出，不再静默跳过）→ 写入巡检日期 → **`validate.mjs` 校验数据契约与脚本语法** → `gen-rss.mjs` 生成 `rss.xml` 订阅源（失败同样进失败汇总）→ 生成待人工处理清单（官方页变动 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/auto/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 有事项时开 issue
+6. **收尾**：`record-history.mjs` 记录价格历史快照（失败会进失败汇总并在 issue 中列出，不再静默跳过）→ **`validate.mjs` 校验数据契约与脚本语法** → `gen-rss.mjs` 生成 `rss.xml` 订阅源（失败同样进失败汇总）→ `mark-pipeline.mjs` 写入巡检日期（**有脚本崩溃则日期不推进并标 `pipelineDegraded`**，最后一步让运行变红）→ 生成待人工处理清单（未决告警全集 / 新线索 / 白嫖异常条目 / 今日到期促销，去重后写入 `data/auto/reported.json`）→ 提交推送（触发 Pages 重新发布）→ 维护常驻 `daily-triage` issue（有事项更新正文、清空自动关闭）
 
 任一步骤失败都会写进 `failed_steps` 并在 issue 中列出；**校验不通过则不提交** —— 坏数据宁可不上线，也不能推上生产页面。
 
@@ -76,6 +78,17 @@
 - 机器只负责**发现**，所有价格与促销数字一律人工确认后才进对比表；机器线索单独陈列
 - 每个信息源的抓取成败写入 `data/auto/sourcehealth.json`，在站点「市场动态 → 信息源健康」公开可见，
   **连续 3 天失败即标注「已失效」**，不再假装巡检成功
+- **区分「源抓不到」与「脚本崩了」**：前者是数据问题，写入 `data/auto/sourcehealth.json` 并在站点标失效；
+  后者是代码 bug，会把 `data/auto/meta.json` 标为 `pipelineDegraded`、**保持巡检日期不推进**（页面顶部显示
+  「自动巡检未完成」），并让 Actions 运行变红——失败的运行绝不冒充「今天巡检成功」
+- **哈希监控分两类**：Kimi 的套餐价不在 HTML 里（客户端再取），GLM / MiniMax 的条目监控只盯额度或
+  API Token 价字段——它们的自动巡检都发现不了**订阅价**变化，在源健康面板标注为「订阅价不在监控范围」
+  （虚线灰底，原因写在 `sources.json` 的 `layoutOnlyReason`），不计入「价格在被自动盯着」
+- **每个订阅价格都有核价溯源**：`data/manual/plans.json` 的每条平台条目带 `pricedAt`（最近一次人工核价日期）
+  与 `pricedBy`（`human`=人工核价 / `auto-merged`=机器抽价+人工合并），由 `scripts/validate.mjs` 强制校验；
+  页面「市场动态 → 数据新鲜度」按此展示核价分布与出处强度，这两个字段**只能人工修改**，巡检脚本不写
+- **未决告警不再隔天消失**：每日待办按「当前未决全集」输出（不再按检出日截断），收敛到一条常驻
+  `daily-triage` issue——有事项就更新正文、清空就自动关闭，队列反映现实而非提交流水
 - JS 渲染的空壳页面（Qoder / CodeBuddy / 火山方舟计费页）与对机器人返回验证页的站点（OpenAI 定价页实测 403）
   明确标注为不可自动监控，不做假巡检
 - **变动需二次确认**：页面内容变化要「下一次巡检仍是同一个新值」才告警（真实变动因此晚一天），
@@ -103,10 +116,11 @@
 ├── rss.xml                 # RSS 2.0 订阅源（每日巡检从 changelog.json 自动生成）
 ├── css/styles.css          # 全部样式（深色主题，无框架）
 ├── js/
-│   └── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/对比/CSV/多语言/价格趋势/巡检）
+│   ├── freshness.js        # 数据新鲜度纯函数层（零 DOM，浏览器与 node:test 共用：距今 / 等级 / 统计 / pill 与卡片 HTML）
+│   └── app.js              # 渲染与交互逻辑（表格/卡片/计算器/实时榜/对比/CSV/多语言/价格趋势/巡检/新鲜度面板）
 ├── data/
 │   ├── manual/             # ⭐ 人工维护 —— 日常只改这里（改完跑 node scripts/validate.mjs）
-│   │   ├── plans.json          # 订阅计划数据：价格 / 档位 / 额度 / 坑点（含 rate 与字段说明）
+│   │   ├── plans.json          # 订阅计划数据：价格 / 档位 / 额度 / 坑点 + pricedAt/pricedBy 核价溯源（只能人工改，含 rate 与字段说明）
 │   │   ├── calc-plans.json     # 成本计算器的候选订阅（月费 + 折算额度）
 │   │   ├── calc-models.json    # 计算器预设模型档位（实时价匹配不到时的内置价）
 │   │   ├── ide-plans.json      # IDE / 编辑器订阅扩展榜
@@ -126,7 +140,7 @@
 │       ├── listbase.json       # 官方页条目级基线（type: list 源，v7.3）
 │       ├── pricebase.json      # 价格 / 免费模型基线（用于差异检测）
 │       ├── transients.json     # 内容回到基线的 auto-revert 回溯记录
-│       └── meta.json           # 最近巡检日期（页脚与「信息源健康」据此显示）
+│       └── meta.json           # 巡检日期与降级状态（pipelineDegraded/failedSteps 由 mark-pipeline.mjs 写入：脚本崩溃时日期不推进，页面顶部如实显示「自动巡检未完成」）
 ├── scripts/
 │   ├── lib.mjs             # 公用：带 UA/超时抓取、JSON 读写、源健康、极简 RSS 解析、关键词匹配、极简 HTML 条目抽取
 │   ├── update-snapshot.mjs # 兜底快照
@@ -137,12 +151,14 @@
 │   ├── verify-listings.mjs # 白嫖额度来源页每日核对 + 促销到期自动归档
 │   ├── record-history.mjs  # 记录每日起步价快照（90 天滚动）+ 调价告警
 │   ├── gen-rss.mjs         # 从站内变更记录生成 rss.xml 订阅源（每日巡检 validate 之后运行）
-│   ├── validate.mjs        # 数据契约 + 脚本语法校验（CI 与本地共用，坏数据不进仓库）
+│   ├── validate.mjs        # 数据契约（含 pricedAt/pricedBy 溯源）+ 脚本语法校验（CI 与本地共用，坏数据不进仓库）
+│   ├── mark-pipeline.mjs   # 巡检日期唯一写入点：有脚本崩溃则 autoCheck 保持旧值 + pipelineDegraded，供前端与 Actions gate 消费
+│   ├── pending-digest.mjs  # 生成「待人工处理清单」（未决告警全集 / 新线索 / 白嫖异常 / 失效源 → issue-body.md），常驻 daily-triage issue 的数据源
 │   └── publish-via-api.mjs # 走 GitHub API 发布（github.com 被阻断时替代 git push）
 ├── tests/selfcheck.mjs     # 零依赖自检（Node 内建 node:test）：纯函数 / 原子写入 / 幂等性 / 条目抽取与熔断 / 校验负向用例
 ├── docs/screenshots/       # README 配图
 └── .github/workflows/
-    ├── daily-update.yml    # 定时任务（cron 09:00 北京时间，可手动触发）
+    ├── daily-update.yml    # 每日巡检定时任务（cron 设为北京 09:00，调度时点不保证；可手动触发）
     └── validate.yml        # push / PR 时校验数据契约与脚本语法
 ```
 
@@ -339,10 +355,11 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 ├── rss.xml                 # RSS 2.0 feed (auto-generated from changelog.json by the daily inspection)
 ├── css/styles.css          # All styling (dark theme, no framework)
 ├── js/
-│   └── app.js              # Rendering and interaction (tables/cards/calculator/live board/compare/CSV/i18n/price trend/inspection)
+│   ├── freshness.js        # Data-freshness pure-function layer (zero DOM, shared by browser and node:test: age / level / stats / pill & card HTML)
+│   └── app.js              # Rendering and interaction (tables/cards/calculator/live board/compare/CSV/i18n/price trend/inspection/freshness panel)
 ├── data/
 │   ├── manual/             # ⭐ Human-maintained — edit these day to day (then run node scripts/validate.mjs)
-│   │   ├── plans.json          # Subscription plan data: prices / tiers / quotas / pitfalls (includes rate + field docs)
+│   │   ├── plans.json          # Subscription plan data: prices / tiers / quotas / pitfalls + pricedAt/pricedBy provenance (human-edit only; includes rate + field docs)
 │   │   ├── calc-plans.json     # Candidate subscriptions for the cost calculator (monthly price + converted quota)
 │   │   ├── calc-models.json    # Calculator model presets (built-in prices when live matching fails)
 │   │   ├── ide-plans.json      # IDE / editor subscription board
@@ -362,7 +379,7 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 │       ├── listbase.json       # Official page item-level baselines (type: list sources, v7.3)
 │       ├── pricebase.json      # Price / free-model baselines (used for diffing)
 │       ├── transients.json     # Auto-revert trail (pages that returned to their baseline)
-│       └── meta.json           # Last inspection date (shown in the footer and "source health")
+│       └── meta.json           # Inspection date + degraded state (pipelineDegraded/failedSteps written by mark-pipeline.mjs: date does not advance on crash, site header shows "inspection incomplete")
 ├── scripts/
 │   ├── lib.mjs             # Shared helpers: fetch with UA/timeout, JSON IO, source health, minimal RSS parser, keyword matching, minimal HTML item extraction
 │   ├── update-snapshot.mjs # Fallback snapshot
@@ -373,12 +390,14 @@ Any failing step is recorded in `failed_steps` and listed in the issue; **if val
 │   ├── verify-listings.mjs # Daily freebie source-page verification + auto-expiry of promos
 │   ├── record-history.mjs  # Record daily starting-price snapshots (90-day rolling) + price-change alerts
 │   ├── gen-rss.mjs         # Generate the rss.xml feed from the in-site changelog (run after validate in the daily inspection)
-│   ├── validate.mjs        # Data-contract + script syntax validation (used by CI and locally; keeps bad data out)
+│   ├── validate.mjs        # Data-contract (incl. pricedAt/pricedBy provenance) + script syntax validation (used by CI and locally; keeps bad data out)
+│   ├── mark-pipeline.mjs   # Single writer of the inspection date: on script crash keeps the old date + marks pipelineDegraded (consumed by the site and the Actions gate)
+│   ├── pending-digest.mjs  # Builds the human to-do list (unresolved alerts / new leads / freebie anomalies / dead sources → issue-body.md), feeds the persistent daily-triage issue
 │   └── publish-via-api.mjs # Publish through the GitHub API (fallback when github.com is blocked)
 ├── tests/selfcheck.mjs     # Zero-dependency self-check (built-in node:test): pure helpers / atomic writes / idempotency / item extraction & circuit breaker / negative cases
 ├── docs/screenshots/       # README images
 └── .github/workflows/
-    ├── daily-update.yml    # Scheduled job (cron 09:00 Beijing time, manually triggerable)
+    ├── daily-update.yml    # Daily inspection (cron set to 09:00 Beijing time, actual start time not guaranteed; manually triggerable)
     └── validate.yml        # Validates data contracts and script syntax on push / PR
 ```
 

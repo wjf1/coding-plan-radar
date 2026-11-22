@@ -289,7 +289,9 @@
       "url": "https://platform.kimi.com/docs/pricing",
       "tier": "official",
       "type": "page",
-      "enabled": true
+      "enabled": true,
+      "hashMonitors": "layout-only",
+      "layoutOnlyReason": "2026-09-20 实测：253 KB HTML 内无任何价格文本（stripTags 后仅 1370 字符），价格为客户端再取。哈希对比只能发现版式改动，发现不了价格改动。"
     },
     {
       "id": "aliyun-free-quota",
@@ -400,6 +402,8 @@
         "cacheRead": "td:nth(4)"
       },
       "keyField": "name",
+      "hashMonitors": "layout-only",
+      "layoutOnlyReason": "监控字段为模型 API Token 价（输入/输出/缓存读取），不含订阅套餐价；且正文中的套餐价为语音套餐（¥630 / ¥5,950 / ¥56,000），非 Coding Plan 档位。订阅价变化不会触发本源告警。",
       "note": "v7.5 迁移：盯「语言模型」首个价格表（MiniMax-M3.1-Flash 的输入/输出/缓存读取，元/百万 tokens）。页面共 24 个表，nth(1) 依赖表格顺序，页面骨架调整会触发 0 条保护；M3 系列表（标准/优先双列）结构复杂未纳入条目抽取"
     },
     {
@@ -463,6 +467,8 @@
         "quotaWeek": "td:nth(3)"
       },
       "keyField": "name",
+      "hashMonitors": "layout-only",
+      "layoutOnlyReason": "2026-09-20 实测：775 KB HTML 内价格字段命中 0，套餐价为客户端再取；条目级监控盯的是「套餐类型 / 5 小时积分 / 每周积分」额度字段，不含订阅价格。订阅价变化不会触发本源告警。",
       "note": "v7.3 起从整页哈希（page）迁移为条目级比对（list）：该页约 800KB，整页哈希对任何无关改动（文案/导航/样式）都会报警且只说「页面变了」；现在只盯「套餐类型 / 5 小时积分 / 每周积分」表，告警直接给出档位与字段的前后值"
     }
   ],

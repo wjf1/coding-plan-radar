@@ -295,6 +295,15 @@ function setLang(lang){
 }
 function renderAll(){ renderPlans(); renderCards(); renderRepos(); renderIde(); renderChangelog(); renderCalc(); renderTokens(); renderCompare(); }
 
+// 对比表行内核价徽标：日期与新鲜度等级同显，一眼看出「这个数字多久没复核过」。
+// 依赖 js/freshness.js 的 FRESH（本文件之前加载）；pricedAt 缺失时走 unknown 兜底。
+const freshBadge = d => {
+  const lv = FRESH.levelOf(d.pricedAt, Date.now());
+  const cls = lv==="bad"?"b-bad":lv==="warn"?"b-warn":"b-ok";
+  if(lv==="unknown") return '<span class="badge b-warn">核价日期未知</span>';
+  return `<span class="badge ${cls}">核价 ${String(d.pricedAt).slice(5)}</span>`;
+};
+
 /* ================= 订阅计划对比表 ================= */
 function renderPlans(){
   const tbody=document.getElementById("tbody");
@@ -343,7 +352,7 @@ function renderPlans(){
       <td class="models">${esc(d.models)}</td>
       <td class="quota">${esc(d.quota)}</td>
       <td><span class="badge ${cls}">${label}</span></td>
-      <td class="src">${srcType}<br><a href="${safeHref(d.srcUrl)}" target="_blank" rel="noopener noreferrer">${currentLang==="en"?"Source ↗":"来源链接 ↗"}</a></td>
+      <td class="src">${srcType}<br><a href="${safeHref(d.srcUrl)}" target="_blank" rel="noopener noreferrer">${currentLang==="en"?"Source ↗":"来源链接 ↗"}</a><br>${freshBadge(d)}</td>
     </tr>`;
   }).join("");
   // 绑定对比复选框事件
@@ -793,22 +802,36 @@ const safeHref = u => {
 };
 const fetchJSON = async p => (await fetch(p,{cache:"no-cache"})).json();
 
+let LAST_META = { autoCheck: null, degraded: false, failed: [] };
 async function loadAutoMeta(){
   const el=document.getElementById("auto-pill");
-  const dd=document.getElementById("data-date");
-  const fd=document.getElementById("foot-date");
+  const wrap=document.getElementById("auto-wrap");
+  if(!el) return;
   try{
     const m=await fetchJSON("data/auto/meta.json");
-    if(m.autoCheck){
-      if(el) el.textContent="自动巡检："+m.autoCheck;
-      if(dd) dd.textContent=m.autoCheck;
-      if(fd) fd.textContent=m.autoCheck;
+    LAST_META={ autoCheck:m.autoCheck||null, degraded:!!m.pipelineDegraded, failed:m.failedSteps||[] };
+    if(LAST_META.degraded){
+      // 脚本崩溃时巡检日期不推进（mark-pipeline 的约定），页面必须如实说「未完成」，
+      // 不能让「自动巡检：某个旧日期」被读成「今天巡检过了」
+      el.textContent="自动巡检未完成（"+(LAST_META.failed.length?LAST_META.failed.join("、"):"脚本异常")+"）";
+      if(wrap) wrap.classList.add("degraded");
+    } else if(m.autoCheck){
+      el.textContent="自动巡检 "+m.autoCheck;
     }
-  }catch(e){
-    if(el) el.textContent="自动巡检：待首次运行";
-    if(dd) dd.textContent="待首次运行";
-    if(fd) fd.textContent="待首次运行";
-  }
+  }catch(e){ el.textContent="自动巡检：待首次运行"; }
+}
+
+/* ================= 数据新鲜度（js/freshness.js 纯函数层 + pricedAt 溯源字段） ================= */
+async function renderFreshness(){
+  const pill=document.getElementById("fresh-pill");
+  const box=document.getElementById("freshness-box");
+  if(!pill && !box) return;
+  try{
+    if(pill) pill.innerHTML=FRESH.pillHtml(PLAN_DATA, Date.now());
+    if(box) box.innerHTML=FRESH.cardHtml(PLAN_DATA, {
+      now:Date.now(), autoCheck:LAST_META.autoCheck, degraded:LAST_META.degraded, failed:LAST_META.failed,
+    });
+  }catch(e){ if(box) box.innerHTML='<p style="color:var(--dim)">新鲜度面板渲染失败</p>'; }
 }
 
 // 页面变动提醒（alerts.json）：由每日巡检生成并写入每日 issue，不再在首页展示横幅
@@ -1013,20 +1036,28 @@ async function renderSourceHealth(){
   if(!box) return;
   try{
     const j=await fetchJSON("data/auto/sourcehealth.json");
+    // 源声明（data/manual/sources.json）里标注 layout-only 的源：自动巡检发现不了价格变化，
+    // chip 必须如实区分，不能混在「价格在被自动盯着」的绿点里
+    const srcDecl=await fetchJSON("data/manual/sources.json").catch(()=>({pages:[],lists:[]}));
+    const layoutOnly=new Set(
+      ["pages","lists"].flatMap(g=>srcDecl[g]||[]).filter(p=>p.hashMonitors==="layout-only").map(p=>p.id)
+    );
     const list=Object.values(j.sources||{});
     if(!list.length){ box.innerHTML=""; return; }
     const chips=list.map(s=>{
       const dead=s.ok===false&&(s.consecutiveFailures||0)>=3;
+      const lo=layoutOnly.has(s.id);
       const cls=dead?"bad":(s.unstable||s.ok===false)?"warn":"";
-      const extra=dead?"（已失效）":s.unstable?"（需人工核对）":"";
+      const extra=dead?"（已失效）":s.unstable?"（需人工核对）":lo?"（订阅价不在监控范围）":"";
       const tip=dead?`连续 ${s.consecutiveFailures} 天抓取失败${s.error?`（${s.error}）`:""}`
         :s.unstable?"页面内容在多个渲染变体间跳变，哈希对比不可靠，已暂停自动预警，价格需人工核对"
+        :lo?"该源的自动巡检不覆盖订阅套餐价（哈希只能发现版式改动或只盯额度字段），发现不了订阅价变化，价格仍需人工核对"
         :s.ok===false?`上次抓取失败${s.error?`（${s.error}）`:""}`
         :`最后成功 ${s.lastOk||"—"}${s.detail?` · ${s.detail}`:""}`;
-      return `<span class="h-item ${dead?"dead":""}" title="${esc(tip)}"><span class="h-dot ${cls}"></span>${esc(s.label)}${extra}</span>`;
+      return `<span class="h-item ${dead?"dead":""}${lo?" layout-only":""}" title="${esc(tip)}"><span class="h-dot ${cls}"></span>${esc(s.label)}${extra}</span>`;
     }).join("");
     box.innerHTML=`<div class="health">${chips}</div>
-      <p style="font-size:12px;color:var(--dim);margin-top:8px">绿点＝最近一次抓取成功；黄点＝失败未达阈值，或该页内容不稳定（已暂停自动预警、需人工核对）；红点＝连续 3 天失败，判定为<b>已失效</b>——站点会如实标注，不再假装该源在正常工作。巡检时间：${esc(j.updatedAt||"—")}。抓不到的源不会硬撑：LINUX DO 与 V2EX 经双环境实测均无法获取（403 / 空响应，数据中心 IP 被拦截），已从清单停用并改为人工巡览，详见页面末尾「数据说明」。</p>`;
+      <p style="font-size:12px;color:var(--dim);margin-top:8px">绿点＝最近一次抓取成功；黄点＝失败未达阈值，或该页内容不稳定（已暂停自动预警、需人工核对）；红点＝连续 3 天失败，判定为<b>已失效</b>——站点会如实标注，不再假装该源在正常工作。<b>虚线灰底＝该源的自动巡检不覆盖订阅套餐价</b>（价格在客户端再取或监控字段不含订阅价，价格变动不会触发告警），价格仍需人工核对。巡检时间：${esc(j.updatedAt||"—")}。抓不到的源不会硬撑：LINUX DO 与 V2EX 经双环境实测均无法获取（403 / 空响应，数据中心 IP 被拦截），已从清单停用并改为人工巡览，详见页面末尾「数据说明」。</p>`;
   }catch(e){ box.innerHTML=""; }
 }
 
@@ -1041,7 +1072,7 @@ bind();
   const platDesc=document.getElementById("st-plat-desc");
   if(platDesc) platDesc.textContent=platCount;
   document.getElementById("st-tier").textContent=PLAN_DATA.reduce((s,d)=>s+d.tiers.length,0);
-  loadAutoMeta();
+  loadAutoMeta().then(renderFreshness);
   // 应用 URL 恢复的状态
   document.querySelectorAll(".chip[data-filter]").forEach(x=>{x.classList.toggle("on",x.dataset.filter===planFilter);x.setAttribute("aria-pressed",x.dataset.filter===planFilter);});
   document.getElementById("search").value=planQuery;
