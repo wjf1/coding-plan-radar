@@ -7,6 +7,27 @@
 
 ## [Unreleased]
 
+## [v7.7] - 2026-11-23
+
+### 新增
+
+- **P0：数据新鲜度面板与巡检状态如实化**（承接 #16 的架构适配重写，PR #74）：
+  - **溯源字段**：`data/manual/plans.json` 全部 20 条补 `pricedAt` / `pricedBy`——「价格何时由谁核的」首次可查（12 条自 v7.4 时代数据实值迁入、8 条按 spec §2.1 从 srcNote 既有采集记录得出，未触碰任何价格/倍率数字）；
+  - **纯函数新鲜度层** `js/freshness.js`：零 DOM、`globalThis.FRESH`、node:test 可测（FRESH_DAYS=30 / STALE_DAYS=60），同时服务浏览器与 Node 测试；
+  - **前端如实渲染**：头部双 pill（自动巡检 / 价格核价）、新鲜度卡（0/30/60+ 三档统计 + 19 段分布条 + 按核价日排序表格）、对比表逐行核价徽标、页脚去静态日期；
+  - **管道诚实化**：`scripts/mark-pipeline.mjs` 区分「源抓不到」（数据问题，不红）与「脚本崩溃」（代码 bug，必须红）；`pending-digest.mjs` 改造为 triage 常驻 issue（未决集全量、挂起天数）；
+  - `daily-update.yml` 步骤 id 化、按崩溃集合条件写 `meta.json`、常驻 issue 失败信息并入。
+
+### 变更
+
+- 全库行尾规范化：17 个历史文件的 CRLF → LF（`publish-via-api` 全量上传链路的跨平台安全基线）。
+
+### 修复
+
+- **pending-digest 收敛口径 bug**：待办条目判定 `detected === today` 导致历史未决项次日即从 digest 消失——改为 `!resolved` 判定并标注挂起天数。
+
+> 注：合并后站点价格核价 pill 将如实显示全红——全部核价记录已 60+ 天未复核，为数据真实状态，需人工复核后更新 `pricedAt`。
+
 ## [v7.6] - 2026-11-22
 
 ### 新增
