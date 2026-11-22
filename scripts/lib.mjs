@@ -39,17 +39,40 @@ export const writeFileAtomic = (p, text) => {
   }
 };
 
-/** 抓取文本；失败抛出带可读信息的错误，绝不返回空字符串让人误以为成功 */
-export async function fetchText(url, { timeout = TIMEOUT_MS, headers = {} } = {}) {
-  const res = await fetch(url, {
-    headers: { "user-agent": UA, accept: "*/*", ...headers },
-    signal: AbortSignal.timeout(timeout),
-    redirect: "follow",
-  });
-  const text = await res.text();
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  if (!text.trim()) throw new Error(`HTTP ${res.status} 但响应体为空`);
-  return { text, status: res.status };
+/** 抓取文本；失败抛出带可读信息的错误，绝不返回空字符串让人误以为成功。
+ * 瞬时失败（网络错误 / 超时 / 429 / 5xx / 空响应体）按指数退避重试（默认 2 次，0.5s/2s），
+ * 确定性失败（其余 4xx）立即抛出——此前单次失败即计入健康失败，瞬时抖动会污染
+ * consecutiveFailures（连续 3 天即误标「已失效」）。 */
+export async function fetchText(url, { timeout = TIMEOUT_MS, headers = {}, retries = 2, retryBaseMs = 500 } = {}) {
+  let lastErr;
+  for (let attempt = 1; attempt <= retries + 1; attempt++) {
+    if (attempt > 1) await new Promise((r) => setTimeout(r, retryBaseMs * 2 ** (attempt - 2)));
+    try {
+      const res = await fetch(url, {
+        headers: { "user-agent": UA, accept: "*/*", ...headers },
+        signal: AbortSignal.timeout(timeout),
+        redirect: "follow",
+      });
+      const text = await res.text();
+      if (!res.ok) {
+        const err = new Error(`HTTP ${res.status}`);
+        err.retryable = res.status === 429 || res.status >= 500;
+        throw err;
+      }
+      if (!text.trim()) {
+        const err = new Error(`HTTP ${res.status} 但响应体为空`);
+        err.retryable = true;
+        throw err;
+      }
+      return { text, status: res.status };
+    } catch (e) {
+      lastErr = e;
+      // 网络层失败（TypeError: fetch failed）与超时（TimeoutError/AbortError）视为瞬时可重试
+      e.retryable = e.retryable || e instanceof TypeError || e.name === "TimeoutError" || e.name === "AbortError";
+      if (!e.retryable || attempt > retries) throw e;
+    }
+  }
+  throw lastErr;
 }
 
 /** GitHub API 请求头：有 GITHUB_TOKEN 时用上（未认证仅 60 次/小时，Actions 里务必带上） */

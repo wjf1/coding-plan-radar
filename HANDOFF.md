@@ -58,9 +58,17 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 单文件失败只让对应板块为空（`loadJSONOr`）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
-## 最近一轮变更与交付成果（v7.5，2026-10-31）
+## 最近一轮变更与交付成果（抓取层加固，2026-11-22）
 
-### v7.5 —— 条目级监控铺开（11 个 page 源逐个评估迁移）+ 缓存 schema 版本化 + CONTRIBUTING
+### 本轮 —— 抓取超时 / 重试 / 硬超时补齐（后端设计专项分析发现的 P1，未打版本号）
+
+- **update-snapshot.mjs**：models.dev 的裸 `fetch` 改走 `fetchText`（此前全链路唯一无超时抓取点，源挂起会阻塞整条巡检直至 job 被墙钟杀、失败汇总与告警全失效）。
+- **lib.mjs `fetchText`**：补指数退避重试（默认 2 次，0.5s/2s）——网络错误/超时/429/5xx/空响应体可重试，其余 4xx 立即抛；消除「单次抖动污染 `consecutiveFailures`、连续 3 天误标已失效」。
+- **daily-update.yml**：update job 加 `timeout-minutes: 30`。
+- **验证**：行为桩测试 3 项（404 不重试 / 5xx 重试成功 / 正常路径不变）；`node scripts/validate.mjs` 通过。
+- **遗留（本轮未做）**：check-pages 五态状态机零测试、反爬特征表双份维护分叉、alerts.json 无界增长、api 源未配置化——见后端设计分析报告 P1/P2 清单。
+
+### 上一轮：v7.5 —— 条目级监控铺开（11 个 page 源逐个评估迁移）+ 缓存 schema 版本化 + CONTRIBUTING（2026-10-31）
 
 **背景**：v7.3 只迁移了 GLM 文档页一个试点，Backlog 留有「其余 11 个 page 源逐个迁移，
 每个先 probe 验证稳定才迁，SPA 空壳 / Cloudflare 拦截页不要尝试」的待办。本轮逐源抓取分析 SSR 结构后完成。

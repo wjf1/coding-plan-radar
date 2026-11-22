@@ -19,6 +19,9 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    # 硬超时兜底：抓取脚本已各自带 25s 请求超时，这里防的是流程级挂起（如 apt/网络层卡死）
+    # 吞掉 360 分钟默认墙钟——失败汇总与 issue 告警机制依赖本 job 正常走到失败分支
+    timeout-minutes: 30
     outputs:
       has_failure: ${{ steps.outcomes.outputs.has_failure }}
     steps:

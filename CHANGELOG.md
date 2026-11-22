@@ -60,6 +60,7 @@
 
 ### 变更
 
+- **抓取层超时与重试补齐（后端设计专项分析发现的 P1）**：① `update-snapshot.mjs` 对 models.dev 的裸 `fetch` 改走 `fetchText`——此前是全链路唯一无超时的抓取点，该源挂起会阻塞整条巡检链直至 job 被 360 分钟默认墙钟杀掉（失败汇总与 issue 告警全部失效，当天巡检全丢），现与其余脚本同口径（25s 超时 + 瞬时失败退避重试）；② `lib.mjs` 的 `fetchText` 补指数退避重试（默认 2 次，0.5s/2s）——网络错误 / 超时 / 429 / 5xx / 空响应体视为瞬时可重试，其余 4xx 确定性失败立即抛出；此前单次失败即计入健康失败，瞬时抖动会污染 `consecutiveFailures`（连续 3 天误标「已失效」）；③ `daily-update.yml` 的 update job 加 `timeout-minutes: 30` 硬超时兜底。行为桩测试验证：404 单次命中立即抛（无重试）、5xx 重试 2 次后成功、正常路径不受影响；`node scripts/validate.mjs` 通过。
 - **page 源条目级选择器迁移（v7.3 条目级监控的第二批，GLM 文档页试点后推进）**：6 个 page 源完成
   page → list 迁移，全部经 `node scripts/probe-source.mjs <id>` 预览验证后落配置：
   - `copilot`：盯第一个「Plan / Pricing / GitHub AI Credits」总览表，实测抽出 8 条

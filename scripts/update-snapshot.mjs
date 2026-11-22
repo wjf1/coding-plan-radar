@@ -1,6 +1,6 @@
 // 每日任务①：从 models.dev 重新生成 data/auto/snapshot.json（兜底快照，与线上实时数据同源）
 // 由 .github/workflows/daily-update.yml 每天调度，也可手动运行：node scripts/update-snapshot.mjs
-import { writeJSON } from "./lib.mjs";
+import { fetchText, writeJSON } from "./lib.mjs";
 
 const PROV = {
   anthropic:"Anthropic", openai:"OpenAI", google:"Google", zhipuai:"智谱", zai:"Z.ai",
@@ -12,7 +12,9 @@ const KW = ["claude sonnet","claude opus","claude fable","claude haiku","gpt-5",
             "minimax-m","deepseek v4","gemini-3","grok 4","doubao-seed-2","qwen3","mimo-v2"];
 const OUT_PRICE_CAP = 60;
 
-const api = await (await fetch("https://models.dev/api.json")).json();
+// 走 fetchText：此前是裸 fetch 无超时——该源挂起会阻塞整条巡检链直至 job 被墙钟杀掉（当天巡检全丢），
+// 现在自带 25s 超时与瞬时失败退避重试，与其余抓取脚本同口径
+const api = JSON.parse((await fetchText("https://models.dev/api.json")).text);
 const rows = [];
 for (const [pid, label] of Object.entries(PROV)) {
   const pv = api[pid];
