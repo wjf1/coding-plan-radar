@@ -7,6 +7,8 @@
 
 ## [Unreleased]
 
+## [v7.6] - 2026-11-22
+
 ### 新增
 
 - **平台深链**：`?p=<平台名>`（如 `?p=Claude`，兼容 `#plan-<名>`）——数据渲染完成后滚动定位到该平台卡片并高亮 2.4s，每平台一个可分享 / 可收录的独立 URL。卡片 DOM 按 `encodeURIComponent(name)` 生成锚点 id，深链解析失败静默跳过不影响正常渲染。README 中英双语补深链用法与 methodology.html 链接。

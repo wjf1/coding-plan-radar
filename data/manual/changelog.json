@@ -1,5 +1,10 @@
 [
  {
+  "date": "2026-11-22",
+  "v": "v7.6",
+  "text": "平台深链（?p=<平台名>，兼容 #plan-<名> 锚点）与额度倍率估算方法论独立页（methodology.html，三级口径 / 字段对照 / 局限声明全公开）、RSS 订阅源（gen-rss.mjs 生成 rss.xml，README 补五个 JSON 数据直链）、IDE 榜对照 awesome-coding-plan 全量复检；修复：核心数据加载失败新增错误横幅与重试（不再把加载失败伪装成空结果）、可排序表头键盘可达（th 内 button.th-sort，tokens 表头与排序下拉同步）、FAQ 降级文案改动态表述。验证：validate 通过、selfcheck 全绿、methodology 结构断言全绿。"
+ },
+ {
   "date": "2026-10-31",
   "v": "v7.5",
   "text": "条目级监控铺开 + 缓存 schema 版本化 + 贡献指南。①6 个 page 源完成 page → list 迁移（copilot / trae / minimax / iflytek-tokenplan / tencent-tokenplan / aliyun-coding-plan），全部先跑 probe-source.mjs 预览验证再落配置，此后这些页只报「哪个档位哪个字段从什么变成什么」；另有 5 个源（kimi / aliyun-free-quota / aliyun-university / baidu-qianfan / xiaomi-mimo）逐源评估后不迁移，原因写进 CHANGELOG（客户端渲染、散文页、营销轮播、已无价格内容、SPA 空壳），不做「看起来在监控」的假象。②models.dev 本地缓存引入 CACHE_SCHEMA = 2：写入带 schema 字段，读取时 schema 不匹配 / 过期 / 解析损坏一律弃用重取，不再有结构变更后读到旧结构的问题。③新增 CONTRIBUTING.md（零依赖环境、校验与自检、数据修改规范含价格红线、PR 流程）。验证：validate 通过、selfcheck 24/24。"
