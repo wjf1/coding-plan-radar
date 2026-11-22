@@ -1,6 +1,20 @@
 {
- "generatedAt": "2026-11-21",
+ "generatedAt": "2026-11-22",
  "items": [
+  {
+   "id": "ithome:bd43498924",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "《我的世界》PC 版游戏价格再度调整，国区 110.99 元 → 76.99 元",
+   "excerpt": "<p data-vmark=\"4511\">IT之家 11 月 22 日消息，微软现已在 Microsoft Store 国区应用商店对《我的世界》PC 版游戏进行价格调整，<strong>价格由原本的 110.99 元降为 76.99 元</strong>。（IT之家附商品页：<a href=\"https://www.xbox.com/zh-CN/games/store/minecraft-java-bedrock-edition-for-pc/9nxp44l49shj\">购买 Minecraft: Java & Bedrock Edition for PC | XBOX</a>）</p><p…",
+   "url": "https://www.ithome.com/1/030/557.htm",
+   "date": "Sun, 22 Nov 2026 03:19:57 GMT",
+   "firstSeen": "2026-11-22",
+   "lastSeen": "2026-11-22"
+  },
   {
    "id": "ithome:34a03f4724",
    "source": "ithome",
@@ -41,7 +55,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/9432d51389b6f16b484e0167719d6b30e009e949",
    "date": "2026-11-19T10:12:30Z",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:1b5cc62d33",
@@ -69,7 +83,7 @@
    "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
    "date": "Thu, 19 Nov 2026 16:37:00 +0000",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "ithome:16130e6424",
@@ -139,7 +153,7 @@
    "url": "https://sspai.com/prime/story/system-app-protection-override-macos-27-3",
    "date": "Thu, 19 Nov 2026 15:34:11 +0800",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "gh-changelog:6fe702665a",
@@ -153,7 +167,7 @@
    "url": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
    "date": "Wed, 18 Nov 2026 22:04:50 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "gh-changelog:76c38abb48",
@@ -195,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -223,7 +237,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/cdc76175b0a40a9274356ce690b44bd058b8afde",
    "date": "2026-11-17T15:47:48Z",
    "firstSeen": "2026-11-18",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "gh-changelog:e024c1555c",
@@ -447,7 +461,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -671,7 +685,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -685,7 +699,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -741,7 +755,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -755,7 +769,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -769,7 +783,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -797,7 +811,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -867,7 +881,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:34fbe14433",
@@ -881,7 +895,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "ithome:8dc99af724",
@@ -979,7 +993,7 @@
    "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
    "date": "Tue, 10 Nov 2026 21:47:48 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "gh-changelog:78f6f56362",
@@ -1035,7 +1049,7 @@
    "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
    "date": "Tue, 10 Nov 2026 17:55:03 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "openrouter:00eb82f842",
@@ -1091,7 +1105,7 @@
    "url": "https://www.githubstatus.com/incidents/6jm5k16vyhfg",
    "date": "Tue, 10 Nov 2026 00:05:52 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:6d987e7733",
@@ -1105,7 +1119,7 @@
    "url": "https://www.githubstatus.com/incidents/tp8cghg7tlc4",
    "date": "Mon, 09 Nov 2026 18:59:32 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:4ced8ef333",
@@ -1119,7 +1133,7 @@
    "url": "https://www.githubstatus.com/incidents/xxb3l2bm76dr",
    "date": "Mon, 09 Nov 2026 11:50:35 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:1b741bff33",
@@ -1189,7 +1203,7 @@
    "url": "https://status.claude.com/incidents/kw2lxj1th04c",
    "date": "Sun, 08 Nov 2026 08:54:43 +0000",
    "firstSeen": "2026-11-09",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-22"
   },
   {
    "id": "github-status:a933ca3733",
