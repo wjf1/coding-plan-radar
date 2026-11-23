@@ -7,6 +7,18 @@
 
 ## [Unreleased]
 
+### 变更
+
+- **英文界面覆盖补全（i18n）**：此前切到 EN 后仅 hero 与工具栏为英文，五个动态渲染区块仍整块中文，双语定位形同半成品。本轮补全：`renderCards`（额度倍率 / 5 小时·每周·每月额度 / 实测速度 / 坑点 / 核心模型 / 额度口径 / 查看来源 / 平台地区）、`renderCalc`（计价行、三种结论句式、表头与够用/不够/未知徽标）、`FREEBIE_STATUS`（五档核对状态）、`renderSignals`（三板块标题·说明·空态）+ `sigRow`（发现时间/原文时间）、`renderSourceHealth`（失效/核对/不监控后缀、四类 tooltip、图例长文）、`renderPromos`（来源待补、已结束、截止/生效、待重新核实、机器线索、待人工确认、暂无记录）与 `TIER_MAP` 引擎徽标；新增约 60 组词条（中英成对）。数据内容（平台额度描述、线索标题、源名称）按既有约定不翻译；价格串（如 `$8 / 月（Go）`）在英文界面经 `localizePriceStr()` 做展示层本地化，数据源不动；promos 的 `statusMap` 中文标签在英文界面按 kind 映射（Promo / Delisted / Price change）。
+- **`priceTrendHTML` 全角冒号**：价格趋势标签原硬编码中文全角「：」，英文界面显示为 `Price Trend：`，改为按语言取 `": "` / `"："`。
+- **`renderPlans` 状态标签**：表格状态列改用 `statusLabel()` 走 I18N（`statusOk/statusPromo/statusBad`），与卡片视图口径统一；`renderIde` 的「社区推荐」徽标接 `ideRecommended`。
+
+### 验证
+
+- `node --check js/app.js` 通过；`node tests/selfcheck.mjs` **24/24** 通过。
+- 真实浏览器走查（临时 http.server + chrome-devtools，`?lang=en`）：五个目标区块的**文案骨架**全部为英文——卡片 kv 标签（`Core models:` / `Quota:` / `Quota ratio:` / `Price Trend:` / `Measured speed:`）、额度周期（`5-hour quota` / `Weekly quota` / `Monthly quota`）、tagline（`From $8 / mo (Go) · International`）、计价行（`Effective pricing: $1.19516 in / $4.18306 out per 1M tokens (models.dev live)`）、计算器表头与结论、三板块标题与说明、源健康图例、白嫖额度/门槛/核对行、促销徽标（`Delisted` / `Price change` / `Ended`）与时间线（`machine lead` / `Source: `）均确认英文；残留 CJK 仅来自数据内容（平台额度描述、线索标题、源名）与未接入 i18n 的静态 FAQ/数据说明长段落（既有缺口，见 HANDOFF 待办）。
+- 切回 zh 复核：卡片标签、计价行、计算器表头、信号板块标题、白嫖 kv、促销徽标与改前逐字一致（中文文案零漂移）。
+
 ## [v7.7] - 2026-11-23
 
 ### 新增

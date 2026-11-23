@@ -32,6 +32,9 @@ const OFFICIAL_PROVIDERS = {
 const CN_PROVIDERS = new Set(["zhipuai","zai","moonshotai","minimax","deepseek","volcengine","xiaomi","alibaba"]);
 
 const statusMap = { ok:["b-ok","正常"], promo:["b-warn","促销中"], bad:["b-bad","已停售"] };
+// 状态徽标文案随语言切换（zh 走 statusMap 原值、en 走 I18N 词条）；exportCSV 保持中文表头口径不动
+const STATUS_KEYS={ok:"statusOk",promo:"statusPromo",bad:"statusBad"};
+const statusLabel = s => STATUS_KEYS[s] ? t(STATUS_KEYS[s]) : s;
 let planFilter="all", planSort="ratio", planQuery="";
 let tFilter="all", tToolOnly=true, tSort="out", tQuery="";
 let modelRows=[]; // {p,pid,id,n,i,o,c,t,r}
@@ -171,6 +174,9 @@ const I18N={
     platform:"平台", startPrice:"起步价（付费档）", ratio:"额度倍率 ↑ 性价比",
     coreModels:"核心模型", quota:"额度口径", status:"状态", dataSource:"数据来源",
     official:"官方直采", agg:"聚合参考",
+    intlRegion:"国际平台", cnRegion:"国内平台",
+    tierOfficial:"官方直采", tierRealtime:"实时数据源", tierAgg:"聚合参考", tierCommunity:"社区情报",
+    ideRecommended:"社区推荐",
     compareBtn:"加入对比", compareClear:"清空对比", compareView:"查看对比",
     compareEmpty:"请勾选 2-4 个平台进行对比",
     exportCSV:"导出 CSV",
@@ -202,6 +208,49 @@ const I18N={
     priceTrend:"价格趋势", priceChange30:"近 30 天变动", priceUp:"↑ 涨价", priceDown:"↓ 降价", priceStable:"— 持平",
     planEmpty:"没有匹配的平台。", planEmptyReset:"清空搜索与筛选", compareLimit:"最多同时对比 4 个平台，请先取消一个。",
     planEmptyNeutral:"暂无数据。", sortTap:"点击切换排序", sortCurAsc:"当前升序", sortCurDesc:"当前降序",
+    statusOk:"正常", statusPromo:"促销中", statusBad:"已停售",
+    tierRealtime:"实时数据源", tierCommunity:"社区情报",
+    cardTagline:"{price} 起 · {region}",
+    cardRatio:"额度倍率：", cardRatioTail:"（{tier}，社区折算口径）",
+    cardH5:"5 小时额度", cardWeekly:"每周额度", cardMonthly:"每月额度",
+    cardSpeed:"实测速度：", cardSpeedTail:"（awesome-coding-plan 实测口径）",
+    cardPitfallLabel:"坑点与社区反馈：", cardModelsLabel:"核心模型：", cardQuotaLabel:"额度口径：",
+    viewSource:"查看来源 ↗",
+    calcPriceLine:"实际计价：输入 ${i} / 输出 ${o} 每百万 tokens",
+    calcPriceLive:"（models.dev 实时）", calcPriceBuiltin:"（内置价）",
+    calcVerdictSubHead:"💡 <b>建议订阅：{name}（{price}/月）</b><br>",
+    calcVerdictSubBody:"你的用量按 API 计费约 <b>{cost}/月</b>，是订阅价的 <b>{x} 倍</b>；该档月额度（{note}）可覆盖你的用量。可再对照速度与坑点选择次便宜的合适档。",
+    calcVerdictApiHead:"💡 <b>建议按量计费（API）</b><br>",
+    calcVerdictApiBody:"你的用量按 API 计费约 <b>{cost}/月</b>，低于最便宜的合适订阅（{name} {price}/月）。经济档模型（如 DeepSeek V4 Flash，输出 $0.6/M）+ 按量付费对你更省钱。",
+    calcVerdictHybridHead:"💡 <b>建议订阅 + 超出按量</b><br>",
+    calcVerdictHybridBody:"API 成本约 {cost}/月；没有已折算额度的订阅能完全覆盖，选低价档（如 OpenCode Go / Cursor Pro）覆盖日常、峰值按量后付。",
+    calcThPlan:"候选订阅", calcThFee:"月费", calcThQuota:"月额度（社区折算）", calcThFit:"覆盖你的用量?",
+    calcFitOk:"够用", calcFitBad:"不够", calcFitUnknown:"未知",
+    freeLimit:"额度：", freeRequires:"门槛：", freeChecked:"核对 {d} · 证据：{e}",
+    freeRetiredText:"{name} 已失效，不要再照着旧教程折腾", freeOfficialLink:"官方说明 ↗",
+    freeLoadError:"白嫖数据加载失败（data/manual/freebies.json）",
+    freeStOk:"✓ 来源页核对正常", freeStWarn:"⚠ 来源页本次抓取失败，观察中",
+    freeStChanged:"⚠ 来源页特征有变化，待人工复核", freeStStale:"⛔ 来源页连续无法访问，待人工复核",
+    freeStManual:"需人工核对",
+    sigPromoHead:"促销 / 价格 / 停售相关线索（{n}）",
+    sigPromoDesc:"来自官方 changelog、价格库与免费模型清单的机器线索。<b>机器只负责发现，未经人工确认不会写进价格表。</b>",
+    sigAvailHead:"官方状态页事件（{n}）",
+    sigAvailDesc:"仅服务可用性事件，用来<b>证伪或证实「降级 / 停售」类传言</b>；与促销无关，故单独列出不混排。",
+    sigCommHead:"社区情报线索（{n}）",
+    sigCommDesc:"黄色标注，<b>仅作线索提示，不作为数据结论</b>。若长期为空，请查看下方「信息源健康」，那里会如实显示哪个源没抓到东西。",
+    sigNone:"暂无线索", sigNoEvents:"暂无事件",
+    sigLoadError:"线索数据尚未生成（data/auto/signals.json），首次自动巡检后出现。",
+    promoLoadError:"动态数据加载失败（data/manual/promos.json）",
+    promoSrcTbd:"来源待补", promoEnded:"已结束", promoUntil:"截止", promoFrom:"生效",
+    promoReverify:"待重新核实", promoSource:"来源：", promoMachineLead:"机器线索",
+    promoPendingHuman:"待人工确认", promoNoRecords:"暂无记录",
+    sigSeen:"本站发现于 {d}", sigOrigDate:"原文时间 {d}",
+    shDead:"（已失效）", shReview:"（需人工核对）", shLayoutOnly:"（订阅价不在监控范围）",
+    shTipDead:"连续 {n} 天抓取失败",
+    shTipUnstable:"页面内容在多个渲染变体间跳变，哈希对比不可靠，已暂停自动预警，价格需人工核对",
+    shTipLayoutOnly:"该源的自动巡检不覆盖订阅套餐价（哈希只能发现版式改动或只盯额度字段），发现不了订阅价变化，价格仍需人工核对",
+    shTipFail:"上次抓取失败", shTipOk:"最后成功 {d}",
+    shLegend:"绿点＝最近一次抓取成功；黄点＝失败未达阈值，或该页内容不稳定（已暂停自动预警、需人工核对）；红点＝连续 3 天失败，判定为<b>已失效</b>——站点会如实标注，不再假装该源在正常工作。<b>虚线灰底＝该源的自动巡检不覆盖订阅套餐价</b>（价格在客户端再取或监控字段不含订阅价，价格变动不会触发告警），价格仍需人工核对。巡检时间：{time}。抓不到的源不会硬撑：LINUX DO 与 V2EX 经双环境实测均无法获取（403 / 空响应，数据中心 IP 被拦截），已从清单停用并改为人工巡览，详见页面末尾「数据说明」。",
   },
   en:{
     langLabel:"中文",
@@ -216,6 +265,9 @@ const I18N={
     platform:"Platform", startPrice:"Starting Price", ratio:"Quota Ratio ↑ Value",
     coreModels:"Core Models", quota:"Quota", status:"Status", dataSource:"Data Source",
     official:"Official", agg:"Aggregated",
+    intlRegion:"International", cnRegion:"China",
+    tierOfficial:"Official source", tierRealtime:"Real-time source", tierAgg:"Aggregated", tierCommunity:"Community intel",
+    ideRecommended:"Community pick",
     compareBtn:"Compare", compareClear:"Clear", compareView:"View Compare",
     compareEmpty:"Select 2-4 platforms to compare",
     exportCSV:"Export CSV",
@@ -247,6 +299,49 @@ const I18N={
     priceTrend:"Price Trend", priceChange30:"30-day change", priceUp:"↑ Up", priceDown:"↓ Down", priceStable:"— Stable",
     planEmpty:"No matching platforms.", planEmptyReset:"Clear search & filters", compareLimit:"Compare up to 4 platforms at a time; deselect one first.",
     planEmptyNeutral:"No data available.", sortTap:"click to sort", sortCurAsc:"currently ascending", sortCurDesc:"currently descending",
+    statusOk:"Active", statusPromo:"Promo", statusBad:"Delisted",
+    tierRealtime:"Real-time source", tierCommunity:"Community intel",
+    cardTagline:"From {price} · {region}",
+    cardRatio:"Quota ratio: ", cardRatioTail:" ({tier}, community-derived estimate)",
+    cardH5:"5-hour quota", cardWeekly:"Weekly quota", cardMonthly:"Monthly quota",
+    cardSpeed:"Measured speed: ", cardSpeedTail:" (per awesome-coding-plan field tests)",
+    cardPitfallLabel:"Pitfalls & community feedback: ", cardModelsLabel:"Core models: ", cardQuotaLabel:"Quota: ",
+    viewSource:"View source ↗",
+    calcPriceLine:"Effective pricing: ${i} in / ${o} out per 1M tokens",
+    calcPriceLive:" (models.dev live)", calcPriceBuiltin:" (built-in rates)",
+    calcVerdictSubHead:"💡 <b>Subscribe to {name} ({price}/mo)</b><br>",
+    calcVerdictSubBody:"Your usage costs about <b>{cost}/mo</b> on API — <b>{x}×</b> the subscription price; this tier's monthly quota ({note}) covers your usage. Compare speed and pitfalls before picking the next-cheaper suitable tier.",
+    calcVerdictApiHead:"💡 <b>Pay as you go (API)</b><br>",
+    calcVerdictApiBody:"Your usage costs about <b>{cost}/mo</b> on API — below the cheapest suitable subscription ({name} {price}/mo). A budget model (e.g. DeepSeek V4 Flash at $0.6/M output) plus pay-as-you-go saves you more.",
+    calcVerdictHybridHead:"💡 <b>Subscribe + pay as you go for overflow</b><br>",
+    calcVerdictHybridBody:"API cost ≈ {cost}/mo; no subscription with a derived quota fully covers your usage — pick a low tier (e.g. OpenCode Go / Cursor Pro) for daily use and pay as you go for peaks.",
+    calcThPlan:"Candidate plan", calcThFee:"Monthly fee", calcThQuota:"Monthly quota (community-derived)", calcThFit:"Covers your usage?",
+    calcFitOk:"Fits", calcFitBad:"Falls short", calcFitUnknown:"Unknown",
+    freeLimit:"Quota: ", freeRequires:"Requirements: ", freeChecked:"Checked {d} · Evidence: {e}",
+    freeRetiredText:"{name} no longer works — don't follow outdated guides", freeOfficialLink:"Official notice ↗",
+    freeLoadError:"Failed to load freebie data (data/manual/freebies.json)",
+    freeStOk:"✓ Source page verified", freeStWarn:"⚠ Source fetch failed this run; monitoring",
+    freeStChanged:"⚠ Source page changed; pending manual review", freeStStale:"⛔ Source unreachable repeatedly; pending manual review",
+    freeStManual:"Needs manual review",
+    sigPromoHead:"Promo / pricing / delisting signals ({n})",
+    sigPromoDesc:"Machine-discovered leads from official changelogs, price repos and free-model lists. <b>Machines only discover — nothing enters the price table without human confirmation.</b>",
+    sigAvailHead:"Official status-page events ({n})",
+    sigAvailDesc:"Service availability events only, used to <b>confirm or refute \"degradation / delisting\" rumors</b>; unrelated to promos, so listed separately.",
+    sigCommHead:"Community intel signals ({n})",
+    sigCommDesc:"Marked yellow and <b>for leads only — never used as data conclusions</b>. If this stays empty, check Source Health below: it honestly shows which source failed.",
+    sigNone:"No signals yet", sigNoEvents:"No events yet",
+    sigLoadError:"Signals have not been generated yet (data/auto/signals.json); they appear after the first automated patrol.",
+    promoLoadError:"Failed to load dynamic data (data/manual/promos.json)",
+    promoSrcTbd:"source TBD", promoEnded:"Ended", promoUntil:"until", promoFrom:"from",
+    promoReverify:"pending re-verification", promoSource:"Source: ", promoMachineLead:"machine lead",
+    promoPendingHuman:"pending manual confirmation", promoNoRecords:"No records yet",
+    sigSeen:"first seen here {d}", sigOrigDate:"published {d}",
+    shDead:" (dead)", shReview:" (needs manual review)", shLayoutOnly:" (subscription prices not monitored)",
+    shTipDead:"Failed {n} days in a row",
+    shTipUnstable:"Page content flips between render variants, making hash comparison unreliable — auto-alerts paused, verify prices manually",
+    shTipLayoutOnly:"This source's automated patrol doesn't cover subscription plan prices (hashes only detect layout changes or watch quota fields); price changes go undetected — verify prices manually",
+    shTipFail:"Last fetch failed", shTipOk:"Last success {d}",
+    shLegend:"Green dot = last fetch succeeded; yellow = failures below threshold, or an unstable page (auto-alerts paused, needs manual review); red = 3 consecutive failures, marked <b>dead</b> — the site states this honestly instead of pretending the source still works. <b>Dashed grey = this source's automated patrol doesn't cover subscription plan prices</b> (prices are fetched client-side or the monitored fields exclude plan prices, so price changes trigger no alert); verify prices manually. Last patrol: {time}. Sources that can't be fetched are never faked: LINUX DO and V2EX are unreachable in dual-environment tests (403 / empty responses — datacenter IPs blocked), so they've been retired from the list and are browsed manually; see Data Policy at the bottom of the page.",
   }
 };
 function t(key, vars){
@@ -334,7 +429,8 @@ function renderPlans(){
     return;
   }
   tbody.innerHTML=rows.map(d=>{
-    const [cls,label]=statusMap[d.status];
+    const cls=(statusMap[d.status]||["",""])[0];
+    const label=statusLabel(d.status);
     const regionTag=d.region==="intl"?(currentLang==="en"?"International":"国际"):(currentLang==="en"?"China":"国内");
     const srcType=d.srcType==="official"
       ?'<span class="srcbadge src-official">'+t("official")+'</span>'
@@ -456,7 +552,7 @@ function priceTrendHTML(name){
   if(change>1) label=t("priceUp")+` ${absChange}%`;
   else if(change<-1) label=t("priceDown")+` ${absChange}%`;
   const svg=sparklineSVG(points, 100, 28);
-  return `<div class="kv" style="font-size:12.5px"><b>${t("priceTrend")}：</b>${svg}<span style="margin-left:6px;color:${change>1?'#ff6b6b':change<-1?'#51cf66':'var(--dim)'}">${label}</span></div>`;
+  return `<div class="kv" style="font-size:12.5px"><b>${t("priceTrend")}${currentLang==="en"?": ":"："}</b>${svg}<span style="margin-left:6px;color:${change>1?'#ff6b6b':change<-1?'#51cf66':'var(--dim)'}">${label}</span></div>`;
 }
 
 /* ================= 多选对比视图（item 9） ================= */
@@ -476,37 +572,48 @@ function renderCompare(){
     {k:currentLang==="en"?"Quota Ratio":"额度倍率", v:items.map(d=>d.ratio?d.ratio+"×":"—")},
     {k:currentLang==="en"?"Core Models":"核心模型", v:items.map(d=>d.models)},
     {k:currentLang==="en"?"Quota":"额度口径", v:items.map(d=>d.quota)},
-    {k:currentLang==="en"?"Status":"状态", v:items.map(d=>{const s=statusMap[d.status]; return s?s[1]:d.status;})},
+    {k:currentLang==="en"?"Status":"状态", v:items.map(d=>statusLabel(d.status))},
     {k:currentLang==="en"?"Price Trend":"价格趋势", v:items.map(d=>priceTrendHTML(d.name)||"—")},
   ];
   box.innerHTML=notice+`<div class="compare-table"><table><thead><tr>${items.map(d=>`<th scope="col">${esc(d.name)}</th>`).join("")}</tr></thead><tbody>${rows.map((r,ri)=>`<tr><th scope="row">${esc(r.k)}</th>${r.v.map(v=>`<td>${ri===6?v:esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
   box.style.display="block";
 }
+/* 价格串是中文字面量（如 "$8 / 月（Go）"），英文界面做展示层本地化，不改数据源 */
+function localizePriceStr(s){
+  const raw=String(s??"");
+  if(currentLang!=="en") return raw;
+  return raw
+    .replace(/\s*\/\s*月/g," / mo")
+    .replace(/（/g," (").replace(/）/g,")")
+    .replace(/年付\s*/g,"annual ")
+    .replace(/月起/g,"/mo up");
+}
 function renderCards(){
   document.getElementById("cards").innerHTML=PLAN_DATA.filter(d=>d.status!=="bad").map(d=>{
-    const [cls,label]=statusMap[d.status];
+    const cls=(statusMap[d.status]||["",""])[0];
+    const label=statusLabel(d.status);
     const srcType=d.srcType==="official"
-      ?'<span class="srcbadge src-official">官方直采</span>'
-      :'<span class="srcbadge src-agg">聚合参考</span>';
-    const ratioLine=d.ratio?`<div class="kv"><b>额度倍率：</b>${esc(d.ratio)}×（${esc(d.ratioTier)}，社区折算口径）</div>`:"";
+      ?`<span class="srcbadge src-official">${t("official")}</span>`
+      :`<span class="srcbadge src-agg">${t("agg")}</span>`;
+    const ratioLine=d.ratio?`<div class="kv"><b>${t("cardRatio")}</b>${esc(d.ratio)}×${t("cardRatioTail",{tier:t("tierCommunity")})}</div>`:"";
     const periods=d.periods?`<div class="periods">
-      <div><b>5 小时额度</b>${esc(d.periods.h5||"—")}</div>
-      <div><b>每周额度</b>${esc(d.periods.wk||d.periods.mo||"—")}</div>
-      <div><b>每月额度</b>${esc(d.periods.mo||"—")}</div>
+      <div><b>${t("cardH5")}</b>${esc(d.periods.h5||"—")}</div>
+      <div><b>${t("cardWeekly")}</b>${esc(d.periods.wk||d.periods.mo||"—")}</div>
+      <div><b>${t("cardMonthly")}</b>${esc(d.periods.mo||"—")}</div>
     </div>`:"";
-    const speedLine=d.speed?`<div class="kv"><b>实测速度：</b>≈ ${esc(d.speed)} TPS（awesome-coding-plan 实测口径）</div>`:"";
+    const speedLine=d.speed?`<div class="kv"><b>${t("cardSpeed")}</b>≈ ${esc(d.speed)} TPS${t("cardSpeedTail")}</div>`:"";
     const trendLine=priceTrendHTML(d.name);
-    const pitfall=d.pitfalls?`<div class="pitfall">⚠ <b>坑点与社区反馈：</b>${esc(d.pitfalls)}</div>`:"";
+    const pitfall=d.pitfalls?`<div class="pitfall">⚠ <b>${t("cardPitfallLabel")}</b>${esc(d.pitfalls)}</div>`:"";
     return `<div class="card" id="plan-${encodeURIComponent(d.name)}">
       <div class="head"><h3>${esc(d.name)}</h3><span class="badge b-chip">${esc(d.vendor)}</span><span class="badge ${cls}">${label}</span></div>
-      <div class="tagline">${esc(d.start)} 起 · ${d.region==="intl"?"国际平台":"国内平台"}</div>
-      <div class="tiers">${d.tiers.map(t=>`<div class="t-row"><span class="t-name">${esc(t[0])}</span><span class="t-price">${esc(t[1])}</span>${t[2]?`<span class="t-note">${esc(t[2])}</span>`:""}</div>`).join("")}</div>
-      <div class="kv"><b>核心模型：</b>${esc(d.models)}</div>
-      <div class="kv"><b>额度口径：</b>${esc(d.quota)}</div>
+      <div class="tagline">${t("cardTagline",{price:esc(localizePriceStr(d.start)),region:d.region==="intl"?t("intlRegion"):t("cnRegion")})}</div>
+      <div class="tiers">${d.tiers.map(ti=>`<div class="t-row"><span class="t-name">${esc(ti[0])}</span><span class="t-price">${esc(ti[1])}</span>${ti[2]?`<span class="t-note">${esc(ti[2])}</span>`:""}</div>`).join("")}</div>
+      <div class="kv"><b>${t("cardModelsLabel")}</b>${esc(d.models)}</div>
+      <div class="kv"><b>${t("cardQuotaLabel")}</b>${esc(d.quota)}</div>
       ${ratioLine}${speedLine}${trendLine}${periods}${pitfall}
-      <div class="tags">${d.tags.map(t=>`<span class="tag2">${esc(t)}</span>`).join("")}</div>
+      <div class="tags">${d.tags.map(tg=>`<span class="tag2">${esc(tg)}</span>`).join("")}</div>
       ${d.note?`<div class="kv" style="color:var(--warn);font-size:12.5px">⚠ ${esc(d.note)}</div>`:""}
-      <div class="foot">${srcType}<span>${esc(d.srcNote)}</span><a href="${safeHref(d.srcUrl)}" target="_blank" rel="noopener noreferrer">查看来源 ↗</a></div>
+      <div class="foot">${srcType}<span>${esc(d.srcNote)}</span><a href="${safeHref(d.srcUrl)}" target="_blank" rel="noopener noreferrer">${t("viewSource")}</a></div>
     </div>`;
   }).join("");
 }
@@ -522,7 +629,7 @@ function renderRepos(){
 
 function renderIde(){
   document.getElementById("idetbody").innerHTML=IDE_PLANS.map(p=>`
-    <tr><td class="p-name">${esc(p.name)}${p.hl?' <span class="badge b-warn">社区推荐</span>':""}</td>
+    <tr><td class="p-name">${esc(p.name)}${p.hl?` <span class="badge b-warn">${t("ideRecommended")}</span>`:""}</td>
     <td class="price">${esc(p.price)}</td><td class="ratio" style="font-size:14px">${esc(p.ratio)}</td>
     <td class="quota">${esc(p.note)}</td></tr>`).join("");
 }
@@ -549,7 +656,7 @@ function renderCalc(){
   const pr=livePrice(m);
   const fIn=pr?pr.i:m.fIn, fOut=pr?pr.o:m.fOut;
   document.getElementById("calcprice").textContent=
-    `实际计价：输入 $${fIn} / 输出 $${fOut} 每百万 tokens${pr?"（models.dev 实时）":"（内置价）"}`;
+    t("calcPriceLine",{i:fIn,o:fOut})+(pr?t("calcPriceLive"):t("calcPriceBuiltin"));
   const apiCost=calcTok*fOut + calcTok*3*fIn; // 1 输出 : 3 输入
   const totalTok=calcTok*4*1e6;
   const cands=CALC_PLANS.map(p=>({...p,fit:p.quota==null?null:p.quota>=totalTok}))
@@ -564,21 +671,21 @@ function renderCalc(){
   const fmt$=v=>"¥"+(Math.round(v*10)/10).toLocaleString("zh-CN");
   let verdict;
   if(bestFit && apiCost>bestFit.price){
-    verdict=`<div class="verdict plan">💡 <b>建议订阅：${bestFit.name}（${fmt$(bestFit.price)}/月）</b><br>
-      你的用量按 API 计费约 <b>${fmt$(apiCost)}/月</b>，是订阅价的 <b>${Math.round(apiCost/bestFit.price*10)/10} 倍</b>；该档月额度（${bestFit.note}）可覆盖你的用量。可再对照速度与坑点选择次便宜的合适档。</div>`;
+    verdict=`<div class="verdict plan">${t("calcVerdictSubHead",{name:bestFit.name,price:fmt$(bestFit.price)})}
+      ${t("calcVerdictSubBody",{cost:fmt$(apiCost),x:Math.round(apiCost/bestFit.price*10)/10,note:bestFit.note})}</div>`;
   }else if(cheapest && apiCost<=cheapest.price){
-    verdict=`<div class="verdict api">💡 <b>建议按量计费（API）</b><br>
-      你的用量按 API 计费约 <b>${fmt$(apiCost)}/月</b>，低于最便宜的合适订阅（${cheapest.name} ${fmt$(cheapest.price)}/月）。经济档模型（如 DeepSeek V4 Flash，输出 $0.6/M）+ 按量付费对你更省钱。</div>`;
+    verdict=`<div class="verdict api">${t("calcVerdictApiHead")}
+      ${t("calcVerdictApiBody",{cost:fmt$(apiCost),name:cheapest.name,price:fmt$(cheapest.price)})}</div>`;
   }else{
-    verdict=`<div class="verdict plan">💡 <b>建议订阅 + 超出按量</b><br>
-      API 成本约 ${fmt$(apiCost)}/月；没有已折算额度的订阅能完全覆盖，选低价档（如 OpenCode Go / Cursor Pro）覆盖日常、峰值按量后付。</div>`;
+    verdict=`<div class="verdict plan">${t("calcVerdictHybridHead")}
+      ${t("calcVerdictHybridBody",{cost:fmt$(apiCost)})}</div>`;
   }
   document.getElementById("calc-out").innerHTML=verdict+`
-    <table><thead><tr><th scope="col">候选订阅</th><th scope="col">月费</th><th scope="col">月额度（社区折算）</th><th scope="col">覆盖你的用量?</th></tr></thead><tbody>
+    <table><thead><tr><th scope="col">${t("calcThPlan")}</th><th scope="col">${t("calcThFee")}</th><th scope="col">${t("calcThQuota")}</th><th scope="col">${t("calcThFit")}</th></tr></thead><tbody>
     ${cands.slice(0,6).map(c=>`<tr>
       <td class="p-name">${c.name}</td><td class="price">${fmt$(c.price)}</td>
       <td class="quota">${c.note}</td>
-      <td>${c.fit===true?'<span class="badge b-ok">够用</span>':c.fit===false?'<span class="badge b-bad">不够</span>':'<span class="badge b-chip">未知</span>'}</td>
+      <td>${c.fit===true?`<span class="badge b-ok">${t("calcFitOk")}</span>`:c.fit===false?`<span class="badge b-bad">${t("calcFitBad")}</span>`:`<span class="badge b-chip">${t("calcFitUnknown")}</span>`}</td>
     </tr>`).join("")}</tbody></table>`;
 }
 function bindCalc(){
@@ -788,9 +895,10 @@ const TIER_MAP = {
   agg: ["src-agg", "聚合参考"],
   community: ["src-community", "社区情报"],
 };
+const TIER_KEYS = { official:"tierOfficial", realtime:"tierRealtime", agg:"tierAgg", community:"tierCommunity" };
 function tierBadge(tier){
   const [cls,label]=TIER_MAP[tier]||TIER_MAP.agg;
-  return `<span class="srcbadge ${cls}">${label}</span>`;
+  return `<span class="srcbadge ${cls}">${TIER_KEYS[tier]?t(TIER_KEYS[tier]):label}</span>`;
 }
 const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 // esc() 只处理 &<>" 四个字符，挡不住协议层面的注入（javascript:/data:）。
@@ -847,11 +955,16 @@ async function renderPromos(){
   let j, sig={items:[]};
   try{ j=await fetchJSON("data/manual/promos.json"); }
   catch(e){
-    box.innerHTML='<p style="color:var(--dim)">动态数据加载失败（data/manual/promos.json）</p>';
+    box.innerHTML=`<p style="color:var(--dim)">${t("promoLoadError")}</p>`;
     return;
   }
   try{ sig=await fetchJSON("data/auto/signals.json"); }catch(e){/* 线索缺失时只展示人工记录 */}
-  const stOf=k=>(j.statusMap||{})[k]||{label:k,cls:""};
+  // statusMap 标签来自数据（中文），英文界面按 kind 映射显示，避免半中半英
+  const PROMO_KIND_EN={promo:"Promo",delist:"Delisted",price:"Price change"};
+  const stOf=k=>{
+    const st=(j.statusMap||{})[k]||{label:k,cls:""};
+    return currentLang==="en"&&PROMO_KIND_EN[k]?{label:PROMO_KIND_EN[k],cls:st.cls}:st;
+  };
 
   const confirmed=(j.items||[]).slice().sort((a,b)=>{
     // 未过期在前（日期降序），已结束的沉底
@@ -866,35 +979,35 @@ async function renderPromos(){
     const st=stOf(p.kind);
     const src=p.source&&p.source.url
       ? `<a href="${safeHref(p.source.url)}" target="_blank" rel="noopener noreferrer">${esc(p.source.label)}</a>`
-      : esc(p.source&&p.source.label||"来源待补");
+      : esc(p.source&&p.source.label||t("promoSrcTbd"));
     const badge=p.expired
-      ?'<span class="badge b-expired">已结束</span>'
+      ?`<span class="badge b-expired">${t("promoEnded")}</span>`
       :`<span class="badge b-chip">${esc(st.label)}</span>`;
     return `<div class="tl-item${p.expired?" is-expired":""}">
-      <div class="date">${esc(p.date)}${p.expires?` · ${p.kind==="promo"?"截止":"生效"} ${esc(p.expires)}`:""}</div>
+      <div class="date">${esc(p.date)}${p.expires?` · ${p.kind==="promo"?t("promoUntil"):t("promoFrom")} ${esc(p.expires)}`:""}</div>
       <h4>${esc(p.title)}</h4>
       <p>${esc(p.body)}</p>
-      <div class="src-line">${tierBadge(p.source&&p.source.tier)}${badge}${p.verified?"":'<span class="vflag">⚠ 待重新核实</span>'}<span>来源：${src}</span></div>
+      <div class="src-line">${tierBadge(p.source&&p.source.tier)}${badge}${p.verified?"":`<span class="vflag">⚠ ${t("promoReverify")}</span>`}<span>${t("promoSource")}${src}</span></div>
       ${p.note?`<div class="src-line">${esc(p.note)}</div>`:""}
     </div>`;
   };
-  const sigRow=i=>`<div class="tl-item is-signal">
-    <div class="date">${esc(fmtISODate(i.date||i.firstSeen||""))} · 机器线索</div>
+  const sigRowP=i=>`<div class="tl-item is-signal">
+    <div class="date">${esc(fmtISODate(i.date||i.firstSeen||""))} · ${t("promoMachineLead")}</div>
     <h4><a href="${safeHref(i.url)}" target="_blank" rel="noopener noreferrer">${esc(leadTitle(i))}</a></h4>
     ${leadExcerpt(i)?`<p>${esc(leadExcerpt(i))}</p>`:""}
-    <div class="src-line">${tierBadge(i.tier)}<span class="badge b-chip">待人工确认</span><span>来源：${esc(i.sourceLabel)}</span></div>
+    <div class="src-line">${tierBadge(i.tier)}<span class="badge b-chip">${t("promoPendingHuman")}</span><span>${t("promoSource")}${esc(i.sourceLabel)}</span></div>
   </div>`;
 
   // 人工记录与机器线索按日期混排：已结束条目沉底，其余按日期降序
   const merged=[
     ...confirmed.map(p=>({expired:!!p.expired,date:String(p.date),html:tl(p)})),
-    ...signals.map(s=>({expired:false,date:fmtISODate(s.date||s.firstSeen||""),html:sigRow(s)})),
+    ...signals.map(s=>({expired:false,date:fmtISODate(s.date||s.firstSeen||""),html:sigRowP(s)})),
   ].sort((a,b)=>{
     if(a.expired!==b.expired) return a.expired?1:-1;
     return b.date.localeCompare(a.date);
   });
 
-  box.innerHTML=merged.length?merged.map(m=>m.html).join(""):'<p style="color:var(--dim)">暂无记录</p>';
+  box.innerHTML=merged.length?merged.map(m=>m.html).join(""):`<p style="color:var(--dim)">${t("promoNoRecords")}</p>`;
 }
 
 /** RFC2822 / ISO 日期统一转 YYYY-MM-DD；解析失败时截前 10 位兜底 */
@@ -906,11 +1019,11 @@ function fmtISODate(s){
 /* ================= 白嫖 / 免费额度（data/manual/freebies.json，每日自动核对） ================= */
 // 核对状态徽标：verify-listings.mjs 每日抓取来源页后写回 status
 const FREEBIE_STATUS = {
-  ok:     ['b-ok',  '✓ 来源页核对正常'],
-  warn:   ['b-warn','⚠ 来源页本次抓取失败，观察中'],
-  changed:['b-warn','⚠ 来源页特征有变化，待人工复核'],
-  stale:  ['b-bad', '⛔ 来源页连续无法访问，待人工复核'],
-  manual: ['',     '需人工核对'],
+  ok:     ['b-ok',  'freeStOk'],
+  warn:   ['b-warn','freeStWarn'],
+  changed:['b-warn','freeStChanged'],
+  stale:  ['b-bad', 'freeStStale'],
+  manual: ['',     'freeStManual'],
 };
 async function renderFreebies(){
   const box=document.getElementById("freebies-grid");
@@ -921,29 +1034,30 @@ async function renderFreebies(){
     const cnt=document.getElementById("st-free");
     if(cnt) cnt.textContent=items.length;
     box.innerHTML=items.map(f=>{
-      const [cls,label]=FREEBIE_STATUS[f.status]||FREEBIE_STATUS.manual;
+      const [cls,key]=FREEBIE_STATUS[f.status]||FREEBIE_STATUS.manual;
+      const label=t(key);
       const badge=cls?`<span class="badge ${cls}">${label}</span>`:`<span class="badge b-chip">${label}</span>`;
       const checkedDate=f.lastChecked||j.checked||"—";
       return `
       <div class="free">
         <div class="fh"><h3>${esc(f.name)}</h3><span class="badge b-chip">${esc(f.vendor)}</span>${tierBadge(f.tier)}</div>
         <div class="offer">${esc(f.offer)}</div>
-        <div class="kv"><b>额度：</b>${esc(f.limit||"—")}</div>
-        <div class="kv"><b>门槛：</b>${esc(f.requires||"—")}</div>
+        <div class="kv"><b>${t("freeLimit")}</b>${esc(f.limit||"—")}</div>
+        <div class="kv"><b>${t("freeRequires")}</b>${esc(f.requires||"—")}</div>
         ${f.note?`<div class="kv">${esc(f.note)}</div>`:""}
         ${f.statusNote?`<div class="kv" style="color:var(--warn)">⚠ ${esc(f.statusNote)}</div>`:""}
-        <div class="foot"><span>${badge}<br>核对 ${esc(checkedDate)} · 证据：${esc(f.evidence||"—")}</span><a href="${safeHref(f.source)}" target="_blank" rel="noopener noreferrer">查看来源 ↗</a></div>
+        <div class="foot"><span>${badge}<br>${t("freeChecked",{d:esc(checkedDate),e:esc(f.evidence||"—")})}</span><a href="${safeHref(f.source)}" target="_blank" rel="noopener noreferrer">${t("viewSource")}</a></div>
       </div>`}).join("");
     const retBox=document.getElementById("freebies-retired");
     const ret=j.retired||[];
     if(retBox) retBox.innerHTML=ret.map(r=>`
       <div class="alert bad"><span class="ico">⛔</span><div>
-        <b>${esc(r.name)} 已失效，不要再照着旧教程折腾</b>
-        <small>${esc(r.reason)}${r.source?` · <a href="${safeHref(r.source)}" target="_blank" rel="noopener noreferrer">官方说明 ↗</a>`:""}</small>
+        <b>${esc(t("freeRetiredText",{name:r.name}))}</b>
+        <small>${esc(r.reason)}${r.source?` · <a href="${safeHref(r.source)}" target="_blank" rel="noopener noreferrer">${t("freeOfficialLink")}</a>`:""}</small>
       </div></div>`).join("");
     hideDecorativeGlyphs(box);
   }catch(e){
-    box.innerHTML='<p style="color:var(--dim)">白嫖数据加载失败（data/manual/freebies.json）</p>';
+    box.innerHTML=`<p style="color:var(--dim)">${t("freeLoadError")}</p>`;
   }
 }
 
@@ -997,7 +1111,7 @@ function sigRow(s){
   const title=leadTitle(s), excerpt=leadExcerpt(s);
   return `<div class="sig">
     <div class="sh">${tierBadge(s.tier)}<a href="${safeHref(s.url)}" target="_blank" rel="noopener noreferrer">${esc(title)}</a></div>
-    <div class="sd">${esc(s.sourceLabel)} · 本站发现于 ${esc(s.firstSeen)}${s.date?` · 原文时间 ${esc(fmtISODate(String(s.date).slice(0,16)))}`:""}</div>
+    <div class="sd">${esc(s.sourceLabel)} · ${t("sigSeen",{d:esc(s.firstSeen)})}${s.date?` · ${t("sigOrigDate",{d:esc(fmtISODate(String(s.date).slice(0,16)))})}`:""}</div>
     ${excerpt?`<div class="sd">${esc(excerpt)}</div>`:""}
   </div>`;
 }
@@ -1006,26 +1120,27 @@ async function renderSignals(){
   if(!box) return;
   let j;
   try{ j=await fetchJSON("data/auto/signals.json"); }
-  catch(e){ box.innerHTML='<div class="pol"><p style="color:var(--dim)">线索数据尚未生成（data/auto/signals.json），首次自动巡检后出现。</p></div>'; return; }
+  catch(e){ box.innerHTML=`<div class="pol"><p style="color:var(--dim)">${t("sigLoadError")}</p></div>`; return; }
   const items=j.items||[];
   const promo=items.filter(i=>i.tier!=="community" && i.kind!=="availability").slice(0,12);
   const avail=items.filter(i=>i.kind==="availability").slice(0,8);
   const comm=items.filter(i=>i.tier==="community").slice(0,8);
+  const empty=`<p style="color:var(--dim);font-size:13px">${t("sigNone")}</p>`;
   box.innerHTML=`
     <div class="pol" style="grid-column:1/-1">
-      <div class="ico">🔎</div><h4>促销 / 价格 / 停售相关线索（${promo.length}）</h4>
-      <p style="margin-bottom:6px">来自官方 changelog、价格库与免费模型清单的机器线索。<b>机器只负责发现，未经人工确认不会写进价格表。</b></p>
-      ${promo.length?promo.map(sigRow).join(""):'<p style="color:var(--dim);font-size:13px">暂无线索</p>'}
+      <div class="ico">🔎</div><h4>${t("sigPromoHead",{n:promo.length})}</h4>
+      <p style="margin-bottom:6px">${t("sigPromoDesc")}</p>
+      ${promo.length?promo.map(sigRow).join(""):empty}
     </div>
     <div class="pol" style="grid-column:1/-1">
-      <div class="ico">🩺</div><h4>官方状态页事件（${avail.length}）</h4>
-      <p style="margin-bottom:6px">仅服务可用性事件，用来<b>证伪或证实「降级 / 停售」类传言</b>；与促销无关，故单独列出不混排。</p>
-      ${avail.length?avail.map(sigRow).join(""):'<p style="color:var(--dim);font-size:13px">暂无事件</p>'}
+      <div class="ico">🩺</div><h4>${t("sigAvailHead",{n:avail.length})}</h4>
+      <p style="margin-bottom:6px">${t("sigAvailDesc")}</p>
+      ${avail.length?avail.map(sigRow).join(""):`<p style="color:var(--dim);font-size:13px">${t("sigNoEvents")}</p>`}
     </div>
     <div class="pol" style="grid-column:1/-1">
-      <div class="ico">💬</div><h4>社区情报线索（${comm.length}）</h4>
-      <p style="margin-bottom:6px">黄色标注，<b>仅作线索提示，不作为数据结论</b>。若长期为空，请查看下方「信息源健康」，那里会如实显示哪个源没抓到东西。</p>
-      ${comm.length?comm.map(sigRow).join(""):'<p style="color:var(--dim);font-size:13px">暂无线索</p>'}
+      <div class="ico">💬</div><h4>${t("sigCommHead",{n:comm.length})}</h4>
+      <p style="margin-bottom:6px">${t("sigCommDesc")}</p>
+      ${comm.length?comm.map(sigRow).join(""):empty}
     </div>`;
   hideDecorativeGlyphs(box);
 }
@@ -1048,16 +1163,16 @@ async function renderSourceHealth(){
       const dead=s.ok===false&&(s.consecutiveFailures||0)>=3;
       const lo=layoutOnly.has(s.id);
       const cls=dead?"bad":(s.unstable||s.ok===false)?"warn":"";
-      const extra=dead?"（已失效）":s.unstable?"（需人工核对）":lo?"（订阅价不在监控范围）":"";
-      const tip=dead?`连续 ${s.consecutiveFailures} 天抓取失败${s.error?`（${s.error}）`:""}`
-        :s.unstable?"页面内容在多个渲染变体间跳变，哈希对比不可靠，已暂停自动预警，价格需人工核对"
-        :lo?"该源的自动巡检不覆盖订阅套餐价（哈希只能发现版式改动或只盯额度字段），发现不了订阅价变化，价格仍需人工核对"
-        :s.ok===false?`上次抓取失败${s.error?`（${s.error}）`:""}`
-        :`最后成功 ${s.lastOk||"—"}${s.detail?` · ${s.detail}`:""}`;
+      const extra=dead?t("shDead"):s.unstable?t("shReview"):lo?t("shLayoutOnly"):"";
+      const tip=dead?t("shTipDead",{n:s.consecutiveFailures})+(s.error?` (${s.error})`:"")
+        :s.unstable?t("shTipUnstable")
+        :lo?t("shTipLayoutOnly")
+        :s.ok===false?t("shTipFail")+(s.error?` (${s.error})`:"")
+        :t("shTipOk",{d:s.lastOk||"—"})+(s.detail?` · ${s.detail}`:"");
       return `<span class="h-item ${dead?"dead":""}${lo?" layout-only":""}" title="${esc(tip)}"><span class="h-dot ${cls}"></span>${esc(s.label)}${extra}</span>`;
     }).join("");
     box.innerHTML=`<div class="health">${chips}</div>
-      <p style="font-size:12px;color:var(--dim);margin-top:8px">绿点＝最近一次抓取成功；黄点＝失败未达阈值，或该页内容不稳定（已暂停自动预警、需人工核对）；红点＝连续 3 天失败，判定为<b>已失效</b>——站点会如实标注，不再假装该源在正常工作。<b>虚线灰底＝该源的自动巡检不覆盖订阅套餐价</b>（价格在客户端再取或监控字段不含订阅价，价格变动不会触发告警），价格仍需人工核对。巡检时间：${esc(j.updatedAt||"—")}。抓不到的源不会硬撑：LINUX DO 与 V2EX 经双环境实测均无法获取（403 / 空响应，数据中心 IP 被拦截），已从清单停用并改为人工巡览，详见页面末尾「数据说明」。</p>`;
+      <p style="font-size:12px;color:var(--dim);margin-top:8px">${t("shLegend",{time:esc(j.updatedAt||"—")})}</p>`;
   }catch(e){ box.innerHTML=""; }
 }
 

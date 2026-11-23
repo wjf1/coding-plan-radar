@@ -60,9 +60,31 @@ node scripts/update-snapshot.mjs && node scripts/check-pages.mjs \
 可排序表头 = th 内 `<button class="th-sort">`（键盘可达，click 只绑按钮不绑 th）。
 
 **关键约定**：人工维护的数据与机器生成的数据**严格分离**；机器只负责发现，任何价格/促销数字必须人工确认后才进对比表。
-## 最近一轮变更与交付成果（P0 数据新鲜度与巡检诚实化，2026-11-23）
+## 最近一轮变更与交付成果（英文界面覆盖补全，2026-11-23）
 
-### 本轮 —— v7.7：P0 数据新鲜度面板与巡检状态如实化（2026-11-23）
+### 本轮 —— 英文界面覆盖补全（i18n，2026-11-23，未发版）
+
+**背景**：前端设计审计发现切到 EN 后仅 hero 与工具栏为英文，五个动态渲染区块（卡片 / 计算器 / 白嫖 / 线索 / 源健康）仍整块中文——双语定位形同半成品，对面向国际读者的定位是净伤害。
+
+**改动**（`js/app.js` 单文件，+约 150 行）：
+
+| # | 区块 | 接入内容 |
+|---|---|---|
+| 1 | `renderCards` | kv 标签（核心模型/额度口径/额度倍率/实测速度/坑点）、额度周期三项、查看来源、平台地区；`localizePriceStr()` 处理数据里的中文价格串（`$8 / 月（Go）` → `From $8 / mo (Go)`），数据源零改动 |
+| 2 | `renderCalc` | 计价行、三种结论句式（订阅/纯 API/混合）全文重建、表头四项、够用/不够/未知徽标 |
+| 3 | `FREEBIE_STATUS` | 表值由中文文案改为 I18N key（五档核对状态），渲染处 `t(key)` |
+| 4 | `renderSignals` + `sigRow` | 三板块标题（带计数占位符）、三段说明、两种空态、发现时间/原文时间 |
+| 5 | `renderSourceHealth` | 失效/需人工核对/不监控后缀、四类 tooltip（含连续失败天数占位符）、图例长文（含巡检时间占位符） |
+| 6 | `renderPromos` | 来源待补/已结束/截止/生效/待重新核实/机器线索/待人工确认/暂无记录/加载失败；`statusMap` 中文标签按 kind 映射英文 |
+| 7 | `priceTrendHTML` / `TIER_MAP` / `renderPlans` / `renderIde` | 全角冒号按语言切换、引擎徽标走 I18N、表格状态列统一 `statusLabel()`、社区推荐徽标 |
+
+**新词条**：约 60 组中英成对（`cardTagline`/`calcVerdict*`/`freeSt*`/`sig*`/`shTip*`/`promo*`/`tier*` 等）。
+
+**验证**：`node --check` 通过；`selfcheck.mjs` 24/24；chrome-devtools 真实走查 `?lang=en`——五区块文案骨架全英文（kv 标签、额度周期、tagline、计价行、计算器表头与结论、三板块标题说明、源健康图例、白嫖 kv、促销徽标与时间线均逐项确认），残留 CJK 仅来自数据内容；切回 zh 复核文案与改前逐字一致（零漂移）。
+
+**遗留**：① 静态 FAQ / 数据说明长段落（`index.html` 约 214/251/292/309/311 行等）仍未接入 `data-i18n`，EN 下仍显示中文——本轮范围是五个动态渲染区块，静态长文翻译是独立工程；② 数据内容本身（平台额度描述、线索标题、源名）按既有约定不翻译。
+
+### 上一轮 —— v7.7：P0 数据新鲜度面板与巡检状态如实化（2026-11-23）
 
 **背景**：PR #16（2026-09 开的 P0 分支）与 main 的 v7.5 scripts 重构、v7.6 数据层 JSON 化存在架构级冲突无法 rebase；按原 plan/spec（`docs/superpowers/plans/2026-09-20-p0-data-freshness.md`，§2/§3/§8 P0 部分）将功能重新落地到当前架构，新分支 `feat/p0-freshness-v2` → [PR #74](https://github.com/wjf1/coding-plan-radar/pull/74) → squash 合入并发版 v7.7。
 
