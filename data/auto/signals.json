@@ -1,6 +1,90 @@
 {
- "generatedAt": "2026-11-22",
+ "generatedAt": "2026-11-23",
  "items": [
+  {
+   "id": "freebie-repos:3b63a5f75e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Data sync 2026-11-22: 7 changes",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-22",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/4da4dd09d85ef15b9e8c6abaa7702a65e6a7b0cd",
+   "date": "2026-11-22T14:09:30Z",
+   "firstSeen": "2026-11-23",
+   "lastSeen": "2026-11-23"
+  },
+  {
+   "id": "freebie-repos:6679dda85e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Data sync 2026-11-21: 6 changes",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-21",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/368fa8c08a7a6510e116c0b4455ab529f4f34968",
+   "date": "2026-11-21T14:09:30Z",
+   "firstSeen": "2026-11-23",
+   "lastSeen": "2026-11-23"
+  },
+  {
+   "id": "freebie-repos:ae69b82b5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Data sync 2026-11-20: 4 changes",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-20",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/bf81f8acbded3c755b63c7c6c90dc415493d3ab4",
+   "date": "2026-11-20T14:10:31Z",
+   "firstSeen": "2026-11-23",
+   "lastSeen": "2026-11-23"
+  },
+  {
+   "id": "hn-algolia:ae2ee5e238",
+   "source": "hn-algolia",
+   "sourceLabel": "Hacker News（Algolia 搜索）",
+   "sourceUrl": "https://hn.algolia.com/api/v1/search_by_date?query=%22coding%20plan%22&tags=story&hitsPerPage=30",
+   "tier": "community",
+   "kind": "community",
+   "title": "GLM-5.4 is now available to all GLM Coding Plan users",
+   "excerpt": "26 points · 10 comments",
+   "url": "https://twitter.com/ZixuanLi_/status/2124719275864670681",
+   "date": "2026-11-23T05:21:54Z",
+   "firstSeen": "2026-11-23",
+   "lastSeen": "2026-11-23"
+  },
+  {
+   "id": "openrouter:4a48137744",
+   "source": "openrouter",
+   "sourceLabel": "OpenRouter 模型表（含 :free 免费模型）",
+   "sourceUrl": "https://openrouter.ai/api/v1/models",
+   "tier": "realtime",
+   "kind": "free-model-new",
+   "title": "OpenRouter 新增免费模型：dots-studio/dots-3-note-preview:free",
+   "excerpt": "可作为白嫖/零成本验证模型的候选，额度与限速以 OpenRouter 页面为准。",
+   "url": "https://openrouter.ai/models?max_price=0",
+   "date": "2026-11-23",
+   "firstSeen": "2026-11-23",
+   "lastSeen": "2026-11-23"
+  },
+  {
+   "id": "sspai:b4a93d6f1d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "派早报：Anthropic 研究员宣称用 Claude 证明黎曼猜想",
+   "excerpt": "<p>Anthropic 研究员宣称用 Claude 证明黎曼猜想</p><p>OpenAI 公布反蒸馏举措</p><p>黄仁勋据称将攻击下属作为管理方式</p><p>GTA 6 首日销售额近 40 亿美元</p><p>特斯拉升级 FSD，推出实景渲染功能</p><p>AMD 股票被做空</p><p>看看就行的简讯</p><p>少数派的近期动态</p><p>你可能错过的好文章</p><a href=\"https://sspai.com/post/119418\" target=\"_blank\">查看全文</a>",
+   "url": "https://sspai.com/post/119418",
+   "date": "Mon, 23 Nov 2026 07:34:27 +0800",
+   "firstSeen": "2026-11-23",
+   "lastSeen": "2026-11-23"
+  },
   {
    "id": "ithome:bd43498924",
    "source": "ithome",
@@ -139,7 +223,7 @@
    "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
    "date": "Thu, 19 Nov 2026 16:37:00 +0000",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "ithome:16130e6424",
@@ -223,7 +307,7 @@
    "url": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
    "date": "Wed, 18 Nov 2026 22:04:50 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "gh-changelog:76c38abb48",
@@ -265,7 +349,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -517,7 +601,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -741,7 +825,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -755,7 +839,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -811,7 +895,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -825,7 +909,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -839,7 +923,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -867,7 +951,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -937,7 +1021,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "github-status:34fbe14433",
@@ -951,7 +1035,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "ithome:8dc99af724",
@@ -1049,7 +1133,7 @@
    "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
    "date": "Tue, 10 Nov 2026 21:47:48 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "gh-changelog:78f6f56362",
@@ -1105,7 +1189,7 @@
    "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
    "date": "Tue, 10 Nov 2026 17:55:03 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "openrouter:00eb82f842",
@@ -1161,7 +1245,7 @@
    "url": "https://www.githubstatus.com/incidents/6jm5k16vyhfg",
    "date": "Tue, 10 Nov 2026 00:05:52 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "github-status:6d987e7733",
@@ -1175,7 +1259,7 @@
    "url": "https://www.githubstatus.com/incidents/tp8cghg7tlc4",
    "date": "Mon, 09 Nov 2026 18:59:32 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "github-status:4ced8ef333",
@@ -1189,7 +1273,7 @@
    "url": "https://www.githubstatus.com/incidents/xxb3l2bm76dr",
    "date": "Mon, 09 Nov 2026 11:50:35 +0000",
    "firstSeen": "2026-11-10",
-   "lastSeen": "2026-11-22"
+   "lastSeen": "2026-11-23"
   },
   {
    "id": "github-status:1b741bff33",
