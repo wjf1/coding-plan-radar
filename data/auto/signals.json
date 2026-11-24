@@ -1,6 +1,244 @@
 {
- "generatedAt": "2026-11-23",
+ "generatedAt": "2026-11-24",
  "items": [
+  {
+   "id": "freebie-repos:0c0cd42c5e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Probe Runcrate with its key from the vault",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-23",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/47832867a0cf3750e7a81980e706c9349690d6eb",
+   "date": "2026-11-23T14:33:21Z",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "gh-changelog:9538e76068",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Usage reports will include a user ID column starting December 1",
+   "excerpt": "Starting December 1, 2026, usage reports that include a username column will also include a user_id column next to it. Every column after username will move one position to the…",
+   "url": "https://github.blog/changelog/2026-11-23-usage-reports-will-include-a-user-id-column-starting-december-1",
+   "date": "Mon, 23 Nov 2026 10:29:36 +0000",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "ithome:af59493b24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "影石经销商称 Luna 云台系列产品将于 12 月 15 日起涨价",
+   "excerpt": "<p data-vmark=\"2b66\">IT之家 11 月 24 日消息，近日多家影石经销商发文，称影石 Luna 云台系列产品将于 12 月 15 日起涨价，涨价原因是“受半导体、存储等关键零部件价格及供应链综合成本抬升影响”。</p><p style=\"text-align: center;\" data-vmark=\"359f\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/11/7c28d126-a67b-4bc9-a19a-1f7720327c43.jpg\" w=\"1440\" h=\"749\" data-weibo=\"0\" …",
+   "url": "https://www.ithome.com/1/031/662.htm",
+   "date": "Tue, 24 Nov 2026 09:05:48 GMT",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:6446203e2c",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "o3-mini 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:8ef66dda38",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gpt-5.3-codex-spark 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:c27bb61f2c",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "o4-mini 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:33d77af831",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gpt-4.1-nano 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:a70ff62c2a",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gpt-4 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:e033ce2c2b",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "o1-pro 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:73e65add36",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gpt-4o-2024-05-13 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:3113f2da27",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "o1 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:a426f5df32",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gpt-3.5-turbo 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:c3426d2335",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gpt-realtime-2.1 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:cb829e9f30",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gpt-4-turbo 已从 models.dev 下架（openai）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:1e7cb4ac42",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gemini-3.1-flash-lite-preview 已从 models.dev 下架（google）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "modelsdev:fbdf4faf4c",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "gemini-2.5-computer-use-preview-10-2025 已从 models.dev 下架（google）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-24",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
+  {
+   "id": "sspai:d28edf6938",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "怪手机们要回来了吗？",
+   "excerpt": "喜欢玩小手机和怪手机的朋友，这两年应该好歹有了点兴奋劲。华为用PuraX系列带回了「阔」屏幕，卖出了百万销量。然后又是一堆宽宽的折叠屏。实体全键盘也不再只有Unihertz一家闷头劳作，做手机键盘壳子 ...<a href=\"https://sspai.com/prime/story/weird-phones-are-returning\" target=\"_blank\">查看全文</a><p>本文为会员文章，出自<a href=\"https://sspai.com/prime/precog/single\" target=\"_blank\">《单篇文章》</a >，订阅后可阅读全文。</p >",
+   "url": "https://sspai.com/prime/story/weird-phones-are-returning",
+   "date": "Mon, 23 Nov 2026 18:00:30 +0800",
+   "firstSeen": "2026-11-24",
+   "lastSeen": "2026-11-24"
+  },
   {
    "id": "freebie-repos:3b63a5f75e",
    "source": "freebie-repos",
@@ -55,7 +293,7 @@
    "url": "https://twitter.com/ZixuanLi_/status/2124719275864670681",
    "date": "2026-11-23T05:21:54Z",
    "firstSeen": "2026-11-23",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "openrouter:4a48137744",
@@ -83,7 +321,7 @@
    "url": "https://sspai.com/post/119418",
    "date": "Mon, 23 Nov 2026 07:34:27 +0800",
    "firstSeen": "2026-11-23",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "ithome:bd43498924",
@@ -223,7 +461,7 @@
    "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
    "date": "Thu, 19 Nov 2026 16:37:00 +0000",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "ithome:16130e6424",
@@ -349,7 +587,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -601,7 +839,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -825,7 +1063,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -839,7 +1077,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -895,7 +1133,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -909,7 +1147,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -923,7 +1161,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -937,7 +1175,7 @@
    "url": "https://models.dev/api.json",
    "date": "2026-11-13",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-13"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "openai-news:484a54f234",
@@ -951,7 +1189,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -1021,7 +1259,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "github-status:34fbe14433",
@@ -1035,7 +1273,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "ithome:8dc99af724",
@@ -1133,7 +1371,7 @@
    "url": "https://status.claude.com/incidents/pgz8r13pk4sm",
    "date": "Tue, 10 Nov 2026 21:47:48 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "gh-changelog:78f6f56362",
@@ -1189,7 +1427,7 @@
    "url": "https://www.githubstatus.com/incidents/hnf21m9jkl3c",
    "date": "Tue, 10 Nov 2026 17:55:03 +0000",
    "firstSeen": "2026-11-11",
-   "lastSeen": "2026-11-23"
+   "lastSeen": "2026-11-24"
   },
   {
    "id": "openrouter:00eb82f842",

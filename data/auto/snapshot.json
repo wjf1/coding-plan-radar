@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-23",
+ "generatedAt": "2026-11-24",
  "source": "https://models.dev/api.json",
  "models": [
   {
@@ -1165,17 +1165,6 @@
    "i": 1.75,
    "o": 14,
    "c": 400000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "OpenAI",
-   "pid": "openai",
-   "id": "gpt-5.3-codex-spark",
-   "n": "GPT-5.3 Codex Spark",
-   "i": 1.75,
-   "o": 14,
-   "c": 128000,
    "t": true,
    "r": true
   },
