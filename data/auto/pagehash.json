@@ -1,22 +1,22 @@
 {
  "schemaVersion": 2,
- "updatedAt": "2026-11-24",
+ "updatedAt": "2026-11-25",
  "entries": {
   "kimi": {
    "hash": "6460286555a",
    "seen": [
-    "bb8281f7aecf",
     "acc0fba8af59",
     "f5ba726daf52",
     "440f137db002",
     "3dd95112affe",
-    "68a27c22b002"
+    "68a27c22b002",
+    "6c21adeaaffe"
    ],
    "flaps": 0,
    "changedAt": "2026-09-21",
    "revertCount": 2,
    "unstable": true,
-   "pending": "68a27c22b002",
+   "pending": "6c21adeaaffe",
    "pendingSince": "2026-09-23"
   },
   "aliyun-free-quota": {

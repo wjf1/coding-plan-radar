@@ -1,6 +1,482 @@
 {
- "generatedAt": "2026-11-24",
+ "generatedAt": "2026-11-25",
  "items": [
+  {
+   "id": "github-status:a4c425b333",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Disruption with Code Completions and Next Edit Suggestions",
+   "excerpt": "<p> <small>Nov <var data-var='date'>25</var>, <var data-var='time'>01:15</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/m0wx9qml7yjh",
+   "date": "Wed, 25 Nov 2026 01:15:18 +0000",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "github-status:4ac7f0c833",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Degraded Availability for MAI Code 2 in Copilot",
+   "excerpt": "<p> <small>Nov <var data-var='date'>24</var>, <var data-var='time'>14:14</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/d56dzxzzlw0b",
+   "date": "Tue, 24 Nov 2026 14:14:05 +0000",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "ithome:af9cbe2024",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "小鹏图灵 AI 智驾官宣推出付费订阅服务：2027 年第二季度开始，老车主权益终身不变",
+   "excerpt": "<p data-vmark=\"478c\">IT之家 11 月 25 日现场消息，在今日的「Origin 原点」2026 小鹏科技日活动中，小鹏集团董事长、CEO 何小鹏宣布，<strong>小鹏图灵 AI 智驾将于 2027 年第二季度面向全球新购车用户提供订阅服务</strong>，服务开启前下订用户，智驾权益终身不变。</p><p data-vmark=\"a725\" style=\"text-align: center;\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/11/a76ae370-ceb2-4f6d-8e5c-7852…",
+   "url": "https://www.ithome.com/1/032/138.htm",
+   "date": "Wed, 25 Nov 2026 07:10:28 GMT",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:72fbe66a3f",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "doubao-seed-1-8-251228 已从 models.dev 下架（volcengine）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:6dff7fea45",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "doubao-seed-1-6-flash-250828 已从 models.dev 下架（volcengine）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:017ee8823f",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "doubao-seed-1-6-251015 已从 models.dev 下架（volcengine）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:888a327646",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "doubao-seed-1-6-vision-250815 已从 models.dev 下架（volcengine）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:dc7e27c24c",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "doubao-seed-2-0-code-preview-260215 已从 models.dev 下架（volcengine）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:ebeaa1133d",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "mimo-v2.5-pro-ultraspeed 已从 models.dev 下架（xiaomi）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:870415c332",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "mimo-v2.5-pro 已从 models.dev 下架（xiaomi）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:7fc214452e",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "mimo-v2.5 已从 models.dev 下架（xiaomi）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:7df27bdd35",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen2-5-omni-7b 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:c1c5fcb936",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-coder-plus 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:83ae82312d",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qvq-max 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:7825875830",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen-turbo 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:79cd50a42f",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-14b 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:7ce11ea13f",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-omni-flash-realtime 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:72cb49d932",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen-vl-plus 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:fd3828132f",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-max 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:bee7faf239",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3.6-max-preview 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:f1ab126a48",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-livetranslate-flash-realtime 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:f23815de35",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen-omni-turbo 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:665d073f31",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen-vl-max 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:7f1e930e3e",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen-omni-turbo-realtime 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:59db1ad341",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-next-80b-a3b-instruct 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:afe74f3e38",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-vl-235b-a22b 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:ce0a2bb02f",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-32b 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:6a740f6541",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-next-80b-a3b-thinking 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:12d99b4c2e",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwq-plus 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:c74356ce44",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-coder-480b-a35b-instruct 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:6472ec0442",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-coder-30b-a3b-instruct 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:c4daaeb535",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-235b-a22b 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:d153a01633",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen-mt-turbo 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
+  {
+   "id": "modelsdev:bab5a2032e",
+   "source": "modelsdev",
+   "sourceLabel": "models.dev 模型价格库",
+   "sourceUrl": "https://models.dev/api.json",
+   "tier": "realtime",
+   "kind": "price-change",
+   "title": "qwen3-8b 已从 models.dev 下架（alibaba）",
+   "excerpt": "该模型上一版基线中存在，本次抓取已消失，可能已下线或改名。",
+   "url": "https://models.dev/api.json",
+   "date": "2026-11-25",
+   "firstSeen": "2026-11-25",
+   "lastSeen": "2026-11-25"
+  },
   {
    "id": "freebie-repos:0c0cd42c5e",
    "source": "freebie-repos",
@@ -13,7 +489,7 @@
    "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/47832867a0cf3750e7a81980e706c9349690d6eb",
    "date": "2026-11-23T14:33:21Z",
    "firstSeen": "2026-11-24",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "gh-changelog:9538e76068",
@@ -27,7 +503,7 @@
    "url": "https://github.blog/changelog/2026-11-23-usage-reports-will-include-a-user-id-column-starting-december-1",
    "date": "Mon, 23 Nov 2026 10:29:36 +0000",
    "firstSeen": "2026-11-24",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "ithome:af59493b24",
@@ -237,7 +713,7 @@
    "url": "https://sspai.com/prime/story/weird-phones-are-returning",
    "date": "Mon, 23 Nov 2026 18:00:30 +0800",
    "firstSeen": "2026-11-24",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "freebie-repos:3b63a5f75e",
@@ -293,7 +769,7 @@
    "url": "https://twitter.com/ZixuanLi_/status/2124719275864670681",
    "date": "2026-11-23T05:21:54Z",
    "firstSeen": "2026-11-23",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "openrouter:4a48137744",
@@ -419,7 +895,7 @@
    "url": "https://openrouter.ai/models?max_price=0",
    "date": "2026-11-21",
    "firstSeen": "2026-11-21",
-   "lastSeen": "2026-11-21"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "freebie-repos:1ed2105c5e",
@@ -461,7 +937,7 @@
    "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
    "date": "Thu, 19 Nov 2026 16:37:00 +0000",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "ithome:16130e6424",
@@ -587,7 +1063,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -839,7 +1315,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -1063,7 +1539,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -1077,7 +1553,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -1133,7 +1609,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -1147,7 +1623,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -1161,7 +1637,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -1189,7 +1665,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "openai-status:da7d9c7f3f",
@@ -1259,7 +1735,7 @@
    "url": "https://www.githubstatus.com/incidents/dvy0t3mvh1lg",
    "date": "Wed, 11 Nov 2026 21:21:39 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "github-status:34fbe14433",
@@ -1273,7 +1749,7 @@
    "url": "https://www.githubstatus.com/incidents/1h2wbly1y72t",
    "date": "Wed, 11 Nov 2026 20:26:23 +0000",
    "firstSeen": "2026-11-12",
-   "lastSeen": "2026-11-24"
+   "lastSeen": "2026-11-25"
   },
   {
    "id": "ithome:8dc99af724",

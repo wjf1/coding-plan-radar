@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-24",
+ "generatedAt": "2026-11-25",
  "source": "https://models.dev/api.json",
  "models": [
   {
@@ -10,17 +10,6 @@
    "i": 0.03,
    "o": 0.13,
    "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "小米",
-   "pid": "xiaomi",
-   "id": "mimo-v2.5",
-   "n": "MiMo-V2.5",
-   "i": 0.14,
-   "o": 0.28,
-   "c": 1048576,
    "t": true,
    "r": true
   },
@@ -135,6 +124,17 @@
    "r": true
   },
   {
+   "p": "火山引擎",
+   "pid": "volcengine",
+   "id": "deepseek-v4-1-flash-economy-261017",
+   "n": "DeepSeek V4.1 Flash 1017 Economy",
+   "i": 0.11977,
+   "o": 0.47909,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
    "p": "Anthropic",
    "pid": "anthropic",
    "id": "claude-haiku-5-5",
@@ -152,6 +152,28 @@
    "n": "GLM-5.3-Flash",
    "i": 0.15,
    "o": 0.5,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "火山引擎",
+   "pid": "volcengine",
+   "id": "deepseek-v4-1-flash-260910",
+   "n": "DeepSeek V4.1 Flash",
+   "i": 0.14972,
+   "o": 0.59886,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "火山引擎",
+   "pid": "volcengine",
+   "id": "deepseek-v4-1-flash-261017",
+   "n": "DeepSeek V4.1 Flash 1017",
+   "i": 0.14972,
+   "o": 0.59886,
    "c": 1000000,
    "t": true,
    "r": true
@@ -203,33 +225,11 @@
   {
    "p": "阿里云",
    "pid": "alibaba",
-   "id": "qwen3-8b",
-   "n": "Qwen3 8B",
-   "i": 0.18,
-   "o": 0.7,
-   "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
    "id": "qwen3-vl-30b-a3b",
    "n": "Qwen3-VL 30B-A3B",
    "i": 0.2,
    "o": 0.8,
    "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "小米",
-   "pid": "xiaomi",
-   "id": "mimo-v2.5-pro",
-   "n": "MiMo-V2.5-Pro",
-   "i": 0.435,
-   "o": 0.87,
-   "c": 1048576,
    "t": true,
    "r": true
   },
@@ -284,6 +284,17 @@
    "n": "GLM-5.3-FlashX",
    "i": 0.29879,
    "o": 1.04577,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "智谱",
+   "pid": "zhipuai",
+   "id": "glm-5.3-flashx-legal",
+   "n": "GLM-5.3-FlashX-Legal",
+   "i": 0.29943,
+   "o": 1.04801,
    "c": 1000000,
    "t": true,
    "r": true
@@ -388,6 +399,17 @@
    "r": true
   },
   {
+   "p": "Z.ai",
+   "pid": "zai",
+   "id": "glm-5.3-flashx-legal",
+   "n": "GLM-5.3-FlashX-Legal",
+   "i": 0.37,
+   "o": 1.25,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
    "p": "阿里云",
    "pid": "alibaba",
    "id": "deepseek-v4-flash-0731",
@@ -406,17 +428,6 @@
    "i": 0.4453,
    "o": 1.3359,
    "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-14b",
-   "n": "Qwen3 14B",
-   "i": 0.35,
-   "o": 1.4,
-   "c": 131072,
    "t": true,
    "r": true
   },
@@ -496,28 +507,6 @@
    "c": 1048576,
    "t": true,
    "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-omni-flash-realtime",
-   "n": "Qwen3-Omni Flash Realtime",
-   "i": 0.52,
-   "o": 1.99,
-   "c": 65536,
-   "t": true,
-   "r": false
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-next-80b-a3b-instruct",
-   "n": "Qwen3-Next 80B-A3B Instruct",
-   "i": 0.5,
-   "o": 2,
-   "c": 131072,
-   "t": true,
-   "r": false
   },
   {
    "p": "阿里云",
@@ -610,17 +599,6 @@
   {
    "p": "阿里云",
    "pid": "alibaba",
-   "id": "qwen3-coder-30b-a3b-instruct",
-   "n": "Qwen3-Coder 30B-A3B Instruct",
-   "i": 0.45,
-   "o": 2.25,
-   "c": 262144,
-   "t": true,
-   "r": false
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
    "id": "qwen3.6-35b-a3b",
    "n": "Qwen3.6 35B-A3B",
    "i": 0.375,
@@ -674,17 +652,6 @@
    "r": true
   },
   {
-   "p": "小米",
-   "pid": "xiaomi",
-   "id": "mimo-v2.5-pro-ultraspeed",
-   "n": "MiMo-V2.5-Pro-UltraSpeed",
-   "i": 1.305,
-   "o": 2.61,
-   "c": 1048576,
-   "t": true,
-   "r": true
-  },
-  {
    "p": "智谱",
    "pid": "zhipuai",
    "id": "glm-5",
@@ -692,39 +659,6 @@
    "i": 0.59758,
    "o": 2.68911,
    "c": 204800,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-235b-a22b",
-   "n": "Qwen3 235B-A22B",
-   "i": 0.7,
-   "o": 2.8,
-   "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-32b",
-   "n": "Qwen3 32B",
-   "i": 0.7,
-   "o": 2.8,
-   "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-vl-235b-a22b",
-   "n": "Qwen3-VL 235B-A22B",
-   "i": 0.7,
-   "o": 2.8,
-   "c": 131072,
    "t": true,
    "r": true
   },
@@ -949,17 +883,6 @@
    "r": true
   },
   {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-coder-plus",
-   "n": "Qwen3 Coder Plus",
-   "i": 1,
-   "o": 5,
-   "c": 1048576,
-   "t": true,
-   "r": false
-  },
-  {
    "p": "Anthropic",
    "pid": "anthropic",
    "id": "claude-haiku-4-5-20251001",
@@ -984,28 +907,6 @@
   {
    "p": "阿里云",
    "pid": "alibaba",
-   "id": "qwen3-max",
-   "n": "Qwen3 Max",
-   "i": 1.2,
-   "o": 6,
-   "c": 262144,
-   "t": true,
-   "r": false
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3-next-80b-a3b-thinking",
-   "n": "Qwen3-Next 80B-A3B (Thinking)",
-   "i": 0.5,
-   "o": 6,
-   "c": 131072,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
    "id": "qwen3.8-max",
    "n": "Qwen3.8 Max",
    "i": 2,
@@ -1017,33 +918,11 @@
   {
    "p": "阿里云",
    "pid": "alibaba",
-   "id": "qwen3-coder-480b-a35b-instruct",
-   "n": "Qwen3-Coder 480B-A35B Instruct",
-   "i": 1.5,
-   "o": 7.5,
-   "c": 262144,
-   "t": true,
-   "r": false
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
    "id": "qwen3.7-max",
    "n": "Qwen3.7 Max",
    "i": 2.5,
    "o": 7.5,
    "c": 1000000,
-   "t": true,
-   "r": true
-  },
-  {
-   "p": "阿里云",
-   "pid": "alibaba",
-   "id": "qwen3.6-max-preview",
-   "n": "Qwen3.6 Max Preview",
-   "i": 1.3,
-   "o": 7.8,
-   "c": 262144,
    "t": true,
    "r": true
   },
@@ -1072,13 +951,24 @@
   {
    "p": "阿里云",
    "pid": "alibaba",
-   "id": "qwen3-livetranslate-flash-realtime",
-   "n": "Qwen3-LiveTranslate Flash Realtime",
-   "i": 10,
+   "id": "glm-5.3-prime",
+   "n": "GLM-5.3 Prime",
+   "i": 2.8,
+   "o": 8.8,
+   "c": 1000000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "阿里云",
+   "pid": "alibaba",
+   "id": "kimi-k3.1-pro",
+   "n": "Kimi K3.1 Pro",
+   "i": 2,
    "o": 10,
-   "c": 53248,
-   "t": false,
-   "r": false
+   "c": 1048576,
+   "t": true,
+   "r": true
   },
   {
    "p": "Anthropic",
@@ -1132,6 +1022,17 @@
    "i": 1.25,
    "o": 10,
    "c": 400000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "火山引擎",
+   "pid": "volcengine",
+   "id": "kimi-k3-1-pro-261024",
+   "n": "Kimi K3.1 Pro",
+   "i": 1.94631,
+   "o": 10.18071,
+   "c": 1048576,
    "t": true,
    "r": true
   },
@@ -1231,6 +1132,17 @@
    "i": 2.5,
    "o": 15,
    "c": 1050000,
+   "t": true,
+   "r": true
+  },
+  {
+   "p": "阿里云",
+   "pid": "alibaba",
+   "id": "kimi-k3.1-pro-prime",
+   "n": "Kimi K3.1 Pro Prime",
+   "i": 4,
+   "o": 20,
+   "c": 1048576,
    "t": true,
    "r": true
   },
