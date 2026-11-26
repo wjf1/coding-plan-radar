@@ -1,7 +1,18 @@
 {
- "generatedAt": "2026-11-25",
+ "generatedAt": "2026-11-26",
  "source": "https://models.dev/api.json",
  "models": [
+  {
+   "p": "Z.ai",
+   "pid": "zai",
+   "id": "glm-4-32b-0414-128k",
+   "n": "GLM-4-32B-0414-128K",
+   "i": 0.1,
+   "o": 0.1,
+   "c": 128000,
+   "t": true,
+   "r": false
+  },
   {
    "p": "阿里云",
    "pid": "alibaba",

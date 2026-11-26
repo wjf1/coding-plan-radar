@@ -1,6 +1,188 @@
 {
- "generatedAt": "2026-11-25",
+ "generatedAt": "2026-11-26",
  "items": [
+  {
+   "id": "freebie-repos:7882a0d95e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Fix the UTM parameters of the Weflayr link",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-25",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/8b52ab6ff39efc92b9dd9c76d2664c0795ce8b63",
+   "date": "2026-11-25T13:49:17Z",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "freebie-repos:1395bf795e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Frame each sponsor in its own table cell",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-25",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/73e44246e37be15fef099c6d3dff22ee31586e8f",
+   "date": "2026-11-25T13:48:40Z",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "gh-changelog:f670035765",
+   "source": "gh-changelog",
+   "sourceLabel": "GitHub Changelog",
+   "sourceUrl": "https://github.blog/changelog/feed/",
+   "tier": "official",
+   "kind": "promo-candidate",
+   "title": "Copilot code review billing will default to the organization",
+   "excerpt": "If you haven’t chosen how to bill Copilot code review for members with a Copilot license, those reviews will be billed to your organization starting December 30, 2026. To keep…",
+   "url": "https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization",
+   "date": "Wed, 25 Nov 2026 22:18:03 +0000",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "github-status:17f53a4633",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "LFS degradation for some customers",
+   "excerpt": "<p> <small>Nov <var data-var='date'>26</var>, <var data-var='time'>00:43</var> UTC</small><br> <strong>Resolved</strong> - On November 25, 2026, between 21:30 UTC and 00:28 UTC, Git Large File Storage (LFS) operations on github.com were degraded. During this time, an average of 2% of Git LFS request…",
+   "url": "https://www.githubstatus.com/incidents/m0wvf9pt3l0l",
+   "date": "Thu, 26 Nov 2026 00:43:01 +0000",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "github-status:e6b5308433",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Investigating degraded experiences across GitHub products",
+   "excerpt": "<p> <small>Nov <var data-var='date'>25</var>, <var data-var='time'>16:52</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/qn8mfv6q5hlx",
+   "date": "Wed, 25 Nov 2026 16:52:16 +0000",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "github-status:f5e06e0333",
+   "source": "github-status",
+   "sourceLabel": "GitHub Status",
+   "sourceUrl": "https://www.githubstatus.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "MAI Code 2 Degredation",
+   "excerpt": "<p> <small>Nov <var data-var='date'>25</var>, <var data-var='time'>12:03</var> UTC</small><br> <strong>Resolved</strong> - This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is availab…",
+   "url": "https://www.githubstatus.com/incidents/189rrqcfhc75",
+   "date": "Wed, 25 Nov 2026 12:03:55 +0000",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "ithome:455f143c24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "德国一消费者保护中心起诉 OpenAI，称 ChatGPT 订阅容易取消难",
+   "excerpt": "<p data-vmark=\"dedb\">IT之家 11 月 26 日消息，据科技媒体 ComputerBase 今天报道，德国勃兰登堡消费者保护中心现已对 OpenAI 提起诉讼，<strong>原因是 ChatGPT 订阅服务的取消流程过于繁琐</strong>。</p><p style=\"text-align: center;\" data-vmark=\"613c\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/11/7ffda32d-9536-4b0e-ba7b-f17150f5ff63.jpg\" w=\"966\" h=\"585…",
+   "url": "https://www.ithome.com/1/032/888.htm",
+   "date": "Thu, 26 Nov 2026 07:56:41 GMT",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "ithome:aa47e92e24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "阿里云联合支付宝推出教师 AI 权益：可领 Qoder 2000 积分，千问 AI 平台与阿里云相关产品提供 5 折优惠",
+   "excerpt": "<p data-vmark=\"987f\">IT之家 11 月 26 日消息，阿里云今日联合支付宝面向全国教师推出 AI 教学助手专属权益，提供 AI 工具及算力支持。全国教师可通过支付宝“尊师惠师”完成身份认证并领取相关权益。</p><p data-vmark=\"390f\">IT之家获悉，此次权益涵盖 Qoder、千问 AI 平台、阿里云及千问 App 产品：</p><ul class=\"medium-size list-paddingleft-2\"><li><p data-vmark=\"59be\">教师可领取 <strong>Qoder 2000 积分</strong>，支持科研编程及软件开…",
+   "url": "https://www.ithome.com/1/032/851.htm",
+   "date": "Thu, 26 Nov 2026 07:29:48 GMT",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "ithome:69801aab24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "打工人双重续命套餐：WPS 京东 PLUS 联合会员 173 元再降，年均 43.3 元",
+   "excerpt": "<p data-vmark=\"0fbc\">WPS 超级会员 3 年日常 298 元，今日买超会 3 年送京东 PLUS <strong>等</strong>联合会员 1 年。</p><p data-vmark=\"4f7e\">今日大部分用户可叠加<strong>京东平台大额补贴</strong>（此项优惠限账号）：</p><ul class=\" list-paddingleft-2\"><li><p data-vmark=\"626d\"><span class=\"font-color-red\"><strong>点击下方卡片 </strong></span><strong>→ 加购物车 1 件</st…",
+   "url": "https://www.ithome.com/1/032/795.htm",
+   "date": "Thu, 26 Nov 2026 07:06:36 GMT",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "ithome:f8c21ee724",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "今晚国内成品油价格降低：加满一箱油将少花 17.5 元左右",
+   "excerpt": "<p data-vmark=\"0000\">IT之家 11 月 26 日消息，根据国家发展改革委消息，11 月 12 日国内成品油价格调整以来，国际市场原油价格震荡下行后近日又有所回升，本次调价的前 10 个工作日平均价格低于上次调价前 10 个工作日平均价格。根据国际市场油价变化情况，自 11 月 26 日 24 时起，国内汽、柴油（标准品）价格每吨分别下调 440 元、425 元。</p><p data-vmark=\"0001\">IT之家附各省区市和中心城市汽、柴油最高零售价格如下：</p><p style=\"text-align: center;\" data-vmark=\"8dfd\"><i…",
+   "url": "https://www.ithome.com/1/032/777.htm",
+   "date": "Thu, 26 Nov 2026 06:59:15 GMT",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "ithome:5eca32aa24",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "特斯拉 Cybertruck 再涨价：唯一可下单的 Cyberbeast 贵了 5000 美元",
+   "excerpt": "<p data-vmark=\"cb77\">IT之家 11 月 26 日消息，特斯拉又一次上调了 Cybertruck 的价格。Cyberbeast 是目前美国市场上唯一还能下单的 Cybertruck 版本，售价从 109,990 美元<span class=\"exch-money-value \">（IT之家注：现汇率约合 73.5 万元人民币）</span>涨到了 114,990 美元<span class=\"exch-money-value \">（现汇率约合 76.8 万元人民币）</span>，涨幅 5,000 美元<span class=\"exch-money-value \">（现汇率…",
+   "url": "https://www.ithome.com/1/032/767.htm",
+   "date": "Thu, 26 Nov 2026 06:42:17 GMT",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "openai-status:5a8a67913f",
+   "source": "openai-status",
+   "sourceLabel": "OpenAI Status",
+   "sourceUrl": "https://status.openai.com/history.rss",
+   "tier": "official",
+   "kind": "availability",
+   "title": "Elevated errors with Codex GitHub reviews and pull request merges",
+   "excerpt": "Status: Monitoring GitHub reports that the service disruption affecting pull requests and webhooks has been mitigated. We are monitoring Codex automated pull request reviews and merge operations to confirm recovery and stability. Affected components Codex Web (Degraded performance)",
+   "url": "https://status.openai.com//incidents/01M89RGC3STKK2MT53TXHFMY4H",
+   "date": "Wed, 25 Nov 2026 16:58:51 GMT",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
+  {
+   "id": "sspai:1b3acad21d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "论文作图不求人，用 ChatGPT 和 Keynote 免费搞定机理图",
+   "excerpt": "在 AI 工具玲琅满目的今天，用各种方法「写」出一篇论文已经不算难事。但有一个环节依然很让人头疼——论文里的机理图。<a href=\"https://sspai.com/post/119563\" target=\"_blank\">查看全文</a>",
+   "url": "https://sspai.com/post/119563",
+   "date": "Thu, 26 Nov 2026 15:00:00 +0800",
+   "firstSeen": "2026-11-26",
+   "lastSeen": "2026-11-26"
+  },
   {
    "id": "github-status:a4c425b333",
    "source": "github-status",
@@ -13,7 +195,7 @@
    "url": "https://www.githubstatus.com/incidents/m0wx9qml7yjh",
    "date": "Wed, 25 Nov 2026 01:15:18 +0000",
    "firstSeen": "2026-11-25",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "github-status:4ac7f0c833",
@@ -27,7 +209,7 @@
    "url": "https://www.githubstatus.com/incidents/d56dzxzzlw0b",
    "date": "Tue, 24 Nov 2026 14:14:05 +0000",
    "firstSeen": "2026-11-25",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "ithome:af9cbe2024",
@@ -503,7 +685,7 @@
    "url": "https://github.blog/changelog/2026-11-23-usage-reports-will-include-a-user-id-column-starting-december-1",
    "date": "Mon, 23 Nov 2026 10:29:36 +0000",
    "firstSeen": "2026-11-24",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "ithome:af59493b24",
@@ -769,7 +951,7 @@
    "url": "https://twitter.com/ZixuanLi_/status/2124719275864670681",
    "date": "2026-11-23T05:21:54Z",
    "firstSeen": "2026-11-23",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "openrouter:4a48137744",
@@ -937,7 +1119,7 @@
    "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
    "date": "Thu, 19 Nov 2026 16:37:00 +0000",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "ithome:16130e6424",
@@ -1063,7 +1245,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -1315,7 +1497,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -1539,7 +1721,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -1553,7 +1735,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -1609,7 +1791,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "github-status:3adcbfd533",
@@ -1623,7 +1805,7 @@
    "url": "https://www.githubstatus.com/incidents/nwbjzl7nfrc2",
    "date": "Thu, 12 Nov 2026 21:43:56 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "github-status:2d81ed6033",
@@ -1637,7 +1819,7 @@
    "url": "https://www.githubstatus.com/incidents/gl7yhd7jx00v",
    "date": "Thu, 12 Nov 2026 19:33:54 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "modelsdev:487b64a83e",
@@ -1665,7 +1847,7 @@
    "url": "https://openai.com/business/customer-stories/gondola",
    "date": "Thu, 12 Nov 2026 12:00:00 GMT",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-25"
+   "lastSeen": "2026-11-26"
   },
   {
    "id": "openai-status:da7d9c7f3f",
