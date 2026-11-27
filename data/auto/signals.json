@@ -1,6 +1,62 @@
 {
- "generatedAt": "2026-11-26",
+ "generatedAt": "2026-11-27",
  "items": [
+  {
+   "id": "freebie-repos:139503c55e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Data sync 2026-11-26: 2 changes",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-26",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/1633eb733e29f6ac132eb6de229318abb7bd08b4",
+   "date": "2026-11-26T14:09:18Z",
+   "firstSeen": "2026-11-27",
+   "lastSeen": "2026-11-27"
+  },
+  {
+   "id": "freebie-repos:64a88ff05e",
+   "source": "freebie-repos",
+   "sourceLabel": "免费 API 汇总仓库（README 变更流）",
+   "sourceUrl": "https://api.github.com/repos/mnfst/awesome-free-llm-apis/commits?per_page=5",
+   "tier": "community",
+   "kind": "community",
+   "title": "Data sync 2026-11-25: 1 change",
+   "excerpt": "Sébastien Conejo 提交于 2026-11-25",
+   "url": "https://github.com/mnfst/awesome-free-llm-apis/commit/28443de366b4896bfc33ac78b555cfcfaea3f6d4",
+   "date": "2026-11-25T14:09:14Z",
+   "firstSeen": "2026-11-27",
+   "lastSeen": "2026-11-27"
+  },
+  {
+   "id": "ithome:31ed311824",
+   "source": "ithome",
+   "sourceLabel": "IT之家",
+   "sourceUrl": "https://www.ithome.com/rss/",
+   "tier": "community",
+   "kind": "community",
+   "title": "长城大狗 PLUS HEV 混动版 / 大狗燃油领航版上市，12.18 万 / 10.59 万元起",
+   "excerpt": "<p data-vmark=\"3ec0\">IT之家 11 月 27 日消息，在今天（27 日）开幕的 2026 广州车展期间，长城推出了多款新车。长城大狗燃油领航版限时优惠换新价区间为 10.59 万-12.59 万元，长城大狗 PLUS HEV 混动版则是 12.18 万-13.18 万元。</p><p data-vmark=\"9f52\" style=\"text-align: center;\"><img src=\"https://img.ithome.com/newsuploadfiles/2026/11/517b2fc4-3094-42f7-a86e-228f0480c7c0.jpg\" w…",
+   "url": "https://www.ithome.com/1/033/478.htm",
+   "date": "Fri, 27 Nov 2026 07:16:58 GMT",
+   "firstSeen": "2026-11-27",
+   "lastSeen": "2026-11-27"
+  },
+  {
+   "id": "sspai:5a77a01b1d",
+   "source": "sspai",
+   "sourceLabel": "少数派",
+   "sourceUrl": "https://sspai.com/feed",
+   "tier": "community",
+   "kind": "community",
+   "title": "「黑五」值得买：不容错过的 App 和服务优惠",
+   "excerpt": "先预祝大家买得愉快、用得舒心。<a href=\"https://sspai.com/post/119601\" target=\"_blank\">查看全文</a>",
+   "url": "https://sspai.com/post/119601",
+   "date": "Fri, 27 Nov 2026 11:48:17 +0800",
+   "firstSeen": "2026-11-27",
+   "lastSeen": "2026-11-27"
+  },
   {
    "id": "freebie-repos:7882a0d95e",
    "source": "freebie-repos",
@@ -41,7 +97,7 @@
    "url": "https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization",
    "date": "Wed, 25 Nov 2026 22:18:03 +0000",
    "firstSeen": "2026-11-26",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "github-status:17f53a4633",
@@ -55,7 +111,7 @@
    "url": "https://www.githubstatus.com/incidents/m0wvf9pt3l0l",
    "date": "Thu, 26 Nov 2026 00:43:01 +0000",
    "firstSeen": "2026-11-26",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "github-status:e6b5308433",
@@ -69,7 +125,7 @@
    "url": "https://www.githubstatus.com/incidents/qn8mfv6q5hlx",
    "date": "Wed, 25 Nov 2026 16:52:16 +0000",
    "firstSeen": "2026-11-26",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "github-status:f5e06e0333",
@@ -83,7 +139,7 @@
    "url": "https://www.githubstatus.com/incidents/189rrqcfhc75",
    "date": "Wed, 25 Nov 2026 12:03:55 +0000",
    "firstSeen": "2026-11-26",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "ithome:455f143c24",
@@ -181,7 +237,7 @@
    "url": "https://sspai.com/post/119563",
    "date": "Thu, 26 Nov 2026 15:00:00 +0800",
    "firstSeen": "2026-11-26",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "github-status:a4c425b333",
@@ -195,7 +251,7 @@
    "url": "https://www.githubstatus.com/incidents/m0wx9qml7yjh",
    "date": "Wed, 25 Nov 2026 01:15:18 +0000",
    "firstSeen": "2026-11-25",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "github-status:4ac7f0c833",
@@ -209,7 +265,7 @@
    "url": "https://www.githubstatus.com/incidents/d56dzxzzlw0b",
    "date": "Tue, 24 Nov 2026 14:14:05 +0000",
    "firstSeen": "2026-11-25",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "ithome:af9cbe2024",
@@ -685,7 +741,7 @@
    "url": "https://github.blog/changelog/2026-11-23-usage-reports-will-include-a-user-id-column-starting-december-1",
    "date": "Mon, 23 Nov 2026 10:29:36 +0000",
    "firstSeen": "2026-11-24",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "ithome:af59493b24",
@@ -951,7 +1007,7 @@
    "url": "https://twitter.com/ZixuanLi_/status/2124719275864670681",
    "date": "2026-11-23T05:21:54Z",
    "firstSeen": "2026-11-23",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "openrouter:4a48137744",
@@ -1119,7 +1175,7 @@
    "url": "https://www.githubstatus.com/incidents/gp7nhc88bwv9",
    "date": "Thu, 19 Nov 2026 16:37:00 +0000",
    "firstSeen": "2026-11-20",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "ithome:16130e6424",
@@ -1245,7 +1301,7 @@
    "url": "https://www.githubstatus.com/incidents/891rm8181xdf",
    "date": "Wed, 18 Nov 2026 09:34:15 +0000",
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "ithome:c44ebd8c24",
@@ -1497,7 +1553,7 @@
    "url": "https://www.githubstatus.com/incidents/2zfqmghmg3s3",
    "date": "Mon, 16 Nov 2026 16:26:26 +0000",
    "firstSeen": "2026-11-17",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "ithome:bc1fe99d24",
@@ -1721,7 +1777,7 @@
    "url": "https://www.githubstatus.com/incidents/51drrqvsv66g",
    "date": "Fri, 13 Nov 2026 21:27:59 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "github-status:d5f6a10a33",
@@ -1735,7 +1791,7 @@
    "url": "https://www.githubstatus.com/incidents/1xzmt89vv61l",
    "date": "Fri, 13 Nov 2026 18:29:31 +0000",
    "firstSeen": "2026-11-14",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "openai-status:71b0e17e3f",
@@ -1791,7 +1847,7 @@
    "url": "https://status.claude.com/incidents/sqn3fg1l96dl",
    "date": "Thu, 12 Nov 2026 23:54:26 +0000",
    "firstSeen": "2026-11-13",
-   "lastSeen": "2026-11-26"
+   "lastSeen": "2026-11-27"
   },
   {
    "id": "github-status:3adcbfd533",
